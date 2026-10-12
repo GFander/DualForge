@@ -17,7 +17,7 @@ import urllib.request
 import uuid
 import zipfile
 
-REPO = Path(__file__).resolve().parent.parent
+REPO = Path(__file__).resolve().parents[2]
 SOURCE = REPO / "spike001a/compat-002-0l/src"
 PROBE_SHA = "a774d2f737b17f089046014ab55a53767dbad008cd44dcce52c727b87e559ae8"
 LIBRARIES = (
@@ -405,7 +405,7 @@ def main():
     parser.add_argument("--mode", choices=("build", "smoke", "regress"), default="build")
     parser.add_argument("--jdk-home", type=Path, default=Path(os.environ.get("JAVA_HOME", "/workspace/dualforge-cloud/tools/msjdk/usr/lib/jvm/msopenjdk-21-amd64")))
     parser.add_argument("--server-input", type=Path, default=REPO / "spike000/neoforge-server")
-    parser.add_argument("--probe", type=Path, default=REPO / "spike000/probe-002-0l/build/forgeprobe.jar")
+    parser.add_argument("--probe", type=Path, default=REPO / "history/spike000/probe-002-0l/build/forgeprobe.jar")
     parser.add_argument("--jar", "--compat-jar", dest="jar", type=Path)
     parser.add_argument("--output-root", type=Path)
     parser.add_argument("--stage", choices=("before", "after"), default="after")
@@ -443,7 +443,7 @@ def main():
             fixed = probe(args)
             server_preflight(args, compat)
             stage = "STARTUP"
-            records = fingerprints([p for folder in ("spike000", "spike001a", "spike001b5", "Dev Manuals")
+            records = fingerprints([p for folder in ("spike000", "spike001a", "spike001b5", "history", "Dev Manuals")
                                     for p in (REPO / folder).rglob("*") if p.is_file()] + [compat, fixed])
             save(directory / "preserved-before.json", records)
             try:

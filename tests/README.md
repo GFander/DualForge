@@ -1,0 +1,109 @@
+# 测试入口
+
+tests 下现有文件位置保持不变。生产源码和工具布局见
+[STRUCTURE.md](../STRUCTURE.md)，环境及隔离运行参数见
+[tools/UNIX.md](../tools/UNIX.md)。从仓库根目录执行以下命令，所有
+JVM 编译、metadata 测试和服务端运行均严格串行。
+
+先通过新入口干净构建兼容层，再使用 result.json 中实际的新 JAR：
+
+```zsh
+export JAVA_HOME='/absolute/path/to/msopenjdk-21'
+DF_SERVER_INPUT='/absolute/path/to/server-base'
+DF_PROBE='/absolute/path/to/original/forgeprobe.jar'
+zsh tools/entry/forgecompat.zsh --mode build --server-input "$DF_SERVER_INPUT"
+DF_COMPAT_JAR='/absolute/path/to/new-run/forgecompat-002-0l.jar'
+```
+
+完整运行库和原 Probe 是外部输入。归档后的原 Probe 源码位于
+`history/spike000/probe-002-0l/src`，但测试不会从它重建替代 JAR。
+原制品指纹校验、现有正负断言和当前构造器 ABI 保持不变。
+
+## dependencies：依赖元数据和加载门禁
+
+夹具在 `tests/dependencies/*.toml`；契约测试为同目录的
+`DependencyContractTest.java`。验证 owner 分组、字段保留、Forge
+mandatory 到真实 FML REQUIRED/OPTIONAL 的适配、范围及非法输入。
+
+仅 metadata：
+
+```zsh
+zsh tools/entry/test-forge-dependencies.zsh --stage after --boundary-only \
+  --server-input "$DF_SERVER_INPUT" --probe "$DF_PROBE" \
+  --compat-jar "$DF_COMPAT_JAR"
+```
+
+六组 metadata 加 C/D/E/F 动态正负例：
+
+```zsh
+zsh tools/entry/test-forge-dependencies.zsh --stage after \
+  --server-input "$DF_SERVER_INPUT" --probe "$DF_PROBE" \
+  --compat-jar "$DF_COMPAT_JAR" --allow-server-start
+```
+
+动态夹具保留原 A 的 class，只替换 TOML；负例按具体 FML 拒绝原因
+判断，不能用 exitCode 或缺少 Done 代替。默认输出在 out/unix/dependencies。
+
+## discovery：真实发现 pipeline 和候选边界
+
+夹具由 `tests/discovery/run-discovery.zsh` 在每轮新输出目录生成，
+测试为 `DiscoveryContractTest.java`，使用当前 FML 的实际 pipeline、
+Reader 和 metadata。覆盖 A–F、文件名无关、原生路径、重复发现和
+歧义拒绝等边界；不初始化候选入口，不代表多 Forge 完整启动。
+
+```zsh
+zsh tests/discovery/run-discovery.zsh \
+  "$DF_COMPAT_JAR" "$DF_SERVER_INPUT" "$DF_PROBE"
+```
+
+输出保持在 out/convergence-003a/discovery 下，包含生成夹具、命令、
+指纹和原始断言日志；目录名是测试系列名称，不表示使用旧兼容层。
+
+## identity：受控入口身份与转换范围
+
+原生 Forge B 源码／资源在 `tests/identity/src/`；对照源码在
+`tests/identity/controls/`；FML 扫描与字节测试为 `IdentityScopeTest.java`。
+zsh 入口仍留在 tests/identity，不移入工具目录。
+
+```zsh
+DF_FORGE_DEPS='/absolute/path/to/pinned-forge-compile-jars'
+zsh tests/identity/run-identity.zsh --stage fixture \
+  --forge-dependencies "$DF_FORGE_DEPS"
+DF_IDENTITY_JAR='/absolute/path/to/fixture/identity-check.jar'
+
+zsh tests/identity/run-identity.zsh --stage after \
+  --fixture "$DF_IDENTITY_JAR" --jar "$DF_COMPAT_JAR" \
+  --server-input "$DF_SERVER_INPUT" --allow-server-start
+
+zsh tests/identity/run-scope.zsh \
+  --fixture "$DF_IDENTITY_JAR" --jar "$DF_COMPAT_JAR" \
+  --server-input "$DF_SERVER_INPUT" --forge-dependencies "$DF_FORGE_DEPS"
+```
+
+fixture 使用原 Probe 相同版本／指纹的 Forge 依赖，拒绝预改写输入。
+after 核验身份关联、必要转换、构造／真实 register 返回、宿主委托、
+Done／正常退出和日志；scope 保存未识别类及原生对照的转换前后字节。
+输出在 out/convergence-003b 下。before 需要历史起点构建件，其目的
+是复现旧失败，不能用当前修复后制品替代。细节见
+[identity/README.md](identity/README.md)。
+
+## 原 A 回归、独立 harness 与云端参数
+
+```zsh
+zsh tools/entry/forgecompat.zsh --mode regress \
+  --server-input "$DF_SERVER_INPUT" --probe "$DF_PROBE" --allow-server-start
+
+zsh tools/harness/run-server.zsh \
+  --server-input "$DF_SERVER_INPUT" --probe "$DF_PROBE" \
+  --jar "$DF_COMPAT_JAR" --allow-server-start
+```
+
+regress 包含干净构建和原 A 严格 smoke。独立 harness 负责隔离运行和
+正常停止，完整兼容 smoke 判据应使用 forgecompat 的 smoke/regress。
+服务端运行需要完整配置、世界、无其他 Java 进程及空闲 25565。
+
+当前云环境的动态命令还需加
+`--java-network-args /workspace/dualforge-cloud/java-network.args --public-key-relay`。
+本地环境应按实际网络和 CA 配置选择参数，不照搬云端文件路径。
+实际结果以每轮 result.json、原始日志、断言和输入指纹为准，
+不把历史验证当作当前运行。

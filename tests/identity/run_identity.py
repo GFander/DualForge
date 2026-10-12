@@ -8,7 +8,7 @@ import shutil
 import zipfile
 
 REPO = Path(__file__).resolve().parents[2]
-spec = importlib.util.spec_from_file_location("workflow", REPO / "tools/unix_workflow.py")
+spec = importlib.util.spec_from_file_location("workflow", REPO / "tools/lib/unix_workflow.py")
 w = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(w)
 FORGE = (
@@ -60,7 +60,7 @@ def dynamic(args, run, binary):
     compat, mod = args.jar.resolve(), args.fixture.resolve()
     assert compat.name == "forgecompat-002-0l.jar" and mod.name == "identity-check.jar"
     w.server_preflight(args, compat)
-    inputs = w.fingerprints([compat, mod, Path(__file__), REPO / "tools/unix_workflow.py"])
+    inputs = w.fingerprints([compat, mod, Path(__file__), REPO / "tools/lib/unix_workflow.py"])
     w.save(run / "inputs.json", inputs)
     meta, logs, server = w.harness(args, run, binary, mod, compat, installed_mod_name=mod.name)
     label = "spike002-0l-treatment"

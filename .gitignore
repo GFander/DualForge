@@ -31,12 +31,12 @@
 *.dat_old
 *.tsrg
 
-# Historical first-party source/notes live here: keep their ORIGINAL paths.
+# Historical first-party source/notes are archived under history/spike000/logs.
 # No generated stdout/javap text, runtime JSON, JARs or class dumps are whitelisted.
-!/spike000/logs/
-!/spike000/logs/*/
-!/spike000/logs/*/*.java
-!/spike000/logs/*/*.md
+!/history/spike000/logs/
+!/history/spike000/logs/*/
+!/history/spike000/logs/*/*.java
+!/history/spike000/logs/*/*.md
 
 # Installer-generated launcher/state files are not current first-party inputs.
 **/neoforge-server/run.bat

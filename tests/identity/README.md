@@ -54,7 +54,7 @@ JDK21.0.10+7-LTS and Linux isolation inputs, run **every JVM command serially**:
 
 ```bash
 # Capture a clean starting compat build before editing production code.
-zsh tools/forgecompat.zsh --mode build \
+zsh tools/entry/forgecompat.zsh --mode build \
   --server-input /workspace/dualforge-cloud/server-base \
   --output-root out/convergence-003b/before-build
 
@@ -69,7 +69,7 @@ zsh tests/identity/run-identity.zsh --stage before \
   --java-network-args /workspace/dualforge-cloud/java-network.args --public-key-relay
 
 # After the identity fix, build again and use its exact artifact for all checks.
-zsh tools/forgecompat.zsh --mode build \
+zsh tools/entry/forgecompat.zsh --mode build \
   --server-input /workspace/dualforge-cloud/server-base \
   --output-root out/convergence-003b/after-build
 zsh tests/identity/run-identity.zsh --stage after \
@@ -82,7 +82,7 @@ zsh tests/identity/run-scope.zsh \
   --fixture /absolute/fixture/identity-check.jar \
   --forge-dependencies /workspace/DualForge/out/convergence-003b/forge-dependencies
 
-zsh tools/forgecompat.zsh --mode smoke \
+zsh tools/entry/forgecompat.zsh --mode smoke \
   --server-input /workspace/dualforge-cloud/server-base \
   --probe /workspace/dualforge-cloud/inputs/forgeprobe.jar \
   --jar /absolute/after-build/forgecompat-002-0l.jar \
@@ -90,7 +90,7 @@ zsh tools/forgecompat.zsh --mode smoke \
   --java-network-args /workspace/dualforge-cloud/java-network.args --public-key-relay
 zsh tests/discovery/run-discovery.zsh /absolute/after-build/forgecompat-002-0l.jar \
   /workspace/dualforge-cloud/server-base /workspace/dualforge-cloud/inputs/forgeprobe.jar
-zsh tools/test-forge-dependencies.zsh --stage after \
+zsh tools/entry/test-forge-dependencies.zsh --stage after \
   --server-input /workspace/dualforge-cloud/server-base \
   --probe /workspace/dualforge-cloud/inputs/forgeprobe.jar \
   --compat-jar /absolute/after-build/forgecompat-002-0l.jar \

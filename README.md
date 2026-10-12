@@ -4,6 +4,12 @@ DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。当前�
 
 仓库只维护 **zsh 脚本入口**。Python 3 标准库负责内部的构建编排、JSON、JAR 指纹、进程及日志捕获；运行不需要 Windows 或 PowerShell。本次工具整理不修改生产 Java 代码、兼容行为或构造器 ABI。
 
+## 仓库结构
+
+生产源码保持在 `spike001a/compat-002-0l/src/`；`history/` 集中保存旧 compat 迭代、0l 冻结副本和旧实验记录。工具分为 `tools/entry/`（zsh 入口）、`tools/lib/`（Python 实现）和 `tools/harness/`（活跃独立 harness）。`tests/` 的文件位置保持不变。
+
+完整目录树、活跃／历史状态和迁移映射见 [STRUCTURE.md](STRUCTURE.md)；三类测试的夹具与运行方式见 [tests/README.md](tests/README.md)。仍保留原位置的 `spike001a/compat/`、`spike000/probe/` 是遗留记录，不能作为并行生产版本。Gradle 弃用说明见 [DEPRECATED.md](spike001a/compat/DEPRECATED.md)。
+
 ## 当前支持范围
 
 - 003a：按受控 Forge metadata 发现 JAR，以规范化路径交由官方 FML pipeline 去重；不依赖固定文件名。`loaderVersion` 的 52 下界是当前准入策略。
@@ -31,7 +37,7 @@ DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。当前�
 - 原固定 Probe：`forgeprobe.jar`，SHA-256 为 `a774d2f737b17f089046014ab55a53767dbad008cd44dcce52c727b87e559ae8`。原回归入口拒绝重建或替代输入。
 - 同一服务端输入下的 `config/`、`defaultconfigs/` 和 `spike000world/`。空的 defaultconfigs 也须保留目录；世界与第三方运行库不入 Git。
 
-`prepare-unix.zsh` 只取得并校验八个固定编译 JAR，不安装完整服务端、不重建 Probe、不启动 JVM 服务端。历史 `build.gradle` 是实验记录，当前入口不使用 Gradle。
+`tools/entry/prepare-unix.zsh` 只取得并校验八个固定编译 JAR，不安装完整服务端、不重建 Probe、不启动 JVM 服务端。旧兼容层 Gradle 记录已归档为 `history/compat-build.gradle.deprecated`，当前入口不使用 Gradle。
 
 ## 构建与回归
 
@@ -43,24 +49,24 @@ DF_SERVER_INPUT='/absolute/path/to/server-base'
 DF_PROBE='/absolute/path/to/forgeprobe.jar'
 
 # 仅准备编译依赖；已有完整安装时也会核验现有文件。
-zsh tools/prepare-unix.zsh --server-input "$DF_SERVER_INPUT"
-zsh tools/forgecompat.zsh --mode build --server-input "$DF_SERVER_INPUT"
+zsh tools/entry/prepare-unix.zsh --server-input "$DF_SERVER_INPUT"
+zsh tools/entry/forgecompat.zsh --mode build --server-input "$DF_SERVER_INPUT"
 
 # 取上一步 result.json 中实际新制品路径，保留文件名。
 DF_COMPAT_JAR='/absolute/path/to/new-run/forgecompat-002-0l.jar'
 
 # 仅执行 metadata 边界，不启动服务端。
-zsh tools/test-forge-dependencies.zsh --stage after --boundary-only \
+zsh tools/entry/test-forge-dependencies.zsh --stage after --boundary-only \
   --server-input "$DF_SERVER_INPUT" --probe "$DF_PROBE" \
   --compat-jar "$DF_COMPAT_JAR"
 
 # 原 Probe 隔离 smoke；所有 JVM 命令必须串行。
-zsh tools/forgecompat.zsh --mode smoke \
+zsh tools/entry/forgecompat.zsh --mode smoke \
   --server-input "$DF_SERVER_INPUT" --probe "$DF_PROBE" \
   --jar "$DF_COMPAT_JAR" --allow-server-start
 
 # metadata + C/D/E/F 动态依赖正负例。
-zsh tools/test-forge-dependencies.zsh --stage after \
+zsh tools/entry/test-forge-dependencies.zsh --stage after \
   --server-input "$DF_SERVER_INPUT" --probe "$DF_PROBE" \
   --compat-jar "$DF_COMPAT_JAR" --allow-server-start
 
@@ -79,10 +85,10 @@ zsh tests/discovery/run-discovery.zsh \
 
 | 入口 | 用途 |
 |---|---|
-| `tools/prepare-unix.zsh` | 准备八个固定编译输入 |
-| `tools/forgecompat.zsh` | build／smoke／regress |
-| `tools/test-forge-dependencies.zsh` | metadata 与动态依赖回归 |
-| `spike000/run-server.zsh` | 独立隔离服务端 harness |
+| `tools/entry/prepare-unix.zsh` | 准备八个固定编译输入 |
+| `tools/entry/forgecompat.zsh` | build／smoke／regress |
+| `tools/entry/test-forge-dependencies.zsh` | metadata 与动态依赖回归 |
+| `tools/harness/run-server.zsh` | 独立隔离服务端 harness |
 | `tests/discovery/run-discovery.zsh` | 发现与候选边界 |
 | `tests/identity/run-identity.zsh` | 原生 Forge 身份 fixture、before／after |
 | `tests/identity/run-scope.zsh` | 实际 FML 扫描和转换字节范围对照 |
@@ -95,11 +101,11 @@ smoke 不只检查 Done，还检查精确安装制品、服务发现、构造 ma
 
 ## 源码、历史记录与证据
 
-- 当前生产源码：[spike001a/compat-002-0l/src](spike001a/compat-002-0l/src)；原 Probe 源码：[spike000/probe-002-0l/src](spike000/probe-002-0l/src)。
+- 当前生产源码：[spike001a/compat-002-0l/src](spike001a/compat-002-0l/src)；原 Probe 源码：[history/spike000/probe-002-0l/src](history/spike000/probe-002-0l/src)。
 - 当前 fixture：[tests/dependencies](tests/dependencies)、[tests/discovery](tests/discovery)、[tests/identity](tests/identity)。
 - 历史交付：[Convergence-001](<Dev Manuals/Convergence-001 交付报告.md>)、[002](<Dev Manuals/Convergence-002 交付报告.md>)、[003a](<Dev Manuals/Convergence-003a 交付报告.md>)、[003b](<Dev Manuals/Convergence-003b 交付报告.md>)。
 - 架构及冻结报告：[Dev Manuals](<Dev Manuals/>)。历史文本仍保留原平台命令与证据路径，作为当时的执行记录，不作为当前入口。
 
-本次移除全部 29 个受 Git 管理的 Windows／PowerShell 脚本，包含历史实验脚本；删除前的原字节副本和指纹存入本轮外部归档 `out/zsh-only-tooling/`，也可从此前 Git 提交恢复。历史 Java 源码、资源、报告及已有证据索引保持原字节，不批量改写历史引用，也不重写 Git 历史。
+此前 zsh 工具整理移除了全部 29 个受 Git 管理的 Windows／PowerShell 脚本；该轮原字节副本和指纹存于外部归档 `out/zsh-only-tooling/`，也可从此前 Git 提交恢复。本轮仅使用 git mv 归档现有文件，未删除文件。历史 Java 源码、资源、报告及已有证据索引保持原字节，不批量改写历史引用，也不重写 Git 历史。
 
 Git 保存第一方源码、fixture、zsh 入口、内部实现、报告和指纹索引；完整运行附件、第三方依赖、构建产物、世界、缓存及凭据继续外部保存。`.gitattributes` 保留原文件换行与字节。既有 LICENSE 未修改。
