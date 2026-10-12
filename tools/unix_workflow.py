@@ -1,4 +1,4 @@
-"""Unix ports of the three current PowerShell entrypoints; no Java code changes."""
+"""Internal implementation of the zsh build, regression and server entrypoints."""
 import argparse
 import hashlib
 import http.server
@@ -39,6 +39,17 @@ MARKERS = (
     "register returned target=com.example.forgeprobe.ForgeProbe declaredMethods=1",
     "delegate -> builtin javafml for neoforge",
     "NeoForge mod loading, version 21.1.256", "Done (",
+)
+SERVER_PROPERTIES = (
+    "allow-flight=false", "allow-nether=false", "difficulty=peaceful",
+    "enable-command-block=false", "enable-rcon=false", "enforce-secure-profile=false",
+    "gamemode=creative", "generate-structures=false", "hardcore=false",
+    "level-name=spike000world", "level-type=minecraft\\:flat", "max-players=1",
+    "motd=Spike-000", "online-mode=false", "player-idle-timeout=0",
+    "prevent-proxy-connections=false", "pvp=false", "query.port=25565",
+    "server-ip=127.0.0.1", "server-port=25565", "simulation-distance=4",
+    "spawn-animals=false", "spawn-monsters=false", "spawn-npcs=false",
+    "sync-chunk-writes=false", "view-distance=4", "white-list=false",
 )
 
 
@@ -239,12 +250,7 @@ def harness(args, directory, binary, mod, compat, installed_mod_name="forgeprobe
     shutil.copyfile(mod, mods / installed_mod_name)
     if compat:
         shutil.copyfile(compat, mods / "forgecompat-002-0l.jar")
-    # Preserve baseline properties except bind locally for the cloud's isolated check.
-    original = (REPO / "spike000/run-server.ps1").read_text()
-    block = original.split("$props = @(", 1)[1].split("\n)", 1)[0]
-    properties = re.findall(r"^\s*'([^']*)',?\s*$", block, re.MULTILINE)
-    properties = ["server-ip=127.0.0.1" if value == "server-ip=" else value for value in properties]
-    (server / "server.properties").write_text("\n".join(properties) + "\n")
+    (server / "server.properties").write_text("\n".join(SERVER_PROPERTIES) + "\n")
     (server / "eula.txt").write_text("eula=true\n")
     dump_args = (f"-Dforgecompat.dump.path={directory / 'dumps/rewritten/ForgeProbe.rewritten.class'}",
                  f"-Dforgecompat.dump.profileDir={directory / 'dumps/profile'}")
@@ -458,7 +464,7 @@ def main():
             stage = "NOT_RUN"
         code = {"BUILD": 10, "STARTUP": 20, "ASSERTION": 30}.get(stage, 40)
         if args.workflow == "dependencies" and code != 40:
-            code = 1  # Preserve the independent PowerShell dependency-test failure code.
+            code = 1  # Preserve the independent dependency-test failure code.
         result.update(status="PARTIAL" if code == 40 and ("build" in result or "boundary" in result) else "NOT RUN" if code == 40 else "FAIL",
                       category=stage, exitCode=code, error=str(error))
         if directory:

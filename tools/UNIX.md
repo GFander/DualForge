@@ -1,10 +1,15 @@
-# Convergence-002 Unix entrypoints
+# zsh entrypoints
 
 The current entrypoints are `forgecompat.zsh`, `test-forge-dependencies.zsh`,
-and `../spike000/run-server.zsh`. They retain the original PowerShell files.
+and `../spike000/run-server.zsh`. Identity checks additionally use
+`../tests/identity/run-identity.zsh` and `../tests/identity/run-scope.zsh`.
+zsh is the only maintained shell entrypoint; Windows/PowerShell scripts
+have been removed from the current tree.
 zsh launches the Python 3 standard-library implementation for JSON, ZIP hashes,
 and process/log capture. No new build framework or Java compatibility changes.
-Historical Spike scripts are not migrated or executed.
+Historical script bytes remain in the removal archive and Git history;
+frozen source and reports are not rewritten. The harness stores its fixed
+server properties in the internal implementation, without reading old scripts.
 
 Required tools: zsh, Python 3.11+, Microsoft JDK **21.0.10+7-LTS**; `pgrep`
 is additionally required before an explicitly requested server run.
@@ -47,8 +52,8 @@ prerequisites exit 40. The standalone harness uses 20 for unsuccessful startup.
 harness require explicit `--allow-server-start`. This option is not authorization
 to invoke them in a task that prohibits starting a server.
 
-The approved dump I/O adaptation adds `forgecompat.dump.path` and
-`forgecompat.dump.profileDir`, keeping the original Windows defaults.
+The existing dump I/O adaptation uses `forgecompat.dump.path` and
+`forgecompat.dump.profileDir`; the original Java fallback paths are unchanged.
 The Unix harness points both properties into each fresh run's `dumps/` directory.
 Transformation/module/loading rules and `dump FAIL` assertions remain intact.
 Startup rejects stale JARs without the new properties. Full runtime, official
@@ -87,5 +92,5 @@ recorded alongside the loopback bind and Unix argfile differences.
 The port selects the official Unix **named-module** argfile, retaining the
 original JVM feature switches. Its isolated server properties bind to
 127.0.0.1 instead of all interfaces; that is an explicit cloud harness difference.
-Windows creation-time restoration is not claimed on Unix; source inputs are
-never used as dump output or as the writable running server directory.
+Source inputs are never used as dump output or as the writable running server
+directory.

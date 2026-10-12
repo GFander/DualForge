@@ -58,11 +58,11 @@ zsh tools/forgecompat.zsh --mode build \
   --server-input /workspace/dualforge-cloud/server-base \
   --output-root out/convergence-003b/before-build
 
-python3 -B tests/identity/run_identity.py --stage fixture \
+zsh tests/identity/run-identity.zsh --stage fixture \
   --forge-dependencies /workspace/DualForge/out/convergence-003b/forge-dependencies
 
 # Replace both paths with the actual preceding result.json paths.
-python3 -B tests/identity/run_identity.py --stage before \
+zsh tests/identity/run-identity.zsh --stage before \
   --fixture /absolute/fixture/identity-check.jar \
   --jar /absolute/before-build/forgecompat-002-0l.jar \
   --allow-server-start \
@@ -72,12 +72,12 @@ python3 -B tests/identity/run_identity.py --stage before \
 zsh tools/forgecompat.zsh --mode build \
   --server-input /workspace/dualforge-cloud/server-base \
   --output-root out/convergence-003b/after-build
-python3 -B tests/identity/run_identity.py --stage after \
+zsh tests/identity/run-identity.zsh --stage after \
   --fixture /absolute/fixture/identity-check.jar \
   --jar /absolute/after-build/forgecompat-002-0l.jar \
   --allow-server-start \
   --java-network-args /workspace/dualforge-cloud/java-network.args --public-key-relay
-python3 -B tests/identity/run_scope.py \
+zsh tests/identity/run-scope.zsh \
   --jar /absolute/after-build/forgecompat-002-0l.jar \
   --fixture /absolute/fixture/identity-check.jar \
   --forge-dependencies /workspace/DualForge/out/convergence-003b/forge-dependencies
@@ -117,5 +117,5 @@ fingerprint identifies the new 003b compat artifact.
 Dynamic runs reuse the verified physical-copy, loopback, official Unix named
 module argument file, original flags, local dump paths and public-key relay
 measures. A and B are never installed together. Historical inputs, worlds and
-evidence are checked by the 003b preservation manifest. Original Windows runs
-have not been repeated.
+evidence are checked by the 003b preservation manifest. Only the zsh entrypoints are maintained; historical platform claims remain
+in the original reports.
