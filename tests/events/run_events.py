@@ -49,6 +49,13 @@ def inputs(args, extra=()):
                           + [REPO / "tools/lib/unix_workflow.py"])
 
 
+def compat_record(records, path):
+    matches = [record for record in records if record["Path"] == str(path.resolve())]
+    if len(matches) != 1:
+        raise RuntimeError(f"Expected exactly one actual compat input fingerprint: {path}")
+    return matches[0]
+
+
 def fixture(args, run, binary):
     forge = [args.forge_dependencies.resolve() / n for n, _ in identity.FORGE]
     for p, (_, h) in zip(forge, identity.FORGE):
@@ -128,7 +135,7 @@ def contract(args, run, binary, runtime=None):
     w.save(run / "assertions.json", checks)
     assert all(checks.values())
     w.unchanged(records)
-    return {"status": "PASS", "assertions": checks}
+    return {"status": "PASS", "assertions": checks, "compat": compat_record(records, args.jar)}
 
 
 def dynamic(args, run, binary):
@@ -186,10 +193,13 @@ def dynamic(args, run, binary):
     contract_result = contract(args, verify, binary, run / "dumps/profile")
     w.unchanged(records)
     return {"status": "PASS", "registrationExecuted": stdout.count("[DF004] REGISTER RETURNED") == 1, "postCount": stdout.count("[DF004] POST BEGIN"),
-            "callbackCount": callback_count, "meta": meta, "assertions": checks, "runtimeBytecode": contract_result}
+            "callbackCount": callback_count, "meta": meta, "assertions": checks, "runtimeBytecode": contract_result,
+            "compat": compat_record(records, args.jar)}
 
 
 def regression(args, run, binary):
+    compat = w.fingerprints([args.jar.resolve()])[0]
+    w.save(run / "inputs.json", {"compat": compat})
     network = (["--java-network-args", args.java_network_args.resolve()] if args.java_network_args else []) + (["--public-key-relay"] if args.public_key_relay else [])
     common = ["--server-input", args.server_input.resolve(), "--jar", args.jar.resolve()]
     commands = {
@@ -213,7 +223,12 @@ def regression(args, run, binary):
         path = Path(match.group(1)) / "result.json"
         result = json.loads(path.read_text())
         assert result["status"] == "PASS"
-        results[name] = {"status": result["status"], "result": str(path)}
+        input_file = path.parent / ("harness-inputs.json" if name == "original-smoke" else "inputs.json")
+        actual = compat_record(json.loads(input_file.read_text()), args.jar)
+        if actual["SHA256"] != compat["SHA256"]:
+            raise RuntimeError(f"Regression {name} used a different compat SHA-256")
+        w.unchanged([compat])
+        results[name] = {"status": result["status"], "result": str(path), "compatSha256": actual["SHA256"]}
         w.save(run / "regressions.json", results)
     before = json.loads((ROOT / "preflight/inputs-before.json").read_text())
     allowed = {str(REPO / p) for p in ["spike001a/compat-002-0l/src/main/java/com/example/forgecompat/ForgeProbeConstructorTransformer.java",
@@ -222,7 +237,8 @@ def regression(args, run, binary):
     w.unchanged(preserved)
     w.save(ROOT / "regression/preservation.json", {"status": "PASS", "unchangedFiles": preserved, "allowedChanges": sorted(allowed),
         "historyAllTrackedFilesUnchanged": True, "structureMappingUnchanged": True, "probeAndFrozenIdentityUnchanged": True})
-    return {"status": "PASS", "regressions": results, "preservation": "out/convergence-004/regression/preservation.json"}
+    return {"status": "PASS", "regressions": results, "compat": compat,
+            "preservation": "out/convergence-004/regression/preservation.json"}
 
 
 def publish_result(stage, run, result):
@@ -239,6 +255,12 @@ def publish_result(stage, run, result):
         "baseCommit": json.loads((ROOT / "preflight/git.json").read_text())["baseCommit"] if (ROOT / "preflight/git.json").exists() else None,
         "testedCommit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=REPO, text=True).strip(),
         "evidence": index, "regressions": results.get("regression", {}).get("regressions", {})}
+    stage_hashes = {name: results.get(name, {}).get("compat", {}).get("SHA256")
+                    for name in ("contract", "control", "treatment", "regression")}
+    summary["stageCompatSha256"] = stage_hashes
+    summary["sameCompatAcrossStages"] = (all(isinstance(value, str) and re.fullmatch(r"[0-9a-f]{64}", value)
+                                             for value in stage_hashes.values())
+                                         and len(set(stage_hashes.values())) == 1)
     for name in ("control", "treatment"):
         if name in results:
             summary[name] = {key: results[name].get(key) for key in ("status", "registrationExecuted", "postCount", "callbackCount")}
@@ -249,7 +271,10 @@ def publish_result(stage, run, result):
         hashes = {Path(r["Path"]).name: r["SHA256"] for r in treatment}
         summary.update(compatSha256=hashes["forgecompat-002-0l.jar"],
                        forgeFixtureSha256=hashes["dispatch-probe.jar"], driverSha256=hashes["dispatch-driver.jar"])
-        summary["status"] = "PASS" if control == treatment else "FAIL"
+        summary["ctCompatEvidenceConsistent"] = (summary["compatSha256"] == stage_hashes["control"]
+                                                 == stage_hashes["treatment"])
+        summary["status"] = ("PASS" if control == treatment and summary["sameCompatAcrossStages"]
+                             and summary["ctCompatEvidenceConsistent"] else "FAIL")
     w.save(ROOT / "summary.json", summary)
 
 
