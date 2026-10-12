@@ -1,0 +1,748 @@
+{
+  "task": "Convergence-005",
+  "baseCommit": "20e69fae7a07c6a5b74f017c29762f414834814c",
+  "productionCommit": "fc15b6231b62523392bd0d888bf888dbb16ccb4a",
+  "finalRegistryRunnerCommit": "56cb1a78bb18e8019b44f3bfdbf42af2869148bf",
+  "status": {
+    "task": "Convergence-005",
+    "serverRegistryChecks": "PASS",
+    "005-S": "PARTIAL",
+    "005-C": "NOT RUN",
+    "sameArtifactCohort": true,
+    "evidence": {
+      "assets": "/workspace/DualForge-005/out/convergence-005/assets/20261012-171236-aa3bd9ec/result.json",
+      "client": "/workspace/DualForge-005/out/convergence-005/client/20261012-171236-d00453f2/result.json",
+      "regression": "/workspace/DualForge-005/out/convergence-005/regression/20261012-170317-cfe96d2c/result.json",
+      "fixture": "/workspace/DualForge-005/out/convergence-005/fixture/20261012-170706-e09009d1/result.json",
+      "contract": "/workspace/DualForge-005/out/convergence-005/contract/20261012-170828-6103722b/result.json",
+      "control": "/workspace/DualForge-005/out/convergence-005/control/20261012-171305-4d99c1f2/result.json",
+      "treatment": "/workspace/DualForge-005/out/convergence-005/treatment/20261012-171332-1143201d/result.json",
+      "baseline": "/workspace/DualForge-005/out/convergence-005/baseline/20261012-165100-fef8857b/result.json"
+    },
+    "stageCompatSha256": {
+      "contract": "ed572ca9762e235e7d264355d35b3c9d3ab9ecf1da3f2c3234b1e28056aad752",
+      "control": "ed572ca9762e235e7d264355d35b3c9d3ab9ecf1da3f2c3234b1e28056aad752",
+      "treatment": "ed572ca9762e235e7d264355d35b3c9d3ab9ecf1da3f2c3234b1e28056aad752",
+      "regression": "ed572ca9762e235e7d264355d35b3c9d3ab9ecf1da3f2c3234b1e28056aad752"
+    },
+    "assets": "NOT RUN"
+  },
+  "archive": {
+    "Path": "/workspace/DualForge-005/out/convergence-005/convergence-005-ct-minimal.tar.gz",
+    "SHA256": "172005c32f609e3818706e64862b12075ee0d6130a3f7ceb297bc44e45d53798",
+    "Bytes": 105206,
+    "fileCount": 27,
+    "uploaded": false,
+    "downloadUrl": null,
+    "contents": "raw C/T logs, commands, metadata, fingerprints; no worlds, binaries, dependency files or credentials"
+  },
+  "files": [
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-004/contract/20261012-170317-b9f90cb4/result.json",
+      "SHA256": "34503c89966fce251d3e37fde75a71c4341c28208182aedd09f7d0d999576ef6",
+      "Bytes": 505
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-004/control/20261012-170322-7c519a92/result.json",
+      "SHA256": "bd9386ad34b4e70e4d28db8f64c68544bcbfd47db1d948b78e0d51d0a7252e9f",
+      "Bytes": 1915
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-004/regression/20261012-170420-14cb0daa/result.json",
+      "SHA256": "fb48e920471153a66f0bbd23e1651c9c50029de9eeb0a707bd03e0e4af072f8d",
+      "Bytes": 1767
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-004/treatment/20261012-170351-c94f0b7b/result.json",
+      "SHA256": "f68a3795eed54a84af70781f2f94ab4d5dabba9d5f7a8c11e5a000013a2a3aee",
+      "Bytes": 2004
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/assets/20261012-171236-aa3bd9ec/result.json",
+      "SHA256": "923e995cb35d3e19cdb5039b08b5d79eeb64a05abfa3e4c57a521a5cba8da702",
+      "Bytes": 1121
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/baseline/20261012-165100-fef8857b/result.json",
+      "SHA256": "58fb6735ab5a85eb5e5fa631bbc5ebb2c581592081c2906a707cb63f964e3bc5",
+      "Bytes": 938
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/client/20261012-171236-d00453f2/result.json",
+      "SHA256": "9bea8e94a973d99cf0d5cb66d16f510fd3106c43e6d76850b8149cdfaa481e57",
+      "Bytes": 617
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Forge-net.minecraftforge.registries.DeferredRegister.command.json",
+      "SHA256": "7724775f664d8ddcc06d38feafb9d3b5426e014a3eba66181582989f06fd4321",
+      "Bytes": 11195
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Forge-net.minecraftforge.registries.DeferredRegister.exit.json",
+      "SHA256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305",
+      "Bytes": 20
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Forge-net.minecraftforge.registries.DeferredRegister.stderr.log",
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "Bytes": 0
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Forge-net.minecraftforge.registries.DeferredRegister.stdout.log",
+      "SHA256": "79af55560086cfcafe36fe57f729980f0f443d8d6f2b3e2111476c254a5ab294",
+      "Bytes": 24700
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Forge-net.minecraftforge.registries.ForgeRegistries.command.json",
+      "SHA256": "8428fcd6e4a5124d48be9638a6115ae92093f911150d1d3f842a66c234a8a68b",
+      "Bytes": 11194
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Forge-net.minecraftforge.registries.ForgeRegistries.exit.json",
+      "SHA256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305",
+      "Bytes": 20
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Forge-net.minecraftforge.registries.ForgeRegistries.stderr.log",
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "Bytes": 0
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Forge-net.minecraftforge.registries.ForgeRegistries.stdout.log",
+      "SHA256": "06a6262dbc541b76d3263f88327e149e65726c9275bea8d416b7ab73a74daedd",
+      "Bytes": 28922
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Forge-net.minecraftforge.registries.IForgeRegistry.command.json",
+      "SHA256": "1d5150449eb3e0d04d1c1f03f80a39dcd19497ea31b783f55c5824d0830d3070",
+      "Bytes": 11193
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Forge-net.minecraftforge.registries.IForgeRegistry.exit.json",
+      "SHA256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305",
+      "Bytes": 20
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Forge-net.minecraftforge.registries.IForgeRegistry.stderr.log",
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "Bytes": 0
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Forge-net.minecraftforge.registries.IForgeRegistry.stdout.log",
+      "SHA256": "43a9bb6fe63799eb656e1f1d2920e90df1bcd2a9d6961dbdb786bcc9818b3a8b",
+      "Bytes": 4086
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Forge-net.minecraftforge.registries.RegistryObject.command.json",
+      "SHA256": "4d8e37073c7861d567d54d0e62dfccb7ae459850a2735d76e85d4d36708fa5c7",
+      "Bytes": 11193
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Forge-net.minecraftforge.registries.RegistryObject.exit.json",
+      "SHA256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305",
+      "Bytes": 20
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Forge-net.minecraftforge.registries.RegistryObject.stderr.log",
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "Bytes": 0
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Forge-net.minecraftforge.registries.RegistryObject.stdout.log",
+      "SHA256": "9fb3cf4d52cd3cb70c899035d6e884bea553a272cd73d08bcd56efbe752491a3",
+      "Bytes": 34190
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.minecraft.core.DefaultedRegistry.command.json",
+      "SHA256": "ca0765c378b69874c413b49bb964f1b852a911546889f83315a793ef7822700c",
+      "Bytes": 10893
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.minecraft.core.DefaultedRegistry.exit.json",
+      "SHA256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305",
+      "Bytes": 20
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.minecraft.core.DefaultedRegistry.stderr.log",
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "Bytes": 0
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.minecraft.core.DefaultedRegistry.stdout.log",
+      "SHA256": "8a2594d456be24ba08a95886cf93ddcf6338d805cf64ecd5783056d728b331f3",
+      "Bytes": 643
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.minecraft.core.Registry.command.json",
+      "SHA256": "ed79d99deb42bac32283b0a5fd384550d8ef787bd843ca0ddd19f5244d139d27",
+      "Bytes": 10884
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.minecraft.core.Registry.exit.json",
+      "SHA256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305",
+      "Bytes": 20
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.minecraft.core.Registry.stderr.log",
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "Bytes": 0
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.minecraft.core.Registry.stdout.log",
+      "SHA256": "cde95ec471db439d79f3a8cfb25de244cea21b605929d4e8ba1ce9d2638fced4",
+      "Bytes": 26610
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.minecraft.core.registries.BuiltInRegistries.command.json",
+      "SHA256": "cb7d29217f1b6bd945ea90d11ec66b132ca647579456c79b6064890333dfe069",
+      "Bytes": 10904
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.minecraft.core.registries.BuiltInRegistries.exit.json",
+      "SHA256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305",
+      "Bytes": 20
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.minecraft.core.registries.BuiltInRegistries.stderr.log",
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "Bytes": 0
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.minecraft.core.registries.BuiltInRegistries.stdout.log",
+      "SHA256": "a9ae371fa292839554e93e7908e228a381fc91c37100315ae0c620947309c705",
+      "Bytes": 94779
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.minecraft.world.item.Item$Properties.command.json",
+      "SHA256": "2ff6d7be9bc4925cccecfdc26597b9861dc9c8510f760a3ce3d60e51524a170c",
+      "Bytes": 10897
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.minecraft.world.item.Item$Properties.exit.json",
+      "SHA256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305",
+      "Bytes": 20
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.minecraft.world.item.Item$Properties.stderr.log",
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "Bytes": 0
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.minecraft.world.item.Item$Properties.stdout.log",
+      "SHA256": "30ac8e3152cea61776671d3b496a6087acab22ef5e635678a2a350c76f39c7f7",
+      "Bytes": 14058
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.minecraft.world.item.Item.command.json",
+      "SHA256": "48a7794e651d96b5c9e628e739d7f994bb65b21584fbfa3f2b69f8d6190eef57",
+      "Bytes": 10886
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.minecraft.world.item.Item.exit.json",
+      "SHA256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305",
+      "Bytes": 20
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.minecraft.world.item.Item.stderr.log",
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "Bytes": 0
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.minecraft.world.item.Item.stdout.log",
+      "SHA256": "51b306b2fe311fa9c049edda5c13f4e4cd9b55bb8debc79289fe290361f5654c",
+      "Bytes": 39480
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.fml.javafmlmod.FMLModContainer.command.json",
+      "SHA256": "8e57246fc7bf426013727f6c68c427d4aaf398297e8f6692f3c1eacd29623f7d",
+      "Bytes": 10901
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.fml.javafmlmod.FMLModContainer.exit.json",
+      "SHA256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305",
+      "Bytes": 20
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.fml.javafmlmod.FMLModContainer.stderr.log",
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "Bytes": 0
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.fml.javafmlmod.FMLModContainer.stdout.log",
+      "SHA256": "af957c76233775a391cedd0f92e5ddd1644512e77d01c179765446c4dc258e2f",
+      "Bytes": 28062
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.internal.CommonModLoader.command.json",
+      "SHA256": "5f716a6bbdb755dabc64f679af544dd6b63bed59db4056acaa4796d92c0b33ed",
+      "Bytes": 10904
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.internal.CommonModLoader.exit.json",
+      "SHA256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305",
+      "Bytes": 20
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.internal.CommonModLoader.stderr.log",
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "Bytes": 0
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.internal.CommonModLoader.stdout.log",
+      "SHA256": "0d5344e973a42ac9e2f327dfb51ea2edd1cc233cda7596418491adf919e23423",
+      "Bytes": 9489
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.registries.DeferredHolder.command.json",
+      "SHA256": "8e9b73a2b51174c9287fc66a7e11599a638c8b067ba576fbdcf4f05da5ea5046",
+      "Bytes": 10905
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.registries.DeferredHolder.exit.json",
+      "SHA256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305",
+      "Bytes": 20
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.registries.DeferredHolder.stderr.log",
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "Bytes": 0
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.registries.DeferredHolder.stdout.log",
+      "SHA256": "81e5aae039b5204abea1d22f5794659de8bbb32e832185935e4c128da3200a61",
+      "Bytes": 18075
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.registries.DeferredItem.command.json",
+      "SHA256": "487b395f23ef50def73e9134a87f08a83cd26bd1fc4c49cdcf9febeaecf538df",
+      "Bytes": 10903
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.registries.DeferredItem.exit.json",
+      "SHA256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305",
+      "Bytes": 20
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.registries.DeferredItem.stderr.log",
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "Bytes": 0
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.registries.DeferredItem.stdout.log",
+      "SHA256": "6c10f96cb55d2e9d13b76387c4e7244f39913793ea8cb1434ded1afd92236e83",
+      "Bytes": 3715
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.registries.DeferredRegister.command.json",
+      "SHA256": "58d296056369d7f6833e93f1454e73e1fbc536084677cac160fa452725d9a2af",
+      "Bytes": 10907
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.registries.DeferredRegister.exit.json",
+      "SHA256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305",
+      "Bytes": 20
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.registries.DeferredRegister.stderr.log",
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "Bytes": 0
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.registries.DeferredRegister.stdout.log",
+      "SHA256": "f91757f8ab9bbfb8225f8ef8acdce1196e39196fcbe8e87acbf4432dedc7006c",
+      "Bytes": 28843
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.registries.GameData.command.json",
+      "SHA256": "4853a8d3b45b767512202aadbb51128d3e7ca692519294fc8817a68d6ebbdfe1",
+      "Bytes": 10899
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.registries.GameData.exit.json",
+      "SHA256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305",
+      "Bytes": 20
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.registries.GameData.stderr.log",
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "Bytes": 0
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.registries.GameData.stdout.log",
+      "SHA256": "41d54f125e673f9188b2e5c2debbe2ef4ef264340d4878c393446c03bf64680f",
+      "Bytes": 16709
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.registries.RegisterEvent.command.json",
+      "SHA256": "61782bc22f8470c754c893c9913effa8a0f63b3a7606f533fbe75b9a16d11fb3",
+      "Bytes": 10904
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.registries.RegisterEvent.exit.json",
+      "SHA256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305",
+      "Bytes": 20
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.registries.RegisterEvent.stderr.log",
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "Bytes": 0
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.registries.RegisterEvent.stdout.log",
+      "SHA256": "2d6eb4e0cd67fcec80161bd13ce090a34696b39189f87b2a7a51e79f8512373d",
+      "Bytes": 4822
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.registries.RegistryManager.command.json",
+      "SHA256": "4d20f3c74605e31b514d2116f0ed8426905405b99ca63cd6d7f3bbf5a124f86d",
+      "Bytes": 10906
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.registries.RegistryManager.exit.json",
+      "SHA256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305",
+      "Bytes": 20
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.registries.RegistryManager.stderr.log",
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "Bytes": 0
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/Neo-net.neoforged.neoforge.registries.RegistryManager.stdout.log",
+      "SHA256": "dcc4f007c50be53dc2b1cd0a75f4f725680947d27953f13ee1cd68c5474c6ca1",
+      "Bytes": 37734
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164104-2fb0a235/dependencies.json",
+      "SHA256": "037ef613ae5ec5c436c674e59d4020f72a4d66ab67d0aad23eaa54201255345c",
+      "Bytes": 22923
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164258-b319ba0c/javac-native.command.json",
+      "SHA256": "26a955a66ef7f2f25ac547b4e7ffd0f5d88db31b38ed1d4c61e9f9b7a8be5d01",
+      "Bytes": 2966
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164258-b319ba0c/javac-native.exit.json",
+      "SHA256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305",
+      "Bytes": 20
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164258-b319ba0c/javac-native.stderr.log",
+      "SHA256": "32a54b22d3774b3a881105a6d91bf37c8ba167a2677dfdde29530ed62a93cebd",
+      "Bytes": 480
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164258-b319ba0c/javac-native.stdout.log",
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "Bytes": 0
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164258-b319ba0c/javap-native.command.json",
+      "SHA256": "52156268e9de80c2f1ddbb026b5e6521fa507a647960b5a46846316af35ae95d",
+      "Bytes": 424
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164258-b319ba0c/javap-native.exit.json",
+      "SHA256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305",
+      "Bytes": 20
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164258-b319ba0c/javap-native.stderr.log",
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "Bytes": 0
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164258-b319ba0c/javap-native.stdout.log",
+      "SHA256": "abce934bb55f24951f7bedc53d6f830294c45a98a49656d468a25076d727a45c",
+      "Bytes": 13254
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164258-b319ba0c/native-compile-inputs.json",
+      "SHA256": "a3c84f0bdc9d9f6a56999d7b3f02b2429ae7965b9b3603529a84200b9e55e858",
+      "Bytes": 5564
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-164258-b319ba0c/result.json",
+      "SHA256": "38fbff99e08a447cb07c414833087842d6b860a1830c34ee1006a330b1765376",
+      "Bytes": 2746
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-170828-6103722b/bytes/entry.after.class",
+      "SHA256": "f5e5fbcc9ee31666af8559e0a610f90cabc4ebd889a97e5aaa6bbb0d7632d0d6",
+      "Bytes": 2864
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-170828-6103722b/bytes/entry.before.class",
+      "SHA256": "c1c13c6ebd9b71195571a543bfc781190e456d3477415afeda19cf836b85c37f",
+      "Bytes": 2827
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-170828-6103722b/bytes/extra-registration.after.class",
+      "SHA256": "27edd68793119a99adcbc080c7ff9b944910e1a70b6f9de6d0c083f93cde4b41",
+      "Bytes": 2841
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-170828-6103722b/bytes/extra-registration.before.class",
+      "SHA256": "27edd68793119a99adcbc080c7ff9b944910e1a70b6f9de6d0c083f93cde4b41",
+      "Bytes": 2841
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-170828-6103722b/bytes/native.after.class",
+      "SHA256": "c1c13c6ebd9b71195571a543bfc781190e456d3477415afeda19cf836b85c37f",
+      "Bytes": 2827
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-170828-6103722b/bytes/native.before.class",
+      "SHA256": "c1c13c6ebd9b71195571a543bfc781190e456d3477415afeda19cf836b85c37f",
+      "Bytes": 2827
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-170828-6103722b/bytes/ordinary.after.class",
+      "SHA256": "a6af75fa8dd77c224cabe257cdcef92af6eeb69e0b8fb97de6898ed67199732d",
+      "Bytes": 2851
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-170828-6103722b/bytes/ordinary.before.class",
+      "SHA256": "a6af75fa8dd77c224cabe257cdcef92af6eeb69e0b8fb97de6898ed67199732d",
+      "Bytes": 2851
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-170828-6103722b/bytes/unknown-bootstrap.after.class",
+      "SHA256": "a727dc3960163096864897b7608da94f678b9a897859b09b9514d93c93ca1f9b",
+      "Bytes": 2801
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-170828-6103722b/bytes/unknown-bootstrap.before.class",
+      "SHA256": "a727dc3960163096864897b7608da94f678b9a897859b09b9514d93c93ca1f9b",
+      "Bytes": 2801
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-170828-6103722b/bytes/unowned-lambda.after.class",
+      "SHA256": "8a119efe3e3c6923362d24ba18a08135ed8975a08fe24fafae500a920c8e7a2d",
+      "Bytes": 2846
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-170828-6103722b/bytes/unowned-lambda.before.class",
+      "SHA256": "8a119efe3e3c6923362d24ba18a08135ed8975a08fe24fafae500a920c8e7a2d",
+      "Bytes": 2846
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-170828-6103722b/bytes/wrong-bus-argument.after.class",
+      "SHA256": "f2697e4c08ef7ca2252a252cd1ce6bb001fa1561f29cdc34ff5458ebb9fec01b",
+      "Bytes": 2827
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-170828-6103722b/bytes/wrong-bus-argument.before.class",
+      "SHA256": "f2697e4c08ef7ca2252a252cd1ce6bb001fa1561f29cdc34ff5458ebb9fec01b",
+      "Bytes": 2827
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-170828-6103722b/bytes/wrong-field.after.class",
+      "SHA256": "14c2b4fec122469cd541b8ef25ac7589fc34932a8c2bca56b7561c9ce26b2b6b",
+      "Bytes": 2848
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-170828-6103722b/bytes/wrong-field.before.class",
+      "SHA256": "14c2b4fec122469cd541b8ef25ac7589fc34932a8c2bca56b7561c9ce26b2b6b",
+      "Bytes": 2848
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/contract/20261012-170828-6103722b/result.json",
+      "SHA256": "f368786df1233cef69388c3080fa48cabdf7a36bde0a849e74c7920df9fe249a",
+      "Bytes": 624
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/control/20261012-171305-4d99c1f2/artifacts.json",
+      "SHA256": "b1b11737aa1b3c8e4f3d61cb31a1815ded6ee869ccd906629dd34e6405679cd7",
+      "Bytes": 685
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/control/20261012-171305-4d99c1f2/assertions.json",
+      "SHA256": "c8dde5a8a46c153d76027855e1db1ffdea61610c4aef91b67733a7516cd36b38",
+      "Bytes": 551
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/control/20261012-171305-4d99c1f2/ct-environment.json",
+      "SHA256": "ac4574f64ed11933247a1d1cbb0ace1f0d78910147296f0b60aa750d6f50d764",
+      "Bytes": 32990
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/control/20261012-171305-4d99c1f2/harness-inputs.json",
+      "SHA256": "28319e1edafb7ed70642c914a992e8d9e683db4abfb4598e1ab227d6f358dd28",
+      "Bytes": 29844
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/control/20261012-171305-4d99c1f2/invocation.json",
+      "SHA256": "5e59881b6beb5df24d85e81cb7b3931a2b391f3ceed26a853cce0dbbd420e6f7",
+      "Bytes": 947
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/control/20261012-171305-4d99c1f2/logs/spike002-0l-treatment/command.json",
+      "SHA256": "77e7b78d9b57f17309e5275906b822de17f2e90f8c0251dcf20a4eb9bb7d5aa5",
+      "Bytes": 505
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/control/20261012-171305-4d99c1f2/logs/spike002-0l-treatment/meta.json",
+      "SHA256": "f262267d08d645fb96f845c0f963a53c0efde2717760f5a3ff7956d007f25759",
+      "Bytes": 349
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/control/20261012-171305-4d99c1f2/logs/spike002-0l-treatment/spike002-0l-treatment.debug.log",
+      "SHA256": "dff469ed499dc1b088f593684f083ae3113fb25d9de57f6f3db0e393830dbe86",
+      "Bytes": 106153
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/control/20261012-171305-4d99c1f2/logs/spike002-0l-treatment/spike002-0l-treatment.log",
+      "SHA256": "c55940de644d6f168a328c370b3bdec910852e51d8ea0b91fe0d0cccbdab8dbb",
+      "Bytes": 8652
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/control/20261012-171305-4d99c1f2/logs/spike002-0l-treatment/spike002-0l-treatment.stderr.log",
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "Bytes": 0
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/control/20261012-171305-4d99c1f2/logs/spike002-0l-treatment/spike002-0l-treatment.stdout.log",
+      "SHA256": "e6cf82499b179d0fcda9d9641b918073d7f0ff63c6e3c414cf4b50b8d7d414e7",
+      "Bytes": 11319
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/control/20261012-171305-4d99c1f2/result.json",
+      "SHA256": "e043d8fef51124d71b2939af94db7f16de4473cf7de0e918e37ab8509b2227db",
+      "Bytes": 36843
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/fixture/20261012-170706-e09009d1/result.json",
+      "SHA256": "e806330260e6df052274ba129c13cdfb71029509101caa637457ac40c43c6034",
+      "Bytes": 994
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/fixture-content-preservation.json",
+      "SHA256": "9f3b027e322b35e7b4ddb8b86d71da3d58734a0c7378eebf3c7bf59535eaf00c",
+      "Bytes": 392
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/implementation-build/20261012-165349-ad26da3e/build-result.json",
+      "SHA256": "f6e3b628f3a0b7f475cd3b922244fa0c1ad21ad46e411240e85662aba17d3186",
+      "Bytes": 379
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/implementation-build/20261012-165349-ad26da3e/committed-source-check.json",
+      "SHA256": "dd11c114fb239006b6749efefeade80469818f6ced049e0f5424668df393a06d",
+      "Bytes": 4187
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/preflight/git.json",
+      "SHA256": "d8350975e9837b64b548972554fc0c36265b2fa81c62b4b94947784d5f75a084",
+      "Bytes": 271
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/preflight/inputs-before.json",
+      "SHA256": "26fc9b463f7ae7ab6a5d043b4a3b4efd5275935a6ca9890750fe509c430b6099",
+      "Bytes": 119143
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/preservation.json",
+      "SHA256": "14f527f16975a3be63448a3602975b8faa133f7b4b1ed5f5772068f8ec59f5a5",
+      "Bytes": 123907
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/regression/20261012-170317-cfe96d2c/result.json",
+      "SHA256": "ed5c82beccb3c3a454dd9b404eb474d72350edb3e0cb8898c1b3d77326615204",
+      "Bytes": 1443
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/release-check.json",
+      "SHA256": "9955fb22149429ded6952603b14987585f5f5f400fd692d5c2a8bfee5b956812",
+      "Bytes": 97
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/summary.json",
+      "SHA256": "deb86f4a22c4ea124be1adf56d7f871fac82079190ff37f38d02c5a918644bd0",
+      "Bytes": 1424
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/treatment/20261012-171332-1143201d/artifacts.json",
+      "SHA256": "b1b11737aa1b3c8e4f3d61cb31a1815ded6ee869ccd906629dd34e6405679cd7",
+      "Bytes": 685
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/treatment/20261012-171332-1143201d/assertions.json",
+      "SHA256": "c8dde5a8a46c153d76027855e1db1ffdea61610c4aef91b67733a7516cd36b38",
+      "Bytes": 551
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/treatment/20261012-171332-1143201d/ct-environment.json",
+      "SHA256": "ac4574f64ed11933247a1d1cbb0ace1f0d78910147296f0b60aa750d6f50d764",
+      "Bytes": 32990
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/treatment/20261012-171332-1143201d/harness-inputs.json",
+      "SHA256": "28319e1edafb7ed70642c914a992e8d9e683db4abfb4598e1ab227d6f358dd28",
+      "Bytes": 29844
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/treatment/20261012-171332-1143201d/invocation.json",
+      "SHA256": "4e6803f5b5d03df6313183da2c50c76c054968f5c2436bfd465f2ef3fb24e7da",
+      "Bytes": 949
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/treatment/20261012-171332-1143201d/logs/spike002-0l-treatment/command.json",
+      "SHA256": "1fdd21725cc24ac6f1aacd8daa3379d74321750b1e671962ef30b008e4398f52",
+      "Bytes": 507
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/treatment/20261012-171332-1143201d/logs/spike002-0l-treatment/meta.json",
+      "SHA256": "67342daf557e00f6457cc95c8e6ed48932c43348c05c807ddffd31ad3e6542a7",
+      "Bytes": 351
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/treatment/20261012-171332-1143201d/logs/spike002-0l-treatment/spike002-0l-treatment.debug.log",
+      "SHA256": "87e583813c04a30d79d6ab946e444baf70f74f244bffc75c58a9e4032855b96b",
+      "Bytes": 106344
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/treatment/20261012-171332-1143201d/logs/spike002-0l-treatment/spike002-0l-treatment.log",
+      "SHA256": "9b419d4025d2e7ab36b587ff0127ff255b88db1ec20320463db273de3246901e",
+      "Bytes": 8660
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/treatment/20261012-171332-1143201d/logs/spike002-0l-treatment/spike002-0l-treatment.stderr.log",
+      "SHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "Bytes": 0
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/treatment/20261012-171332-1143201d/logs/spike002-0l-treatment/spike002-0l-treatment.stdout.log",
+      "SHA256": "78af026db6b3f3a03c09fffddc8e361c3b6e26997533a6b50433f1a0498e2dd6",
+      "Bytes": 13567
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/treatment/20261012-171332-1143201d/result.json",
+      "SHA256": "59751f4c3064cece07d42410b679a364d56c99623576d6e908ae99a67ac010d0",
+      "Bytes": 36848
+    }
+  ],
+  "regressions": {
+    "events-contract": {
+      "status": "PASS",
+      "result": "/workspace/DualForge-005/out/convergence-004/contract/20261012-170317-b9f90cb4/result.json",
+      "compatSha256": "ed572ca9762e235e7d264355d35b3c9d3ab9ecf1da3f2c3234b1e28056aad752"
+    },
+    "events-control": {
+      "status": "PASS",
+      "result": "/workspace/DualForge-005/out/convergence-004/control/20261012-170322-7c519a92/result.json",
+      "compatSha256": "ed572ca9762e235e7d264355d35b3c9d3ab9ecf1da3f2c3234b1e28056aad752"
+    },
+    "events-treatment": {
+      "status": "PASS",
+      "result": "/workspace/DualForge-005/out/convergence-004/treatment/20261012-170351-c94f0b7b/result.json",
+      "compatSha256": "ed572ca9762e235e7d264355d35b3c9d3ab9ecf1da3f2c3234b1e28056aad752"
+    },
+    "prior-regressions": {
+      "status": "PASS",
+      "result": "/workspace/DualForge-005/out/convergence-004/regression/20261012-170420-14cb0daa/result.json",
+      "compatSha256": "ed572ca9762e235e7d264355d35b3c9d3ab9ecf1da3f2c3234b1e28056aad752"
+    }
+  }
+}
