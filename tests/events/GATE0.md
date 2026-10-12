@@ -36,10 +36,15 @@ NeoForge21.1.256、ModLauncher11.0.5、ASM9.10.1）；Java21.0.10 实测见基�
 → Class.forName(eventName,true,loader) → 公共无参构造器 newInstance。
 只反射公共 Event 构造器，不调用 listener、不 setAccessible、不写模块描述符。
 原生 driver 无需编译引用 Forge Event；运行时检查 Event 所属 module 和 loader。
+前提是输入 manifest 的 Automatic-Module-Name 与真实 metadata moduleName 一致；
+以原 003b fixture 已有形式声明各自身份，不改变模块描述符策略。
 
 最小实验在 `contract/VisibilityCheck.java`：真实 ForgeReader/LoadingModList 取得
 自动模块名称，stock JDK 的临时 layer 验证 exports、公开类加载和构造。
 这只是独立可见性模型；完整 FML GAME layer 可见性仍待 Gate 2 动态确认。
+首轮完整运行暴露新夹具 manifest 误带 identityprobe，修正测试输入后补做
+metadata/moduleName 一致性检查；强化实验于
+contract/20261012-152349-1df83ac7 再次 PASS。
 不增加生产 ClassLoader 或 Layer 策略。
 
 选择系统属性 -DDF004_REGISTER=false/true。fixture 在 FML 构造阶段读取，

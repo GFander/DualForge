@@ -18,6 +18,7 @@ public final class VisibilityCheck {
         var file = (ModFile) new ForgeModReader().read(JarContents.of(Path.of(args[0])), ModFileDiscoveryAttributes.DEFAULT);
         LoadingModList.of(List.of(), List.of(file), List.of(), List.of(), Map.of());
         String name = LoadingModList.get().getModFileById("dispatchprobe").getFile().getSecureJar().name();
+        if (!file.getModFileInfo().moduleName().equals(name)) throw new AssertionError("FML metadata/module identity mismatch");
         var finder = ModuleFinder.of(Path.of(args[0]));
         if (!finder.find(name).orElseThrow().descriptor().isAutomatic()) throw new AssertionError("Expected automatic module");
         var config = ModuleLayer.boot().configuration().resolve(finder, ModuleFinder.of(), Set.of(name));
