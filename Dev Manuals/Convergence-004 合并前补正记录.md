@@ -60,8 +60,24 @@ STRUCTURE.md只补充events活跃测试，原迁移映射表不改变。
   私钥、GitHub token、Authorization及含用户名密码的URL扫描通过；内部工作区路径保留。
 - 原C为control/20261012-153251-9b014d34，原T为treatment/20261012-153413-f38a4b25。
 
-**尚未上传，不能从GitHub PR下载。** 自动审批审核拒绝向GitHub Gist导出原始日志、
-命令和输入指纹，理由是用户未授权该具体目的地和载荷，且可能包含敏感环境信息。
-没有绕过拒绝或改用其他外部目的地。当前可在本工作区取得本地归档；
-外部分享需要用户明确批准该归档上传到其GitHub账户的unlisted Gist，
-知道链接的人将能够读取。PR明确记录这一限制，不声称上传已完成。
+**尚未上传，不能从GitHub PR下载。** 最初自动审批审核因缺少对具体目的地和载荷的授权，
+拒绝向GitHub Gist导出原始证据；没有绕过拒绝。
+
+2026-10-13（Asia/Hong_Kong），用户明确批准将上述34555字节、22文件的同一归档
+上传至其GitHub账户的unlisted Gist并在PR提供链接。重新核对归档SHA及base64载荷后，
+上传请求通过自动审批，但GitHub API实际返回：
+
+```text
+POST /gists
+HTTP 403
+Resource not accessible by integration
+```
+
+当前GitHub集成凭据不具备创建Gist的权限。没有创建Gist，没有远端下载URL；
+阻塞已从上传授权缺失变为GitHub凭据权限不足，不再重复请求用户批准。
+请求结果及归档指纹保存在本轮附件的gist-upload-attempt.json与gist-upload-response.json。
+没有改用其他外部目的地、发布Release或提交原始日志到Git。
+
+本地归档仍可取得；完成外部分享需要具备Gist写权限的用户凭据或手动上传。
+unlisted Gist不是私有访问控制，知道链接的人可以读取。
+本次后续仅更新本记录和PR状态，没有修改代码或重新运行生产测试，004受控PASS结论不变。
