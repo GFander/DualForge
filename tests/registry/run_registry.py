@@ -150,6 +150,16 @@ def dynamic(args, run, binary):
     w.save(run / "artifacts.json", records)
     meta, logs, server = w.harness(args, run, binary, artifacts[1], artifacts[0],
         installed_mod_name=artifacts[1].name, extra_mods=(artifacts[2],), extra_jvm_args=("-DDF005_REGISTER=" + value,))
+    host_inputs = [record for record in json.loads((run / "harness-inputs.json").read_text())
+                   if Path(record["Path"]).is_relative_to(args.server_input.resolve())]
+    environment = {"hostInputs": host_inputs, "java": fingerprint(binary / "java"),
+                   "actualJavaVersionSHA256": w.digest(run / "java-version.stderr.log"),
+                   # Minecraft rewrites timestamp comments; compare every actual property.
+                   "serverProperties": sorted(line for line in (server / "server.properties").read_text().splitlines()
+                                              if line and not line.startswith("#")),
+                   "commonJvmFlags": ["-Xmx3G", "-Xms1G", *w.FLAGS], "publicKeyRelay": args.public_key_relay,
+                   "javaNetworkArgs": fingerprint(args.java_network_args) if args.java_network_args else None}
+    w.save(run / "ct-environment.json", environment)
     label = "spike002-0l-treatment"
     stdout = (logs / (label + ".stdout.log")).read_text(errors="replace")
     debug = (logs / (label + ".debug.log")).read_text(errors="replace")
@@ -192,7 +202,7 @@ def dynamic(args, run, binary):
     w.unchanged(records)
     return {"status": "PASS", "compat": events.compat_record(records, artifacts[0]),
             "fixture": events.compat_record(records, artifacts[1]), "driver": events.compat_record(records, artifacts[2]),
-            "meta": meta, "assertions": checks, "runtimeBytecode": verified, "registered": enabled}
+            "environment": environment, "meta": meta, "assertions": checks, "runtimeBytecode": verified, "registered": enabled}
 
 
 def assets(args, run, binary=None):
@@ -284,6 +294,8 @@ def cohort_consistent(results):
             return False
     c, t = results["control"], results["treatment"]
     if any(c.get(k) != t.get(k) for k in ("compat", "fixture", "driver")):
+        return False
+    if not c.get("environment") or c["environment"] != t.get("environment"):
         return False
     if results["contract"].get("fixture") != t.get("fixture"):
         return False

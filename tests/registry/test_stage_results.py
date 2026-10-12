@@ -14,6 +14,7 @@ def cohort():
     fixture = {"Path": "/run/registry-probe.jar", "SHA256": "b" * 64}
     driver = {"Path": "/run/registry-driver.jar", "SHA256": "c" * 64}
     dynamic = {"status": "PASS", "compat": compat, "fixture": fixture, "driver": driver,
+               "environment": {"hostInputs": "frozen", "java": "pinned", "serverProperties": ["key=value"]},
                "runtimeBytecode": {"compat": compat, "fixture": fixture}}
     return {"contract": {"status": "PASS", "compat": compat, "fixture": fixture},
             "control": copy.deepcopy(dynamic), "treatment": copy.deepcopy(dynamic),
@@ -53,6 +54,12 @@ class BindingTest(unittest.TestCase):
         result = copy.deepcopy(cohort())
         result["control"]["runtimeBytecode"]["compat"] = {"SHA256": "e" * 64}
         self.assertFalse(runner.cohort_consistent(result))
+
+    def test_host_or_java_mismatch(self):
+        for key in ("hostInputs", "java", "serverProperties"):
+            result = copy.deepcopy(cohort())
+            result["treatment"]["environment"][key] = "other"
+            self.assertFalse(runner.cohort_consistent(result))
 
 
 if __name__ == "__main__":
