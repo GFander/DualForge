@@ -87,7 +87,22 @@ Every invocation creates a new `out/convergence-004/<stage>/<run-id>/`.
 aggregates those actual results. Missing stages remain PARTIAL. Failed stages remain
 FAIL/NOT RUN until an explicit rerun replaces that stage selection. Historical
 failure directories are retained. Do not reuse stage selections from different
-artifacts: final aggregation checks identical C/T paths and SHA-256 for all three JARs.
+artifacts: each Contract/Control/Treatment/Regression result records its actual
+compat input fingerprint. Regression additionally verifies the input fingerprints
+recorded by every child runner. Overall PASS requires the same compat SHA-256 in
+all four stages, consistent with the C/T artifact records, plus identical C/T paths
+and SHA-256 for all three JARs. Legacy results missing the new compat field cannot
+pass automatically; audit their immutable original inputs separately or rerun them.
+
+Metadata-only negative tests (no JVM):
+
+```zsh
+python3 -B -m unittest discover -s tests/events -p test_stage_consistency.py -v
+```
+
+These tests use synthetic metadata in temporary directories; they do not represent
+new game runs. The premerge correction and original evidence reuse are documented
+in [the correction record](../../Dev%20Manuals/Convergence-004%20合并前补正记录.md).
 
 Fixture output includes source copies, compile classpaths, command/exit records,
 jar-contents, fingerprints, javap and purity assertions. Contract output includes
