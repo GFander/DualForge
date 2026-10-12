@@ -30,7 +30,8 @@ public final class ForgeProbeConstructorTransformer implements ITransformer<Clas
     private static final String OLD_DESC = "(Lnet/minecraftforge/eventbus/api/IEventBus;)V";
     private static final String NEW_DESC = "(Lnet/neoforged/bus/api/IEventBus;)V";
     private static final Path DUMP_PATH =
-            Path.of("D:\\DualForge\\spike000\\logs\\spike002-0b-2a-v1.1\\ForgeProbe.rewritten.class");
+            Path.of(System.getProperty("forgecompat.dump.path",
+                    "D:\\DualForge\\spike000\\logs\\spike002-0b-2a-v1.1\\ForgeProbe.rewritten.class"));
 
     private final boolean rewriteEnabled;
     private final boolean apiRewriteEnabled;
@@ -181,7 +182,8 @@ public final class ForgeProbeConstructorTransformer implements ITransformer<Clas
     }
 
     private void dumpProfile(ClassNode node) throws java.io.IOException {
-        Path path = Path.of("D:\\DualForge\\spike000\\logs\\spike002-0l-current",
+        Path path = Path.of(System.getProperty("forgecompat.dump.profileDir",
+                        "D:\\DualForge\\spike000\\logs\\spike002-0l-current"),
                 node.name.substring(node.name.lastIndexOf('/') + 1) + ".class");
         ClassWriter writer = new ClassWriter(0);
         node.accept(writer);

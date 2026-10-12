@@ -32,6 +32,8 @@ public class ForgeModReader implements IModFileReader {
     @Override
     public IModFile read(JarContents jar, ModFileDiscoveryAttributes attributes) {
         System.out.println("[FORGECOMPAT] CALLED ForgeModReader.read for " + jar.getPrimaryPath());
+        // Native locators also invoke this Reader; apply the same identity guard there.
+        if (!ForgeModLocator.isForgeCandidate(jar.getPrimaryPath())) return null;
 
         Optional<java.net.URI> toml = jar.findFile(MODS_TOML);
         if (toml.isEmpty()) {
