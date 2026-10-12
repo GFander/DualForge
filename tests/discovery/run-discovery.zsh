@@ -10,7 +10,7 @@ python3 -B - "${0:A:h:h:h}" "$@" <<'PY'
 from pathlib import Path
 import hashlib, importlib.util, json, os, shutil, sys, zipfile
 repo, compat, server, probe = (Path(value).resolve() for value in sys.argv[1:])
-spec = importlib.util.spec_from_file_location('workflow', repo/'tools/unix_workflow.py')
+spec = importlib.util.spec_from_file_location('workflow', repo/'tools/lib/unix_workflow.py')
 workflow = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(workflow)
 assert hashlib.sha256(probe.read_bytes()).hexdigest() == workflow.PROBE_SHA, 'Fixed Probe mismatch'

@@ -1,7 +1,7 @@
 # zsh entrypoints
 
-The current entrypoints are `forgecompat.zsh`, `test-forge-dependencies.zsh`,
-and `../spike000/run-server.zsh`. Identity checks additionally use
+The current entrypoints are `entry/forgecompat.zsh`, `entry/test-forge-dependencies.zsh`,
+and `harness/run-server.zsh`. Identity checks additionally use
 `../tests/identity/run-identity.zsh` and `../tests/identity/run-scope.zsh`.
 zsh is the only maintained shell entrypoint; Windows/PowerShell scripts
 have been removed from the current tree.
@@ -19,13 +19,13 @@ HTTPS proxy and CA, with authoritative artifact checksum verification retained.
 From the checkout root:
 
 ```zsh
-zsh tools/prepare-unix.zsh --server-input /workspace/dualforge-cloud/server-base
-zsh tools/forgecompat.zsh --mode build \
+zsh tools/entry/prepare-unix.zsh --server-input /workspace/dualforge-cloud/server-base
+zsh tools/entry/forgecompat.zsh --mode build \
   --jdk-home /workspace/dualforge-cloud/tools/msjdk/usr/lib/jvm/msopenjdk-21-amd64 \
   --server-input /workspace/dualforge-cloud/server-base
 
 # Supply the actual newly built JAR; do not rename it.
-zsh tools/test-forge-dependencies.zsh --stage after --boundary-only \
+zsh tools/entry/test-forge-dependencies.zsh --stage after --boundary-only \
   --server-input /workspace/dualforge-cloud/server-base \
   --probe /workspace/dualforge-cloud/inputs/forgeprobe.jar \
   --compat-jar out/unix/build/<actual-run>/forgecompat-002-0l.jar
@@ -64,14 +64,14 @@ Probe are required. The user supplied the original world and confirmed that
 After a new build, explicitly authorized runs use:
 
 ```zsh
-zsh tools/forgecompat.zsh --mode smoke \
+zsh tools/entry/forgecompat.zsh --mode smoke \
   --server-input /workspace/dualforge-cloud/server-base \
   --probe /workspace/dualforge-cloud/inputs/forgeprobe.jar \
   --jar out/unix/build/<actual-run>/forgecompat-002-0l.jar \
   --allow-server-start \
   --java-network-args /workspace/dualforge-cloud/java-network.args \
   --public-key-relay
-zsh tools/test-forge-dependencies.zsh --stage after \
+zsh tools/entry/test-forge-dependencies.zsh --stage after \
   --server-input /workspace/dualforge-cloud/server-base \
   --probe /workspace/dualforge-cloud/inputs/forgeprobe.jar \
   --compat-jar out/unix/build/<actual-run>/forgecompat-002-0l.jar \
