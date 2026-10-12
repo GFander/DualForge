@@ -246,7 +246,9 @@ def publish_result(stage, run, result):
         control = json.loads((Path(index["control"]).parent / "artifacts.json").read_text())
         treatment = json.loads((Path(index["treatment"]).parent / "artifacts.json").read_text())
         summary["identicalArtifactPathsAndSha256"] = control == treatment
-        summary.update(dict(zip(("compatSha256", "forgeFixtureSha256", "driverSha256"), (r["SHA256"] for r in treatment))))
+        hashes = {Path(r["Path"]).name: r["SHA256"] for r in treatment}
+        summary.update(compatSha256=hashes["forgecompat-002-0l.jar"],
+                       forgeFixtureSha256=hashes["dispatch-probe.jar"], driverSha256=hashes["dispatch-driver.jar"])
         summary["status"] = "PASS" if control == treatment else "FAIL"
     w.save(ROOT / "summary.json", summary)
 
