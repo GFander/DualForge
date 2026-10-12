@@ -92,7 +92,7 @@ def fixture(args, run, binary):
     assert not re.search(r"(?:Method|InterfaceMethod) (?:net/minecraft/core/Registry.register|net/neoforged/neoforge/registries/(?:DeferredRegister|RegisterEvent)\.(?:create|register)|.*setAccessible|.*Unsafe)", driver)
     w.unchanged(records)
     return {"status": "PASS", "jars": jars, "nativeForgeCompilation": True,
-            "assets": "NOT RUN: original user PNG unavailable"}
+            "assets": "Packaged; requires separate assets stage validation"}
 
 
 def baseline(args, run, binary):
@@ -229,8 +229,11 @@ def assets(args, run, binary=None):
             png = archive.read(prefix + names[0])
             with Image.open(io.BytesIO(png)) as image:
                 image.load()
-                checks["32x32 RGBA PNG with transparent and visible pixels"] = (image.format == "PNG" and image.size == (32, 32)
+                checks["original 16x16 RGBA PNG with transparent and visible pixels"] = (image.format == "PNG" and image.size == (16, 16)
                     and image.mode == "RGBA" and image.getchannel("A").getextrema() == (0, 255))
+            provenance = json.loads((SOURCE / "texture-source.json").read_text())
+            checks["original user PNG bytes preserved"] = (hashlib.sha256(png).hexdigest()
+                == provenance["pngSHA256"] == "2c810e0c1cca3c451a536a4cf1d72448a5809f999933acc45ca01240315f1681")
     w.save(run / "assertions.json", checks)
     w.save(run / "resources.json", hashes)
     w.unchanged([records])
