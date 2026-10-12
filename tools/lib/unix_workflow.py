@@ -235,11 +235,12 @@ def public_key_relay(directory):
     return relay, thread
 
 
-def harness(args, directory, binary, mod, compat, installed_mod_name="forgeprobe.jar"):
+def harness(args, directory, binary, mod, compat, installed_mod_name="forgeprobe.jar",
+            extra_mods=(), extra_jvm_args=()):
     # Never mutate the supplied installation. Every invocation gets a physical copy.
     records = fingerprints([p for folder in ("libraries", "config", "defaultconfigs", "spike000world")
                             for p in (args.server_input / folder).rglob("*") if p.is_file()]
-                           + [mod] + ([compat] if compat else []))
+                           + [mod, *extra_mods] + ([compat] if compat else []))
     save(directory / "harness-inputs.json", records)
     server = directory / "server"
     server.mkdir()
@@ -248,6 +249,8 @@ def harness(args, directory, binary, mod, compat, installed_mod_name="forgeprobe
     mods = server / "mods"
     mods.mkdir()
     shutil.copyfile(mod, mods / installed_mod_name)
+    for extra in extra_mods:
+        shutil.copyfile(extra, mods / extra.name)
     if compat:
         shutil.copyfile(compat, mods / "forgecompat-002-0l.jar")
     (server / "server.properties").write_text("\n".join(SERVER_PROPERTIES) + "\n")
@@ -255,7 +258,7 @@ def harness(args, directory, binary, mod, compat, installed_mod_name="forgeprobe
     dump_args = (f"-Dforgecompat.dump.path={directory / 'dumps/rewritten/ForgeProbe.rewritten.class'}",
                  f"-Dforgecompat.dump.profileDir={directory / 'dumps/profile'}")
     (server / "user_jvm_args.txt").write_text("\n".join(json.dumps(value) for value in
-            ("-Xmx3G", "-Xms1G", *FLAGS, *dump_args)) + "\n")
+            ("-Xmx3G", "-Xms1G", *FLAGS, *dump_args, *extra_jvm_args)) + "\n")
     network = ["@" + str(args.java_network_args.resolve())] if args.java_network_args else []
     relay, relay_thread = public_key_relay(directory) if args.public_key_relay else (None, None)
     endpoints = ([f"-Dminecraft.api.services.host=http://127.0.0.1:{relay.server_port}",
