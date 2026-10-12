@@ -107,3 +107,16 @@ regress 包含干净构建和原 A 严格 smoke。独立 harness 负责隔离运
 本地环境应按实际网络和 CA 配置选择参数，不照搬云端文件路径。
 实际结果以每轮 result.json、原始日志、断言和输入指纹为准，
 不把历史验证当作当前运行。
+
+## events：004 受控真实事件投递
+
+独立 Forge fixture、原生 NeoForge 测试 driver、拒绝对照及 Linux runner 位于
+`tests/events/`，不改原 A 或 IdentityProbe。运行入口为
+`zsh tests/events/run-events.zsh --stage fixture/contract/control/treatment/regression`
+（每次选择一个 stage）。完整参数、固定输入和串行重跑说明见
+[events/README.md](events/README.md)。
+
+同一组 JAR 只改变构造阶段的注册属性，未注册组真实 post 一次／回调零次，
+注册组真实 post 一次／回调一次；打印点调用栈确认实际 EventBus 链。
+仅支持当前 marker-only listener 与普通自定义 Event，不实现 Forge post ABI，
+不将 driver 的原生 NeoForge API 用法计入 Forge 兼容范围。
