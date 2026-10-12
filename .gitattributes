@@ -1,0 +1,3 @@
+# Preserve the bytes of source, resources and frozen text evidence on Windows.
+# In particular, do not normalize historical CRLF/LF files during staging/checkout.
+* -text

@@ -1,0 +1,17 @@
+[
+  {
+    "Path": "main\\java\\com\\example\\forgeprobe\\ForgeProbe.java",
+    "SHA256": "6092CC3D402F6D0132A8F15C6A298BC1AE8D4EFFBD8CD91B01C9D734FC1EBBF5",
+    "Bytes": 455
+  },
+  {
+    "Path": "main\\resources\\META-INF\\MANIFEST.MF",
+    "SHA256": "AC0B123F98FC1B1D0FB78C04FB2493A58A299A6ED4D0A444100023D10DCA3382",
+    "Bytes": 57
+  },
+  {
+    "Path": "main\\resources\\META-INF\\mods.toml",
+    "SHA256": "B32CF69B88FBE053C2580FC739B30FEDC43D96984C72FF78CD6725C7F3A1CE6E",
+    "Bytes": 241
+  }
+]

@@ -1,0 +1,51 @@
+// Spike-001a compatibility-core probe (DISCOVERY-ONLY slice).
+//
+// This component is the compatibility layer's OWN jar, so - unlike
+// forgeprobe.jar - it is compiled against the *NeoForge/FML* SPI, not against
+// Forge. The freeze pins are:
+//     NeoForge              21.1.256
+//     FancyModLoader        4.0.45
+//     securejarhandler      3.0.8   (cpw.mods.jarhandling.*)
+//     modlauncher           11.0.5  (cpw.mods.modlauncher.api.*)
+//
+// Build environment note: Gradle is not installed on the Spike host, so the
+// actual compile for this run was executed with javac against the exact
+// artifacts that the official NeoForge 21.1.256 installer resolved into
+// neoforge-server/libraries. See the Spike-001a-0 report, section 三.
+
+plugins {
+    id 'java'
+}
+
+version = '0.0.1'
+group = 'com.example.forgecompat'
+
+base {
+    archivesName = 'forgecompat'
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+repositories {
+    maven { url = 'https://maven.neoforged.net/releases' }
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'net.neoforged.fancymodloader:loader:4.0.45'
+    compileOnly 'cpw.mods:securejarhandler:3.0.8'
+    compileOnly 'cpw.mods:modlauncher:11.0.5'
+    compileOnly 'org.slf4j:slf4j-api:2.0.9'
+}
+
+// FMLModType: LIBRARY + Automatic-Module-Name, matching the shape of NeoForge's
+// own neoforge-coremods jar.
+jar {
+    manifest {
+        attributes([
+            'Manifest-Version'    : '1.0',
+            'Automatic-Module-Name': 'forgecompat',
+            'FMLModType'          : 'LIBRARY'
+        ])
+    }
+}

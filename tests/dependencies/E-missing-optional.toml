@@ -1,0 +1,12 @@
+modLoader="javafml"
+loaderVersion="[52,)"
+license="MIT"
+[[mods]]
+modId="forgeprobe"
+version="1.0.0"
+[[dependencies.forgeprobe]]
+modId="convergence_missing"
+mandatory=false
+versionRange="[1,)"
+ordering="NONE"
+side="BOTH"

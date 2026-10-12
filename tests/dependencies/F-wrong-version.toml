@@ -1,0 +1,12 @@
+modLoader="javafml"
+loaderVersion="[52,)"
+license="MIT"
+[[mods]]
+modId="forgeprobe"
+version="1.0.0"
+[[dependencies.forgeprobe]]
+modId="minecraft"
+mandatory=true
+versionRange="[9.0,)"
+ordering="NONE"
+side="BOTH"
