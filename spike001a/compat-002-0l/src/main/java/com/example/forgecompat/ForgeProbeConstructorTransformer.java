@@ -6,6 +6,7 @@ import cpw.mods.modlauncher.api.TargetType;
 import cpw.mods.modlauncher.api.TransformerVoteResult;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.AnnotationNode;
 import org.objectweb.asm.tree.ClassNode;
@@ -15,18 +16,23 @@ import org.objectweb.asm.tree.MethodNode;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.lang.annotation.ElementType;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import net.neoforged.fml.loading.LoadingModList;
+import net.neoforged.neoforgespi.language.ModFileScanData;
 
 /**
  * Spike-002-0b Step 2-A probe transformer.
- * Sole rewrite: com/example/forgeprobe/ForgeProbe <init> descriptor
+ * Controlled Forge entries from FML's @Mod scan, with the original <init> descriptor
  *   (Lnet/minecraftforge/eventbus/api/IEventBus;)V
  * -> (Lnet/neoforged/bus/api/IEventBus;)V
  * Spike-002-0g additionally gates the single EVENT_BUS.register(this) member-reference rule.
  * Spike-002-0l adds only the frozen subscriber/custom-event profile rule.
  */
 public final class ForgeProbeConstructorTransformer implements ITransformer<ClassNode> {
-    private static final String TARGET_FQCN = "com.example.forgeprobe.ForgeProbe";
     private static final String OLD_DESC = "(Lnet/minecraftforge/eventbus/api/IEventBus;)V";
     private static final String NEW_DESC = "(Lnet/neoforged/bus/api/IEventBus;)V";
     private static final Path DUMP_PATH =
@@ -37,6 +43,8 @@ public final class ForgeProbeConstructorTransformer implements ITransformer<Clas
     private final boolean apiRewriteEnabled;
     private final boolean emptyRegistrationEnabled;
     private final boolean subscriberRewriteEnabled;
+    private final Map<String, String> entryEvents = new HashMap<>();
+    private final Set<String> eventClasses = new HashSet<>();
 
     public ForgeProbeConstructorTransformer() {
         String value = System.getProperty("forgecompat.2a.rewrite");
@@ -70,11 +78,12 @@ public final class ForgeProbeConstructorTransformer implements ITransformer<Clas
     public ClassNode transform(ClassNode input, ITransformerVotingContext context) {
         try {
             log("offered: " + input.name);
-            if ("com/example/forgeprobe/ProbeEvent".equals(input.name)) {
+            if (eventClasses.contains(input.name)) {
                 rewriteProbeEvent(input);
                 dumpProfile(input);
                 return input;
             }
+            if (!entryEvents.containsKey(input.name)) return input;
             if (!rewriteEnabled) {
                 return input;
             }
@@ -117,13 +126,12 @@ public final class ForgeProbeConstructorTransformer implements ITransformer<Clas
     }
 
     private void rewriteSubscriber(ClassNode node) {
-        if (!"com/example/forgeprobe/ForgeProbe".equals(node.name) || node.methods.size() != 2) {
+        if (!entryEvents.containsKey(node.name) || node.methods.size() != 2) {
             throw new IllegalStateException("0l unexpected subscriber class profile");
         }
         MethodNode listener = null;
         for (MethodNode method : node.methods) {
-            if ("onProbe".equals(method.name)
-                    && "(Lcom/example/forgeprobe/ProbeEvent;)V".equals(method.desc)) {
+            if (("(L" + entryEvents.get(node.name) + ";)V").equals(method.desc)) {
                 if (listener != null) throw new IllegalStateException("0l duplicate listener");
                 listener = method;
             }
@@ -194,7 +202,7 @@ public final class ForgeProbeConstructorTransformer implements ITransformer<Clas
     }
 
     private void rewriteEventBusCall(ClassNode node) {
-        if (!"com/example/forgeprobe/ForgeProbe".equals(node.name)) {
+        if (!entryEvents.containsKey(node.name)) {
             throw new IllegalStateException("0g unexpected target " + node.name);
         }
         FieldInsnNode field = null;
@@ -269,8 +277,47 @@ public final class ForgeProbeConstructorTransformer implements ITransformer<Clas
 
     @Override
     public Set<ITransformer.Target<ClassNode>> targets() {
-        return Set.of(ITransformer.Target.targetClass(TARGET_FQCN),
-                ITransformer.Target.targetClass("com.example.forgeprobe.ProbeEvent"));
+        entryEvents.clear();
+        eventClasses.clear();
+        Set<ITransformer.Target<ClassNode>> targets = new HashSet<>();
+        // ModLauncher registers targets after FML completeScan, before the GAME layer.
+        // getScanResult waits for the host's background scan; no classes are loaded here.
+        var loading = LoadingModList.get();
+        if (loading.hasErrors()) return Set.of();
+        for (var file : loading.getModFiles()) {
+            if (!ForgeModLocator.isForgeCandidate(file.getFile().getFilePath())) continue;
+            ModFileScanData scan = file.getFile().getScanResult();
+            for (var info : file.getMods()) {
+                for (String entry : ForgeCompatLanguageLoader.forgeEntrypoints(info, scan)) {
+                    String internal = entry.replace('.', '/');
+                    Set<String> events = new HashSet<>();
+                    for (var annotation : scan.getAnnotations()) {
+                        if (annotation.targetType() != ElementType.METHOD
+                                || !annotation.clazz().getInternalName().equals(internal)
+                                || !annotation.annotationType().getClassName().equals("net.minecraftforge.eventbus.api.SubscribeEvent")) continue;
+                        String member = annotation.memberName();
+                        String desc = member.substring(member.indexOf('('));
+                        Type[] args = Type.getArgumentTypes(desc);
+                        if (!Type.VOID_TYPE.equals(Type.getReturnType(desc)) || args.length != 1
+                                || args[0].getSort() != Type.OBJECT) continue;
+                        // Only the listener's direct Forge Event subclass in this same file.
+                        if (scan.getClasses().stream().anyMatch(c -> c.clazz().equals(args[0])
+                                && Type.getObjectType("net/minecraftforge/eventbus/api/Event").equals(c.parent()))) {
+                            events.add(args[0].getInternalName());
+                        }
+                    }
+                    if (events.size() != 1) throw new IllegalStateException("0l expected one same-file event profile for " + entry);
+                    String event = events.iterator().next();
+                    entryEvents.put(internal, event);
+                    eventClasses.add(event);
+                    targets.add(ITransformer.Target.targetClass(entry));
+                    targets.add(ITransformer.Target.targetClass(event.replace('/', '.')));
+                    log("TARGET modId=" + info.getModId() + " entry=" + entry + " event=" + event
+                            + " file=" + file.getFile().getFilePath());
+                }
+            }
+        }
+        return targets;
     }
 
     @Override

@@ -1,15 +1,17 @@
 # DualForge / ForgeCompat
 
-项目目前是**受控 ForgeProbe 兼容原型**：以 NeoForge 为唯一宿主，在固定服务端环境验证最小 Forge 入口、构造参数转换、指定注册路径及依赖元数据。不是通用 Forge 模组兼容层；不代表任意 Forge 模组或 API 已可用。Fabric 只是未来方向，不是当前交付目标。
+项目目前是**受控 Forge 入口兼容原型**：以 NeoForge 为唯一宿主，在固定服务端环境验证最小 Forge 入口、构造参数转换、指定注册路径及依赖元数据。不是通用 Forge 模组兼容层；不代表任意 Forge 模组或 API 已可用。Fabric 只是未来方向，不是当前交付目标。
 
-有效基线为 **Convergence-002 完成后的当前源码**：[spike001a/compat-002-0l/src](spike001a/compat-002-0l/src)（10 Java＋5资源），保留 Parser 的依赖 owner 分组和 mandatory 适配修复。目录名沿用0l，不意味着回退为历史0l版本；旧 `spike001a/compat/build/forgecompat.jar` 与原服务器安装的历史0l JAR均不是当前新构建基线。
+有效基线为 **Convergence-003b 完成后的当前 Linux 源码**：[spike001a/compat-002-0l/src](spike001a/compat-002-0l/src)（10 Java＋5资源），保留 Parser 的依赖 owner 分组和 mandatory 适配修复。目录名沿用0l，不意味着回退为历史0l版本；旧 `spike001a/compat/build/forgecompat.jar` 与原服务器安装的历史0l JAR均不是当前新构建基线。
 
 ## 已有成果与范围
 
 - [Convergence-001 交付报告](<Dev Manuals/Convergence-001 交付报告.md>)：统一 javac 干净构建、制品指纹追溯、隔离 smoke／回归入口，不依赖残留 class。
 - [Convergence-002 交付报告](<Dev Manuals/Convergence-002 交付报告.md>)：复现并修复依赖声明丢失，按owner分组，核验Forge mandatory与FML type差异；六组metadata边界、四个动态依赖正负例和原0l回归已有保存证据。
+- [Convergence-003a 交付报告](<Dev Manuals/Convergence-003a 交付报告.md>)：移除固定JAR叶名，按受控metadata识别，交由FML pipeline去重。52下界是当前准入策略，A/B仅证明文件名无关，C仅证明metadata交接。
+- [Convergence-003b 交付报告](<Dev Manuals/Convergence-003b 交付报告.md>)：按所属modId的Forge `@Mod` 扫描确定入口，转换入口和同制品内实际引用的受控Event；原ForgeProbe与不同身份IdentityProbe独立完整加载通过。ABI、API及事件profile范围保持原样。
 
-这些 PASS 是各任务的历史执行结果；本次整理入库没有重跑服务端，也没有执行 Convergence-003a。依赖修复仅保证现有扫描器的简单TOML子集，不是完整Forge TOML规范，不扩展 Registry、Capability 或事件兼容。
+003a/003b验证使用[当前Unix入口](tools/UNIX.md)和已有dump I/O适配，证明本轮Linux云端基线；原Windows入口未重新验证。依赖修复仅保证现有扫描器的简单TOML子集，不是完整Forge TOML规范，不扩展 Registry、Capability 或事件兼容。003b支持范围及重跑命令见[身份fixture说明](tests/identity/README.md)。
 
 ## 固定环境与外部前置
 
@@ -22,7 +24,7 @@
 | ASM / asm-tree | 9.10.1 / 9.10.1 |
 | slf4j-api / maven-artifact | 2.0.9 / 3.8.5 |
 
-当前脚本面向 Windows 和 PowerShell 7。本地实验根路径是 `D:\DualForge`；JDK默认路径是 `C:\Users\Albert\.jdks\ms-21.0.10`。构建脚本可用 `-JdkHome` 指定同版本JDK，但依赖测试仍使用固定路径，转换器及历史脚本也有绝对路径。未经修改和验证，不保证其它平台或目录布局可运行。
+原 PowerShell 入口面向 Windows 和 PowerShell 7。本地实验根路径是 `D:\DualForge`；JDK默认路径是 `C:\Users\Albert\.jdks\ms-21.0.10`。构建脚本可用 `-JdkHome` 指定同版本JDK，但依赖测试仍使用固定路径，历史脚本也有绝对路径。当前Linux验证使用独立[Unix入口](tools/UNIX.md)及隔离dump路径；不外推其它平台或目录布局。
 
 **克隆仓库不能独立运行。** 必须预先准备以下外置输入；当前入口不自动下载、安装依赖或重建固定Probe：
 
@@ -57,7 +59,7 @@ pwsh -NoProfile -File .\tools\test-forge-dependencies.ps1 -Stage after -Boundary
 
 统一入口退出码：0=本模式PASS，10=构建失败，20=启动失败，30=断言失败，40=未执行（regress已构建则PARTIAL）。以本轮 `result.json` 为准，失败日志保留。
 
-smoke／动态依赖测试必须串行，在允许所需socket/DNS的安全本机运行。沿用离线模式、空server-ip和25565，会临时监听端口，**不要在暴露公网的机器运行**。其它Java进程、占用端口或无法安全隔离时不要继续。源码中三个shared/current调试缓存路径仍硬编码；脚本在获准的本地实验方式中备份、保留本轮dump、恢复原内容与时间戳，再复核冻结文件，不代表运行完全无临时外部副作用。
+smoke／动态依赖测试必须串行，在允许所需socket/DNS的安全本机运行。Windows原入口沿用离线模式、空server-ip和25565，会临时监听端口，**不要在暴露公网的机器运行**。其它Java进程、占用端口或无法安全隔离时不要继续。源码保留Windows调试路径默认值；原脚本备份、保留本轮dump、恢复共享缓存内容与时间戳，再复核冻结文件。当前Unix入口绑定127.0.0.1并将dump写入每轮新目录，详见Unix说明。
 
 ## 目录与外置证据
 

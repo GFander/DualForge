@@ -224,7 +224,7 @@ def public_key_relay(directory):
     return relay, thread
 
 
-def harness(args, directory, binary, mod, compat):
+def harness(args, directory, binary, mod, compat, installed_mod_name="forgeprobe.jar"):
     # Never mutate the supplied installation. Every invocation gets a physical copy.
     records = fingerprints([p for folder in ("libraries", "config", "defaultconfigs", "spike000world")
                             for p in (args.server_input / folder).rglob("*") if p.is_file()]
@@ -236,7 +236,7 @@ def harness(args, directory, binary, mod, compat):
         shutil.copytree(args.server_input / folder, server / folder)
     mods = server / "mods"
     mods.mkdir()
-    shutil.copyfile(mod, mods / "forgeprobe.jar")
+    shutil.copyfile(mod, mods / installed_mod_name)
     if compat:
         shutil.copyfile(compat, mods / "forgecompat-002-0l.jar")
     # Preserve baseline properties except bind locally for the cloud's isolated check.
