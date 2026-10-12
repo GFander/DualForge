@@ -1,6 +1,7 @@
 package com.example.forgecompat;
 
 import java.util.ArrayList;
+import java.lang.annotation.ElementType;
 import java.util.List;
 
 import net.neoforged.fml.ModContainer;
@@ -12,7 +13,7 @@ import net.neoforged.neoforgespi.language.ModFileScanData;
 
 /**
  * Spike-002-0b Step 2-A v1.1 §0.3 前置 1（IModLanguageLoader observer）.
- * name()="javafml", version()="9999"; loadMod returns a real FMLModContainer and never throws.
+ * name()="javafml", version()="9999"; Forge entries use the host FMLModContainer.
  */
 public final class ForgeCompatLanguageLoader implements IModLanguageLoader {
     public static final String NAME = "javafml";
@@ -38,12 +39,7 @@ public final class ForgeCompatLanguageLoader implements IModLanguageLoader {
 
     @Override
     public ModContainer loadMod(IModInfo info, ModFileScanData scanData, ModuleLayer layer) {
-        List<String> entrypoints = new ArrayList<>();
-        for (ModFileScanData.AnnotationData annotation : scanData.getAnnotations()) {
-            if (annotation.annotationType().getClassName().equals("net.minecraftforge.fml.common.Mod")) {
-                entrypoints.add(annotation.clazz().getClassName());
-            }
-        }
+        List<String> entrypoints = forgeEntrypoints(info, scanData);
         System.out.println("[FORGECOMPAT-LANG] loadMod called for " + info.getModId() + " entrypoints=" + entrypoints);
         if (entrypoints.isEmpty()) {
             List<IModLanguageLoader> candidates = FMLLoader.getLanguageLoadingProvider()
@@ -60,5 +56,19 @@ public final class ForgeCompatLanguageLoader implements IModLanguageLoader {
             return builtin.loadMod(info, scanData, layer);
         }
         return new FMLModContainer(info, entrypoints, scanData, layer);
+    }
+
+    static List<String> forgeEntrypoints(IModInfo info, ModFileScanData scanData) {
+        // Reuse 003a admission: native metadata must remain on the builtin path.
+        if (!ForgeModLocator.isForgeCandidate(info.getOwningFile().getFile().getFilePath())) return List.of();
+        List<String> entrypoints = new ArrayList<>();
+        for (ModFileScanData.AnnotationData annotation : scanData.getAnnotations()) {
+            if (annotation.targetType() == ElementType.TYPE
+                    && annotation.annotationType().getClassName().equals("net.minecraftforge.fml.common.Mod")
+                    && info.getModId().equals(annotation.annotationData().get("value"))) {
+                entrypoints.add(annotation.clazz().getClassName());
+            }
+        }
+        return entrypoints;
     }
 }
