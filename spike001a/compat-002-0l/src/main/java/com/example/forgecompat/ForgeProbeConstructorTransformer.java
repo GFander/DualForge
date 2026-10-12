@@ -13,6 +13,7 @@ import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.FieldInsnNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
+import org.objectweb.asm.tree.LdcInsnNode;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -75,7 +76,10 @@ public final class ForgeProbeConstructorTransformer implements ITransformer<Clas
     }
 
     @Override
-    public ClassNode transform(ClassNode input, ITransformerVotingContext context) {
+    public ClassNode transform(ClassNode original, ITransformerVotingContext context) {
+        // Never expose partial edits to the caller when a controlled profile is rejected.
+        ClassNode input = new ClassNode();
+        original.accept(input);
         try {
             log("offered: " + input.name);
             if (eventClasses.contains(input.name)) {
@@ -87,6 +91,7 @@ public final class ForgeProbeConstructorTransformer implements ITransformer<Clas
             if (!rewriteEnabled) {
                 return input;
             }
+            validateSubscriber(input);
             int hits = 0;
             for (MethodNode method : input.methods) {
                 if ("<init>".equals(method.name) && OLD_DESC.equals(method.desc)) {
@@ -120,12 +125,12 @@ public final class ForgeProbeConstructorTransformer implements ITransformer<Clas
             dumpProfile(input);
             return input;
         } catch (Throwable t) {
-            log("ERROR " + t);
-            return input;
+            log("REJECTED " + input.name + " " + t);
+            throw new IllegalStateException("Controlled Forge transformation rejected: " + input.name, t);
         }
     }
 
-    private void rewriteSubscriber(ClassNode node) {
+    private AnnotationNode validateSubscriber(ClassNode node) {
         if (!entryEvents.containsKey(node.name) || node.methods.size() != 2) {
             throw new IllegalStateException("0l unexpected subscriber class profile");
         }
@@ -146,14 +151,32 @@ public final class ForgeProbeConstructorTransformer implements ITransformer<Clas
                 || (annotation.values != null && !annotation.values.isEmpty())) {
             throw new IllegalStateException("0l default annotation profile mismatch");
         }
-        int opcodes = 0;
-        for (AbstractInsnNode insn : listener.instructions) {
-            if (insn.getOpcode() >= 0) {
-                opcodes++;
-                if (insn.getOpcode() != Opcodes.RETURN) throw new IllegalStateException("0l nonempty listener");
+        AbstractInsnNode first = listener.instructions.getFirst();
+        while (first != null && first.getOpcode() < 0) first = first.getNext();
+        boolean empty = first != null && first.getOpcode() == Opcodes.RETURN && nextOpcode(first) == null;
+        if (!empty) {
+            AbstractInsnNode constant = first == null ? null : nextOpcode(first);
+            AbstractInsnNode call = constant == null ? null : nextOpcode(constant);
+            AbstractInsnNode last = call == null ? null : nextOpcode(call);
+            if (listener.access != Opcodes.ACC_PUBLIC || !listener.tryCatchBlocks.isEmpty()
+                    || (listener.exceptions != null && !listener.exceptions.isEmpty())
+                    || (listener.invisibleAnnotations != null && !listener.invisibleAnnotations.isEmpty())
+                    || !(first instanceof FieldInsnNode field) || field.getOpcode() != Opcodes.GETSTATIC
+                    || !"java/lang/System".equals(field.owner) || !"out".equals(field.name)
+                    || !"Ljava/io/PrintStream;".equals(field.desc)
+                    || !(constant instanceof LdcInsnNode ldc) || !(ldc.cst instanceof String)
+                    || !(call instanceof MethodInsnNode print) || print.getOpcode() != Opcodes.INVOKEVIRTUAL
+                    || print.itf || !"java/io/PrintStream".equals(print.owner)
+                    || !"println".equals(print.name) || !"(Ljava/lang/String;)V".equals(print.desc)
+                    || last == null || last.getOpcode() != Opcodes.RETURN || nextOpcode(last) != null) {
+                throw new IllegalStateException("004 unsupported listener: expected empty or marker-only profile");
             }
         }
-        if (opcodes != 1) throw new IllegalStateException("0l listener instruction count mismatch");
+        return annotation;
+    }
+
+    private void rewriteSubscriber(ClassNode node) {
+        AnnotationNode annotation = validateSubscriber(node);
         if (subscriberRewriteEnabled) annotation.desc = "Lnet/neoforged/bus/api/SubscribeEvent;";
         log("SUBSCRIBER enabled=" + subscriberRewriteEnabled + " annotationHits="
                 + (subscriberRewriteEnabled ? 1 : 0) + " desc=" + annotation.desc);
