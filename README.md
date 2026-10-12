@@ -1,8 +1,8 @@
 # DualForge / ForgeCompat
 
-DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。当前生产基线为 **Convergence-003b**，源码位于 [spike001a/compat-002-0l/src](spike001a/compat-002-0l/src)。目录名沿用历史编号，当前构建始终从这些源码和资源全量编译。
+DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。当前生产基线为 **Convergence-004**，源码位于 [spike001a/compat-002-0l/src](spike001a/compat-002-0l/src)。目录名沿用历史编号，当前构建始终从这些源码和资源全量编译。
 
-仓库只维护 **zsh 脚本入口**。Python 3 标准库负责内部的构建编排、JSON、JAR 指纹、进程及日志捕获；运行不需要 Windows 或 PowerShell。本次工具整理不修改生产 Java 代码、兼容行为或构造器 ABI。
+仓库只维护 **zsh 脚本入口**。Python 3 标准库负责内部的构建编排、JSON、JAR 指纹、进程及日志捕获；运行不需要 Windows 或 PowerShell。当前仍使用原单参数构造器 ABI；004 的监听器支持范围如下。
 
 ## 仓库结构
 
@@ -14,10 +14,11 @@ DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。当前�
 
 - 003a：按受控 Forge metadata 发现 JAR，以规范化路径交由官方 FML pipeline 去重；不依赖固定文件名。`loaderVersion` 的 52 下界是当前准入策略。
 - 003b：根据所属 modId 的 Forge `@Mod` 扫描确定入口，仅转换该入口与同制品内实际引用的受控 Event。原 ForgeProbe 与不同身份 IdentityProbe 已分别完整加载。
-- 支持原单参数 Forge IEventBus 构造器和已验证的 register／SubscribeEvent／Event profile；不扩展其他构造器 ABI。
+- 003b 证明 register 真实返回；004 证明一个受控自定义 Event 在正常启动后的宿主全局总线上真实 post 一次，注册组回调一次、未注册组零次。测试型 NeoForge driver 不属于 Forge API 兼容能力。
+- 支持原单参数 Forge IEventBus 构造器、空 listener，以及严格四条打印指令的 marker-only listener；Event profile 和构造器 ABI 保持不变。
 - metadata 仅支持现有 Parser 的简单 TOML 子集；保留依赖 owner 分组及 mandatory 到 FML REQUIRED/OPTIONAL 的适配。
 
-这是受控原型，不代表任意 Forge 模组兼容。真实事件回调、多 Forge 同时完整启动、Registry、Capability 和 Fabric 尚未验证或实现。历史 PASS 见交付报告；每轮运行以新生成的 `result.json` 和原始日志为准。
+这是受控原型，不代表任意 Forge 模组兼容。一般 Forge post API、取消／优先级／自动／静态订阅、多 Forge 同时完整启动、Registry、Capability 和 Fabric 尚未验证或实现。受控真实投递不代表一般 Forge Event 系统兼容。历史 PASS 见交付报告；每轮运行以新生成的 `result.json` 和原始日志为准。
 
 ## 环境与外部输入
 
@@ -92,6 +93,7 @@ zsh tests/discovery/run-discovery.zsh \
 | `tests/discovery/run-discovery.zsh` | 发现与候选边界 |
 | `tests/identity/run-identity.zsh` | 原生 Forge 身份 fixture、before／after |
 | `tests/identity/run-scope.zsh` | 实际 FML 扫描和转换字节范围对照 |
+| `tests/events/run-events.zsh` | 004 原生夹具、字节契约、真实投递 C/T 和旧回归 |
 
 每轮输出在新建的 `out/` 子目录；`--output-root` 可选择仓库 out 下的其他位置。保存实际命令、工具版本、输入与 JAR entry SHA-256、完整日志、退出记录和断言，不覆盖原服务器制品。
 
@@ -102,10 +104,10 @@ smoke 不只检查 Done，还检查精确安装制品、服务发现、构造 ma
 ## 源码、历史记录与证据
 
 - 当前生产源码：[spike001a/compat-002-0l/src](spike001a/compat-002-0l/src)；原 Probe 源码：[history/spike000/probe-002-0l/src](history/spike000/probe-002-0l/src)。
-- 当前 fixture：[tests/dependencies](tests/dependencies)、[tests/discovery](tests/discovery)、[tests/identity](tests/identity)。
-- 历史交付：[Convergence-001](<Dev Manuals/Convergence-001 交付报告.md>)、[002](<Dev Manuals/Convergence-002 交付报告.md>)、[003a](<Dev Manuals/Convergence-003a 交付报告.md>)、[003b](<Dev Manuals/Convergence-003b 交付报告.md>)。
+- 当前 fixture：[tests/dependencies](tests/dependencies)、[tests/discovery](tests/discovery)、[tests/identity](tests/identity)、[tests/events](tests/events/README.md)。
+- 历史交付：[Convergence-001](<Dev Manuals/Convergence-001 交付报告.md>)、[002](<Dev Manuals/Convergence-002 交付报告.md>)、[003a](<Dev Manuals/Convergence-003a 交付报告.md>)、[003b](<Dev Manuals/Convergence-003b 交付报告.md>)、[004](<Dev Manuals/Convergence-004 交付报告.md>)。
 - 架构及冻结报告：[Dev Manuals](<Dev Manuals/>)。历史文本仍保留原平台命令与证据路径，作为当时的执行记录，不作为当前入口。
 
-此前 zsh 工具整理移除了全部 29 个受 Git 管理的 Windows／PowerShell 脚本；该轮原字节副本和指纹存于外部归档 `out/zsh-only-tooling/`，也可从此前 Git 提交恢复。本轮仅使用 git mv 归档现有文件，未删除文件。历史 Java 源码、资源、报告及已有证据索引保持原字节，不批量改写历史引用，也不重写 Git 历史。
+此前 zsh 工具整理移除了全部 29 个受 Git 管理的 Windows／PowerShell 脚本；该轮原字节副本和指纹存于外部归档 `out/zsh-only-tooling/`，也可从此前 Git 提交恢复。此前仓库结构整理仅使用 git mv 归档现有文件，未删除文件。历史 Java 源码、资源、报告及已有证据索引保持原字节，不批量改写历史引用，也不重写 Git 历史。
 
 Git 保存第一方源码、fixture、zsh 入口、内部实现、报告和指纹索引；完整运行附件、第三方依赖、构建产物、世界、缓存及凭据继续外部保存。`.gitattributes` 保留原文件换行与字节。既有 LICENSE 未修改。

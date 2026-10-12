@@ -37,7 +37,7 @@ public final class IdentityScopeTest {
     private static byte[] transform(ForgeProbeConstructorTransformer transformer, byte[] before) {
         ClassNode node = new ClassNode();
         new ClassReader(before).accept(node, 0);
-        transformer.transform(node, null);
+        node = transformer.transform(node, null);
         ClassWriter writer = new ClassWriter(0);
         node.accept(writer);
         return writer.toByteArray();

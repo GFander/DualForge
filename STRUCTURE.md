@@ -27,10 +27,11 @@ DualForge/
 │   ├── harness/run-server.zsh             活跃：独立隔离服务端 harness
 │   └── UNIX.md                           当前运行环境说明
 ├── tests/
-│   ├── README.md                         三类测试的统一说明
+│   ├── README.md                         四类测试的统一说明
 │   ├── dependencies/                     活跃：TOML 夹具和 FML metadata 契约
 │   ├── discovery/                        活跃：实际发现 pipeline 与边界
-│   └── identity/                         活跃：原生 Forge 身份夹具与范围对照
+│   ├── identity/                         活跃：原生 Forge 身份夹具与范围对照
+│   └── events/                           活跃：004 受控事件投递、C/T 和阶段一致性
 ├── history/
 │   ├── compat-002-0d/                    归档：旧生产候选及冻结副本
 │   ├── compat-002-0g/                    归档：旧 API 转换迭代
@@ -68,7 +69,10 @@ DualForge/
 
 所有 tests 文件保持原位置。IdentityProbe 在 tests/identity/src 内从原生
 Forge 源码编译；dependencies 的动态夹具只替换原 A 的 TOML；discovery
-通过实际 FML pipeline 验证候选交接。归档源码不参与生产编译。
+通过实际 FML pipeline 验证候选交接。events 的独立原生 Forge fixture 与
+测试型 NeoForge driver 验证一次真实受控投递；阶段一致性自动负例不启动 JVM。
+入口为 `zsh tests/events/run-events.zsh`，参数与证据布局见
+[tests/events/README.md](tests/events/README.md)。归档源码不参与生产编译。
 
 ## 新旧路径映射
 
@@ -103,7 +107,7 @@ Forge 源码编译；dependencies 的动态夹具只替换原 A 的 TOML；disco
 [DEPRECATED.md](spike001a/compat/DEPRECATED.md)。这两个目录及其中的
 旧 Gradle 记录不提供当前构建入口。
 `spike001b5/probe/` 的早期 metadata 契约探针同样保留原位置，不属于
-当前 dependencies/discovery/identity 测试入口。
+当前 dependencies/discovery/identity/events 测试入口。
 
 ## 保全与输出
 
