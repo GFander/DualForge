@@ -78,8 +78,8 @@ Forge 源码编译；dependencies 的动态夹具只替换原 A 的 TOML；disco
 registry 的 Forge 输入位于 `tests/registry/src/`，原生 NeoForge 查询／栈观察
 driver 位于 `driver/`；拒绝及原子性对照在 `RegistryBytecodeTest.java`。
 入口 `zsh tests/registry/run-registry.zsh` 复用现有 Python harness。
-单 Item ID 为 `registryprobe:ice_ether`；PNG 待取得原文件，资源及真实客户端
-验收尚未完成。阶段、输入和重跑方式见 [tests/registry/README.md](tests/registry/README.md)。
+单 Item ID 为 `registryprobe:ice_ether`；用户原始 16×16 PNG 已原字节打包，
+服务端与资源静态验收 PASS，真实客户端仍 NOT RUN。阶段、输入和重跑方式见 [tests/registry/README.md](tests/registry/README.md)。
 
 ## 新旧路径映射
 

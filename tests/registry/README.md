@@ -1,10 +1,11 @@
 # Convergence-005: one native Forge Item
 
-Current registration checks PASS; complete 005-S is **PARTIAL**, because the
-user's original PNG is unavailable. 005-C is **NOT RUN**: this host has no
+Complete 005-S and static resource checks **PASS** using the user's original
+16×16 PNG, preserved byte-for-byte (SHA-256 pinned in texture-source.json). 005-C is **NOT RUN**: this host has no
 display, `/dev/dri` or installed graphical client. No screenshots exist.
 The item ID is `registryprobe:ice_ether`, overriding the task's `test_item`.
-No replacement texture is generated from the inline preview.
+No replacement texture or resized image was generated. Original PNG SHA-256:
+`2c810e0c1cca3c451a536a4cf1d72448a5809f999933acc45ca01240315f1681`.
 
 `src/main/java` is original Forge code. `driver/` is a native NeoForge test
 mod: it observes the original supplier stack and queries after
@@ -103,14 +104,15 @@ reproduced; it does not mean registry loading succeeded.
 
 ## Original texture and client acceptance
 
-Save the original user-supplied PNG bytes as
-`src/main/resources/assets/registryprobe/textures/item/ice_ether.png` once
-available. Do not regenerate from the preview. Static checks require a 32×32
-RGBA PNG with transparent and visible pixels, `minecraft:item/generated`
+The original user-supplied PNG is saved as
+`src/main/resources/assets/registryprobe/textures/item/ice_ether.png`. Static
+checks require its exact SHA and original 16×16 RGBA dimensions with
+transparent and visible pixels. The later user instruction to use this image
+supersedes the initial 32×32 generated-artwork requirement; no resizing. Checks also require the `minecraft:item/generated`
 model and matching `item.registryprobe.ice_ether` keys. Model/en/zh JSONs are
-already packaged. A missing PNG leaves assets NOT RUN and complete 005-S
+packaged and validated. A missing PNG would leave assets NOT RUN and complete 005-S
 PARTIAL. PNG validation uses Pillow; other runner operations use the standard
-library. After adding the real resource, rebuild the native fixture and rerun
+library. After changing any resource, rebuild the native fixture and rerun
 contract, C/T and assets with its new SHA; old results cannot be mixed.
 
 `client` only records environment and NOT RUN, not a graphical acceptance.

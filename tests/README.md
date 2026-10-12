@@ -132,5 +132,5 @@ Run C 查询 `registryprobe:ice_ether` 不存在；Run T 验证实际 Item、key
 入口 `zsh tests/registry/run-registry.zsh`，阶段、依赖纯度、夹具、资源检查和
 客户端人工步骤见 [registry/README.md](registry/README.md)。负例在
 `RegistryBytecodeTest.java`；`test_stage_results.py` 拒绝跨阶段制品错配。
-原 PNG 缺失的 assets 阶段为 NOT RUN，不能把模型／语言 JSON 存在当作
-完整资源或真实渲染 PASS。
+assets 已核对四份真实资源及用户原始 16×16 PNG 的 SHA；服务端和资源
+静态检查 PASS。真实客户端仍 NOT RUN，不能将静态资源检查当作渲染 PASS。

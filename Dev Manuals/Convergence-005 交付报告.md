@@ -1,4 +1,75 @@
-# Convergence-005 交付报告
+# Convergence-005 交付报告（原 PNG 补完）
+
+最新结论：**005-S PASS，005-C NOT RUN**。这是新增原图后的实际服务端与
+资源静态验证；不代表客户端加载或真实渲染。以下首次交付记录保留为
+10c9e0c 的历史现场，最新制品与状态以本节及更新后的证据索引为准。
+
+## 本次补完
+
+起点 `10c9e0c3aa6bcd3d2a7f532d80d5d4f1cfac0dd3`，同一
+`codex/convergence-005-registry-item` 分支和 PR #7。开始时工作区干净，
+已 fetch；原图／runner 被测提交 `fe0716640a6bac8d71a4a33ba4874d925e616976`。
+文档提交 SHA 见 PR。没有修改生产 Java 或生产资源，不重建 compat，
+继续使用原生产提交 fc15b6231b62523392bd0d888bf888dbb16ccb4a 的同一制品。
+
+用户通过 ZIP 提供的原 PNG 为 **16×16、RGBA、276 字节**，透明与可见像素
+均存在。遵循后来“使用这张原图”的指示，替代早期生成 32×32 图的要求；
+未缩放、重画或重新编码。AppleDouble 元数据未当成图片打包。
+严格检验原 ZIP 内容、Git blob 和最终 Forge JAR PNG 条目原字节一致。
+来源与尺寸决定记录于 tests/registry/texture-source.json；runner 绑定原图
+精确尺寸及 SHA，而非放宽到任意图片。
+
+| 最新制品／资源 | SHA-256 |
+| --- | --- |
+| compat（未变） | `ed572ca9762e235e7d264355d35b3c9d3ab9ecf1da3f2c3234b1e28056aad752` |
+| 原生 Forge fixture | `312a4f697c1dc617ed48822c10179384b6559f4e6399db9210c15541c774132c` |
+| 原生 NeoForge driver | `c2ee1c3454c3800d8a3d11708d09b4f2d91337a695ae524a9444b8eb726498d0` |
+| 原始 ice_ether.png | `2c810e0c1cca3c451a536a4cf1d72448a5809f999933acc45ca01240315f1681` |
+| 模型 JSON | `c1a59acc99caf2bb7aafbe072d7fe39f928ee88dbd3661cbdbfa14dd97422563` |
+| 英文 JSON | `c6846d4dd0afa6c97363bdcd65bfa8e8bc51656f79e692545037f5778f587f65` |
+| 中文 JSON | `8905a599dee672be2691b8a47a7047b3d0027333f8a335ac5fdd65f7aae3052a` |
+
+原生 Forge fixture 从保存源码干净编译，依赖纯度与原 compile profile 不变。
+所有原有 Forge fixture 与 driver JAR 条目字节不变，新增 PNG 与目录条目；
+容器时间戳导致 JAR SHA 改变。Contract、C/T、assets 均按新制品实际重跑：
+
+- Contract：/workspace/DualForge-005/out/convergence-005/contract/20261012-192256-ddc3a7a2，PASS。
+- C：/workspace/DualForge-005/out/convergence-005/control/20261012-192259-f777d911，PASS；实际 contains=false、optional=false、supplier=0。
+- T：/workspace/DualForge-005/out/convergence-005/treatment/20261012-192327-105ea485，PASS；实际 Item/key/非 AIR/holder 同对象、supplier=1 和官方 RegisterEvent 栈。
+- Assets：/workspace/DualForge-005/out/convergence-005/assets/20261012-192355-c13bf186，PASS；四份资源在同一 Forge JAR，原 PNG 解码与 SHA、model/两语言 JSON、metadata/module 通过。
+
+C/T 同一 compat、fixture、driver、Java、宿主输入和配置，正常 Done/stop/exit0，
+无 ERROR/FATAL/dump FAIL、stderr 或 crash。实际注入 MOD bus、转换范围、
+拒绝原子性和 runtime dump 比对仍通过；6 项制品错配自动测试与 zsh 语法
+检查重跑通过。没有扩大生产 ABI、API 或架构。
+
+原 A、002 metadata/CDEF、003a、003b、004 Event C/T **本次未重新运行**；
+保留首次交付的实际 PASS，其被测 compat SHA 与最终 compat 完全一致。
+资产补完没有改变生产字节或旧测试/夹具；此前验证的来源与限制明确保留。
+本次起点除授权文档和 runner 外 402 个已跟踪文件不变；首次记录的原
+世界与外部输入仍保留，各 C/T harness 再次核验原安装指纹。JVM 已退出，
+25565 可绑定。历史冻结文件、前次原始日志和归档未覆盖。
+
+实际工具链仍为 Microsoft OpenJDK 21.0.10+7-LTS、zsh 5.9、Python 3.12.14；
+MC 1.21.1、NeoForge 21.1.256、Forge 52.1.0、Forge bus 6.2.27、FML 4.0.45、
+ModLauncher 11.0.5。新阶段记录实际命令、版本及输入指纹。
+
+客户端仅记录环境 NOT RUN：无 DISPLAY、WAYLAND_DISPLAY、/dev/dri 或
+安装的图形客户端，没有真实客户端日志／游戏截图，未执行 /give、背包、
+手持或语言切换渲染。原 PNG 已不再是阻塞；剩余限制只有真实客户端验收。
+不自动合并，不开始 006。范围仍仅一个受控 Item，无通用 RegistryObject、
+Block、自定义 Registry、复杂 supplier 或新的构造器/事件能力。
+
+新最小证据归档 `/workspace/DualForge-005/out/convergence-005/texture-completion/convergence-005-ct-with-texture.tar.gz`，94199 字节、51 文件，
+SHA-256 `55ce1a038c10349b08fa5130220a05d84577b8bc202759f20b526fc0aa2c302a`。包含本次 C/T 原始日志、命令、metadata、
+资源断言与指纹；不含世界、依赖、二进制或凭据。**仅本地保存，未上传，
+无外部下载 URL**。首次交付的旧归档仍完整保留。更新的证据索引包含新旧
+阶段路径和 SHA；重跑方式见 tests/registry/README.md。
+
+---
+
+## 首次交付记录（10c9e0c，已由上方 PNG 补完更新）
+
 
 结论：**真实服务端注册检查 PASS；完整 005-S PARTIAL；005-C NOT RUN。**
 原生 Forge 输入的 `registryprobe:ice_ether` 在 T 中进入真实 Item Registry，
