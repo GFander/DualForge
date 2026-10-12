@@ -22,6 +22,28 @@ ENTRY = "com.example.dispatchcheck.DispatchProbe"
 CALLBACK = "[DF004] CALLBACK REACHED"
 
 
+def preflight(args, run):
+    """Record the initial checkout and immutable external inputs before any build or edit."""
+    snapshot = ROOT / "preflight/inputs-before.json"
+    if snapshot.exists():
+        raise w.NotRunError("Initial snapshot already exists; preserve it and use a fresh worktree for a new baseline")
+    assert args.server_input.is_dir()
+    assert w.digest(args.probe.resolve()) == w.PROBE_SHA
+    assert w.digest(args.identity_fixture.resolve()) == "95ad77b0c2f5005bd7e98af139a911559635d4dd55e25463052a463748161b22"
+    tracked = subprocess.check_output(["git", "ls-files", "-z"], cwd=REPO).decode().rstrip("\0").split("\0")
+    paths = [REPO / name for name in tracked] + [p for folder in ("libraries", "config", "defaultconfigs", "spike000world")
+        for p in (args.server_input / folder).rglob("*") if p.is_file()] + [args.probe.resolve(), args.identity_fixture.resolve()]
+    records = w.fingerprints(paths)
+    w.save(run / "inputs-before.json", records)
+    w.save(snapshot, records)
+    state = {"baseCommit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=REPO, text=True).strip(),
+        "branch": subprocess.check_output(["git", "branch", "--show-current"], cwd=REPO, text=True).strip(),
+        "status": subprocess.check_output(["git", "status", "--short"], cwd=REPO, text=True)}
+    w.save(ROOT / "preflight/git.json", state)
+    w.save(run / "git.json", state)
+    return {"status": "PASS", "inputCount": len(records)}
+
+
 def inputs(args, extra=()):
     return w.fingerprints([p for p in SOURCE.rglob("*") if p.is_file()] + list(extra)
                           + [REPO / "tools/lib/unix_workflow.py"])
@@ -183,6 +205,7 @@ def regression(args, run, binary):
                          "--allow-server-start", *network]}
     results = {}
     assert args.allow_server_start, "Regression requires --allow-server-start"
+    assert w.digest(args.identity_fixture.resolve()) == "95ad77b0c2f5005bd7e98af139a911559635d4dd55e25463052a463748161b22", "Requires the frozen 003b IdentityProbe"
     for name, command in commands.items():
         w.native(run, name, command, cwd=REPO)
         match = re.search(r"RESULT PASS(?: exit=0)? (.+)", (run / (name + ".stdout.log")).read_text())
@@ -213,13 +236,13 @@ def publish_result(stage, run, result):
     statuses = [r["status"] for r in results.values()]
     status = "FAIL" if "FAIL" in statuses else "NOT RUN" if "NOT RUN" in statuses else "PARTIAL"
     summary = {"task": "Convergence-004", "status": status,
-        "baseCommit": json.loads((ROOT / "preflight/git.json").read_text())["baseCommit"],
+        "baseCommit": json.loads((ROOT / "preflight/git.json").read_text())["baseCommit"] if (ROOT / "preflight/git.json").exists() else None,
         "testedCommit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=REPO, text=True).strip(),
         "evidence": index, "regressions": results.get("regression", {}).get("regressions", {})}
     for name in ("control", "treatment"):
         if name in results:
             summary[name] = {key: results[name].get(key) for key in ("status", "registrationExecuted", "postCount", "callbackCount")}
-    if required.issubset(index) and all(results[name]["status"] == "PASS" for name in required):
+    if required.issubset(index) and summary["baseCommit"] and all(r["status"] == "PASS" for r in results.values()):
         control = json.loads((Path(index["control"]).parent / "artifacts.json").read_text())
         treatment = json.loads((Path(index["treatment"]).parent / "artifacts.json").read_text())
         summary["identicalArtifactPathsAndSha256"] = control == treatment
@@ -230,7 +253,7 @@ def publish_result(stage, run, result):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--stage", choices=("fixture", "contract", "control", "treatment", "regression"), required=True)
+    p.add_argument("--stage", choices=("preflight", "fixture", "contract", "control", "treatment", "regression"), required=True)
     for name in ("forge-dependencies", "fixture", "driver", "rejected-fixture", "jar", "identity-fixture", "java-network-args"):
         p.add_argument("--" + name, type=Path)
     p.add_argument("--probe", type=Path, default=Path("/workspace/dualforge-cloud/inputs/forgeprobe.jar"))
@@ -245,15 +268,16 @@ def main():
     w.save(run / "invocation.json", {k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()})
     result = {"status": "FAIL", "stage": args.stage, "directory": str(run)}
     try:
-        required = {"fixture": ("forge_dependencies",), "contract": ("jar", "fixture", "rejected_fixture"),
+        required = {"preflight": ("identity_fixture",), "fixture": ("forge_dependencies",), "contract": ("jar", "fixture", "rejected_fixture"),
                     "control": ("jar", "fixture", "driver", "rejected_fixture"),
                     "treatment": ("jar", "fixture", "driver", "rejected_fixture"),
                     "regression": ("jar", "forge_dependencies", "identity_fixture")}[args.stage]
         for name in required:
             path = getattr(args, name)
             if path is None or not path.exists(): raise w.NotRunError("Missing explicit input: " + name)
-        binary = w.tools(args, run)
-        if args.stage == "fixture": result.update(fixture(args, run, binary))
+        binary = None if args.stage == "preflight" else w.tools(args, run)
+        if args.stage == "preflight": result.update(preflight(args, run))
+        elif args.stage == "fixture": result.update(fixture(args, run, binary))
         elif args.stage == "contract": result.update(contract(args, run, binary))
         elif args.stage == "regression": result.update(regression(args, run, binary))
         else: result.update(dynamic(args, run, binary))

@@ -38,6 +38,10 @@ DF_SERVER_INPUT='/workspace/dualforge-cloud/server-base'
 DF_FORGE_DEPS='/workspace/DualForge/out/convergence-003b/forge-dependencies'
 DF_IDENTITY_JAR='/workspace/DualForge/out/convergence-003b/fixture/20261012-105146-57a9e7aa/identity-check.jar'
 
+# In a fresh worktree, snapshot inputs before edits/builds. Never overwrite an old snapshot.
+zsh tests/events/run-events.zsh --stage preflight \
+  --server-input "$DF_SERVER_INPUT" --identity-fixture "$DF_IDENTITY_JAR"
+
 zsh tools/entry/forgecompat.zsh --mode build \
   --server-input "$DF_SERVER_INPUT" --output-root out/convergence-004/final-build
 DF_COMPAT_JAR='/absolute/new-build/forgecompat-002-0l.jar'
