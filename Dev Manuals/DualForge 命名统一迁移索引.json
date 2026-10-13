@@ -2356,6 +2356,11 @@
       "path": "tests/project_identity/run_identity_unification.py",
       "text": "                  'old identity absent': all(b'forgecompat' not in archive.read(n).lower() for n in names if not n.endswith('/')),",
       "reason": "Negative binary-content check rejects the old project identity."
+    },
+    {
+      "path": "tests/registry/run_registry.py",
+      "text": "        assert b\"com/example/forgecompat/\" not in entry  # Also reject Legacy compat in a native Forge input.",
+      "reason": "Native Forge purity retains the prior Legacy-owner rejection alongside the new project package."
     }
   ],
   "migrationDocumentExemptions": [

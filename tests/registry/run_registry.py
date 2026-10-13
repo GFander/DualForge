@@ -77,6 +77,7 @@ def fixture(args, run, binary):
     with zipfile.ZipFile(run / "registry-probe.jar") as archive:
         entry = archive.read(ENTRY.replace(".", "/") + ".class")
         assert b"net/neoforged/" not in entry and b"io/github/gfander/dualforge/" not in entry
+        assert b"com/example/forgecompat/" not in entry  # Also reject Legacy compat in a native Forge input.
         assert b"net/minecraftforge/registries/RegistryObject" in entry
     # Same entry bytes behind native metadata: scope check only, not a loadable Forge fixture.
     with zipfile.ZipFile(run / "registry-probe.jar") as source, zipfile.ZipFile(run / "native-control.jar", "w") as target:
