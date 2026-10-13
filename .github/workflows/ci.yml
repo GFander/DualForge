@@ -1,0 +1,66 @@
+
+name: DualForge CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static-and-unit:
+    name: static-and-unit
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install zsh
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y zsh
+
+      - name: Verify naming and protected files
+        run: python3 -B tests/project_identity/check_identity.py
+
+      - name: Run Python unit tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          for dir in \
+            tests/events \
+            tests/registry \
+            tests/project_identity \
+            tests/multi_registry
+          do
+            python3 -B -m unittest discover \
+              -s "$dir" -p 'test_*.py' -v
+          done
+
+      - name: Validate zsh scripts
+        shell: bash
+        run: |
+          set -euo pipefail
+          find tools tests -type f -name '*.zsh' -print0 \
+            | xargs -0 -r -n1 zsh -n
+
+      - name: Check PR whitespace
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: |
+          git diff --check \
+            "$(git merge-base origin/main HEAD)" HEAD
