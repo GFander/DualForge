@@ -60,13 +60,14 @@ DF_NATIVE='/absolute/path/to/run/native-control.jar'
 # Baseline requires a clean build from 004 commit 20e69fae..., in a separate
 # worktree, or the recorded original baseline artifact. Do not rebuild the
 # current production code and label it pre-change.
-DF_BASELINE='/absolute/path/to/004-clean-build/forgecompat-002-0l.jar'
+DF_BASELINE='/absolute/path/to/004-clean-build/forgecompat-002-0l.jar' # Legacy
+# Legacy: use the original 005 report commit and runner, not the renamed current checkout.
 zsh tests/registry/run-registry.zsh --stage baseline \
   --server-input "$DF_SERVER" --jar "$DF_BASELINE" \
   --fixture "$DF_FIXTURE" --driver "$DF_DRIVER" --allow-server-start
 
-zsh tools/entry/forgecompat.zsh --mode build --server-input "$DF_SERVER"
-DF_COMPAT='/absolute/path/to/new-build/forgecompat-002-0l.jar'
+zsh tools/entry/dualforge.zsh --mode build --server-input "$DF_SERVER"
+DF_COMPAT='/absolute/path/to/new-build/dualforge.jar'
 zsh tests/registry/run-registry.zsh --stage contract \
   --server-input "$DF_SERVER" --jar "$DF_COMPAT" \
   --fixture "$DF_FIXTURE" --native-control "$DF_NATIVE"

@@ -11,8 +11,8 @@ JVM 编译、metadata 测试和服务端运行均严格串行。
 export JAVA_HOME='/absolute/path/to/msopenjdk-21'
 DF_SERVER_INPUT='/absolute/path/to/server-base'
 DF_PROBE='/absolute/path/to/original/forgeprobe.jar'
-zsh tools/entry/forgecompat.zsh --mode build --server-input "$DF_SERVER_INPUT"
-DF_COMPAT_JAR='/absolute/path/to/new-run/forgecompat-002-0l.jar'
+zsh tools/entry/dualforge.zsh --mode build --server-input "$DF_SERVER_INPUT"
+DF_COMPAT_JAR='/absolute/path/to/new-run/dualforge.jar'
 ```
 
 完整运行库和原 Probe 是外部输入。归档后的原 Probe 源码位于
@@ -90,7 +90,7 @@ Done／正常退出和日志；scope 保存未识别类及原生对照的转换�
 ## 原 A 回归、独立 harness 与云端参数
 
 ```zsh
-zsh tools/entry/forgecompat.zsh --mode regress \
+zsh tools/entry/dualforge.zsh --mode regress \
   --server-input "$DF_SERVER_INPUT" --probe "$DF_PROBE" --allow-server-start
 
 zsh tools/harness/run-server.zsh \
@@ -99,7 +99,7 @@ zsh tools/harness/run-server.zsh \
 ```
 
 regress 包含干净构建和原 A 严格 smoke。独立 harness 负责隔离运行和
-正常停止，完整兼容 smoke 判据应使用 forgecompat 的 smoke/regress。
+正常停止，完整兼容 smoke 判据应使用 dualforge 的 smoke/regress。
 服务端运行需要完整配置、世界、无其他 Java 进程及空闲 25565。
 
 当前云环境的动态命令还需加
@@ -133,4 +133,12 @@ Run C 查询 `registryprobe:ice_ether` 不存在；Run T 验证实际 Item、key
 客户端人工步骤见 [registry/README.md](registry/README.md)。负例在
 `RegistryBytecodeTest.java`；`test_stage_results.py` 拒绝跨阶段制品错配。
 assets 已核对四份真实资源及用户原始 16×16 PNG 的 SHA；服务端和资源
-静态检查 PASS。真实客户端仍 NOT RUN，不能将静态资源检查当作渲染 PASS。
+静态检查 PASS。旧 005-C 的受控客户端 PASS 仅属于旧 cohort；新 DualForge JAR 的客户端 NOT RUN。
+
+## project_identity：当前生产身份和完整回归
+
+[project_identity/README.md](project_identity/README.md) 说明命名审计、
+Manifest/SPI/模块/属性检查、官方 Module Layer 实际观测及串行兼容回归。
+所有 C/T 和回归使用同一个重新编译的 `dualforge.jar`；原 Forge 输入和资源不变。
+新 Mac kit 见 [registry/mac/README.md](registry/mac/README.md)，
+固定历史 kit 见 [registry/mac-legacy/LEGACY.md](registry/mac-legacy/LEGACY.md)。
