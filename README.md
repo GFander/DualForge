@@ -1,6 +1,6 @@
 # DualForge
 
-DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。main 已合并 Convergence-005 与命名迁移；本分支增加 Convergence-006A 受控多 Item 声明。唯一生产源码位于 [dualforge/src/main](dualforge/src/main)，当前构建从源码与资源全量编译并生成 `dualforge.jar`。本轮新制品验证见 [006A 报告](<Dev Manuals/Convergence-006A 交付报告.md>)；[命名迁移报告](<Dev Manuals/DualForge 命名统一迁移报告.md>) 保存历史基线。
+DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。main 已合并 Convergence-006A；本分支只整理仓库目录与路径，不修改兼容功能。唯一生产源码位于 [dualforge/src/main](dualforge/src/main)，当前构建从源码与资源全量编译并生成 `dualforge.jar`。本轮新制品验证见 [006A 报告](<Dev Manuals/Convergence-006A 交付报告.md>)；[命名迁移报告](<Dev Manuals/DualForge 命名统一迁移报告.md>) 保存历史基线。
 
 仓库只维护 **zsh 脚本入口**。Python 3 标准库负责内部的构建编排、JSON、JAR 指纹、进程及日志捕获；运行不需要 Windows 或 PowerShell。当前仍使用原单参数构造器 ABI；004 的监听器支持范围如下。
 
@@ -8,7 +8,7 @@ DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。main 已
 
 生产源码保持在 `dualforge/src/`；`history/` 集中保存旧 compat 迭代、0l 冻结副本和旧实验记录。工具分为 `tools/entry/`（zsh 入口）、`tools/lib/`（Python 实现）和 `tools/harness/`（活跃独立 harness）。`tests/` 的文件位置保持不变。
 
-完整目录树、活跃／历史状态和迁移映射见 [STRUCTURE.md](STRUCTURE.md)；测试夹具与运行方式见 [tests/README.md](tests/README.md)。仍保留原位置的 `spike001a/compat/`、`spike000/probe/` 是遗留记录，不能作为并行生产版本。Gradle 弃用说明见 [DEPRECATED.md](spike001a/compat/DEPRECATED.md)。
+完整目录树、活跃／历史状态和迁移映射见 [STRUCTURE.md](STRUCTURE.md)；按功能查找实现和报告见 [docs/README.md](docs/README.md)，测试方式见 [tests/README.md](tests/README.md)。早期 Spike 归档于 `history/early-spikes/`，默认服务端输入为 `runtime/neoforge-server/`。Gradle 历史弃用说明见 [DEPRECATED.md](history/early-spikes/discovery-001a/DEPRECATED.md)，原文命令仅供历史追溯。
 
 ## 当前支持范围
 

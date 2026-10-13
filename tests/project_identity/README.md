@@ -56,3 +56,7 @@ Gate 3 复用 registry runner 的 Contract/C/T/assets/regression；其 regressio
 
 Gate 4 见 [新 Mac kit](../registry/mac/README.md)：真实 Mac 客户端不可访问时为 NOT RUN。
 不继承历史 005-C 人工 PASS，也不发布 Release。
+
+## 精确路径保全
+
+`structure_relocation.json`记录26个授权路径及原SHA；`relocation_protection.py`继续以冻结命名索引作为374项保护的事实来源。原路径缺失/字节变化、非法目标、重复/遗漏映射、旧新同时tracked和额外元数据均拒绝。只有已核验映射中的精确路径值继承原历史身份，不增加命名豁免或目录通配。所有迁移保护测试由现有CI unittest discover自动执行。
