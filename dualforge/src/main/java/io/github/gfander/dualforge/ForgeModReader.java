@@ -1,4 +1,4 @@
-package com.example.forgecompat;
+package io.github.gfander.dualforge;
 
 import java.util.Optional;
 
@@ -22,29 +22,29 @@ public class ForgeModReader implements IModFileReader {
     public static final String MODS_TOML = "META-INF/mods.toml";
 
     static {
-        System.out.println("[FORGECOMPAT] <clinit> ForgeModReader");
+        System.out.println("[DUALFORGE] <clinit> ForgeModReader");
     }
 
     public ForgeModReader() {
-        System.out.println("[FORGECOMPAT] INSTANTIATED ForgeModReader");
+        System.out.println("[DUALFORGE] INSTANTIATED ForgeModReader");
     }
 
     @Override
     public IModFile read(JarContents jar, ModFileDiscoveryAttributes attributes) {
-        System.out.println("[FORGECOMPAT] CALLED ForgeModReader.read for " + jar.getPrimaryPath());
+        System.out.println("[DUALFORGE] CALLED ForgeModReader.read for " + jar.getPrimaryPath());
         // Native locators also invoke this Reader; apply the same identity guard there.
         if (!ForgeModLocator.isForgeCandidate(jar.getPrimaryPath())) return null;
 
         Optional<java.net.URI> toml = jar.findFile(MODS_TOML);
         if (toml.isEmpty()) {
-            System.out.println("[FORGECOMPAT] ForgeModReader: no " + MODS_TOML + " -> returning null");
+            System.out.println("[DUALFORGE] ForgeModReader: no " + MODS_TOML + " -> returning null");
             return null;
         }
 
-        System.out.println("[FORGECOMPAT] ForgeModReader: found " + MODS_TOML + " -> building SecureJar + IModFile");
+        System.out.println("[DUALFORGE] ForgeModReader: found " + MODS_TOML + " -> building SecureJar + IModFile");
         SecureJar secureJar = SecureJar.from(jar, new ForgeJarMetadata(jar));
         IModFile modFile = IModFile.create(secureJar, new ForgeModFileInfoParser());
-        System.out.println("[FORGECOMPAT] ForgeModReader: returning IModFile " + modFile);
+        System.out.println("[DUALFORGE] ForgeModReader: returning IModFile " + modFile);
         return modFile;
     }
 
@@ -55,6 +55,6 @@ public class ForgeModReader implements IModFileReader {
 
     @Override
     public String toString() {
-        return "forgecompat reader (META-INF/mods.toml)";
+        return "dualforge reader (META-INF/mods.toml)";
     }
 }

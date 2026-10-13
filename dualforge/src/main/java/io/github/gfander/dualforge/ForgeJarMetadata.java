@@ -1,4 +1,4 @@
-package com.example.forgecompat;
+package io.github.gfander.dualforge;
 
 import java.lang.module.ModuleDescriptor;
 
@@ -20,9 +20,9 @@ public final class ForgeJarMetadata implements JarMetadata {
     private final JarMetadata delegate;
 
     public ForgeJarMetadata(JarContents contents) {
-        System.out.println("[FORGECOMPAT] CALLED ForgeJarMetadata.<init> for " + contents.getPrimaryPath());
+        System.out.println("[DUALFORGE] CALLED ForgeJarMetadata.<init> for " + contents.getPrimaryPath());
         this.delegate = JarMetadata.from(contents);
-        System.out.println("[FORGECOMPAT] ForgeJarMetadata: delegate name=" + delegate.name()
+        System.out.println("[DUALFORGE] ForgeJarMetadata: delegate name=" + delegate.name()
                 + " version=" + delegate.version());
     }
 

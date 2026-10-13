@@ -1,4 +1,4 @@
-package com.example.forgecompat;
+package io.github.gfander.dualforge;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -27,16 +27,16 @@ import net.neoforged.neoforgespi.locating.ModFileInfoParser;
 public class ForgeModFileInfoParser implements ModFileInfoParser {
 
     static {
-        System.out.println("[FORGECOMPAT] <clinit> ForgeModFileInfoParser");
+        System.out.println("[DUALFORGE] <clinit> ForgeModFileInfoParser");
     }
 
     public ForgeModFileInfoParser() {
-        System.out.println("[FORGECOMPAT] INSTANTIATED ForgeModFileInfoParser");
+        System.out.println("[DUALFORGE] INSTANTIATED ForgeModFileInfoParser");
     }
 
     @Override
     public IModFileInfo build(IModFile file) throws InvalidModFileException {
-        System.out.println("[FORGECOMPAT] CALLED ForgeModFileInfoParser.build for " + file.getFilePath());
+        System.out.println("[DUALFORGE] CALLED ForgeModFileInfoParser.build for " + file.getFilePath());
 
         Path toml;
         try {
@@ -54,7 +54,7 @@ public class ForgeModFileInfoParser implements ModFileInfoParser {
 
         Map<String, Object> parsed = parseForgeModsToml(text);
         String license = String.valueOf(parsed.getOrDefault("license", ""));
-        System.out.println("[FORGECOMPAT] ForgeModFileInfoParser: parsed keys=" + parsed.keySet());
+        System.out.println("[DUALFORGE] ForgeModFileInfoParser: parsed keys=" + parsed.keySet());
         ModFile modFile = (ModFile) file;
         return new ModFileInfo(modFile, ForgeModFileInfo.configOf(parsed), info -> { });
     }

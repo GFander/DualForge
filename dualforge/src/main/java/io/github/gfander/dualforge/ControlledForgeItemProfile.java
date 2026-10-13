@@ -1,4 +1,4 @@
-package com.example.forgecompat;
+package io.github.gfander.dualforge;
 
 import java.util.ArrayList;
 import java.util.Arrays;

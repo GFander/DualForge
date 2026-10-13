@@ -1,4 +1,4 @@
-package com.example.forgecompat;
+package io.github.gfander.dualforge;
 
 import cpw.mods.modlauncher.api.ITransformer;
 import cpw.mods.modlauncher.api.ITransformerVotingContext;
@@ -34,11 +34,11 @@ import net.neoforged.neoforgespi.language.ModFileScanData;
  * Spike-002-0g additionally gates the single EVENT_BUS.register(this) member-reference rule.
  * Spike-002-0l adds only the frozen subscriber/custom-event profile rule.
  */
-public final class ForgeProbeConstructorTransformer implements ITransformer<ClassNode> {
+public final class DualForgeEntryTransformer implements ITransformer<ClassNode> {
     private static final String OLD_DESC = "(Lnet/minecraftforge/eventbus/api/IEventBus;)V";
     private static final String NEW_DESC = "(Lnet/neoforged/bus/api/IEventBus;)V";
     private static final Path DUMP_PATH =
-            Path.of(System.getProperty("forgecompat.dump.path",
+            Path.of(System.getProperty("dualforge.dump.path",
                     "D:\\DualForge\\spike000\\logs\\spike002-0b-2a-v1.1\\ForgeProbe.rewritten.class"));
 
     private final boolean rewriteEnabled;
@@ -49,29 +49,29 @@ public final class ForgeProbeConstructorTransformer implements ITransformer<Clas
     private final Set<String> eventClasses = new HashSet<>();
     private final Map<String, String> registryEntries = new HashMap<>();
 
-    public ForgeProbeConstructorTransformer() {
-        String value = System.getProperty("forgecompat.2a.rewrite");
+    public DualForgeEntryTransformer() {
+        String value = System.getProperty("dualforge.2a.rewrite");
         if (value == null) {
             throw new IllegalStateException(
-                    "[FORGECOMPAT-XFORM] required system property 'forgecompat.2a.rewrite' is not set (must be explicitly true or false)");
+                    "[DUALFORGE-XFORM] required system property 'dualforge.2a.rewrite' is not set (must be explicitly true or false)");
         }
         this.rewriteEnabled = Boolean.parseBoolean(value);
         log("rewriteEnabled=" + rewriteEnabled);
-        String apiValue = System.getProperty("forgecompat.0g.apiRewrite");
+        String apiValue = System.getProperty("dualforge.0g.apiRewrite");
         if (!"true".equals(apiValue) && !"false".equals(apiValue)) {
-            throw new IllegalStateException("[FORGECOMPAT-XFORM] required forgecompat.0g.apiRewrite must be true or false");
+            throw new IllegalStateException("[DUALFORGE-XFORM] required dualforge.0g.apiRewrite must be true or false");
         }
         this.apiRewriteEnabled = Boolean.parseBoolean(apiValue);
         log("apiRewriteEnabled=" + apiRewriteEnabled);
-        String emptyValue = System.getProperty("forgecompat.0j.emptyRegistration");
+        String emptyValue = System.getProperty("dualforge.0j.emptyRegistration");
         if (!"true".equals(emptyValue) && !"false".equals(emptyValue)) {
-            throw new IllegalStateException("[FORGECOMPAT-XFORM] required forgecompat.0j.emptyRegistration must be true or false");
+            throw new IllegalStateException("[DUALFORGE-XFORM] required dualforge.0j.emptyRegistration must be true or false");
         }
         this.emptyRegistrationEnabled = Boolean.parseBoolean(emptyValue);
         log("emptyRegistrationEnabled=" + emptyRegistrationEnabled);
-        String subscriberValue = System.getProperty("forgecompat.0l.subscriberRewrite");
+        String subscriberValue = System.getProperty("dualforge.0l.subscriberRewrite");
         if (!"true".equals(subscriberValue) && !"false".equals(subscriberValue)) {
-            throw new IllegalStateException("[FORGECOMPAT-XFORM] required forgecompat.0l.subscriberRewrite must be true or false");
+            throw new IllegalStateException("[DUALFORGE-XFORM] required dualforge.0l.subscriberRewrite must be true or false");
         }
         this.subscriberRewriteEnabled = Boolean.parseBoolean(subscriberValue);
         log("subscriberRewriteEnabled=" + subscriberRewriteEnabled);
@@ -224,7 +224,7 @@ public final class ForgeProbeConstructorTransformer implements ITransformer<Clas
     }
 
     private void dumpProfile(ClassNode node) throws java.io.IOException {
-        Path path = Path.of(System.getProperty("forgecompat.dump.profileDir",
+        Path path = Path.of(System.getProperty("dualforge.dump.profileDir",
                         "D:\\DualForge\\spike000\\logs\\spike002-0l-current"),
                 node.name.substring(node.name.lastIndexOf('/') + 1) + ".class");
         ClassWriter writer = new ClassWriter(0);
@@ -275,7 +275,7 @@ public final class ForgeProbeConstructorTransformer implements ITransformer<Clas
         if (emptyRegistrationEnabled) {
             if (!apiRewriteEnabled) throw new IllegalStateException("0j requires apiRewrite=true");
             call.setOpcode(Opcodes.INVOKESTATIC);
-            call.owner = "com/example/forgecompat/ForgeEmptyRegistration";
+            call.owner = "io/github/gfander/dualforge/ForgeEmptyRegistration";
             call.desc = "(Lnet/neoforged/bus/api/IEventBus;Ljava/lang/Object;)V";
             call.itf = false;
         }
@@ -323,7 +323,7 @@ public final class ForgeProbeConstructorTransformer implements ITransformer<Clas
             if (!ForgeModLocator.isForgeCandidate(file.getFile().getFilePath())) continue;
             ModFileScanData scan = file.getFile().getScanResult();
             for (var info : file.getMods()) {
-                for (String entry : ForgeCompatLanguageLoader.forgeEntrypoints(info, scan)) {
+                for (String entry : DualForgeLanguageLoader.forgeEntrypoints(info, scan)) {
                     String internal = entry.replace('.', '/');
                     Set<String> events = new HashSet<>();
                     for (var annotation : scan.getAnnotations()) {
@@ -376,6 +376,6 @@ public final class ForgeProbeConstructorTransformer implements ITransformer<Clas
     }
 
     private static void log(String message) {
-        System.out.println("[FORGECOMPAT-XFORM] " + message);
+        System.out.println("[DUALFORGE-XFORM] " + message);
     }
 }

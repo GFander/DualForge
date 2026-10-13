@@ -1,4 +1,4 @@
-package com.example.forgecompat;
+package io.github.gfander.dualforge;
 
 import java.util.ArrayList;
 import java.lang.annotation.ElementType;
@@ -15,16 +15,16 @@ import net.neoforged.neoforgespi.language.ModFileScanData;
  * Spike-002-0b Step 2-A v1.1 §0.3 前置 1（IModLanguageLoader observer）.
  * name()="javafml", version()="9999"; Forge entries use the host FMLModContainer.
  */
-public final class ForgeCompatLanguageLoader implements IModLanguageLoader {
+public final class DualForgeLanguageLoader implements IModLanguageLoader {
     public static final String NAME = "javafml";
     public static final String VERSION = "9999";
 
     static {
-        System.out.println("[FORGECOMPAT-LANG] <clinit> ForgeCompatLanguageLoader");
+        System.out.println("[DUALFORGE-LANG] <clinit> DualForgeLanguageLoader");
     }
 
-    public ForgeCompatLanguageLoader() {
-        System.out.println("[FORGECOMPAT-LANG] INSTANTIATED ForgeCompatLanguageLoader");
+    public DualForgeLanguageLoader() {
+        System.out.println("[DUALFORGE-LANG] INSTANTIATED DualForgeLanguageLoader");
     }
 
     @Override
@@ -40,7 +40,7 @@ public final class ForgeCompatLanguageLoader implements IModLanguageLoader {
     @Override
     public ModContainer loadMod(IModInfo info, ModFileScanData scanData, ModuleLayer layer) {
         List<String> entrypoints = forgeEntrypoints(info, scanData);
-        System.out.println("[FORGECOMPAT-LANG] loadMod called for " + info.getModId() + " entrypoints=" + entrypoints);
+        System.out.println("[DUALFORGE-LANG] loadMod called for " + info.getModId() + " entrypoints=" + entrypoints);
         if (entrypoints.isEmpty()) {
             List<IModLanguageLoader> candidates = FMLLoader.getLanguageLoadingProvider()
                     .applyForEach(l -> l)
@@ -49,10 +49,10 @@ public final class ForgeCompatLanguageLoader implements IModLanguageLoader {
                     .filter(l -> "net.neoforged.fml.javafmlmod.FMLJavaModLanguageProvider".equals(l.getClass().getName()))
                     .toList();
             if (candidates.size() != 1) {
-                throw new IllegalStateException("[FORGECOMPAT-LANG] builtin javafml not unique in languageProviders: candidates=" + candidates.size());
+                throw new IllegalStateException("[DUALFORGE-LANG] builtin javafml not unique in languageProviders: candidates=" + candidates.size());
             }
             IModLanguageLoader builtin = candidates.get(0);
-            System.out.println("[FORGECOMPAT-LANG] delegate -> builtin javafml for " + info.getModId());
+            System.out.println("[DUALFORGE-LANG] delegate -> builtin javafml for " + info.getModId());
             return builtin.loadMod(info, scanData, layer);
         }
         return new FMLModContainer(info, entrypoints, scanData, layer);

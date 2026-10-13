@@ -1,4 +1,4 @@
-package com.example.forgecompat;
+package io.github.gfander.dualforge;
 
 import java.lang.reflect.Method;
 import net.neoforged.bus.api.IEventBus;
@@ -16,15 +16,15 @@ public final class ForgeEmptyRegistration {
                     if (method.getDeclaringClass() != Object.class) customPublic++;
                 }
                 if (customPublic == 0) {
-                    System.out.println("[FORGECOMPAT-EMPTY] legacy-empty-noop target=" + type.getName()
+                    System.out.println("[DUALFORGE] legacy-empty-noop target=" + type.getName()
                             + " declaredMethods=0 customPublic=0");
                     return;
                 }
             }
         }
-        System.out.println("[FORGECOMPAT-EMPTY] delegate to NeoForge register");
+        System.out.println("[DUALFORGE] delegate to NeoForge register");
         bus.register(target);
-        System.out.println("[FORGECOMPAT-SUBSCRIBER] register returned target="
+        System.out.println("[DUALFORGE] register returned target="
                 + target.getClass().getName() + " declaredMethods="
                 + target.getClass().getDeclaredMethods().length);
     }

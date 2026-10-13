@@ -1,4 +1,4 @@
-package com.example.forgecompat;
+package io.github.gfander.dualforge;
 
 import java.nio.file.Files;
 import java.nio.file.FileSystems;
@@ -31,16 +31,16 @@ import net.neoforged.neoforgespi.locating.ModFileDiscoveryAttributes;
 public class ForgeModLocator implements IModFileCandidateLocator {
 
     static {
-        System.out.println("[FORGECOMPAT] <clinit> ForgeModLocator");
+        System.out.println("[DUALFORGE] <clinit> ForgeModLocator");
     }
 
     public ForgeModLocator() {
-        System.out.println("[FORGECOMPAT] INSTANTIATED ForgeModLocator");
+        System.out.println("[DUALFORGE] INSTANTIATED ForgeModLocator");
     }
 
     @Override
     public void findCandidates(ILaunchContext context, IDiscoveryPipeline pipeline) {
-        System.out.println("[FORGECOMPAT] CALLED ForgeModLocator.findCandidates");
+        System.out.println("[DUALFORGE] CALLED ForgeModLocator.findCandidates");
         Path folder = FMLPaths.MODSDIR.get();
         try (var files = Files.list(folder)) {
             // Extension is only a container filter; identity comes from metadata below.
@@ -50,7 +50,7 @@ public class ForgeModLocator implements IModFileCandidateLocator {
                 path = path.toAbsolutePath().normalize();
                 if (context.isLocated(path)) continue;
                 if (!isForgeCandidate(path)) continue;
-                System.out.println("[FORGECOMPAT] ForgeModLocator: adding candidate " + path);
+                System.out.println("[DUALFORGE] ForgeModLocator: adding candidate " + path);
                 // addPath owns addLocated; do not pre-mark and thereby skip Reader handoff.
                 pipeline.addPath(path, ModFileDiscoveryAttributes.DEFAULT.withLocator(this),
                         IncompatibleFileReporting.WARN_ALWAYS);
@@ -103,7 +103,7 @@ public class ForgeModLocator implements IModFileCandidateLocator {
             return true;
         } catch (IOException e) {
             // FML's built-in pipeline reports broken containers; never feed them to this Reader.
-            System.out.println("[FORGECOMPAT] ForgeModLocator: unreadable candidate " + path + ": " + e);
+            System.out.println("[DUALFORGE] ForgeModLocator: unreadable candidate " + path + ": " + e);
             return false;
         }
     }
@@ -115,6 +115,6 @@ public class ForgeModLocator implements IModFileCandidateLocator {
 
     @Override
     public String toString() {
-        return "forgecompat locator (controlled Forge metadata)";
+        return "dualforge locator (controlled Forge metadata)";
     }
 }

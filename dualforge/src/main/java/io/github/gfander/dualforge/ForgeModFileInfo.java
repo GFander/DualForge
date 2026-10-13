@@ -1,4 +1,4 @@
-package com.example.forgecompat;
+package io.github.gfander.dualforge;
 
 import java.net.URL;
 import java.util.List;
@@ -51,7 +51,7 @@ public final class ForgeModFileInfo implements IModFileInfo {
         this.config = new MapConfigurable(parsedToml);
         this.mods = buildMods();
         this.languageSpecs = buildLanguageSpecs();
-        System.out.println("[FORGECOMPAT] ForgeModFileInfo built: mods=" + mods.size()
+        System.out.println("[DUALFORGE] ForgeModFileInfo built: mods=" + mods.size()
                 + " languageSpecs=" + languageSpecs);
     }
 
@@ -67,17 +67,17 @@ public final class ForgeModFileInfo implements IModFileInfo {
     private List<IModInfo> buildMods() {
         Object raw = parsedToml.get("mods");
         if (!(raw instanceof List<?> list) || list.isEmpty()) {
-            System.out.println("[FORGECOMPAT] ForgeModFileInfo.buildMods: no [[mods]] entry -> empty");
+            System.out.println("[DUALFORGE] ForgeModFileInfo.buildMods: no [[mods]] entry -> empty");
             return List.of();
         }
         if (!(list.get(0) instanceof Map<?, ?> entry)) {
-            System.out.println("[FORGECOMPAT] ForgeModFileInfo.buildMods: first entry is not a table -> empty");
+            System.out.println("[DUALFORGE] ForgeModFileInfo.buildMods: first entry is not a table -> empty");
             return List.of();
         }
         String modId = str(entry, "modId", "");
         String version = str(entry, "version", "0.0NONE");
         String displayName = str(entry, "displayName", modId);
-        System.out.println("[FORGECOMPAT] ForgeModFileInfo.buildMods: modId=" + modId
+        System.out.println("[DUALFORGE] ForgeModFileInfo.buildMods: modId=" + modId
                 + " version=" + version + " displayName=" + displayName);
         return List.of(new ForgeModInfo(this, modId, displayName, version, config));
     }
@@ -92,26 +92,26 @@ public final class ForgeModFileInfo implements IModFileInfo {
         Object modLoader = parsedToml.get("modLoader");
         Object loaderVersion = parsedToml.get("loaderVersion");
         if (modLoader == null || loaderVersion == null) {
-            System.out.println("[FORGECOMPAT] ForgeModFileInfo.buildLanguageSpecs: modLoader=" + modLoader
+            System.out.println("[DUALFORGE] ForgeModFileInfo.buildLanguageSpecs: modLoader=" + modLoader
                     + " loaderVersion=" + loaderVersion + " -> empty");
             return List.of();
         }
         LanguageSpec spec = new LanguageSpec(
                 String.valueOf(modLoader),
                 MavenVersionAdapter.createFromVersionSpec(String.valueOf(loaderVersion)));
-        System.out.println("[FORGECOMPAT] ForgeModFileInfo.buildLanguageSpecs: " + spec);
+        System.out.println("[DUALFORGE] ForgeModFileInfo.buildLanguageSpecs: " + spec);
         return List.of(spec);
     }
 
     @Override
     public List<IModInfo> getMods() {
-        System.out.println("[FORGECOMPAT] CALLED ForgeModFileInfo.getMods -> " + mods.size() + " entry(ies)");
+        System.out.println("[DUALFORGE] CALLED ForgeModFileInfo.getMods -> " + mods.size() + " entry(ies)");
         return mods;
     }
 
     @Override
     public List<LanguageSpec> requiredLanguageLoaders() {
-        System.out.println("[FORGECOMPAT] CALLED ForgeModFileInfo.requiredLanguageLoaders -> " + languageSpecs);
+        System.out.println("[DUALFORGE] CALLED ForgeModFileInfo.requiredLanguageLoaders -> " + languageSpecs);
         return languageSpecs;
     }
 
