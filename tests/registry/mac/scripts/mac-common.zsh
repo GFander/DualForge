@@ -22,12 +22,21 @@ df_kit() {
   [[ -f "$DF_KIT/manifest.json" && -f "$DF_KIT/SHA256SUMS" ]] || df_die 'Incomplete kit.'
   (cd "$DF_KIT" && shasum -a 256 -c SHA256SUMS) || df_die 'Kit SHA256SUMS mismatch.'
   local file
-  for file in forgecompat-002-0l.jar registry-probe.jar; do
+  for file in dualforge.jar registry-probe.jar; do
     [[ -f "$DF_KIT/mods/$file" && ! -L "$DF_KIT/mods/$file" ]] || df_die "Missing regular artifact: $file"
     unzip -tq "$DF_KIT/mods/$file" >/dev/null || df_die "Bad JAR: $file"
   done
-  [[ "$(df_sha "$DF_KIT/mods/forgecompat-002-0l.jar")" == ed572ca9762e235e7d264355d35b3c9d3ab9ecf1da3f2c3234b1e28056aad752 ]] || df_die 'Wrong compat cohort.'
+  [[ "$(df_sha "$DF_KIT/mods/dualforge.jar")" == "$(df_cohort_sha dualforge.jar)" ]] || df_die 'Wrong compat cohort.'
   [[ "$(df_sha "$DF_KIT/mods/registry-probe.jar")" == 312a4f697c1dc617ed48822c10179384b6559f4e6399db9210c15541c774132c ]] || df_die 'Wrong Forge cohort.'
+}
+df_cohort_sha() {
+  local name="$1" key value count=0 result=''
+  [[ -f "$DF_KIT/COHORT-SHA256.txt" ]] || df_die 'Missing tested cohort receipt.'
+  while read -r key value; do
+    if [[ "$key" == "$name" ]]; then count=$((count+1)); result="$value"; fi
+  done < "$DF_KIT/COHORT-SHA256.txt"
+  [[ "$count" == 1 && ${#result} == 64 && "$result" != *[^0-9a-f]* ]] || df_die 'Invalid tested cohort receipt.'
+  print -r -- "$result"
 }
 df_cfg() {
   local key="$1" line
@@ -93,10 +102,11 @@ df_inventory() {
     name="${file:t}"
     [[ ! -L "$file" && -f "$file" ]] || df_die "Non-regular mods entry refused: $name"
     case "$name" in
-      .dualforge-005-owned) continue ;;
-      forgecompat-002-0l.jar|registry-probe.jar)
+      .dualforge-identity-owned) continue ;;
+      dualforge.jar|registry-probe.jar)
         [[ "$(df_sha "$file")" == "$(df_sha "$DF_KIT/mods/$name")" ]] || df_die "Same name, different SHA: $name; no overwrite."
         ;;
+      forgecompat-002-0l.jar) df_die 'Legacy compatibility JAR found; use a fresh instance for this DualForge cohort.' ;;
       *) df_die "Other mods entry found: $name. Use a fresh isolated instance; nothing is removed." ;;
     esac
     print -r -- "$name $(df_sha "$file")"
@@ -117,6 +127,9 @@ df_jvm() {
     arguments="${(Q)arguments}"
   fi
   tokens=("${(@Q)${(z)arguments}}")
+  for value in "${tokens[@]}"; do
+    [[ "$value" != -Dforgecompat.* ]] || df_die 'Legacy JVM property refused: use this kit JVM-ARGS.txt.'
+  done
   while IFS= read -r required || [[ -n "$required" ]]; do
     [[ -n "$required" ]] || continue
     count=0
@@ -129,6 +142,6 @@ df_jvm() {
     done
     [[ "$count" == 1 ]] || df_die "Required JVM argument must occur exactly once: $required"
   done < "$DF_KIT/JVM-ARGS.txt"
-  df_no_links "$DF_GAME/dualforge-005-evidence/profile"
+  df_no_links "$DF_GAME/dualforge-identity-evidence/profile"
   print -r -- 'All required JVM arguments verified in the actual instance.cfg.'
 }

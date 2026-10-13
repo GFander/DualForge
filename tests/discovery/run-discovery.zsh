@@ -61,7 +61,7 @@ try:
                     '-d',classes,repo/'tests/discovery/DiscoveryContractTest.java'], cwd=run)
     workflow.native(run, 'discovery', [jdk/'java','--add-opens','java.base/java.lang.invoke=ALL-UNNAMED',
                     '--add-exports','java.base/sun.security.util=ALL-UNNAMED','-classpath',str(classes)+os.pathsep+cp,
-                    'com.example.forgecompat.DiscoveryContractTest',root], cwd=run)
+                    'io.github.gfander.dualforge.DiscoveryContractTest',root], cwd=run)
     output = (run/'discovery.stdout.log').read_text()
     assert 'PASS A-F + native-dual' in output, 'Discovery cases did not complete'
     assert (root/'A/mods/forgeprobe.jar').read_bytes() == (root/'B/mods/arbitrary-renamed-input.jar').read_bytes()

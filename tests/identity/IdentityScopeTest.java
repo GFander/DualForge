@@ -1,4 +1,4 @@
-package com.example.forgecompat;
+package io.github.gfander.dualforge;
 
 import cpw.mods.jarhandling.JarContents;
 import cpw.mods.modlauncher.api.ITransformer;
@@ -34,7 +34,7 @@ public final class IdentityScopeTest {
         return file;
     }
 
-    private static byte[] transform(ForgeProbeConstructorTransformer transformer, byte[] before) {
+    private static byte[] transform(DualForgeEntryTransformer transformer, byte[] before) {
         ClassNode node = new ClassNode();
         new ClassReader(before).accept(node, 0);
         node = transformer.transform(node, null);
@@ -43,7 +43,7 @@ public final class IdentityScopeTest {
         return writer.toByteArray();
     }
 
-    private static void unchanged(ForgeProbeConstructorTransformer transformer, ModFile file,
+    private static void unchanged(DualForgeEntryTransformer transformer, ModFile file,
                                   String name, Path out) throws Exception {
         Files.createDirectories(out);
         byte[] original = Files.readAllBytes(file.findResource(name + ".class"));
@@ -65,11 +65,11 @@ public final class IdentityScopeTest {
         ModFile forge = file(Path.of(args[0]), false);
         var scan = forge.getScanResult();
         var info = forge.getModInfos().getFirst();
-        check(ForgeCompatLanguageLoader.forgeEntrypoints(info, scan)
+        check(DualForgeLanguageLoader.forgeEntrypoints(info, scan)
                         .equals(List.of("com.example.identitycheck.IdentityProbe")),
                 "@Mod.value matched to owning modId, unlistedprobe excluded");
         LoadingModList.of(List.of(), List.of(forge), List.of(), List.of(), Map.of());
-        var transformer = new ForgeProbeConstructorTransformer();
+        var transformer = new DualForgeEntryTransformer();
         Set<ITransformer.Target<ClassNode>> targets = transformer.targets();
         check(targets.equals(Set.of(ITransformer.Target.targetClass("com.example.identitycheck.IdentityProbe"),
                         ITransformer.Target.targetClass("com.example.identitycheck.IdentityEvent"))),
@@ -93,7 +93,7 @@ public final class IdentityScopeTest {
         ModFile nativeFile = file(Path.of(args[1]), true);
         check(Arrays.equals(entry, Files.readAllBytes(nativeFile.findResource("com/example/identitycheck/IdentityProbe.class"))),
                 "native control contains identical Forge-shaped entry bytes");
-        check(ForgeCompatLanguageLoader.forgeEntrypoints(nativeFile.getModInfos().getFirst(), nativeFile.getScanResult()).isEmpty(),
+        check(DualForgeLanguageLoader.forgeEntrypoints(nativeFile.getModInfos().getFirst(), nativeFile.getScanResult()).isEmpty(),
                 "native metadata remains on builtin language path even with matching Forge annotation");
         check(nativeFile.getScanResult().getAnnotatedBy(net.neoforged.fml.common.Mod.class, ElementType.TYPE)
                         .anyMatch(a -> a.clazz().equals(Type.getObjectType("com/example/identitycheck/NativeControl"))

@@ -1,30 +1,30 @@
 # DualForge 005-C：Mac 人工验收
 
-当前 005-S PASS；用户已在 macOS 27.0 arm64 + Java 21.0.7 完成人工 005-C
-受控验收 PASS。这个修订包的脚本尚未在 Mac 实机复测；以下清单作为其他
-运行的空白模板，不表示预先验收。本包只帮助部署和取证，不含客户端、
-账号、世界、JDK、LWJGL、服务端 libraries 或测试 driver。云端不执行 Mac
-图形操作；成功安装、主菜单或静态资源检查均不代表完整客户端 PASS。
+新 DualForge 兼容层已重新编译，服务端回归与 Mac 实机验收分别记录。
+本 cohort 的真实客户端验收 **NOT RUN**；历史 005-C PASS 不适用于这个新 SHA。
+以下清单为空白模板。本包不含客户端、账号、世界、JDK、LWJGL、libraries 或 driver。
+云端不执行 Mac 图形操作；成功安装、主菜单或静态资源检查均不代表完整客户端 PASS。
 
 ## 1. 下载与核验
 
-仅使用实际交付的 dualforge-005-mac-client-kit.zip 和发布方报告的 ZIP SHA。
+仅使用实际交付的 dualforge-identity-mac-client-kit.zip 和发布方报告的 ZIP SHA。
 若未提供经验证可下载的附件/链接，先停在传输阻塞，不能猜测 URL。
 不要把 Linux 安装、JDK、native libraries 复制到 Mac。正常 Minecraft 登录
 在本地 Prism 中完成，不向 Codex 提供账号密码或任何私钥。
 
 ```zsh
-shasum -a 256 '/实际下载位置/dualforge-005-mac-client-kit.zip'
-unzip -t '/实际下载位置/dualforge-005-mac-client-kit.zip'
-unzip '/实际下载位置/dualforge-005-mac-client-kit.zip' -d '/你的独立测试目录'
-DF_KIT='/你的独立测试目录/dualforge-005-mac-client-kit'
+shasum -a 256 '/实际下载位置/dualforge-identity-mac-client-kit.zip'
+unzip -t '/实际下载位置/dualforge-identity-mac-client-kit.zip'
+unzip '/实际下载位置/dualforge-identity-mac-client-kit.zip' -d '/你的独立测试目录'
+DF_KIT='/你的独立测试目录/dualforge-identity-mac-client-kit'
 (cd "$DF_KIT" && shasum -a 256 -c SHA256SUMS)
 ```
 
 ZIP 本身的 SHA 在外部交付报告/.sha256 文件中，不放进自身制造递归；
 SHA256SUMS 校验包内所有 payload 文件（不含自身），脚本也会逐项校验。
 manifest.json 标明源提交、原生 Forge 编译纯度证据、实际 JAR/资源指纹和
-原始 005-S cohort。包内两个 JAR 就是先前被测的原文件，未重编译。
+本轮 cohort。dualforge.jar 是重新编译的新生产制品；RegistryProbe 保持原字节。
+COHORT-SHA256.txt 绑定本轮实际被测 SHA；旧 kit 的固定 SHA 不用于这个新 JAR。
 
 ## 2. 手动创建 Prism 隔离实例
 
@@ -48,7 +48,7 @@ Prism 给整串 JvmArgs 加的一层外部双引号会先解码，再按实际�
 多空格及内部参数引号保留；缺失、重复或冲突的受控参数仍拒绝，不用 eval。
 
 默认 dump 路径在生产源码里仍有历史 Windows 值，因此本包明确覆盖为
-`dualforge-005-evidence/...`，相对于 Prism 启动的该实例游戏目录；Mac 有效，
+`dualforge-identity-evidence/...`，相对于 Prism 启动的该实例游戏目录；Mac 有效，
 无 Linux/Windows 绝对路径。四个转换开关和 DF005_REGISTER=true 全部必须
 存在。没有新增 --add-opens/--add-exports：当前正常服务端启动不使用它们；
 旧 isolated bytecode/metadata harness 的模块参数不等同客户端需求。
@@ -137,7 +137,7 @@ Codex，并指出脱敏是否隐藏了必要上下文。所有人工项通过且
 zsh "$DF_KIT/scripts/mac-install.zsh" --rollback --instance-dir "$DF_INSTANCE"
 ```
 
-回滚只删除 mods/.dualforge-005-owned 记录的本脚本新增 JAR，且删除前核对
+回滚只删除 mods/.dualforge-identity-owned 记录的本脚本新增 JAR，且删除前核对
 原 cohort SHA；用户预先已有的相同 JAR不会被删除，发生修改则全部拒绝。
 新版 ledger 每行记录文件名和 cohort SHA；旧版 filename-only ledger 仍可
 安全回滚（核对当前原 JAR SHA），不删除或重建用户原来的收据来绕过校验。
@@ -152,5 +152,5 @@ Prism 控制台 System.out 可能不在 latest/debug 中，必要时另行手动
 并检查脱敏，不能把缺少 println marker 当成未加载。
 
 替换旧 kit 时将新版解压到新目录，保留旧脚本/.orig、清单、日志及世界。
-不要把旧脚本复制进新包或手工改 SHA256SUMS 绕过完整性检查。两 JAR 原字节
+不要把旧脚本复制进新包或手工改 SHA256SUMS 绕过完整性检查。本轮两个 JAR 原字节
 未变，已安装的旧收据仍兼容；新的脚本验证先 preflight/dry-run，再决定操作。

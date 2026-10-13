@@ -10,7 +10,7 @@ spec.loader.exec_module(runner)
 
 
 def cohort():
-    compat = {"Path": "/run/forgecompat-002-0l.jar", "SHA256": "a" * 64}
+    compat = {"Path": "/run/dualforge.jar", "SHA256": "a" * 64}
     fixture = {"Path": "/run/registry-probe.jar", "SHA256": "b" * 64}
     driver = {"Path": "/run/registry-driver.jar", "SHA256": "c" * 64}
     dynamic = {"status": "PASS", "compat": compat, "fixture": fixture, "driver": driver,
@@ -31,12 +31,12 @@ class BindingTest(unittest.TestCase):
         for stage in ("contract", "control", "treatment", "regression"):
             with self.subTest(stage=stage):
                 result = copy.deepcopy(cohort())
-                result[stage]["compat"] = {"Path": "/other/forgecompat-002-0l.jar", "SHA256": "d" * 64}
+                result[stage]["compat"] = {"Path": "/other/dualforge.jar", "SHA256": "d" * 64}
                 self.assertFalse(runner.cohort_consistent(result))
 
     def test_missing_hash(self):
         result = cohort()
-        result["contract"]["compat"] = {"Path": "/run/forgecompat-002-0l.jar"}
+        result["contract"]["compat"] = {"Path": "/run/dualforge.jar"}
         self.assertFalse(runner.cohort_consistent(result))
 
     def test_sorted_fingerprint_role_confusion(self):

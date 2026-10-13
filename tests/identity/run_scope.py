@@ -55,9 +55,9 @@ def main():
         dumps = run / "bytes"
         w.native(run, "scope", [binary / "java", "--add-opens", "java.base/java.lang.invoke=ALL-UNNAMED",
                  "--add-exports", "java.base/sun.security.util=ALL-UNNAMED", *w.FLAGS,
-                 f"-Dforgecompat.dump.path={run / 'dumps/entry.class'}",
-                 f"-Dforgecompat.dump.profileDir={run / 'dumps/profile'}",
-                 "-classpath", str(test) + os.pathsep + cp, "com.example.forgecompat.IdentityScopeTest",
+                 f"-Ddualforge.dump.path={run / 'dumps/entry.class'}",
+                 f"-Ddualforge.dump.profileDir={run / 'dumps/profile'}",
+                 "-classpath", str(test) + os.pathsep + cp, "io.github.gfander.dualforge.IdentityScopeTest",
                  controlled, native, dumps], cwd=run)
         assert "PASS identity scope controls" in (run / "scope.stdout.log").read_text()
         assert (run / "scope.stderr.log").stat().st_size == 0

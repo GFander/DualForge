@@ -1,39 +1,31 @@
-# 005-C Mac kit：云端准备，Mac 原生人工运行
+# DualForge 新制品 Mac kit
 
-macOS 用户说明：[MAC-SETUP.md](MAC-SETUP.md)，人工清单：[CHECKLIST.md](CHECKLIST.md)，
-必需的五个受控开关及两个相对 dump 路径：[JVM-ARGS.txt](JVM-ARGS.txt)。
-`scripts/` 包含 preflight、安装/回滚、只生成本地脱敏诊断的 collector，
-以及共享的版本、SHA、实例验证。无 Python 的 Mac 也可使用这些 zsh 脚本；
-依赖 Mac 系统 plutil、shasum、Perl、zip/unzip，不自动安装软件。
+新 cohort 的真实 macOS 客户端验收 **NOT RUN**，不继承旧 005-C PASS。
+[MAC-SETUP.md](MAC-SETUP.md) 提供原生 Prism A/B/C、精确 MC 1.21.1 / NeoForge 21.1.256、
+Java 21、安装/回滚和本地脱敏取证；参数在 [JVM-ARGS.txt](JVM-ARGS.txt)。
+Mac 脚本依赖系统 plutil、shasum、Perl、zip/unzip，无需 Python。
 
-云端直接使用两份 **原始已测 005-S** JAR，不重编译、不复制 Linux 安装：
+打包前须完整执行 [身份迁移验证](../../project_identity/README.md)。packager 比对
+新兼容层 SHA 与真实 Contract/C/T/Regression，并验证原字节 RegistryProbe 和资源。
 
 ```zsh
-DF_COMPAT='/实际原 cohort/forgecompat-002-0l.jar'
-DF_FIXTURE='/实际原 cohort/registry-probe.jar'
+DF_COMPAT='/实际本轮构建/dualforge.jar'
+DF_FIXTURE='/固定原 005 cohort/registry-probe.jar'
+DF_VALIDATION='out/identity-unification/validation.json'
 zsh tests/registry/mac/build-kit.zsh \
-  --compat "$DF_COMPAT" --fixture "$DF_FIXTURE" \
-  --output-dir out/convergence-005/mac-client-kit/一个全新目录
-python3 -B tests/registry/mac/test_mac_kit.py
+  --compat "$DF_COMPAT" --fixture "$DF_FIXTURE" --validation "$DF_VALIDATION" \
+  --output-dir out/identity-unification/mac-kit/全新目录
+# 测试只模拟 Mac/Prism/Java，不启动 Minecraft 客户端。
+DF_TEST_COMPAT="$DF_COMPAT" DF_TEST_FIXTURE="$DF_FIXTURE" \
+DF_TEST_VALIDATION="$DF_VALIDATION" DF_TEST_LEGACY_COMPAT='/原历史兼容层制品' \
+  python3 -B tests/registry/mac/test_mac_kit.py
 ```
 
-packager 拒绝不同 SHA 的输入；两份 JAR 的固定指纹在原 005 报告中。
-输出仅包含所需的 `dualforge-005-mac-client-kit/` 树（另有共享验证脚本），
-生成 manifest、SHA256SUMS、ZIP、ZIP 外部 .sha256 与实际 result.json。
-manifest 记录源码 commit、原始 cohort、资源 SHA、Mac 架构与 Java 21。
-不包含 Minecraft、Linux JDK/native libraries、世界、账号、driver 或依赖。
+ZIP 为 `dualforge-identity-mac-client-kit.zip`，包含新 `dualforge.jar`、原 Forge
+RegistryProbe、manifest、COHORT-SHA256.txt、SHA256SUMS、脚本和空白人工清单。
+不含世界、依赖、账号、JDK、客户端或 driver；不自动上传或发布 Release。
+旧 JAR、旧参数或其他模组混入实例时明确拒绝；不覆盖用户文件。
 
-行为测试在 **Linux 上用模拟 Mac/Prism/Java 元数据** 执行实际 zsh 脚本；
-覆盖平台拒绝、B/C 干净安装、dry-run 约束、用户文件/世界保护、回滚原子性、
-错误版本/Java/开关、symlink、kit 篡改和日志脱敏。不是 Mac 脚本实机结果，
-更不是图形客户端 PASS。真实 Mac A/B/C 与渲染只能由人工证据裁定。
-
-已收到用户真实 macOS 27.0 arm64 A/B/C 日志与 C 截图，用户确认 /give
-及中英文名称均通过；005-C 在该受控 Mac/JAR cohort 上人工 PASS。修订
-脚本加入 JSON parse、Qt INI 外层引号、多空格与严格重复/冲突检查，完整
-13 项 Linux 模拟测试通过；不是修订脚本的 Mac 实机复测。
-
-下载 URL 只有真实上传并验证后才能记录。当前云端未上传包，不使用未经
-授权的公共 Release、Gist 或网盘，也不自行开启 SSH。若应用无法取出云端
-工作区 ZIP，则传输仍阻塞；包保留，不能声称已在用户 Mac 部署。
-后续运行按 MAC-SETUP 独立取证，不自动合并 PR #7 或开始 006。
+[mac-legacy](../mac-legacy/LEGACY.md) 保留原已验收 005-C kit 的源码、固定 SHA 和参数，
+整体移动后原字节未变。它只服务历史 cohort；新旧 kit 使用独立收据和输出路径。
+新 kit 的实机人工记录齐全后才能更新本轮客户端结论。

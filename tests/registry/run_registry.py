@@ -76,7 +76,8 @@ def fixture(args, run, binary):
         jars[name] = fingerprint(jar)
     with zipfile.ZipFile(run / "registry-probe.jar") as archive:
         entry = archive.read(ENTRY.replace(".", "/") + ".class")
-        assert b"net/neoforged/" not in entry and b"com/example/forgecompat/" not in entry
+        assert b"net/neoforged/" not in entry and b"io/github/gfander/dualforge/" not in entry
+        assert b"com/example/forgecompat/" not in entry  # Also reject Legacy compat in a native Forge input.
         assert b"net/minecraftforge/registries/RegistryObject" in entry
     # Same entry bytes behind native metadata: scope check only, not a loadable Forge fixture.
     with zipfile.ZipFile(run / "registry-probe.jar") as source, zipfile.ZipFile(run / "native-control.jar", "w") as target:
@@ -106,7 +107,7 @@ def baseline(args, run, binary):
     stderr = (logs / "spike002-0l-treatment.stderr.log").read_text(errors="replace")
     checks = {
         "exact installed artifacts": all(w.digest(server / "mods" / p.name) == w.digest(p) for p in artifacts),
-        "discovered exactly once": debug.count('Found mod file "registry-probe.jar" [locator: forgecompat locator') == 1,
+        "discovered exactly once": debug.count('Found mod file "registry-probe.jar" [locator: dualforge locator') == 1,
         "real Reader and metadata": "ForgeModReader: found META-INF/mods.toml" in stdout
             and "Found valid mod file registry-probe.jar with {registryprobe} mods" in debug,
         "direct first failure": "0l expected one same-file event profile for " + ENTRY in stdout + stderr,
@@ -131,8 +132,8 @@ def contract(args, run, binary, runtime=None):
              "-d", classes, SOURCE / "RegistryBytecodeTest.java"], cwd=run)
     w.native(run, "bytecode", [binary / "java", "--add-opens", "java.base/java.lang.invoke=ALL-UNNAMED",
              "--add-exports", "java.base/sun.security.util=ALL-UNNAMED", *w.FLAGS,
-             f"-Dforgecompat.dump.profileDir={run / 'dumps'}", "-classpath", str(classes) + os.pathsep + cp,
-             "com.example.forgecompat.RegistryBytecodeTest", args.fixture.resolve(), args.native_control.resolve(),
+             f"-Ddualforge.dump.profileDir={run / 'dumps'}", "-classpath", str(classes) + os.pathsep + cp,
+             "io.github.gfander.dualforge.RegistryBytecodeTest", args.fixture.resolve(), args.native_control.resolve(),
              runtime if runtime else "-", run / "bytes"], cwd=run)
     assert "PASS registry bytecode scope and atomicity" in (run / "bytecode.stdout.log").read_text()
     assert (run / "bytecode.stderr.log").stat().st_size == 0
@@ -168,7 +169,7 @@ def dynamic(args, run, binary):
     checks = {
         "exact three installed artifacts": all(w.digest(server / "mods" / p.name) == w.digest(p) for p in artifacts)
             and sorted(p.name for p in (server / "mods").iterdir()) == sorted(p.name for p in artifacts),
-        "one discovery real metadata and entry": debug.count('Found mod file "registry-probe.jar" [locator: forgecompat locator') == 1
+        "one discovery real metadata and entry": debug.count('Found mod file "registry-probe.jar" [locator: dualforge locator') == 1
             and "Found valid mod file registry-probe.jar with {registryprobe} mods" in debug
             and "loadMod called for registryprobe entrypoints=[" + ENTRY + "]" in stdout,
         "only registry entry transformed": stdout.count("offered: com/example/registryprobe/RegistryProbe") == 1
@@ -293,7 +294,7 @@ def cohort_consistent(results):
         return False
     # Verify actual stage roles and the nested runtime checker, not positional fingerprint order.
     for stage in stages:
-        if Path(results[stage]["compat"].get("Path", "")).name != "forgecompat-002-0l.jar":
+        if Path(results[stage]["compat"].get("Path", "")).name != "dualforge.jar":
             return False
     c, t = results["control"], results["treatment"]
     if any(c.get(k) != t.get(k) for k in ("compat", "fixture", "driver")):

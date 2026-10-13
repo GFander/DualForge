@@ -1,6 +1,6 @@
 # zsh entrypoints
 
-The current entrypoints are `entry/forgecompat.zsh`, `entry/test-forge-dependencies.zsh`,
+The current entrypoints are `entry/dualforge.zsh`, `entry/test-forge-dependencies.zsh`,
 and `harness/run-server.zsh`. Identity checks additionally use
 `../tests/identity/run-identity.zsh` and `../tests/identity/run-scope.zsh`.
 zsh is the only maintained shell entrypoint; Windows/PowerShell scripts
@@ -20,7 +20,7 @@ From the checkout root:
 
 ```zsh
 zsh tools/entry/prepare-unix.zsh --server-input /workspace/dualforge-cloud/server-base
-zsh tools/entry/forgecompat.zsh --mode build \
+zsh tools/entry/dualforge.zsh --mode build \
   --jdk-home /workspace/dualforge-cloud/tools/msjdk/usr/lib/jvm/msopenjdk-21-amd64 \
   --server-input /workspace/dualforge-cloud/server-base
 
@@ -28,7 +28,7 @@ zsh tools/entry/forgecompat.zsh --mode build \
 zsh tools/entry/test-forge-dependencies.zsh --stage after --boundary-only \
   --server-input /workspace/dualforge-cloud/server-base \
   --probe /workspace/dualforge-cloud/inputs/forgeprobe.jar \
-  --compat-jar out/unix/build/<actual-run>/forgecompat-002-0l.jar
+  --compat-jar out/unix/build/<actual-run>/dualforge.jar
 ```
 
 Preparation downloads only the eight fixed compile JARs, not a complete server
@@ -52,8 +52,8 @@ prerequisites exit 40. The standalone harness uses 20 for unsuccessful startup.
 harness require explicit `--allow-server-start`. This option is not authorization
 to invoke them in a task that prohibits starting a server.
 
-The existing dump I/O adaptation uses `forgecompat.dump.path` and
-`forgecompat.dump.profileDir`; the original Java fallback paths are unchanged.
+The existing dump I/O adaptation uses `dualforge.dump.path` and
+`dualforge.dump.profileDir`; the original Java fallback paths are unchanged.
 The Unix harness points both properties into each fresh run's `dumps/` directory.
 Transformation/module/loading rules and `dump FAIL` assertions remain intact.
 Startup rejects stale JARs without the new properties. Full runtime, official
@@ -64,17 +64,17 @@ Probe are required. The user supplied the original world and confirmed that
 After a new build, explicitly authorized runs use:
 
 ```zsh
-zsh tools/entry/forgecompat.zsh --mode smoke \
+zsh tools/entry/dualforge.zsh --mode smoke \
   --server-input /workspace/dualforge-cloud/server-base \
   --probe /workspace/dualforge-cloud/inputs/forgeprobe.jar \
-  --jar out/unix/build/<actual-run>/forgecompat-002-0l.jar \
+  --jar out/unix/build/<actual-run>/dualforge.jar \
   --allow-server-start \
   --java-network-args /workspace/dualforge-cloud/java-network.args \
   --public-key-relay
 zsh tools/entry/test-forge-dependencies.zsh --stage after \
   --server-input /workspace/dualforge-cloud/server-base \
   --probe /workspace/dualforge-cloud/inputs/forgeprobe.jar \
-  --compat-jar out/unix/build/<actual-run>/forgecompat-002-0l.jar \
+  --compat-jar out/unix/build/<actual-run>/dualforge.jar \
   --allow-server-start \
   --java-network-args /workspace/dualforge-cloud/java-network.args \
   --public-key-relay

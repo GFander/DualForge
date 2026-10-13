@@ -1,14 +1,14 @@
 # 仓库结构
 
-唯一生产版本是 `spike001a/compat-002-0l/src/`。目录中的历史编号不表示
-当前构建可选多个 compat 版本；工具只编译这里的 Java 与资源。
+唯一生产源码为 `dualforge/src/main/`，当前开发制品为 `dualforge.jar`。
+历史编号只表示冻结迭代或验证系列，不提供并行生产版本。
 
 ```text
 DualForge/
+├── dualforge/src/main/
+│   ├── java/                             活跃：唯一生产 Java
+│   └── resources/                        活跃：manifest 与 SPI
 ├── spike001a/
-│   ├── compat-002-0l/src/main/
-│   │   ├── java/                         活跃：唯一生产 Java
-│   │   └── resources/                    活跃：manifest 与 SPI
 │   └── compat/
 │       ├── src/、archive/                历史：保留原位置的早期副本
 │       └── DEPRECATED.md                 弃用说明
@@ -18,7 +18,7 @@ DualForge/
 ├── spike001b5/probe/                      历史：保留原位置的 metadata 契约探针
 ├── tools/
 │   ├── entry/
-│   │   ├── forgecompat.zsh                活跃：build / smoke / regress
+│   │   ├── dualforge.zsh                  活跃：build / smoke / regress
 │   │   ├── prepare-unix.zsh               活跃：八个编译依赖的准备
 │   │   └── test-forge-dependencies.zsh    活跃：依赖 metadata / 动态回归
 │   ├── lib/
@@ -27,12 +27,15 @@ DualForge/
 │   ├── harness/run-server.zsh             活跃：独立隔离服务端 harness
 │   └── UNIX.md                           当前运行环境说明
 ├── tests/
-│   ├── README.md                         五类测试的统一说明
+│   ├── README.md                         兼容测试与身份迁移验证的统一说明
 │   ├── dependencies/                     活跃：TOML 夹具和 FML metadata 契约
 │   ├── discovery/                        活跃：实际发现 pipeline 与边界
 │   ├── identity/                         活跃：原生 Forge 身份夹具与范围对照
 │   ├── events/                           活跃：004 受控事件投递、C/T 和阶段一致性
-│   └── registry/                         活跃：005 原生 Forge 单 Item、注册 C/T、资源检查
+│   ├── registry/                         活跃：005 原生 Forge 单 Item、注册 C/T、资源检查
+│   │   ├── mac/                          活跃：新 DualForge 制品的 Mac kit
+│   │   └── mac-legacy/                   Legacy：固定旧 cohort 的部署工具
+│   └── project_identity/                 活跃：命名、SPI、Module Layer、全回归
 ├── history/
 │   ├── compat-002-0d/                    归档：旧生产候选及冻结副本
 │   ├── compat-002-0g/                    归档：旧 API 转换迭代
@@ -52,14 +55,14 @@ DualForge/
 
 ## 活跃入口和输入
 
-从仓库根目录执行 `zsh tools/entry/forgecompat.zsh --mode build`。
+从仓库根目录执行 `zsh tools/entry/dualforge.zsh --mode build`。
 其他构建／依赖参数见 [README.md](README.md) 和
 [tools/UNIX.md](tools/UNIX.md)，测试入口见 [tests/README.md](tests/README.md)。
 
 `tools/harness/run-server.zsh` 仍是活跃独立入口；它调用
 `tools/lib/unix_workflow.py` 的 harness 模式，没有归档为历史脚本。
 三个 tools/entry 入口同样只调用 tools/lib 中的实现。Python 实现按其
-新位置计算仓库根目录，生产 SOURCE 路径保持不变。
+新位置计算仓库根目录，生产 SOURCE 路径指向 dualforge/src。
 
 `spike000/neoforge-server/` 继续作为默认服务端输入位置，完整运行库、
 原配置、defaultconfigs 和世界需外部准备，不因归档历史源码而迁移。
@@ -79,13 +82,19 @@ registry 的 Forge 输入位于 `tests/registry/src/`，原生 NeoForge 查询�
 driver 位于 `driver/`；拒绝及原子性对照在 `RegistryBytecodeTest.java`。
 入口 `zsh tests/registry/run-registry.zsh` 复用现有 Python harness。
 单 Item ID 为 `registryprobe:ice_ether`；用户原始 16×16 PNG 已原字节打包，
-服务端与资源静态验收 PASS，用户 Mac arm64 客户端受控人工验收 PASS。阶段、输入和重跑方式见 [tests/registry/README.md](tests/registry/README.md)。
+服务端与资源静态验收 PASS；旧 cohort 用户 Mac arm64 客户端受控人工验收 PASS，
+新 JAR 客户端为 NOT RUN。阶段、输入和重跑方式见 [tests/registry/README.md](tests/registry/README.md)。
 
-`tests/registry/mac/` 是活跃的 005-C 部署准备：云端 kit packager、Mac
-preflight／安装回滚／本地脱敏日志 zsh 脚本及 A/B/C 人工清单，说明见
-[Mac kit README](tests/registry/mac/README.md)。不打包运行库或账号，不代表
-修订脚本已在 Mac 实机复测；用户此前的真实客户端证据另见新验收报告。
-最终 ZIP 仍保存于被忽略的 out/。
+`tests/registry/mac/` 面向新的 DualForge 制品，必须在其实际服务端回归后打包。
+Mac 实机验收为 NOT RUN。`tests/registry/mac-legacy/` 保留原 005-C 固定 SHA、
+参数、安装和回滚逻辑；旧客户端 PASS 只属于历史制品。ZIP 保存在 out/。
+
+## 本轮生产身份迁移
+
+原生产 src/main 已通过 git mv 移至 `dualforge/src/main/`，Java 包为
+`io.github.gfander.dualforge`；主入口为 `tools/entry/dualforge.zsh`。
+旧 Mac 工具整体移至 `tests/registry/mac-legacy/`，原字节保留。
+本轮完整对照与保护结果见 [迁移报告](<Dev Manuals/DualForge 命名统一迁移报告.md>)。
 
 ## 新旧路径映射
 
@@ -104,7 +113,7 @@ preflight／安装回滚／本地脱敏日志 zsh 脚本及 A/B/C 人工清单�
 | `spike000/subscriber-002-0n/` | `history/spike000/subscriber-002-0n/` |
 | `spike000/run-server.zsh` | `tools/harness/run-server.zsh` |
 | `spike001a/compat/build.gradle` | `history/compat-build.gradle.deprecated` |
-| `tools/forgecompat.zsh` | `tools/entry/forgecompat.zsh` |
+| `tools/forgecompat.zsh` | `tools/entry/forgecompat.zsh`（该轮；现入口见上节） |
 | `tools/prepare-unix.zsh` | `tools/entry/prepare-unix.zsh` |
 | `tools/test-forge-dependencies.zsh` | `tools/entry/test-forge-dependencies.zsh` |
 | `tools/unix_workflow.py` | `tools/lib/unix_workflow.py` |

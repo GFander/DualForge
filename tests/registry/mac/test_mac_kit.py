@@ -17,8 +17,9 @@ REPO = SOURCE.parents[2]
 spec = importlib.util.spec_from_file_location("mac_builder", SOURCE / "build_kit.py")
 builder = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(builder)
-COMPAT = REPO / "out/convergence-005/implementation-build/20261012-165349-ad26da3e/forgecompat-002-0l.jar"
-FIXTURE = REPO / "out/convergence-005/fixture/20261012-192217-d17bd31f/registry-probe.jar"
+COMPAT = Path(os.environ["DF_TEST_COMPAT"])
+FIXTURE = Path(os.environ["DF_TEST_FIXTURE"])
+VALIDATION = Path(os.environ["DF_TEST_VALIDATION"])
 
 
 def snapshot(folder):
@@ -30,8 +31,8 @@ class MacScriptTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.root = REPO / "out/convergence-005/mac-client-kit/tests" / uuid.uuid4().hex[:8]
-        builder.build(argparse.Namespace(compat=COMPAT, fixture=FIXTURE, output_dir=cls.root / "package"))
-        cls.base_kit = cls.root / "package/dualforge-005-mac-client-kit"
+        builder.build(argparse.Namespace(compat=COMPAT, fixture=FIXTURE, output_dir=cls.root / "package", validation=VALIDATION))
+        cls.base_kit = cls.root / "package/dualforge-identity-mac-client-kit"
         cls.mock = cls.root / "mock-bin"
         cls.mock.mkdir()
         commands = {
@@ -78,6 +79,20 @@ class MacScriptTest(unittest.TestCase):
         self.assertEqual(result.returncode == 0, ok, result.stdout + result.stderr)
         return result
 
+    def test_packager_refuses_unvalidated_or_mixed_compat(self):
+        report = json.loads(VALIDATION.read_text())
+        path = self.work / "invalid-validation.json"
+        args = argparse.Namespace(compat=COMPAT, fixture=FIXTURE, validation=path,
+                                  output_dir=self.work / "must-not-package")
+        report["status"] = "PARTIAL"
+        path.write_text(json.dumps(report))
+        with self.assertRaises(AssertionError): builder.build(args)
+        report["status"] = "PASS"
+        report["compat"]["SHA256"] = "0" * 64
+        path.write_text(json.dumps(report))
+        with self.assertRaises(AssertionError): builder.build(args)
+        self.assertFalse(args.output_dir.exists())
+
     def test_linux_is_rejected(self):
         self.run_script("mac-preflight.zsh", ok=False, native=True)
 
@@ -116,12 +131,12 @@ class MacScriptTest(unittest.TestCase):
         self.run_script("mac-install.zsh", "--rollback")
         self.assertEqual((self.mods / "user-added.jar").read_text(), "do not delete")
         self.assertEqual((self.game / "world-do-not-touch").read_text(), "world sentinel")
-        self.assertFalse((self.mods / "forgecompat-002-0l.jar").exists())
+        self.assertFalse((self.mods / "dualforge.jar").exists())
 
     def test_sha_ledger_validation_and_legacy_rollback(self):
         self.run_script("mac-install.zsh", "--dry-run")
         self.run_script("mac-install.zsh", "--install")
-        ledger = self.mods / ".dualforge-005-owned"
+        ledger = self.mods / ".dualforge-identity-owned"
         entries = [line.split() for line in ledger.read_text().splitlines()]
         self.assertEqual(len(entries), 2)
         for name, digest in entries:
@@ -146,7 +161,7 @@ class MacScriptTest(unittest.TestCase):
         self.assertEqual(before, snapshot(self.instance))
 
     def test_same_named_different_sha_and_other_mods_refused(self):
-        for name in ("other.jar", "forgecompat-002-0l.jar"):
+        for name in ("other.jar", "dualforge.jar"):
             file = self.mods / name
             file.write_bytes(b"user input")
             before = snapshot(self.instance)
@@ -154,12 +169,24 @@ class MacScriptTest(unittest.TestCase):
             self.assertEqual(before, snapshot(self.instance))
             file.unlink()
 
+    def test_legacy_and_current_cohort_cannot_mix(self):
+        shutil.copyfile(COMPAT, self.mods / "dualforge.jar")
+        legacy = Path(os.environ["DF_TEST_LEGACY_COMPAT"])
+        shutil.copyfile(legacy, self.mods / legacy.name)
+        before = snapshot(self.instance)
+        result = self.run_script("mac-install.zsh", "--dry-run", ok=False)
+        self.assertIn("Legacy compatibility JAR", result.stderr)
+        self.assertEqual(before, snapshot(self.instance))
+        (self.mods / legacy.name).unlink()
+        self.cfg.write_text(self.cfg.read_text().rstrip() + " -Dforgecompat.2a.rewrite=true\n")
+        self.run_script("mac-preflight.zsh", ok=False)
+
     def test_preexisting_correct_jar_survives_rollback(self):
-        shutil.copyfile(COMPAT, self.mods / "forgecompat-002-0l.jar")
+        shutil.copyfile(COMPAT, self.mods / "dualforge.jar")
         self.run_script("mac-install.zsh", "--dry-run", "--phase", "B")
         self.run_script("mac-install.zsh", "--install", "--phase", "B")
         self.run_script("mac-install.zsh", "--rollback")
-        self.assertEqual((self.mods / "forgecompat-002-0l.jar").read_bytes(), COMPAT.read_bytes())
+        self.assertEqual((self.mods / "dualforge.jar").read_bytes(), COMPAT.read_bytes())
 
     def test_wrong_versions_missing_flags_and_kit_tamper(self):
         pack = self.instance / "mmc-pack.json"
@@ -224,7 +251,7 @@ class MacScriptTest(unittest.TestCase):
         self.run_script("mac-collect-logs.zsh", "--stage", "C", "--since-marker", marker,
                         "--output-dir", self.work, "--redact-text", "private.example.net")
         self.assertEqual(before, snapshot(self.instance))
-        diagnostics = next(self.work.glob("dualforge-005-client-C-*.zip"))
+        diagnostics = next(self.work.glob("dualforge-identity-client-C-*.zip"))
         with zipfile.ZipFile(diagnostics) as archive:
             self.assertTrue(any(n.endswith("/checklist/CHECKLIST.md") for n in archive.namelist()))
             text = "\n".join(archive.read(n).decode() for n in archive.namelist() if n.endswith(".txt") or n.endswith(".log"))

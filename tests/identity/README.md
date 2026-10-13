@@ -54,7 +54,7 @@ JDK21.0.10+7-LTS and Linux isolation inputs, run **every JVM command serially**:
 
 ```bash
 # Capture a clean starting compat build before editing production code.
-zsh tools/entry/forgecompat.zsh --mode build \
+zsh tools/entry/dualforge.zsh --mode build \
   --server-input /workspace/dualforge-cloud/server-base \
   --output-root out/convergence-003b/before-build
 
@@ -69,31 +69,31 @@ zsh tests/identity/run-identity.zsh --stage before \
   --java-network-args /workspace/dualforge-cloud/java-network.args --public-key-relay
 
 # After the identity fix, build again and use its exact artifact for all checks.
-zsh tools/entry/forgecompat.zsh --mode build \
+zsh tools/entry/dualforge.zsh --mode build \
   --server-input /workspace/dualforge-cloud/server-base \
   --output-root out/convergence-003b/after-build
 zsh tests/identity/run-identity.zsh --stage after \
   --fixture /absolute/fixture/identity-check.jar \
-  --jar /absolute/after-build/forgecompat-002-0l.jar \
+  --jar /absolute/after-build/dualforge.jar \
   --allow-server-start \
   --java-network-args /workspace/dualforge-cloud/java-network.args --public-key-relay
 zsh tests/identity/run-scope.zsh \
-  --jar /absolute/after-build/forgecompat-002-0l.jar \
+  --jar /absolute/after-build/dualforge.jar \
   --fixture /absolute/fixture/identity-check.jar \
   --forge-dependencies /workspace/DualForge/out/convergence-003b/forge-dependencies
 
-zsh tools/entry/forgecompat.zsh --mode smoke \
+zsh tools/entry/dualforge.zsh --mode smoke \
   --server-input /workspace/dualforge-cloud/server-base \
   --probe /workspace/dualforge-cloud/inputs/forgeprobe.jar \
-  --jar /absolute/after-build/forgecompat-002-0l.jar \
+  --jar /absolute/after-build/dualforge.jar \
   --output-root out/convergence-003b/original-smoke --allow-server-start \
   --java-network-args /workspace/dualforge-cloud/java-network.args --public-key-relay
-zsh tests/discovery/run-discovery.zsh /absolute/after-build/forgecompat-002-0l.jar \
+zsh tests/discovery/run-discovery.zsh /absolute/after-build/dualforge.jar \
   /workspace/dualforge-cloud/server-base /workspace/dualforge-cloud/inputs/forgeprobe.jar
 zsh tools/entry/test-forge-dependencies.zsh --stage after \
   --server-input /workspace/dualforge-cloud/server-base \
   --probe /workspace/dualforge-cloud/inputs/forgeprobe.jar \
-  --compat-jar /absolute/after-build/forgecompat-002-0l.jar \
+  --compat-jar /absolute/after-build/dualforge.jar \
   --output-root out/convergence-003b/dependencies --allow-server-start \
   --java-network-args /workspace/dualforge-cloud/java-network.args --public-key-relay
 ```
@@ -119,3 +119,5 @@ module argument file, original flags, local dump paths and public-key relay
 measures. A and B are never installed together. Historical inputs, worlds and
 evidence are checked by the 003b preservation manifest. Only the zsh entrypoints are maintained; historical platform claims remain
 in the original reports.
+
+The `before` reproduction belongs to the historical report checkout and original toolchain; current DualForge tools target the `after` regression. Old before artifacts are not renamed or accepted as new production builds.

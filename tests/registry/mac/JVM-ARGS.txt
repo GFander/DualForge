@@ -1,7 +1,7 @@
--Dforgecompat.2a.rewrite=true
--Dforgecompat.0g.apiRewrite=true
--Dforgecompat.0j.emptyRegistration=true
--Dforgecompat.0l.subscriberRewrite=true
+-Ddualforge.2a.rewrite=true
+-Ddualforge.0g.apiRewrite=true
+-Ddualforge.0j.emptyRegistration=true
+-Ddualforge.0l.subscriberRewrite=true
 -DDF005_REGISTER=true
--Dforgecompat.dump.path=dualforge-005-evidence/ForgeProbe.rewritten.class
--Dforgecompat.dump.profileDir=dualforge-005-evidence/profile
+-Ddualforge.dump.path=dualforge-identity-evidence/ForgeProbe.rewritten.class
+-Ddualforge.dump.profileDir=dualforge-identity-evidence/profile

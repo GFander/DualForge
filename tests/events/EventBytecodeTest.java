@@ -1,4 +1,4 @@
-package com.example.forgecompat;
+package io.github.gfander.dualforge;
 
 import cpw.mods.jarhandling.JarContents;
 import cpw.mods.modlauncher.api.ITransformer;
@@ -38,7 +38,7 @@ public final class EventBytecodeTest {
     }
     public static void main(String[] args) throws Exception {
         Path out=Path.of(args[3]); Files.createDirectories(out);
-        ModFile f=file(Path.of(args[0])); var t=new ForgeProbeConstructorTransformer();
+        ModFile f=file(Path.of(args[0])); var t=new DualForgeEntryTransformer();
         check(t.targets().equals(Set.of(ITransformer.Target.targetClass("com.example.dispatchcheck.DispatchProbe"), ITransformer.Target.targetClass("com.example.dispatchcheck.DispatchEvent"))),"exact scan-derived entry and Event targets");
         ClassNode before=read(Files.readAllBytes(f.findResource("com/example/dispatchcheck/DispatchProbe.class")));
         check(before.methods.getFirst().desc.equals("(Lnet/minecraftforge/eventbus/api/IEventBus;)V"),"native Forge constructor");
@@ -55,7 +55,7 @@ public final class EventBytecodeTest {
         int fields=0,calls=0;
         for (var insn:restored.methods.getFirst().instructions) {
             if(insn instanceof FieldInsnNode field && field.owner.equals("net/neoforged/neoforge/common/NeoForge")) { field.owner="net/minecraftforge/common/MinecraftForge";field.desc="Lnet/minecraftforge/eventbus/api/IEventBus;";fields++; }
-            if(insn instanceof MethodInsnNode call && call.owner.equals("com/example/forgecompat/ForgeEmptyRegistration")) {call.setOpcode(Opcodes.INVOKEINTERFACE);call.owner="net/minecraftforge/eventbus/api/IEventBus";call.desc="(Ljava/lang/Object;)V";call.itf=true;calls++;}
+            if(insn instanceof MethodInsnNode call && call.owner.equals("io/github/gfander/dualforge/ForgeEmptyRegistration")) {call.setOpcode(Opcodes.INVOKEINTERFACE);call.owner="net/minecraftforge/eventbus/api/IEventBus";call.desc="(Ljava/lang/Object;)V";call.itf=true;calls++;}
         }
         check(fields==1 && calls==1 && Arrays.equals(bytes(before),bytes(restored)),"entry changed only authorized structures");
         ClassNode event=read(Files.readAllBytes(f.findResource("com/example/dispatchcheck/DispatchEvent.class"))), translated=t.transform(event,null);
