@@ -1,0 +1,7 @@
+-Ddualforge.2a.rewrite=true
+-Ddualforge.0g.apiRewrite=true
+-Ddualforge.0j.emptyRegistration=true
+-Ddualforge.0l.subscriberRewrite=true
+-DDF006_REGISTER=true
+-Ddualforge.dump.path=dualforge-006a-evidence/rewritten.class
+-Ddualforge.dump.profileDir=dualforge-006a-evidence/profile
