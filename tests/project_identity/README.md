@@ -34,8 +34,9 @@ zsh tests/project_identity/run-identity-unification.zsh \
 常规本地环境按实际代理/CA 配置执行，不复制云端绝对路径。
 
 Gate 1 保存 Manifest、四份 SPI、jar tf / describe-module / javap，并检查每个 package 路径、
-Provider class、新属性和旧二进制身份缺失。check_identity 对照起点源码，只允许明确的身份
-字符串映射；所有 16 份生产 Java/资源及逐文件历史保护 SHA 都要匹配。
+Provider class、新属性和旧二进制身份缺失。check_identity 对照冻结的命名迁移提交与其起点，只允许明确的身份
+字符串映射；该历史契约的16份生产输入及逐文件历史保护 SHA 都要匹配。
+当前活跃源码仍严格扫描旧身份，但后续已授权功能以自己的构建与动态回归验证，不与冻结命名迁移代码强制相等。
 豁免按路径、理由和完整行记录在迁移索引中，没有目录级字符串扫描豁免。
 
 Gate 2 使用独立 read-only Java agent，在正常 shutdown 时通过 Instrumentation 已加载 class、
