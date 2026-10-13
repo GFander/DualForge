@@ -9,7 +9,8 @@ Supplier 为零捕获 lambda 或同入口私有静态零参数工厂 method refe
 `driver/` 为只观察真实官方调用栈及查询注册表/holder 的 NeoForge driver。
 `matrix/` 有不同 modId、包/字段/ID/getter/factory 名称和实际 ASTORE/ALOAD 局部寄存器别名，
 另含捕获和 altMetafactory 编译取证。matrix 不用于同时安装多个 Forge 模组。
-两个新贴图使用原 005 用户 PNG 的原字节副本；原 PNG、物品 ID 和原 JAR 不改。
+Alpha 保留原 005 用户 PNG 的原字节副本；Beta 使用用户新提供的 `raw_ice_ether.png`，以区分两个物品。原 005 PNG、物品 ID 和历史已测 JAR 不改。
+贴图更新的资源变体、静态核对和客户端包见 [更新记录](../../Dev%20Manuals/Convergence-006A%20Beta%20贴图更新.md)；新变体未重跑 JVM 或客户端，不能冒称原已测 fixture SHA。
 
 所有 JVM 命令严格串行，在仓库根执行：
 
