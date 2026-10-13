@@ -1,8 +1,11 @@
 # Convergence-005: one native Forge Item
 
 Complete 005-S and static resource checks **PASS** using the user's original
-16×16 PNG, preserved byte-for-byte (SHA-256 pinned in texture-source.json). 005-C is **NOT RUN**: this host has no
-display, `/dev/dri` or installed graphical client. No screenshots exist.
+16×16 PNG, preserved byte-for-byte (SHA-256 pinned in texture-source.json).
+005-C is **PASS for the user-run macOS 27.0 arm64 cohort**, based on real
+A/B/C logs, inventory/hand screenshots and explicit give/English/Chinese
+manual confirmation. Cloud graphical execution remains NOT RUN; repaired
+deployment scripts have not been rerun on a real Mac.
 The item ID is `registryprobe:ice_ether`, overriding the task's `test_item`.
 No replacement texture or resized image was generated. Original PNG SHA-256:
 `2c810e0c1cca3c451a536a4cf1d72448a5809f999933acc45ca01240315f1681`.
@@ -126,4 +129,5 @@ Dedicated Server output and resource presence cannot prove any of these.
 
 Mac 原生部署包、Prism A/B/C 实验、只安装两个原 cohort JAR 的脚本与本地
 诊断回传说明见 [mac/README.md](mac/README.md)。云端完成打包不升级
-005-C 状态；等待真实 Mac 人工加载、物品和渲染证据。
+005-C 状态。已回传的用户 Mac 原 cohort 受控人工验收 PASS；修订部署
+脚本仅有 Linux 模拟测试，新验收与限制见当前 005-C 报告。

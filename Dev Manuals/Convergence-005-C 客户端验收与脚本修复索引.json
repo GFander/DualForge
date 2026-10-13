@@ -1,0 +1,274 @@
+{
+  "task": "Convergence-005-C Mac kit bug fixes and manual acceptance review",
+  "startCommit": "bbc14d16ae09fe32e5c74c4c20faeb48c07e1a92",
+  "repairCommit": "d48ca2a714d5bf858bca3a165e6c03350821d5cf",
+  "005-S": "PASS",
+  "005-C": "PASS",
+  "scope": "User-run macOS 27.0 arm64, Microsoft Java 21.0.7+6, MC1.21.1/NeoForge21.1.256",
+  "manualConfirmation": {
+    "giveRegistryprobeIceEther": true,
+    "englishName": true,
+    "chineseName": true,
+    "source": "user asynchronous reply: 三项都已实际检查通过"
+  },
+  "clientEvidence": {
+    "A": {
+      "jars": "(none)",
+      "environment": "stage=A clientStatus=NOT_ASSESSED macOS=27.0 CPU=arm64 Minecraft=1.21.1 NeoForge=21.1.256",
+      "javaVersion": "openjdk version \"21.0.7\" 2025-04-15 LTS\nOpenJDK Runtime Environment Microsoft-11369939 (build 21.0.7+6-LTS)\nOpenJDK 64-Bit Server VM Microsoft-11369939 (build 21.0.7+6-LTS, mixed mode)",
+      "ERROR_FATAL": 0,
+      "actualTransformerServiceLoaded": false,
+      "actualRegistryMetadata": false,
+      "actualLocator": false,
+      "actualEntryTransformTarget": false,
+      "integratedServerStarted": false,
+      "uncompletedChecklist": true,
+      "screenshots": 0
+    },
+    "B": {
+      "jars": "forgecompat-002-0l.jar ed572ca9762e235e7d264355d35b3c9d3ab9ecf1da3f2c3234b1e28056aad752",
+      "environment": "stage=B clientStatus=NOT_ASSESSED macOS=27.0 CPU=arm64 Minecraft=1.21.1 NeoForge=21.1.256",
+      "javaVersion": "openjdk version \"21.0.7\" 2025-04-15 LTS\nOpenJDK Runtime Environment Microsoft-11369939 (build 21.0.7+6-LTS)\nOpenJDK 64-Bit Server VM Microsoft-11369939 (build 21.0.7+6-LTS, mixed mode)",
+      "ERROR_FATAL": 0,
+      "actualTransformerServiceLoaded": true,
+      "actualRegistryMetadata": false,
+      "actualLocator": false,
+      "actualEntryTransformTarget": false,
+      "integratedServerStarted": false,
+      "uncompletedChecklist": true,
+      "screenshots": 0
+    },
+    "C": {
+      "jars": "forgecompat-002-0l.jar ed572ca9762e235e7d264355d35b3c9d3ab9ecf1da3f2c3234b1e28056aad752\nregistry-probe.jar 312a4f697c1dc617ed48822c10179384b6559f4e6399db9210c15541c774132c",
+      "environment": "stage=C clientStatus=NOT_ASSESSED macOS=27.0 CPU=arm64 Minecraft=1.21.1 NeoForge=21.1.256",
+      "javaVersion": "openjdk version \"21.0.7\" 2025-04-15 LTS\nOpenJDK Runtime Environment Microsoft-11369939 (build 21.0.7+6-LTS)\nOpenJDK 64-Bit Server VM Microsoft-11369939 (build 21.0.7+6-LTS, mixed mode)",
+      "ERROR_FATAL": 0,
+      "actualTransformerServiceLoaded": true,
+      "actualRegistryMetadata": true,
+      "actualLocator": true,
+      "actualEntryTransformTarget": true,
+      "integratedServerStarted": true,
+      "uncompletedChecklist": true,
+      "screenshots": 2
+    }
+  },
+  "limitations": [
+    "English/Chinese names and exact /give success are user manual confirmation; screenshot does not show item tooltip names.",
+    "System.out compat markers are not present in latest/debug logs; no Prism console supplied.",
+    "Published repaired scripts not re-executed on Mac by cloud agent; Linux behavior tests use mocks.",
+    "Intel real client not tested."
+  ],
+  "zip": {
+    "status": "PASS",
+    "sourceCommit": "d48ca2a714d5bf858bca3a165e6c03350821d5cf",
+    "zip": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/delivery/dualforge-005-mac-client-kit.zip",
+    "zipSHA256": "f2a01c9693363af041c8a870390f9651352e0ea863be99a1cebe1aae05d95dae",
+    "zipBytes": 55808,
+    "contents": 11,
+    "mods": {
+      "forgecompat-002-0l.jar": {
+        "SHA256": "ed572ca9762e235e7d264355d35b3c9d3ab9ecf1da3f2c3234b1e28056aad752",
+        "bytes": 38752
+      },
+      "registry-probe.jar": {
+        "SHA256": "312a4f697c1dc617ed48822c10179384b6559f4e6399db9210c15541c774132c",
+        "bytes": 4518
+      }
+    },
+    "resources": {
+      "textures/item/ice_ether.png": "2c810e0c1cca3c451a536a4cf1d72448a5809f999933acc45ca01240315f1681",
+      "models/item/ice_ether.json": "c1a59acc99caf2bb7aafbe072d7fe39f928ee88dbd3661cbdbfa14dd97422563",
+      "lang/en_us.json": "c6846d4dd0afa6c97363bdcd65bfa8e8bc51656f79e692545037f5778f587f65",
+      "lang/zh_cn.json": "8905a599dee672be2691b8a47a7047b3d0027333f8a335ac5fdd65f7aae3052a"
+    },
+    "005-S": "PASS",
+    "005-C": "PASS",
+    "clientScope": "user-run macOS 27.0 arm64 / Microsoft Java 21.0.7+6; original tested JAR cohort",
+    "repairedScriptsMacExecuted": false,
+    "uploaded": false,
+    "downloadUrl": null,
+    "CloudMacExecuted": false
+  },
+  "validation": {
+    "unfixedReproduction": "FAIL expected: both original errors reproduced",
+    "fixedLinuxMockTests": "PASS 13 tests",
+    "firstExpandedTestRun": "ERROR: misplaced Intel test tail (NameError), corrected; log retained",
+    "zshSyntax": "PASS 5 files",
+    "zipAndManifestIntegrity": "PASS",
+    "originalTrackedFilesPreserved": 414,
+    "productionAndFrozenHistoryUnchanged": true,
+    "newMacScriptExecution": "NOT RUN",
+    "productionRegressionThisTask": "NOT RUN; exact tested JARs unchanged"
+  },
+  "rawUploadedEvidence": {
+    "SHA256": "053f8db1d403f8f808436849fcf2db7afc7ea5e82fd86c700ebf818266ccd129",
+    "publiclyUploaded": false
+  },
+  "files": [
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/preflight.json",
+      "SHA256": "744e541dc377b5b4699dd05b63ad7d01f9e197f0c5916e4b19665e6826dd8fe4",
+      "Bytes": 90958
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/reproduce.stdout.log",
+      "SHA256": "66d270e22fe3c11f5c6a55626daf4cd20390974f1d13610e9da22b96d5e58afa",
+      "Bytes": 1151
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/reproduce.stderr.log",
+      "SHA256": "f47e39ab0ad34c54d60a120e0e63c60e383f09db1e9cc31f5f1b0333724f3a3d",
+      "Bytes": 1778
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/fixed-tests.stderr.log",
+      "SHA256": "823c426dc535e5f356142dd631ad50bd12327c3a94ad6aaad57d2550c2c093ee",
+      "Bytes": 702
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/final-tests.stdout.log",
+      "SHA256": "2d2e14dd676c581145996dbba5e168a03c761f9553f7c1da6831324062ba54b3",
+      "Bytes": 1151
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/final-tests.stderr.log",
+      "SHA256": "cce1eb002b6d5b3eda56537222cac9d72a3a84fd17a41130e03631c9df5027ce",
+      "Bytes": 112
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/client-evidence-review.json",
+      "SHA256": "e5e30bc081a2e6e2e158aa1e84707115e742d1677824423b8764e7a47d60b8cb",
+      "Bytes": 9519
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/delivery/result.json",
+      "SHA256": "d0c5efb6b2d42c55cf89c8017c3beaaeb9a49e7ab65bd6e4d25abf23648b7bce",
+      "Bytes": 1295
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/delivery/dualforge-005-mac-client-kit/manifest.json",
+      "SHA256": "0e9adc5154d3348769fe3a03e05b760dcd9431b750efbfe985868607c458c53d",
+      "Bytes": 4084
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/delivery/dualforge-005-mac-client-kit/SHA256SUMS",
+      "SHA256": "5bb5938d62645a47aaec338b0b975b139fe46ffe37a825e24988423e0494d93f",
+      "Bytes": 867
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/incoming/dualforge-005-client-A-20261013-144339-57721/CHECKLIST.md",
+      "SHA256": "aeb67f189e3703d6589021ad7d8bc8eda8a1752738fdac0c361998e454377c10",
+      "Bytes": 1976
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/incoming/dualforge-005-client-A-20261013-144339-57721/installed-jars.txt",
+      "SHA256": "5dfecbf35de344dc6dc4b8a79c4e5327122b2737250403b04abf2060fbc3927f",
+      "Bytes": 7
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/incoming/dualforge-005-client-A-20261013-144339-57721/log-1-latest.log",
+      "SHA256": "e06b531e310e37b21552d6d31f8a681878d63c4c4cbd292f5c53dd8f0952a1f8",
+      "Bytes": 8218
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/incoming/dualforge-005-client-A-20261013-144339-57721/log-2-debug.log",
+      "SHA256": "e58a22eb913503abc0e5e63c82cc7d2b2145b98a9bebc6b6dbd296ecdbe213e8",
+      "Bytes": 82585
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/incoming/dualforge-005-client-A-20261013-144339-57721/REDACTION-NOTES.txt",
+      "SHA256": "031a61ccdf04de9cc6f311e139ab5debcfc63ffc93b9e12d164206eda07a68c2",
+      "Bytes": 405
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/incoming/dualforge-005-client-A-20261013-144339-57721/java-version.txt",
+      "SHA256": "22d85e7486fa827b633c86a25fddc2192a108fc0e9eec5d3156b368925eb054d",
+      "Bytes": 185
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/incoming/dualforge-005-client-A-20261013-144339-57721/environment.txt",
+      "SHA256": "50b80f817d478a2165bb6e998fa7397a27391775e24b5fb4c1604287c3924d5e",
+      "Bytes": 90
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/incoming/dualforge-005-client-B-20261013-144633-58195/CHECKLIST.md",
+      "SHA256": "aeb67f189e3703d6589021ad7d8bc8eda8a1752738fdac0c361998e454377c10",
+      "Bytes": 1976
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/incoming/dualforge-005-client-B-20261013-144633-58195/installed-jars.txt",
+      "SHA256": "5aa18cbd30b8ead53e863f29994faf93bc771f632188920aa34509f95fa29a24",
+      "Bytes": 88
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/incoming/dualforge-005-client-B-20261013-144633-58195/log-1-latest.log",
+      "SHA256": "6090c9381ae98c88244a757e22a392eb7aed7cfe8653cd6bdfe5235828bef333",
+      "Bytes": 8218
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/incoming/dualforge-005-client-B-20261013-144633-58195/log-2-debug.log",
+      "SHA256": "7ab7c2df4f9281e5a1ff6ef30a8cceb721b42d16a84a012ed7a35e8e9caf5757",
+      "Bytes": 85474
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/incoming/dualforge-005-client-B-20261013-144633-58195/REDACTION-NOTES.txt",
+      "SHA256": "031a61ccdf04de9cc6f311e139ab5debcfc63ffc93b9e12d164206eda07a68c2",
+      "Bytes": 405
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/incoming/dualforge-005-client-B-20261013-144633-58195/java-version.txt",
+      "SHA256": "22d85e7486fa827b633c86a25fddc2192a108fc0e9eec5d3156b368925eb054d",
+      "Bytes": 185
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/incoming/dualforge-005-client-B-20261013-144633-58195/environment.txt",
+      "SHA256": "3320335efdb7e29c557466cc5716f5a3fa0da7e9bfaf6f0b3ad023a969c1f22c",
+      "Bytes": 90
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/incoming/dualforge-005-client-C-20261013-145536-58960/CHECKLIST.md",
+      "SHA256": "aeb67f189e3703d6589021ad7d8bc8eda8a1752738fdac0c361998e454377c10",
+      "Bytes": 1976
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/incoming/dualforge-005-client-C-20261013-145536-58960/installed-jars.txt",
+      "SHA256": "77ce244f99e4f239cd6812f13be0e75fc7a24e61b8bda2d2f13402c40ee61a0d",
+      "Bytes": 172
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/incoming/dualforge-005-client-C-20261013-145536-58960/screenshot-1.png",
+      "SHA256": "eadb72f63d7b16f3dcbe508e608218613d910ca908c03738aa30d75869dea994",
+      "Bytes": 696257
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/incoming/dualforge-005-client-C-20261013-145536-58960/log-1-latest.log",
+      "SHA256": "67d274d8b4a41a388cf9178b923323afd398ae79a34e389d7b5f727de56fb616",
+      "Bytes": 22399
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/incoming/dualforge-005-client-C-20261013-145536-58960/log-2-debug.log",
+      "SHA256": "c4710740c70fad3a1a2221efcf7e2424c469276d8c32397fade6929abcff56cc",
+      "Bytes": 108253
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/incoming/dualforge-005-client-C-20261013-145536-58960/REDACTION-NOTES.txt",
+      "SHA256": "031a61ccdf04de9cc6f311e139ab5debcfc63ffc93b9e12d164206eda07a68c2",
+      "Bytes": 405
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/incoming/dualforge-005-client-C-20261013-145536-58960/screenshot-2.png",
+      "SHA256": "4886443023d3b463b31d4d4c8d6800ae3de6392f75cabf4dd39d30a925a9e2ec",
+      "Bytes": 1362445
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/incoming/dualforge-005-client-C-20261013-145536-58960/java-version.txt",
+      "SHA256": "22d85e7486fa827b633c86a25fddc2192a108fc0e9eec5d3156b368925eb054d",
+      "Bytes": 185
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/fix-prism-format/incoming/dualforge-005-client-C-20261013-145536-58960/environment.txt",
+      "SHA256": "194a46814e3752240ac3edc12793953068d94f9754ffd2197741851771d6d892",
+      "Bytes": 90
+    }
+  ]
+}

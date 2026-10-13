@@ -1,6 +1,6 @@
 # DualForge / ForgeCompat
 
-DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。已验收基线为 **Convergence-004**；本分支增加 **005 受控单 Item 注册**，005-S 与资源静态验收 PASS，005-C 为 NOT RUN。源码位于 [spike001a/compat-002-0l/src](spike001a/compat-002-0l/src)。目录名沿用历史编号，当前构建始终从这些源码和资源全量编译。
+DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。已验收基线为 **Convergence-004**；本分支增加 **005 受控单 Item 注册**，005-S 与资源静态验收 PASS，005-C 在用户 macOS arm64 受控人工验收中 PASS。源码位于 [spike001a/compat-002-0l/src](spike001a/compat-002-0l/src)。目录名沿用历史编号，当前构建始终从这些源码和资源全量编译。
 
 仓库只维护 **zsh 脚本入口**。Python 3 标准库负责内部的构建编排、JSON、JAR 指纹、进程及日志捕获；运行不需要 Windows 或 PowerShell。当前仍使用原单参数构造器 ABI；004 的监听器支持范围如下。
 
@@ -17,13 +17,15 @@ DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。已验�
 - 003b 证明 register 真实返回；004 证明一个受控自定义 Event 在正常启动后的宿主全局总线上真实 post 一次，注册组回调一次、未注册组零次。测试型 NeoForge driver 不属于 Forge API 兼容能力。
 - 支持原单参数 Forge IEventBus 构造器、空 listener，以及严格四条打印指令的 marker-only listener；Event profile 和构造器 ABI 保持不变。
 - metadata 仅支持现有 Parser 的简单 TOML 子集；保留依赖 owner 分组及 mandatory 到 FML REQUIRED/OPTIONAL 的适配。
-- 005：一个扫描归属明确、严格结构匹配的 Forge DeferredRegister<Item> 入口；转换创建、单 Supplier、MOD bus 挂接、holder 字段及 get 引用。原构造器 ABI 不变，真实注册 C/T 与旧回归通过。物品 `registryprobe:ice_ether` 已打包用户原始 16×16 RGBA PNG，字节与来源 SHA 严格一致；005-S 与资源静态验收 PASS，005-C 为 NOT RUN。详见 [005 报告](<Dev Manuals/Convergence-005 交付报告.md>)。
+- 005：一个扫描归属明确、严格结构匹配的 Forge DeferredRegister<Item> 入口；转换创建、单 Supplier、MOD bus 挂接、holder 字段及 get 引用。原构造器 ABI 不变，真实注册 C/T 与旧回归通过。物品 `registryprobe:ice_ether` 已打包用户原始 16×16 RGBA PNG，字节与来源 SHA 严格一致；005-S 与资源静态验收 PASS，005-C 在用户 macOS arm64 受控人工验收中 PASS。详见 [005 报告](<Dev Manuals/Convergence-005 交付报告.md>)。
 
 这是受控原型，不代表任意 Forge 模组兼容。一般 Forge post API、取消／优先级／自动／静态订阅、多 Forge 同时完整启动、一般 RegistryObject API、Block／自定义 Registry、Capability 和 Fabric 尚未验证或实现。受控真实投递不代表一般 Forge Event 系统兼容。历史 PASS 见交付报告；每轮运行以新生成的 `result.json` 和原始日志为准。
 
 005-C 的 macOS 原生客户端部署准备见 [Mac kit](tests/registry/mac/README.md)：
 只交付两个原 005-S JAR、Prism 精确版本和 Java/JVM 参数检查、安装回滚与
-人工清单。Linux 模拟脚本测试及打包成功不代表真实 Mac 客户端 PASS。
+人工清单。用户已回传真实日志、截图及 /give／双语言人工确认，详见
+[005-C 客户端验收](<Dev Manuals/Convergence-005-C 客户端验收与脚本修复.md>)。
+修订脚本的 Linux 模拟测试及打包成功不代表其已在 Mac 实机复测。
 
 ## 环境与外部输入
 
