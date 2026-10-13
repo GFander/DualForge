@@ -1,0 +1,34 @@
+{
+  "task": "Convergence-006A-C",
+  "status": "PASS (user-reported controlled manual acceptance)",
+  "date": "2026-10-14 Asia/Shanghai",
+  "baseCommit": "6ea5b965ec15068d55dcfac452cf504a5f254e06",
+  "report": "Convergence-006A-C macOS 客户端人工验收报告.md",
+  "inputReportSHA256": "e2a45d626225f696bd8cac207a422bf56cc9a8d145f075f43f5e2f3d8bed14fb",
+  "inputBytes": 11444,
+  "evidenceAccess": "User-supplied console excerpts/review report; full original console and visual attachments unavailable to Codex",
+  "compatSHA256": "f03d86331830c57c55915c611143d864eaef6d2dbf25cc3cf1628c39015a3a1c",
+  "clientFixtureSHA256": "9094b4f1d83f5a6355bfb4bf7ae775964a8067d8663c16a292c9685da2ededd9",
+  "serverOriginalFixtureSHA256": "4099fb08fef19891eb95ca2fcce52300fb428f1faca4b562200dd081f562d904",
+  "scope": "macOS27 AppleM4 arm64, MC1.21.1 NeoForge21.1.256 MicrosoftJava21.0.7+6-LTS; Beta texture variant",
+  "labels": {
+    "E": "reported terminal and console excerpts, not independently read originals",
+    "U": "explicit user manual confirmation reported in input",
+    "S": "local matching artifacts and resource-only comparison",
+    "D": "controlled acceptance decision"
+  },
+  "openALError": "Stop: Invalid name parameter. during shutdown; no demonstrated causal link to DualForge",
+  "exitCodeReported": 0,
+  "missingAttachments": [
+    "full original console",
+    "screenshots",
+    "latest.log",
+    "debug.log",
+    "diagnostic ZIP"
+  ],
+  "notRun": [
+    "resource variant independent server C/T",
+    "Intel Mac"
+  ],
+  "codexRuntimeTestsPerformed": false
+}

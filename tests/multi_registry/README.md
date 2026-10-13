@@ -10,7 +10,7 @@ Supplier 为零捕获 lambda 或同入口私有静态零参数工厂 method refe
 `matrix/` 有不同 modId、包/字段/ID/getter/factory 名称和实际 ASTORE/ALOAD 局部寄存器别名，
 另含捕获和 altMetafactory 编译取证。matrix 不用于同时安装多个 Forge 模组。
 Alpha 保留原 005 用户 PNG 的原字节副本；Beta 使用用户新提供的 `raw_ice_ether.png`，以区分两个物品。原 005 PNG、物品 ID 和历史已测 JAR 不改。
-贴图更新的资源变体、静态核对和客户端包见 [更新记录](../../Dev%20Manuals/Convergence-006A%20Beta%20贴图更新.md)；新变体未重跑 JVM 或客户端，不能冒称原已测 fixture SHA。
+贴图更新的资源变体、静态核对和客户端包见 [更新记录](../../Dev%20Manuals/Convergence-006A%20Beta%20贴图更新.md)；更新当时未运行客户端；随后用户完成 Beta 资源版 macOS arm64 受控人工验收 PASS，见 [客户端报告](../../Dev%20Manuals/Convergence-006A-C%20macOS%20客户端人工验收报告.md)。独立新版服务端 C/T 仍 NOT RUN，不能冒称原已测 fixture SHA。
 
 所有 JVM 命令严格串行，在仓库根执行：
 

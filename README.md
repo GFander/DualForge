@@ -19,11 +19,11 @@ DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。main 已
 - metadata 仅支持现有 Parser 的简单 TOML 子集；保留依赖 owner 分组及 mandatory 到 FML REQUIRED/OPTIONAL 的适配。
 - 005：一个扫描归属明确、严格结构匹配的 Forge DeferredRegister<Item> 入口；转换创建、单 Supplier、MOD bus 挂接、holder 字段及 get 引用。原构造器 ABI 不变，真实注册 C/T 与旧回归通过。物品 `registryprobe:ice_ether` 已打包用户原始 16×16 RGBA PNG，字节与来源 SHA 严格一致；原 005-S 与资源静态验收 PASS，原 005-C 在用户 macOS arm64 受控人工验收中 PASS；该客户端结论只属于历史 cohort，新制品 Mac 验收为 NOT RUN。详见 [005 报告](<Dev Manuals/Convergence-005 交付报告.md>)。
 
-006A 在保持原构造器 ABI、Mod Event Bus 和 Supplier 业务字节不变的前提下，将整类固定计数改为逐 API 调用点与数据依赖验证。一个原生 Forge 模组通过同一个 DeferredRegister<Item> 声明 lambda Alpha 与静态 method reference Beta，006A-S 动态 PASS；006A-C NOT RUN。详见 [006A 报告](<Dev Manuals/Convergence-006A 交付报告.md>) 和 [新测试入口](tests/multi_registry/README.md)。
+006A 在保持原构造器 ABI、Mod Event Bus 和 Supplier 业务字节不变的前提下，将整类固定计数改为逐 API 调用点与数据依赖验证。一个原生 Forge 模组通过同一个 DeferredRegister<Item> 声明 lambda Alpha 与静态 method reference Beta，006A-S 原冻结 fixture 动态 PASS；Beta 资源更新版 006A-C 在用户 macOS arm64 人工验收中受控 PASS，见 [客户端报告](<Dev Manuals/Convergence-006A-C macOS 客户端人工验收报告.md>)。Codex仅取得用户控制台摘录/审查报告，未独立取得原始日志或截图。详见 [006A 报告](<Dev Manuals/Convergence-006A 交付报告.md>) 和 [新测试入口](tests/multi_registry/README.md)。
 
 这是受控原型，不代表任意 Forge 模组兼容。一般 Forge post API、取消／优先级／自动／静态订阅、多 Forge 同时完整启动、一般 RegistryObject API、Block／自定义 Registry、Capability 和 Fabric 尚未验证或实现。受控真实投递不代表一般 Forge Event 系统兼容。历史 PASS 见交付报告；每轮运行以新生成的 `result.json` 和原始日志为准。
 
-006A 双 Item 的独立人工输入包说明见 [006A Mac门槛](tests/multi_registry/MAC-SETUP.md)，客户端 NOT RUN。
+006A 双 Item 的独立人工输入包说明见 [006A Mac门槛](tests/multi_registry/MAC-SETUP.md)，Beta 资源更新版客户端受控人工验收 PASS；原服务端 fixture 与新客户端 fixture 分别记录。
 原005 fixture 的命名迁移 cohort 部署工具见 [Mac kit](tests/registry/mac/README.md)：
 使用实际重新编译并完成服务端回归的 `dualforge.jar` 和原字节 RegistryProbe，
 提供 Prism/Java/JVM 检查、安装回滚及人工清单。新 cohort 的 Mac 实机验收 **NOT RUN**。
