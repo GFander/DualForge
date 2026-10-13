@@ -84,13 +84,17 @@
 - 开始修改前阅读根目录 STRUCTURE.md 和 tests/README.md，确认目录状态及实际入口。
 - 唯一生产源码为 dualforge/src/main/java 和 src/main/resources；不得把历史副本当作生产版本。
 - tools/entry/ 存放 zsh 入口，tools/lib/ 存放 Python 内部实现，tools/harness/run-server.zsh 是活跃独立 harness。
-- tests/dependencies、tests/discovery、tests/identity、tests/events、tests/registry、tests/project_identity 是当前测试；测试文件的位置保持不变。Registry 阶段和受控范围见 tests/registry/README.md，资源静态检查不代表真实客户端渲染。
+- tests/dependencies、tests/discovery、tests/identity、tests/events、tests/registry、tests/project_identity、tests/multi_registry 是当前测试；测试文件的位置保持不变。Registry 阶段和受控范围见 tests/registry/README.md，资源静态检查不代表真实客户端渲染。
 - history/ 是历史迭代、冻结源码、夹具及记录的归档，不作为生产构建输入。原 Probe 是历史冻结回归输入，只使用指纹匹配的原制品，不重建替代。
 - spike001a/compat/ 和 spike000/probe/ 是保留原位置的遗留目录，不是活跃实现。Gradle 记录已弃用，说明见 spike001a/compat/DEPRECATED.md。
-- 移动文件使用 git mv，冻结记录保持原字节；当前身份迁移只允许 package、类名和相关身份引用变化，禁止改变兼容算法；同步更新活跃脚本、文档和忽略规则。
+- 移动文件使用 git mv，冻结记录保持原字节；历史命名迁移的允许差异限于身份；后续功能按用户明确任务范围实现和验证；同步更新活跃脚本、文档和忽略规则。
 - 冻结报告、索引及 Java 中的历史现场绝对路径保持原样；新旧仓库路径映射见 STRUCTURE.md，不进行全局字符串替换。
 - 运行附件、依赖、制品和世界继续外部保存或存入被忽略的 out/；所有 JVM 验证串行执行。
 
 - tests/registry/mac/ 面向新 dualforge.jar；tests/registry/mac-legacy/ 是固定旧 cohort 的显式 Legacy 工具，保持原字节。新制品不能继承旧 Mac PASS。
 - 当前生产 package 为 io.github.gfander.dualforge，模块 dualforge，服务 dualforge-transform，属性前缀 dualforge.；LanguageLoader 的 javafml / 9999 契约不改。
 - 命名迁移审计、逐路径豁免与保全指纹见 Dev Manuals/DualForge 命名审计.json 和 DualForge 命名统一迁移索引.json；不得以目录级豁免掩盖活跃旧引用。
+
+- 006A 的 tests/multi_registry/ 使用独立原生Forge双Item输入和NeoForge查询driver；原005输入及贴图冻结不变。验证器按逐调用/字段数据依赖匹配，禁止新增fixture身份白名单或通用命名空间替换。
+- tests/project_identity/check_identity.py 的生产规范化对照验证冻结命名迁移提交；当前命名扫描和逐路径保护继续严格。新的兼容功能必须用自己的最终新JAR重新动态验证。
+- 006A-S与006A-C分别交付；服务端证据不继承客户端PASS，不能以资源静态或打包代替实机验收。

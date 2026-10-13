@@ -1,6 +1,6 @@
 # DualForge
 
-DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。main 已合并 Convergence-005；本分支仅统一工程与运行时身份，不扩大兼容能力。唯一生产源码位于 [dualforge/src/main](dualforge/src/main)，当前构建从源码与资源全量编译并生成 `dualforge.jar`。新制品的验证见 [命名迁移报告](<Dev Manuals/DualForge 命名统一迁移报告.md>)。
+DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。main 已合并 Convergence-005 与命名迁移；本分支增加 Convergence-006A 受控多 Item 声明。唯一生产源码位于 [dualforge/src/main](dualforge/src/main)，当前构建从源码与资源全量编译并生成 `dualforge.jar`。本轮新制品验证见 [006A 报告](<Dev Manuals/Convergence-006A 交付报告.md>)；[命名迁移报告](<Dev Manuals/DualForge 命名统一迁移报告.md>) 保存历史基线。
 
 仓库只维护 **zsh 脚本入口**。Python 3 标准库负责内部的构建编排、JSON、JAR 指纹、进程及日志捕获；运行不需要 Windows 或 PowerShell。当前仍使用原单参数构造器 ABI；004 的监听器支持范围如下。
 
@@ -19,9 +19,12 @@ DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。main 已
 - metadata 仅支持现有 Parser 的简单 TOML 子集；保留依赖 owner 分组及 mandatory 到 FML REQUIRED/OPTIONAL 的适配。
 - 005：一个扫描归属明确、严格结构匹配的 Forge DeferredRegister<Item> 入口；转换创建、单 Supplier、MOD bus 挂接、holder 字段及 get 引用。原构造器 ABI 不变，真实注册 C/T 与旧回归通过。物品 `registryprobe:ice_ether` 已打包用户原始 16×16 RGBA PNG，字节与来源 SHA 严格一致；原 005-S 与资源静态验收 PASS，原 005-C 在用户 macOS arm64 受控人工验收中 PASS；该客户端结论只属于历史 cohort，新制品 Mac 验收为 NOT RUN。详见 [005 报告](<Dev Manuals/Convergence-005 交付报告.md>)。
 
+006A 在保持原构造器 ABI、Mod Event Bus 和 Supplier 业务字节不变的前提下，将整类固定计数改为逐 API 调用点与数据依赖验证。一个原生 Forge 模组通过同一个 DeferredRegister<Item> 声明 lambda Alpha 与静态 method reference Beta，006A-S 动态 PASS；006A-C NOT RUN。详见 [006A 报告](<Dev Manuals/Convergence-006A 交付报告.md>) 和 [新测试入口](tests/multi_registry/README.md)。
+
 这是受控原型，不代表任意 Forge 模组兼容。一般 Forge post API、取消／优先级／自动／静态订阅、多 Forge 同时完整启动、一般 RegistryObject API、Block／自定义 Registry、Capability 和 Fabric 尚未验证或实现。受控真实投递不代表一般 Forge Event 系统兼容。历史 PASS 见交付报告；每轮运行以新生成的 `result.json` 和原始日志为准。
 
-新制品的 macOS 部署工具见 [Mac kit](tests/registry/mac/README.md)：
+006A 双 Item 的独立人工输入包说明见 [006A Mac门槛](tests/multi_registry/MAC-SETUP.md)，客户端 NOT RUN。
+原005 fixture 的命名迁移 cohort 部署工具见 [Mac kit](tests/registry/mac/README.md)：
 使用实际重新编译并完成服务端回归的 `dualforge.jar` 和原字节 RegistryProbe，
 提供 Prism/Java/JVM 检查、安装回滚及人工清单。新 cohort 的 Mac 实机验收 **NOT RUN**。
 旧已验收 kit 保留在 [Legacy 流程](tests/registry/mac-legacy/LEGACY.md)，适用于原始固定 SHA；
@@ -102,6 +105,7 @@ zsh tests/discovery/run-discovery.zsh \
 | `tests/identity/run-scope.zsh` | 实际 FML 扫描和转换字节范围对照 |
 | `tests/events/run-events.zsh` | 004 原生夹具、字节契约、真实投递 C/T 和旧回归 |
 | `tests/registry/run-registry.zsh` | 005 原生单 Item、ABI／范围、真实注册 C/T、资源与客户端状态 |
+| `tests/multi_registry/run-multi-registry.zsh` | 006A 独立原生双 Item、调用点/数据依赖、范围/拒绝/原子性及 C/T |
 
 每轮输出在新建的 `out/` 子目录；`--output-root` 可选择仓库 out 下的其他位置。保存实际命令、工具版本、输入与 JAR entry SHA-256、完整日志、退出记录和断言，不覆盖原服务器制品。
 
