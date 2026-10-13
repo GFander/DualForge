@@ -26,6 +26,6 @@ RegistryProbe、manifest、COHORT-SHA256.txt、SHA256SUMS、脚本和空白人�
 不含世界、依赖、账号、JDK、客户端或 driver；不自动上传或发布 Release。
 旧 JAR、旧参数或其他模组混入实例时明确拒绝；不覆盖用户文件。
 
-[mac-legacy](../mac-legacy/README.md) 保留原已验收 005-C kit 的源码、固定 SHA 和参数，
+[mac-legacy](../mac-legacy/LEGACY.md) 保留原已验收 005-C kit 的源码、固定 SHA 和参数，
 整体移动后原字节未变。它只服务历史 cohort；新旧 kit 使用独立收据和输出路径。
 新 kit 的实机人工记录齐全后才能更新本轮客户端结论。

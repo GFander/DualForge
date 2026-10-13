@@ -2370,6 +2370,10 @@
     {
       "path": "Dev Manuals/DualForge 命名统一迁移报告.md",
       "reason": "Migration report documents old versus new identities."
+    },
+    {
+      "path": "tests/registry/mac-legacy/LEGACY.md",
+      "reason": "Explicit Legacy fixed-cohort tool instructions; original README remains historical and byte-identical."
     }
   ]
 }

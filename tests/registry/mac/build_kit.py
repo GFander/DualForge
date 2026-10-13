@@ -24,7 +24,7 @@ def tested_cohort(args):
     assert report["compat"]["Path"] == str(args.compat.resolve())
     assert report["compat"]["SHA256"] == sha(args.compat)
     assert report["fixture"]["SHA256"] == EXPECTED["registry-probe.jar"] == sha(args.fixture)
-    for stage in ("registry-contract", "registry-control", "registry-treatment", "regression"):
+    for stage in ("static", "loading", "registry-contract", "registry-control", "registry-treatment", "regression"):
         result = json.loads(Path(report["results"][stage]).read_text())
         assert result["status"] == "PASS" and result["compat"]["SHA256"] == sha(args.compat)
     assert json.loads(Path(report["results"]["assets"]).read_text())["status"] == "PASS"

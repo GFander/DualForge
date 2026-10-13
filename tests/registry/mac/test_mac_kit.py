@@ -79,6 +79,20 @@ class MacScriptTest(unittest.TestCase):
         self.assertEqual(result.returncode == 0, ok, result.stdout + result.stderr)
         return result
 
+    def test_packager_refuses_unvalidated_or_mixed_compat(self):
+        report = json.loads(VALIDATION.read_text())
+        path = self.work / "invalid-validation.json"
+        args = argparse.Namespace(compat=COMPAT, fixture=FIXTURE, validation=path,
+                                  output_dir=self.work / "must-not-package")
+        report["status"] = "PARTIAL"
+        path.write_text(json.dumps(report))
+        with self.assertRaises(AssertionError): builder.build(args)
+        report["status"] = "PASS"
+        report["compat"]["SHA256"] = "0" * 64
+        path.write_text(json.dumps(report))
+        with self.assertRaises(AssertionError): builder.build(args)
+        self.assertFalse(args.output_dir.exists())
+
     def test_linux_is_rejected(self):
         self.run_script("mac-preflight.zsh", ok=False, native=True)
 
