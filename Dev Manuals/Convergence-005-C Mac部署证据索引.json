@@ -1,0 +1,91 @@
+{
+  "task": "Convergence-005-C Mac deployment preparation",
+  "startCommit": "51e1603310ed225264f9e04cd33dbad232195b6f",
+  "sourceCommit": "69d2e3284537067a55f2018fc826c04519c79901",
+  "status": "WAITING_FOR_MAC_MANUAL_ACCEPTANCE",
+  "005-S": "PASS",
+  "005-C": "NOT RUN",
+  "MacExecuted": false,
+  "packaging": {
+    "status": "PASS",
+    "sourceCommit": "69d2e3284537067a55f2018fc826c04519c79901",
+    "zip": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/delivery/dualforge-005-mac-client-kit.zip",
+    "zipSHA256": "7b2cc61a8a8101f2aded2560dcd6db8d1dde42150636f6aa8b4ec8e7067e81eb",
+    "zipBytes": 54342,
+    "contents": 11,
+    "mods": {
+      "forgecompat-002-0l.jar": {
+        "SHA256": "ed572ca9762e235e7d264355d35b3c9d3ab9ecf1da3f2c3234b1e28056aad752",
+        "bytes": 38752
+      },
+      "registry-probe.jar": {
+        "SHA256": "312a4f697c1dc617ed48822c10179384b6559f4e6399db9210c15541c774132c",
+        "bytes": 4518
+      }
+    },
+    "resources": {
+      "textures/item/ice_ether.png": "2c810e0c1cca3c451a536a4cf1d72448a5809f999933acc45ca01240315f1681",
+      "models/item/ice_ether.json": "c1a59acc99caf2bb7aafbe072d7fe39f928ee88dbd3661cbdbfa14dd97422563",
+      "lang/en_us.json": "c6846d4dd0afa6c97363bdcd65bfa8e8bc51656f79e692545037f5778f587f65",
+      "lang/zh_cn.json": "8905a599dee672be2691b8a47a7047b3d0027333f8a335ac5fdd65f7aae3052a"
+    },
+    "005-S": "PASS",
+    "005-C": "NOT RUN",
+    "uploaded": false,
+    "downloadUrl": null,
+    "MacExecuted": false
+  },
+  "validation": {
+    "zipIntegrity": "PASS",
+    "packageChecksumManifest": "PASS",
+    "zshSyntax": "PASS (5 files)",
+    "LinuxMockBehaviorTests": "PASS (9 tests)",
+    "actualMacScriptExecution": "NOT RUN",
+    "graphicalClient": "NOT RUN",
+    "productionAndHistoryUnchanged": true,
+    "retainedTrackedInputsExceptAuthorizedDocsUnchanged": true,
+    "serverRegressionThisTask": "NOT RUN; immutable original tested cohort reused"
+  },
+  "delivery": {
+    "uploaded": false,
+    "downloadUrl": null,
+    "reason": "No file-upload/transfer tool or user-authorized remote destination; local cloud workspace ZIP retained. No Release/Gist/public drive/SSH used."
+  },
+  "files": [
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/delivery/result.json",
+      "SHA256": "bda7c50337c68b8a1ca79e7c3a0765869df650f784b7c9859fbc7add97486fea",
+      "Bytes": 1137
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/delivery/dualforge-005-mac-client-kit/manifest.json",
+      "SHA256": "7777c89eb0a1e8719c87b47eabbd9544cbbc54965fccbba642d2ae1c2fd0d2e6",
+      "Bytes": 3781
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/delivery/dualforge-005-mac-client-kit/SHA256SUMS",
+      "SHA256": "8c8c671d56bd1845434ffb28c152f79948308175ee1b9ad346d0b97fe133a566",
+      "Bytes": 867
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/delivery/dualforge-005-mac-client-kit.zip.sha256",
+      "SHA256": "e8591e983adf9cba329c9958b8f897c109e1dfabb59cfcb5e60eb1088c57bf1c",
+      "Bytes": 99
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/preflight/baseline.json",
+      "SHA256": "df8116f770c9b993999ed257c8ab4e552cf686ad46ec1dbf2c74a84863e7f826",
+      "Bytes": 749
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/tests/d7be48f6/commands.json",
+      "SHA256": "a381fb67cd5bb06a633cf9e7bf0ad8c38964c59c2c139e7db75c564471366728",
+      "Bytes": 37905
+    },
+    {
+      "Path": "/workspace/DualForge-005/out/convergence-005/mac-client-kit/tests/d7be48f6/status.json",
+      "SHA256": "b925457f695a3cab0bdc77b47be6c357f62a3d55e0468094b4352c6379d44461",
+      "Bytes": 78
+    }
+  ]
+}
