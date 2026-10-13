@@ -61,6 +61,26 @@ def dynamic(args,run,binary):
     return {'status':'PASS','compat':r.fingerprint(args.jar),'fixture':r.fingerprint(args.fixture),'driver':r.fingerprint(args.driver),'environment':environment,'meta':meta,'assertions':checks,'runtimeBytecode':runtime,'registered':enabled}
 
 
+def baseline(args,run,binary):
+    artifacts=[args.jar,args.fixture,args.driver]
+    w.server_preflight(args,args.jar);w.save(run/'artifacts.json',w.fingerprints(artifacts))
+    meta,logs,server=w.harness(args,run,binary,args.fixture,args.jar,installed_mod_name=args.fixture.name,
+                              extra_mods=(args.driver,),extra_jvm_args=('-DDF006_REGISTER=true',))
+    stdout=(logs/'spike002-0l-treatment.stdout.log').read_text(errors='replace')
+    stderr=(logs/'spike002-0l-treatment.stderr.log').read_text(errors='replace')
+    debug=(logs/'spike002-0l-treatment.debug.log').read_text(errors='replace')
+    checks={'exactInstalledCohort':all(w.digest(server/'mods'/p.name)==w.digest(p) for p in artifacts),
+            'actualForgeDiscoveryOnce':debug.count('Found mod file "multi-registry-probe.jar" [locator: dualforge locator')==1,
+            'realReaderAndFMLMetadata':'ForgeModReader: found META-INF/mods.toml' in stdout and 'Found valid mod file multi-registry-probe.jar with {multiregistryprobe} mods' in debug,
+            'firstFailureRawEvidence':'005 unsupported Item profile: class structure' in stderr and 'ControlledForgeItemProfile.validate' in stderr and 'DualForgeEntryTransformer.targets' in stderr,
+            'beforeConstruction':'[DF006] CONSTRUCTOR REACHED' not in stdout,
+            'JVMExitedBeforeDone':meta['status']=='EXITED_EARLY' and meta['doneLine'] is None}
+    w.save(run/'assertions.json',checks);w.save(run/'meta.json',meta)
+    assert all(checks.values()),'Read actual baseline failure; do not presume a root cause'
+    return {'status':'PASS','observedBehavior':'Existing profile rejects at targets/validate; reproduction only, not functional PASS',
+            'compat':r.fingerprint(args.jar),'fixture':r.fingerprint(args.fixture),'assertions':checks,'meta':meta}
+
+
 def consistent(results):
     required=('contract','control','treatment','regression')
     if any(results.get(s,{}).get('status')!='PASS' for s in required):return False
@@ -77,7 +97,7 @@ def consistent(results):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--stage',choices=('contract','control','treatment'),required=True)
+    p.add_argument('--stage',choices=('baseline','contract','control','treatment'),required=True)
     for key in ('jar','fixture','driver','native-control','matrix','server-input','jdk-home','java-network-args'):
         p.add_argument('--'+key,type=Path,required=key!='java-network-args')
     p.add_argument('--allow-server-start',action='store_true');p.add_argument('--public-key-relay',action='store_true')
@@ -91,7 +111,7 @@ def main():
         frozen=json.loads((ROOT/'fixture.json').read_text())['jars']
         for key,role in [('fixture','multi-registry-probe'),('driver','multi-registry-driver'),('native_control','native-control'),('matrix','registry-matrix')]:assert w.digest(getattr(args,key))==frozen[role]['SHA256'],'Frozen fixture cohort mismatch'
         binary=w.tools(args,run)
-        result.update(contract(args,run,binary) if args.stage=='contract' else dynamic(args,run,binary))
+        result.update(baseline(args,run,binary) if args.stage=='baseline' else contract(args,run,binary) if args.stage=='contract' else dynamic(args,run,binary))
     except Exception as error:
         result.update(status='NOT RUN' if isinstance(error,w.NotRunError) else 'FAIL',error=str(error));(run/'failure.txt').write_text(traceback.format_exc());raise
     finally:
