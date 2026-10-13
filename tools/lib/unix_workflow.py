@@ -418,7 +418,7 @@ def main():
     parser.add_argument("workflow", choices=("build", "dependencies", "harness"))
     parser.add_argument("--mode", choices=("build", "smoke", "regress"), default="build")
     parser.add_argument("--jdk-home", type=Path, default=Path(os.environ.get("JAVA_HOME", "/workspace/dualforge-cloud/tools/msjdk/usr/lib/jvm/msopenjdk-21-amd64")))
-    parser.add_argument("--server-input", type=Path, default=REPO / "spike000/neoforge-server")
+    parser.add_argument("--server-input", type=Path, default=REPO / "runtime/neoforge-server")
     parser.add_argument("--probe", type=Path, default=REPO / "history/spike000/probe-002-0l/build/forgeprobe.jar")
     parser.add_argument("--jar", "--compat-jar", dest="jar", type=Path)
     parser.add_argument("--output-root", type=Path)
@@ -457,7 +457,7 @@ def main():
             fixed = probe(args)
             server_preflight(args, compat)
             stage = "STARTUP"
-            records = fingerprints([p for folder in ("dualforge", "spike000", "spike001a", "spike001b5", "history", "Dev Manuals")
+            records = fingerprints([p for folder in ("dualforge", "runtime", "history", "Dev Manuals")
                                     for p in (REPO / folder).rglob("*") if p.is_file()] + [compat, fixed])
             save(directory / "preserved-before.json", records)
             try:

@@ -44,6 +44,13 @@
 /spike000/forge-server/README.txt
 /spike000/forge-server/run.bat
 /spike000/forge-server/run.sh
+# Runtime installations are local inputs; only these original configs are versioned.
+/runtime/neoforge-server/*
+!/runtime/neoforge-server/config/
+/runtime/neoforge-server/config/*
+!/runtime/neoforge-server/config/fml.toml
+!/runtime/neoforge-server/config/neoforge-common.toml
+!/runtime/neoforge-server/config/neoforge-server.toml
 **/server.properties
 **/user_jvm_args.txt
 **/eula.txt
