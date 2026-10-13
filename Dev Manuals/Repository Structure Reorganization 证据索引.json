@@ -2494,8 +2494,98 @@
       "path": "/workspace/DualForge-reorganization/out/reorganization/mac-unit.stdout.log",
       "sha256": "c1b1efe8f174735d9607a9ad8f938c0f83dc02f645da41b23efa72432ed6743a",
       "bytes": 1292
+    },
+    {
+      "path": "/workspace/DualForge-reorganization/out/reorganization/ci-47011dd.json",
+      "sha256": "36a0cf57a445f0036d1f28f0470337e17fe92f776c89eb15e33590e37471d460",
+      "bytes": 1384
     }
   ],
   "attachmentsUploaded": false,
-  "ciStatusAtWriting": "NOT RUN; final PR checks reported separately"
+  "ciObserved": {
+    "conclusion": "success",
+    "headSha": "47011dd248a1a74e712082b11ea4abcb47f324fc",
+    "jobs": [
+      {
+        "completedAt": "2026-10-13T23:06:18Z",
+        "conclusion": "success",
+        "databaseId": 115586882717,
+        "name": "static-and-unit",
+        "startedAt": "2026-10-13T23:05:57Z",
+        "status": "completed",
+        "steps": [
+          {
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Checkout repository",
+            "number": 2,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Set up Python",
+            "number": 3,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Install zsh",
+            "number": 4,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Verify naming and protected files",
+            "number": 5,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Run Python unit tests",
+            "number": 6,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Validate zsh scripts",
+            "number": 7,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Check PR whitespace",
+            "number": 8,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Set up Python",
+            "number": 15,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Post Checkout repository",
+            "number": 16,
+            "status": "completed"
+          },
+          {
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 17,
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/GFander/DualForge/actions/runs/38482107378/job/115586882717"
+      }
+    ],
+    "status": "completed",
+    "url": "https://github.com/GFander/DualForge/actions/runs/38482107378"
+  },
+  "finalHeadCIPolicy": "Final report-only commit must pass its own workflow; see final PR checks/delivery reply"
 }

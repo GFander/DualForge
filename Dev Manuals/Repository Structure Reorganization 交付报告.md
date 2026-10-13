@@ -82,7 +82,7 @@ Contract故意注入的dump失败仍仅为既有负例，不混成真实服务�
 ## Gate 4：GitHub Actions
 
 现有ci.yml原字节不改，自动执行37项Python测试、命名/历史保护、22份zsh语法及PR diff检查。
-最终PR HEAD的实际Actions状态及run链接记录在PR正文/交付回复；提交本报告时尚未推送，因此此处不预先填写PASS。
+[E] PR #12 的实际Actions [run 38482107378](https://github.com/GFander/DualForge/actions/runs/38482107378) 在提交 `47011dd248a1a74e712082b11ea4abcb47f324fc` 全部PASS：命名/历史保护、37项常规Python单测、zsh语法、PR diff检查。完成时间2026-10-14 07:06:18（Asia/Shanghai）。本CI回写提交仅修改报告/索引，之后最终HEAD亦须等待同一workflow完成；最终run记录在PR正文/交付回复，不将前一提交CI冒称最终提交检查。
 
 ## 失败记录及完成边界
 
