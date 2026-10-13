@@ -123,3 +123,7 @@ and hand-held rendering, no missing model/texture or purple/black fallback,
 and switch English/Simplified Chinese to verify both names. Save actual
 client logs, commands, artifact hashes and real screenshots externally.
 Dedicated Server output and resource presence cannot prove any of these.
+
+Mac 原生部署包、Prism A/B/C 实验、只安装两个原 cohort JAR 的脚本与本地
+诊断回传说明见 [mac/README.md](mac/README.md)。云端完成打包不升级
+005-C 状态；等待真实 Mac 人工加载、物品和渲染证据。

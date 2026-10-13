@@ -81,6 +81,11 @@ driver 位于 `driver/`；拒绝及原子性对照在 `RegistryBytecodeTest.java
 单 Item ID 为 `registryprobe:ice_ether`；用户原始 16×16 PNG 已原字节打包，
 服务端与资源静态验收 PASS，真实客户端仍 NOT RUN。阶段、输入和重跑方式见 [tests/registry/README.md](tests/registry/README.md)。
 
+`tests/registry/mac/` 是活跃的 005-C 部署准备：云端 kit packager、Mac
+preflight／安装回滚／本地脱敏日志 zsh 脚本及 A/B/C 人工清单，说明见
+[Mac kit README](tests/registry/mac/README.md)。不打包运行库或账号，不代表
+已执行真实客户端测试，最终 ZIP 仍保存于被忽略的 out/。
+
 ## 新旧路径映射
 
 本轮基线为 `4078888fb13958c61829c4041f832b88164a7c01`，所有已有文件的

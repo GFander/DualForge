@@ -21,6 +21,10 @@ DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。已验�
 
 这是受控原型，不代表任意 Forge 模组兼容。一般 Forge post API、取消／优先级／自动／静态订阅、多 Forge 同时完整启动、一般 RegistryObject API、Block／自定义 Registry、Capability 和 Fabric 尚未验证或实现。受控真实投递不代表一般 Forge Event 系统兼容。历史 PASS 见交付报告；每轮运行以新生成的 `result.json` 和原始日志为准。
 
+005-C 的 macOS 原生客户端部署准备见 [Mac kit](tests/registry/mac/README.md)：
+只交付两个原 005-S JAR、Prism 精确版本和 Java/JVM 参数检查、安装回滚与
+人工清单。Linux 模拟脚本测试及打包成功不代表真实 Mac 客户端 PASS。
+
 ## 环境与外部输入
 
 | 组件 | 版本 |

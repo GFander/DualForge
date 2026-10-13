@@ -1,0 +1,7 @@
+-Dforgecompat.2a.rewrite=true
+-Dforgecompat.0g.apiRewrite=true
+-Dforgecompat.0j.emptyRegistration=true
+-Dforgecompat.0l.subscriberRewrite=true
+-DDF005_REGISTER=true
+-Dforgecompat.dump.path=dualforge-005-evidence/ForgeProbe.rewritten.class
+-Dforgecompat.dump.profileDir=dualforge-005-evidence/profile
