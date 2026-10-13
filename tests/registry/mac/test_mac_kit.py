@@ -39,7 +39,8 @@ class MacScriptTest(unittest.TestCase):
             "sw_vers": '#!/bin/sh\necho 15.0\n',
             "prismlauncher": '#!/bin/sh\nexit 0\n',
             "java-mock": '#!/bin/sh\necho "    java.version = 21.0.10" >&2\necho "    os.arch = aarch64" >&2\n',
-            "plutil": '#!/usr/bin/env python3\nimport json,sys\na=sys.argv[1:];v=json.load(open(a[-1]))\nif a[0]=="-lint":sys.exit(0)\ntry:\n for k in a[1].split("."):v=v[int(k)] if isinstance(v,list) else v[k]\n print(v)\nexcept (KeyError,IndexError):sys.exit(1)\n',
+            # Match the reported Mac: JSON works with -p/-extract, not plist -lint.
+            "plutil": '#!/usr/bin/env python3\nimport json,sys\na=sys.argv[1:]\nif a[0]=="-lint":sys.stderr.write("Unexpected character { at line 1\\n");sys.exit(1)\ntry:v=json.load(open(a[-1]))\nexcept (ValueError,OSError):sys.exit(1)\nif a[0]=="-p":print(v);sys.exit(0)\ntry:\n for k in a[1].split("."):v=v[int(k)] if isinstance(v,list) else v[k]\n print(v)\nexcept (KeyError,IndexError):sys.exit(1)\n',
         }
         for name, text in commands.items():
             path = cls.mock / name
@@ -80,6 +81,27 @@ class MacScriptTest(unittest.TestCase):
     def test_linux_is_rejected(self):
         self.run_script("mac-preflight.zsh", ok=False, native=True)
 
+    def test_json_uses_parse_mode_not_plist_lint(self):
+        self.run_script("mac-preflight.zsh")
+        (self.instance / "mmc-pack.json").write_text('{"components": invalid}')
+        before = snapshot(self.instance)
+        self.run_script("mac-preflight.zsh", ok=False)
+        self.assertEqual(before, snapshot(self.instance))
+
+    def test_prism_outer_quoted_jvm_args(self):
+        original = self.cfg.read_text()
+        flags = "  ".join((self.kit / "JVM-ARGS.txt").read_text().splitlines())
+        for arguments in (flags, '"' + flags + '"',
+                          '"' + flags + '  \\"-Dlabel=two words\\""'):
+            self.cfg.write_text(original.split("JvmArgs=", 1)[0] + "JvmArgs=" + arguments + "\n")
+            # Isolate JVM parsing from the separate JSON/plutil failure.
+            command = ["zsh", "-c", 'source "$1"; DF_INSTANCE="$2"; DF_GAME="$3"; DF_KIT="$4"; df_jvm',
+                       "jvm-parser-test", str(self.kit / "scripts/mac-common.zsh"), str(self.instance), str(self.game), str(self.kit)]
+            result = subprocess.run(command, text=True, capture_output=True)
+            self.results.append({"command": command, "exit": result.returncode, "stdout": result.stdout,
+                                 "stderr": result.stderr, "mocked": True})
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
     def test_phase_b_c_dry_run_ownership_rollback(self):
         before = snapshot(self.instance)
         self.run_script("mac-install.zsh", "--install", "--phase", "B", ok=False)
@@ -95,6 +117,24 @@ class MacScriptTest(unittest.TestCase):
         self.assertEqual((self.mods / "user-added.jar").read_text(), "do not delete")
         self.assertEqual((self.game / "world-do-not-touch").read_text(), "world sentinel")
         self.assertFalse((self.mods / "forgecompat-002-0l.jar").exists())
+
+    def test_sha_ledger_validation_and_legacy_rollback(self):
+        self.run_script("mac-install.zsh", "--dry-run")
+        self.run_script("mac-install.zsh", "--install")
+        ledger = self.mods / ".dualforge-005-owned"
+        entries = [line.split() for line in ledger.read_text().splitlines()]
+        self.assertEqual(len(entries), 2)
+        for name, digest in entries:
+            self.assertEqual(digest, hashlib.sha256((self.kit / "mods" / name).read_bytes()).hexdigest())
+        ledger.write_text(entries[0][0] + " " + "0" * 64 + "\n")
+        before = snapshot(self.instance)
+        self.run_script("mac-install.zsh", "--rollback", ok=False)
+        self.assertEqual(before, snapshot(self.instance))
+        # Existing users can roll back their original filename-only receipt safely.
+        ledger.write_text("\n".join(name for name, _ in entries) + "\n")
+        self.run_script("mac-install.zsh", "--rollback")
+        self.assertFalse((self.mods / "registry-probe.jar").exists())
+        self.assertEqual((self.game / "world-do-not-touch").read_text(), "world sentinel")
 
     def test_rollback_rejects_changed_owned_artifact_atomically(self):
         self.run_script("mac-install.zsh", "--dry-run")
@@ -160,13 +200,25 @@ class MacScriptTest(unittest.TestCase):
         self.cfg.write_text(self.cfg.read_text().replace("-DDF005_REGISTER=true", "-DDF005_REGISTER=true -DDF005_REGISTER=false"))
         self.run_script("mac-preflight.zsh", ok=False)
 
+    def test_quoted_properties_remain_strict_and_do_not_execute(self):
+        initial = self.cfg.read_text().split("JvmArgs=", 1)[0]
+        flags = "  ".join((self.kit / "JVM-ARGS.txt").read_text().splitlines())
+        for suffix in (" -DDF005_REGISTER=false", " -DDF005_REGISTER=true"):
+            self.cfg.write_text(initial + 'JvmArgs="' + flags + suffix + '"\n')
+            self.run_script("mac-preflight.zsh", ok=False)
+        marker = self.work / "must-not-execute"
+        # Keep command-substitution-looking data literal throughout INI/token parsing.
+        self.cfg.write_text(initial + 'JvmArgs="' + flags + " '-Dliteral=$(touch " + str(marker) + ")'\"\n")
+        self.run_script("mac-preflight.zsh")
+        self.assertFalse(marker.exists())
+
     def test_collection_redacts_and_keeps_originals(self):
         marker = self.work / "start-marker"
         marker.write_text("")
         os.utime(marker, (time.time() - 60, time.time() - 60))
         logs = self.game / "logs"
         logs.mkdir()
-        raw = "[DF005] CONSTRUCTOR REACHED\naccessToken=SECRET\nsession: PRIVATESESSION\npassword: PWD\nConnecting to hidden.example.net\naddress 10.2.3.4\nIPv6 ::1 and 2001:db8:85a3:0:0:8a2e:370:7334\nprivate.example.net\n"
+        raw = "[DF005] CONSTRUCTOR REACHED\naccessToken=SECRET\nsession: PRIVATESESSION\npassword: PWD\nConnecting to hidden.example.net\naddress 10.2.3.4\nIPv6 ::1 and 2001:db8:85a3:0:0:8a2e:370:7334\nprivate.example.net\n" + str(self.instance / "mods/registry-probe.jar") + "\n"
         (logs / "latest.log").write_text(raw)
         before = snapshot(self.instance)
         self.run_script("mac-collect-logs.zsh", "--stage", "C", "--since-marker", marker,
@@ -174,10 +226,14 @@ class MacScriptTest(unittest.TestCase):
         self.assertEqual(before, snapshot(self.instance))
         diagnostics = next(self.work.glob("dualforge-005-client-C-*.zip"))
         with zipfile.ZipFile(diagnostics) as archive:
+            self.assertTrue(any(n.endswith("/checklist/CHECKLIST.md") for n in archive.namelist()))
             text = "\n".join(archive.read(n).decode() for n in archive.namelist() if n.endswith(".txt") or n.endswith(".log"))
         for secret in ("SECRET", "PRIVATESESSION", "PWD", "hidden.example.net", "10.2.3.4", "::1", "2001:db8", "private.example.net"):
             self.assertNotIn(secret, text)
         self.assertIn("[DF005] CONSTRUCTOR REACHED", text)
+        self.assertIn("<INSTANCE>/mods/registry-probe.jar", text)
+        self.assertNotIn(str(self.instance), text)
+        self.assertIn("not runtime log evidence", text)
 
 
 if __name__ == "__main__":

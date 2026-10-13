@@ -24,7 +24,8 @@ done
 [[ "$stage" == A || "$stage" == B || "$stage" == C ]] || df_die 'Choose stage A, B or C.'
 df_platform
 df_kit
-df_instance "$instance"
+df_instance "$instance" >/dev/null
+print -r -- 'Verified collector instance=<INSTANCE>; MC=1.21.1; NeoForge=21.1.256'
 [[ -f "$marker" && ! -L "$marker" ]] || df_die 'Before launching, create a stage marker with touch; pass that exact file.'
 [[ -d "$output_dir" ]] || df_die 'Pass an existing user-selected output directory.'
 df_no_links "$output_dir"
@@ -34,6 +35,7 @@ diagnostics="$output_dir/dualforge-005-client-$stage-$(date +%Y%m%d-%H%M%S)-$$"
 mkdir "$diagnostics"
 print -r -- "stage=$stage" "clientStatus=NOT_ASSESSED" "macOS=$(sw_vers -productVersion)" "CPU=$(uname -m)" \
   'Minecraft=1.21.1' 'NeoForge=21.1.256' > "$diagnostics/environment.txt"
+mkdir "$diagnostics/checklist"
 java_path="$(df_cfg JavaPath)" || df_die 'No configured instance Java.'
 [[ -x "$java_path" ]] || df_die 'Configured instance Java unavailable.'
 "$java_path" -version > "$diagnostics/java-version.txt" 2>&1
@@ -54,6 +56,7 @@ sanitize() {
       if (/(?:Connecting to|server address|server ip|hostname\s*[=:])/i) { $_="[REDACTED connection-address line]\n"; }
     }
   ' "$1" > "$2"
+  DF_INSTANCE_TEXT="$DF_INSTANCE" perl -i -pe 's/\Q$ENV{DF_INSTANCE_TEXT}\E/<INSTANCE>/g' "$2"
   local text
   for text in "${private_text[@]}"; do
     DF_PRIVATE_TEXT="$text" perl -i -pe 's/\Q$ENV{DF_PRIVATE_TEXT}\E/[REDACTED_USER_TEXT]/g' "$2"
@@ -75,7 +78,7 @@ for log in "${logs[@]}"; do
 done
 [[ -f "$checklist" ]] || df_die 'Checklist file missing.'
 df_no_links "$checklist"
-sanitize "$checklist" "$diagnostics/CHECKLIST.md"
+sanitize "$checklist" "$diagnostics/checklist/CHECKLIST.md"
 index=0
 for screenshot in "${screenshots[@]}"; do
   [[ -f "$screenshot" && "${screenshot:e:l}" == png ]] || df_die 'Explicit screenshots must be existing PNG files.'
@@ -88,6 +91,8 @@ print -r -- 'Local originals retained. Copies omit whole sensitive-field/connect
   'Necessary context may be hidden: report these omissions when returning diagnostics.' \
   'Screenshots are unchanged user-selected bytes: inspect for names, chat, private addresses and secrets before sharing.' \
   'No upload occurs. Inspect every archive member before deciding to return it.' > "$diagnostics/REDACTION-NOTES.txt"
+print -r -- 'checklist/CHECKLIST.md contains template/user assertions, not runtime log evidence. Keyword hits there (registryprobe, LanguageLoader, etc.) prove no loading.' \
+  'Instance path strings are replaced by <INSTANCE>. Analyze log-*.log separately from checklist/notes/metadata and require actual logger/message context.' >> "$diagnostics/REDACTION-NOTES.txt"
 (cd "$output_dir" && zip -qr "${diagnostics:t}.zip" "${diagnostics:t}")
 unzip -tq "$diagnostics.zip" >/dev/null
 print -r -- "Local diagnostic ZIP=$diagnostics.zip" "SHA256=$(df_sha "$diagnostics.zip")"

@@ -1,6 +1,8 @@
 # DualForge 005-C：Mac 人工验收
 
-当前 005-S PASS；005-C **NOT RUN**。此包只帮助部署和取证，不含客户端、
+当前 005-S PASS；用户已在 macOS 27.0 arm64 + Java 21.0.7 完成人工 005-C
+受控验收 PASS。这个修订包的脚本尚未在 Mac 实机复测；以下清单作为其他
+运行的空白模板，不表示预先验收。本包只帮助部署和取证，不含客户端、
 账号、世界、JDK、LWJGL、服务端 libraries 或测试 driver。云端不执行 Mac
 图形操作；成功安装、主菜单或静态资源检查均不代表完整客户端 PASS。
 
@@ -40,6 +42,10 @@ manifest.json 标明源提交、原生 Forge 编译纯度证据、实际 JAR/资
 6. 右键实例 → Folder，明确记录实例目录：它含 mmc-pack.json 和
    instance.cfg，游戏目录是其中 `.minecraft/`（通常）或 `minecraft/`。
    脚本只接受恰好一个已有游戏目录，不猜测 `~/Library` 下实例名字。
+
+脚本使用 plutil 的 JSON parse/extract 模式，而非 plist-only `-lint`；
+Prism 给整串 JvmArgs 加的一层外部双引号会先解码，再按实际参数分词。
+多空格及内部参数引号保留；缺失、重复或冲突的受控参数仍拒绝，不用 eval。
 
 默认 dump 路径在生产源码里仍有历史 Windows 值，因此本包明确覆盖为
 `dualforge-005-evidence/...`，相对于 Prism 启动的该实例游戏目录；Mac 有效，
@@ -133,6 +139,18 @@ zsh "$DF_KIT/scripts/mac-install.zsh" --rollback --instance-dir "$DF_INSTANCE"
 
 回滚只删除 mods/.dualforge-005-owned 记录的本脚本新增 JAR，且删除前核对
 原 cohort SHA；用户预先已有的相同 JAR不会被删除，发生修改则全部拒绝。
+新版 ledger 每行记录文件名和 cohort SHA；旧版 filename-only ledger 仍可
+安全回滚（核对当前原 JAR SHA），不删除或重建用户原来的收据来绕过校验。
 不删除世界、日志、截图、其他模组或游戏目录。脚本不使用 rm -rf，不安装
 软件，不修改 launcher profile/账号或全局配置。恢复纯 A 后再次检查 mods
 为空；未由脚本新增的文件由你自行决定如何处理。
+
+诊断包的清单副本位于 checklist/CHECKLIST.md；它包含模板/人工陈述，不能
+作为日志痕迹。应仅在 log-*.log 中按实际 logger/message 判断加载。
+collector 将实例路径替换为 <INSTANCE>，避免目录名 DualForge 造成误命中；
+Prism 控制台 System.out 可能不在 latest/debug 中，必要时另行手动保存
+并检查脱敏，不能把缺少 println marker 当成未加载。
+
+替换旧 kit 时将新版解压到新目录，保留旧脚本/.orig、清单、日志及世界。
+不要把旧脚本复制进新包或手工改 SHA256SUMS 绕过完整性检查。两 JAR 原字节
+未变，已安装的旧收据仍兼容；新的脚本验证先 preflight/dry-run，再决定操作。

@@ -22,8 +22,11 @@ typeset -a owned desired
 owned=()
 if [[ -e "$ledger" ]]; then
   [[ -f "$ledger" && ! -L "$ledger" ]] || df_die 'Unsafe ownership ledger.'
-  while IFS= read -r name || [[ -n "$name" ]]; do
+  while IFS=$' \t' read -r name recorded_sha extra || [[ -n "$name" ]]; do
     [[ "$name" == forgecompat-002-0l.jar || "$name" == registry-probe.jar ]] || df_die 'Invalid ownership ledger.'
+    [[ -z "$extra" ]] || df_die 'Unexpected ownership ledger fields.'
+    # Filename-only ledgers from the first kit remain safe via the pinned kit SHA.
+    [[ -z "$recorded_sha" || "$recorded_sha" == "$(df_sha "$DF_KIT/mods/$name")" ]] || df_die 'Ownership ledger cohort SHA mismatch.'
     owned+=("$name")
   done < "$ledger"
 fi
@@ -64,7 +67,9 @@ for name in "${desired[@]}"; do
     # noclobber prevents replacing even a raced-in target; no user backup is needed.
     (setopt noclobber; cat "$DF_KIT/mods/$name" > "$DF_MODS/$name") || df_die "Copy refused: $name"
     owned+=("$name")
-    print -rl -- "${owned[@]}" > "$ledger"
+    for owned_name in "${owned[@]}"; do
+      print -r -- "$owned_name $(df_sha "$DF_KIT/mods/$owned_name")"
+    done > "$ledger"
     [[ "$(df_sha "$DF_MODS/$name")" == "$(df_sha "$DF_KIT/mods/$name")" ]] || df_die "Copy verification failed; retained for inspection: $name"
   fi
 done

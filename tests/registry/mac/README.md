@@ -28,7 +28,12 @@ manifest 记录源码 commit、原始 cohort、资源 SHA、Mac 架构与 Java 2
 错误版本/Java/开关、symlink、kit 篡改和日志脱敏。不是 Mac 脚本实机结果，
 更不是图形客户端 PASS。真实 Mac A/B/C 与渲染只能由人工证据裁定。
 
+已收到用户真实 macOS 27.0 arm64 A/B/C 日志与 C 截图，用户确认 /give
+及中英文名称均通过；005-C 在该受控 Mac/JAR cohort 上人工 PASS。修订
+脚本加入 JSON parse、Qt INI 外层引号、多空格与严格重复/冲突检查，完整
+13 项 Linux 模拟测试通过；不是修订脚本的 Mac 实机复测。
+
 下载 URL 只有真实上传并验证后才能记录。当前云端未上传包，不使用未经
 授权的公共 Release、Gist 或网盘，也不自行开启 SSH。若应用无法取出云端
 工作区 ZIP，则传输仍阻塞；包保留，不能声称已在用户 Mac 部署。
-完成云端准备后等待用户执行 MAC-SETUP，不自动合并 PR #7 或开始 006。
+后续运行按 MAC-SETUP 独立取证，不自动合并 PR #7 或开始 006。

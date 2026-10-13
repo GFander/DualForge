@@ -46,7 +46,10 @@ def build(args):
     for name in ("MAC-SETUP.md", "JVM-ARGS.txt", "CHECKLIST.md"):
         shutil.copyfile(SOURCE / name, root / name)
     shutil.copytree(SOURCE / "scripts", root / "scripts")
-    manifest = {"schemaVersion": 1, "task": "Convergence-005-C", "clientStatus": "NOT RUN",
+    manifest = {"schemaVersion": 1, "task": "Convergence-005-C", "clientStatus": "PASS",
+                "clientScope": "user-run macOS 27.0 arm64 / Microsoft Java 21.0.7+6; original tested JAR cohort",
+                "clientEvidence": "Dev Manuals/Convergence-005-C 客户端验收与脚本修复.md: real A/B/C logs/screenshots plus user manual give/English/Chinese confirmation",
+                "repairedScriptsMacExecuted": False,
                 "serverStatus": "PASS", "minecraft": "1.21.1", "neoforge": "21.1.256", "javaMajor": 21,
                 "platform": "macOS", "architectures": ["arm64", "x86_64"],
                 "sourceCommit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=REPO, text=True).strip(),
@@ -75,8 +78,9 @@ def build(args):
         assert all(not any(x in n for x in ("libraries/", "world/", "accounts", "driver.jar")) for n in package.namelist())
     result = {"status": "PASS", "sourceCommit": manifest["sourceCommit"], "zip": str(archive),
               "zipSHA256": sha(archive), "zipBytes": archive.stat().st_size, "contents": len(payload) + 1,
-              "mods": records, "resources": resources, "005-S": "PASS", "005-C": "NOT RUN",
-              "uploaded": False, "downloadUrl": None, "MacExecuted": False}
+              "mods": records, "resources": resources, "005-S": "PASS", "005-C": "PASS",
+              "clientScope": manifest["clientScope"], "repairedScriptsMacExecuted": False,
+              "uploaded": False, "downloadUrl": None, "CloudMacExecuted": False}
     (output / "result.json").write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
     (output / (archive.name + ".sha256")).write_text(f"{sha(archive)}  {archive.name}\n")
     print(json.dumps(result, ensure_ascii=False, indent=2))

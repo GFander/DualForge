@@ -43,7 +43,8 @@ df_instance() {
   DF_INSTANCE="${1:A}"
   [[ -f "$DF_INSTANCE/mmc-pack.json" && -f "$DF_INSTANCE/instance.cfg" ]] || df_die 'Instance missing: manually create MC 1.21.1 + NeoForge 21.1.256 in Prism; do not guess a path.'
   [[ ! -L "$DF_INSTANCE/mmc-pack.json" && ! -L "$DF_INSTANCE/instance.cfg" ]] || df_die 'Linked instance metadata refused.'
-  plutil -lint "$DF_INSTANCE/mmc-pack.json" >/dev/null || df_die 'Invalid mmc-pack.json.'
+  # Prism stores JSON. On the reported Mac, -lint accepts only plist syntax.
+  plutil -p "$DF_INSTANCE/mmc-pack.json" >/dev/null 2>&1 || df_die 'Invalid mmc-pack.json.'
   local i=0 uid version mc='' neo=''
   while uid="$(plutil -extract "components.$i.uid" raw -o - "$DF_INSTANCE/mmc-pack.json" 2>/dev/null)"; do
     version="$(plutil -extract "components.$i.version" raw -o - "$DF_INSTANCE/mmc-pack.json")" || df_die 'Missing component version.'
@@ -108,6 +109,13 @@ df_jvm() {
   override="$(df_cfg OverrideJavaArgs)" || df_die 'Enable the instance Java arguments override in Prism.'
   [[ "$override" == true ]] || df_die 'Instance JVM arguments override is not enabled.'
   arguments="$(df_cfg JvmArgs)" || df_die 'No instance JvmArgs: paste JVM-ARGS.txt in Prism.'
+  # Qt INI may quote the entire value and escape quotes inside that wrapper.
+  # Decode one whole-value wrapper, then tokenize the actual JVM argument string.
+  # A sequence of individually quoted arguments must retain its own grouping.
+  tokens=("${(@)${(z)arguments}}")
+  if [[ "$arguments" == \"*\" ]] && (( ${#tokens} == 1 )); then
+    arguments="${(Q)arguments}"
+  fi
   tokens=("${(@Q)${(z)arguments}}")
   while IFS= read -r required || [[ -n "$required" ]]; do
     [[ -n "$required" ]] || continue
