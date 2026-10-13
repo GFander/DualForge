@@ -18,7 +18,7 @@ import uuid
 import zipfile
 
 REPO = Path(__file__).resolve().parents[2]
-SOURCE = REPO / "spike001a/compat-002-0l/src"
+SOURCE = REPO / "dualforge/src"
 PROBE_SHA = "a774d2f737b17f089046014ab55a53767dbad008cd44dcce52c727b87e559ae8"
 LIBRARIES = (
     "net/neoforged/fancymodloader/loader/4.0.45/loader-4.0.45.jar",
@@ -30,7 +30,7 @@ LIBRARIES = (
     "org/ow2/asm/asm-tree/9.10.1/asm-tree-9.10.1.jar",
     "net/neoforged/bus/8.0.5/bus-8.0.5.jar",
 )
-FLAGS = tuple("-Dforgecompat." + name + "=true" for name in (
+FLAGS = tuple("-Ddualforge." + name + "=true" for name in (
     "2a.rewrite", "0g.apiRewrite", "0j.emptyRegistration", "0l.subscriberRewrite"))
 MARKERS = (
     "FORGE PROBE CONSTRUCTOR REACHED",
@@ -157,7 +157,7 @@ def build(args, directory, binary):
     root = directory / "jar-root"
     shutil.copytree(classes, root)
     shutil.copytree(SOURCE / "main/resources", root, dirs_exist_ok=True)
-    jar = directory / "forgecompat-002-0l.jar"
+    jar = directory / "dualforge.jar"
     native(directory, "jar", [binary / "jar", "--create", "--file", jar, "--manifest",
            SOURCE / "main/resources/META-INF/MANIFEST.MF", "-C", root, "."])
     unchanged(inputs)
@@ -174,8 +174,8 @@ def server_preflight(args, compat=None):
     if compat is not None:
         # Reject stale builds that cannot redirect dump I/O into this isolated run.
         with zipfile.ZipFile(compat) as archive:
-            transformer = archive.read("com/example/forgecompat/ForgeProbeConstructorTransformer.class")
-        if any(key not in transformer for key in (b"forgecompat.dump.path", b"forgecompat.dump.profileDir")):
+            transformer = archive.read("io/github/gfander/dualforge/DualForgeEntryTransformer.class")
+        if any(key not in transformer for key in (b"dualforge.dump.path", b"dualforge.dump.profileDir")):
             raise NotRunError("Server NOT RUN: rebuild with the approved configurable dump paths")
     processes = subprocess.run(["pgrep", "-x", "java"], capture_output=True)
     if processes.returncode not in (0, 1):
@@ -237,6 +237,7 @@ def public_key_relay(directory):
 
 def harness(args, directory, binary, mod, compat, installed_mod_name="forgeprobe.jar",
             extra_mods=(), extra_jvm_args=()):
+    validate_mod_cohort(mod, extra_mods)
     # Never mutate the supplied installation. Every invocation gets a physical copy.
     records = fingerprints([p for folder in ("libraries", "config", "defaultconfigs", "spike000world")
                             for p in (args.server_input / folder).rglob("*") if p.is_file()]
@@ -252,11 +253,11 @@ def harness(args, directory, binary, mod, compat, installed_mod_name="forgeprobe
     for extra in extra_mods:
         shutil.copyfile(extra, mods / extra.name)
     if compat:
-        shutil.copyfile(compat, mods / "forgecompat-002-0l.jar")
+        shutil.copyfile(compat, mods / "dualforge.jar")
     (server / "server.properties").write_text("\n".join(SERVER_PROPERTIES) + "\n")
     (server / "eula.txt").write_text("eula=true\n")
-    dump_args = (f"-Dforgecompat.dump.path={directory / 'dumps/rewritten/ForgeProbe.rewritten.class'}",
-                 f"-Dforgecompat.dump.profileDir={directory / 'dumps/profile'}")
+    dump_args = (f"-Ddualforge.dump.path={directory / 'dumps/rewritten/ForgeProbe.rewritten.class'}",
+                 f"-Ddualforge.dump.profileDir={directory / 'dumps/profile'}")
     (server / "user_jvm_args.txt").write_text("\n".join(json.dumps(value) for value in
             ("-Xmx3G", "-Xms1G", *FLAGS, *dump_args, *extra_jvm_args)) + "\n")
     network = ["@" + str(args.java_network_args.resolve())] if args.java_network_args else []
@@ -320,12 +321,22 @@ def harness(args, directory, binary, mod, compat, installed_mod_name="forgeprobe
     return meta, logs, server
 
 
+def validate_mod_cohort(mod, extra_mods):
+    """The shared harness owns the only compatibility JAR in an isolated run."""
+    for path in (mod, *extra_mods):
+        with zipfile.ZipFile(path) as archive:
+            manifest = archive.read("META-INF/MANIFEST.MF").decode()
+            # Explicit Legacy recognition also catches an old JAR renamed by a caller.
+            if re.search(r"^Automatic-Module-Name: (dualforge|forgecompat)\s*$", manifest, re.M):
+                raise NotRunError("Duplicate or Legacy compatibility JAR: use only the designated DualForge artifact")
+
+
 def assertions(directory, meta, logs, server, mod, compat, negative=None):
     label = "spike002-0l-treatment"
     stdout = (logs / (label + ".stdout.log")).read_text(errors="replace")
     debug = (logs / (label + ".debug.log")).read_text(errors="replace")
     checks = {"exactFixtureInstalled": digest(server / "mods/forgeprobe.jar") == digest(mod),
-              "exactCompatInstalled": digest(server / "mods/forgecompat-002-0l.jar") == digest(compat)}
+              "exactCompatInstalled": digest(server / "mods/dualforge.jar") == digest(compat)}
     if negative:
         target, actual = ("convergence_missing", "[MISSING]") if negative.startswith("D-") else ("minecraft", "1.21.1")
         checks.update(specificDependencyRejected=("Missing or unsupported mandatory dependencies" in debug
@@ -343,9 +354,9 @@ def assertions(directory, meta, logs, server, mod, compat, negative=None):
         checks["stderr empty"] = (logs / (label + ".stderr.log")).stat().st_size == 0
         checks["no crash report"] = not any(p.is_file() for p in (logs / "crash-reports").rglob("*"))
         checks["exactly two mods"] = len(list((server / "mods").iterdir())) == 2
-        discovery = f"Found additional transformation services from discovery services: [{server / 'mods/forgecompat-002-0l.jar'}]"
-        checks["isolated artifact service discovery"] = (discovery in debug and "Loaded service forgecompat-transform" in debug
-                                                        and "ForgeCompatLanguageLoader from forgecompat-002-0l.jar" in debug)
+        discovery = f"Found additional transformation services from discovery services: [{server / 'mods/dualforge.jar'}]"
+        checks["isolated artifact service discovery"] = (discovery in debug and "Loaded service dualforge-transform" in debug
+                                                        and "DualForgeLanguageLoader from dualforge.jar" in debug)
     save(directory / "assertions.json", checks)
     if not all(checks.values()):
         raise RuntimeError("Assertion failed; see assertions.json")
@@ -353,8 +364,8 @@ def assertions(directory, meta, logs, server, mod, compat, negative=None):
 
 
 def dependencies(args, directory, binary, fixed, compat, result):
-    if compat.name != "forgecompat-002-0l.jar":
-        raise RuntimeError("Keep the baseline compat jar filename")
+    if compat.name != "dualforge.jar":
+        raise RuntimeError("Use the current dualforge.jar artifact")
     libraries = sorted((args.server_input / "libraries").rglob("*.jar"))
     if not libraries:
         raise NotRunError("Missing server libraries")
@@ -368,7 +379,7 @@ def dependencies(args, directory, binary, fixed, compat, result):
            "-d", classes, fixtures / "DependencyContractTest.java"])
     native(directory, "boundary", [binary / "java", "--add-opens", "java.base/java.lang.invoke=ALL-UNNAMED",
            "--add-exports", "java.base/sun.security.util=ALL-UNNAMED", "-classpath", str(classes) + os.pathsep + cp,
-           "com.example.forgecompat.DependencyContractTest", args.stage, fixtures, fixed])
+           "io.github.gfander.dualforge.DependencyContractTest", args.stage, fixtures, fixed])
     boundary = (directory / "boundary.stdout.log").read_text()
     marker = "PASS cases=6" if args.stage == "after" else "REPRODUCED cases=6"
     if marker not in boundary:
@@ -441,12 +452,12 @@ def main():
             dependencies(args, directory, binary, fixed, compat, result)
         elif args.workflow == "harness" or args.mode in ("smoke", "regress"):
             stage = "NOT_RUN"
-            if compat is None or compat.name != "forgecompat-002-0l.jar":
-                raise RuntimeError("--jar with the baseline filename is required")
+            if compat is None or compat.name != "dualforge.jar":
+                raise RuntimeError("--jar with the dualforge.jar filename is required")
             fixed = probe(args)
             server_preflight(args, compat)
             stage = "STARTUP"
-            records = fingerprints([p for folder in ("spike000", "spike001a", "spike001b5", "history", "Dev Manuals")
+            records = fingerprints([p for folder in ("dualforge", "spike000", "spike001a", "spike001b5", "history", "Dev Manuals")
                                     for p in (REPO / folder).rglob("*") if p.is_file()] + [compat, fixed])
             save(directory / "preserved-before.json", records)
             try:

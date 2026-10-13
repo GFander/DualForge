@@ -31,7 +31,7 @@ print -r -- 'Verified collector instance=<INSTANCE>; MC=1.21.1; NeoForge=21.1.25
 df_no_links "$output_dir"
 output_dir="${output_dir:A}"
 [[ "$output_dir" != "$DF_INSTANCE" && "$output_dir" != "$DF_INSTANCE/"* ]] || df_die 'Diagnostics must be outside the instance.'
-diagnostics="$output_dir/dualforge-005-client-$stage-$(date +%Y%m%d-%H%M%S)-$$"
+diagnostics="$output_dir/dualforge-identity-client-$stage-$(date +%Y%m%d-%H%M%S)-$$"
 mkdir "$diagnostics"
 print -r -- "stage=$stage" "clientStatus=NOT_ASSESSED" "macOS=$(sw_vers -productVersion)" "CPU=$(uname -m)" \
   'Minecraft=1.21.1' 'NeoForge=21.1.256' > "$diagnostics/environment.txt"

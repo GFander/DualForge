@@ -17,13 +17,13 @@ done
 df_platform
 df_kit
 df_instance "$instance"
-ledger="$DF_MODS/.dualforge-005-owned"
+ledger="$DF_MODS/.dualforge-identity-owned"
 typeset -a owned desired
 owned=()
 if [[ -e "$ledger" ]]; then
   [[ -f "$ledger" && ! -L "$ledger" ]] || df_die 'Unsafe ownership ledger.'
   while IFS=$' \t' read -r name recorded_sha extra || [[ -n "$name" ]]; do
-    [[ "$name" == forgecompat-002-0l.jar || "$name" == registry-probe.jar ]] || df_die 'Invalid ownership ledger.'
+    [[ "$name" == dualforge.jar || "$name" == registry-probe.jar ]] || df_die 'Invalid ownership ledger.'
     [[ -z "$extra" ]] || df_die 'Unexpected ownership ledger fields.'
     # Filename-only ledgers from the first kit remain safe via the pinned kit SHA.
     [[ -z "$recorded_sha" || "$recorded_sha" == "$(df_sha "$DF_KIT/mods/$name")" ]] || df_die 'Ownership ledger cohort SHA mismatch.'
@@ -46,7 +46,7 @@ df_java "$java_path"
 df_jvm
 inventory="$(df_inventory)"
 [[ "$phase" != B || ! -e "$DF_MODS/registry-probe.jar" ]] || df_die 'Client B must have compat only. Roll back owned files first.'
-desired=(forgecompat-002-0l.jar)
+desired=(dualforge.jar)
 [[ "$phase" != C ]] || desired+=(registry-probe.jar)
 fingerprint="$(print -r -- "$DF_INSTANCE" "$phase" "$(df_sha "$DF_KIT/manifest.json")" "$inventory" | shasum -a 256 | cut -d ' ' -f 1)"
 receipt="$DF_KIT/.state/$fingerprint.dryrun"
