@@ -1,4 +1,4 @@
-package com.example.forgecompat;
+package io.github.gfander.dualforge;
 
 import cpw.mods.jarhandling.JarContents;
 import java.lang.module.ModuleFinder;

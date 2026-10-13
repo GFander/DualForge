@@ -58,7 +58,7 @@ def fixture(args, run, binary):
 
 def dynamic(args, run, binary):
     compat, mod = args.jar.resolve(), args.fixture.resolve()
-    assert compat.name == "forgecompat-002-0l.jar" and mod.name == "identity-check.jar"
+    assert compat.name == "dualforge.jar" and mod.name == "identity-check.jar"
     w.server_preflight(args, compat)
     inputs = w.fingerprints([compat, mod, Path(__file__), REPO / "tools/lib/unix_workflow.py"])
     w.save(run / "inputs.json", inputs)
@@ -70,12 +70,12 @@ def dynamic(args, run, binary):
         "exact B installed under identity-check.jar": w.digest(server / "mods" / mod.name) == w.digest(mod),
         "exact new compat installed": w.digest(server / "mods" / compat.name) == w.digest(compat),
         "exactly B and compat": sorted(p.name for p in (server / "mods").iterdir()) == sorted([mod.name, compat.name]),
-        "identified exactly once": debug.count('Found mod file "identity-check.jar" [locator: forgecompat locator') == 1,
+        "identified exactly once": debug.count('Found mod file "identity-check.jar" [locator: dualforge locator') == 1,
         "real ForgeReader metadata": "ForgeModReader: returning IModFile" in stdout
              and "Found valid mod file identity-check.jar with {identityprobe} mods" in debug,
         "correct modId and entry association": f"loadMod called for identityprobe entrypoints=[{ENTRY}]" in stdout,
         "isolated new transformation service": f"Found additional transformation services from discovery services: [{server / 'mods' / compat.name}]" in debug
-             and "Loaded service forgecompat-transform" in debug,
+             and "Loaded service dualforge-transform" in debug,
     }
     if args.stage == "before":
         checks.update({

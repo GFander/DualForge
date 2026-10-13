@@ -123,9 +123,9 @@ def contract(args, run, binary, runtime=None):
     out = run / "bytes"
     w.native(run, "bytecode", [binary / "java", "--add-opens", "java.base/java.lang.invoke=ALL-UNNAMED",
              "--add-exports", "java.base/sun.security.util=ALL-UNNAMED", *w.FLAGS,
-             f"-Dforgecompat.dump.path={run / 'dumps/entry.class'}",
-             f"-Dforgecompat.dump.profileDir={run / 'dumps/profile'}", "-classpath", str(classes) + os.pathsep + cp,
-             "com.example.forgecompat.EventBytecodeTest", args.fixture.resolve(), args.rejected_fixture.resolve(),
+             f"-Ddualforge.dump.path={run / 'dumps/entry.class'}",
+             f"-Ddualforge.dump.profileDir={run / 'dumps/profile'}", "-classpath", str(classes) + os.pathsep + cp,
+             "io.github.gfander.dualforge.EventBytecodeTest", args.fixture.resolve(), args.rejected_fixture.resolve(),
              str(runtime) if runtime else "-", out], cwd=run)
     checks = {"complete controlled bytecode and atomicity": "PASS controlled dispatch bytecode and atomicity" in (run / "bytecode.stdout.log").read_text(),
               "bytecode stderr empty": (run / "bytecode.stderr.log").stat().st_size == 0}
@@ -142,7 +142,7 @@ def dynamic(args, run, binary):
     enabled = args.stage == "treatment"
     value = str(enabled).lower()
     artifacts = [args.jar.resolve(), args.fixture.resolve(), args.driver.resolve()]
-    assert [p.name for p in artifacts] == ["forgecompat-002-0l.jar", "dispatch-probe.jar", "dispatch-driver.jar"]
+    assert [p.name for p in artifacts] == ["dualforge.jar", "dispatch-probe.jar", "dispatch-driver.jar"]
     w.server_preflight(args, artifacts[0])
     records = inputs(args, artifacts)
     w.save(run / "inputs.json", {"files": records, "registrationSwitch": {
@@ -158,7 +158,7 @@ def dynamic(args, run, binary):
               "[DF004] POST BEGIN"] + ([CALLBACK] if enabled else []) + ["[DF004] POST RETURNED"]
     checks = {"same exact installed artifacts": all(w.digest(server / "mods" / p.name) == w.digest(p) for p in artifacts),
         "exact three mods": sorted(p.name for p in (server / "mods").iterdir()) == sorted(p.name for p in artifacts),
-        "identified once": debug.count('Found mod file "dispatch-probe.jar" [locator: forgecompat locator') == 1,
+        "identified once": debug.count('Found mod file "dispatch-probe.jar" [locator: dualforge locator') == 1,
         "real metadata and entry": "Found valid mod file dispatch-probe.jar with {dispatchprobe} mods" in debug
             and f"loadMod called for dispatchprobe entrypoints=[{ENTRY}]" in stdout,
         "actual switch arrived": stdout.count("[DF004] REGISTER SWITCH=" + value) == 1,
@@ -203,7 +203,7 @@ def regression(args, run, binary):
     network = (["--java-network-args", args.java_network_args.resolve()] if args.java_network_args else []) + (["--public-key-relay"] if args.public_key_relay else [])
     common = ["--server-input", args.server_input.resolve(), "--jar", args.jar.resolve()]
     commands = {
-        "original-smoke": ["zsh", REPO / "tools/entry/forgecompat.zsh", "--mode", "smoke", *common,
+        "original-smoke": ["zsh", REPO / "tools/entry/dualforge.zsh", "--mode", "smoke", *common,
                            "--probe", args.probe.resolve(), "--output-root", ROOT / "regression/original-smoke", "--allow-server-start", *network],
         "identity": ["zsh", REPO / "tests/identity/run-identity.zsh", "--stage", "after", *common,
                      "--fixture", args.identity_fixture.resolve(), "--allow-server-start", *network],
@@ -231,7 +231,7 @@ def regression(args, run, binary):
         results[name] = {"status": result["status"], "result": str(path), "compatSha256": actual["SHA256"]}
         w.save(run / "regressions.json", results)
     before = json.loads((ROOT / "preflight/inputs-before.json").read_text())
-    allowed = {str(REPO / p) for p in ["spike001a/compat-002-0l/src/main/java/com/example/forgecompat/ForgeProbeConstructorTransformer.java",
+    allowed = {str(REPO / p) for p in ["dualforge/src/main/java/io/github/gfander/dualforge/DualForgeEntryTransformer.java",
         "tools/lib/unix_workflow.py", "tests/identity/IdentityScopeTest.java", "README.md", "tests/README.md"]}
     preserved = [r for r in before if r["Path"] not in allowed]
     w.unchanged(preserved)
@@ -269,7 +269,7 @@ def publish_result(stage, run, result):
         treatment = json.loads((Path(index["treatment"]).parent / "artifacts.json").read_text())
         summary["identicalArtifactPathsAndSha256"] = control == treatment
         hashes = {Path(r["Path"]).name: r["SHA256"] for r in treatment}
-        summary.update(compatSha256=hashes["forgecompat-002-0l.jar"],
+        summary.update(compatSha256=hashes["dualforge.jar"],
                        forgeFixtureSha256=hashes["dispatch-probe.jar"], driverSha256=hashes["dispatch-driver.jar"])
         summary["ctCompatEvidenceConsistent"] = (summary["compatSha256"] == stage_hashes["control"]
                                                  == stage_hashes["treatment"])

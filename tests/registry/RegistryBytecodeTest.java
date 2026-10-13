@@ -1,4 +1,4 @@
-package com.example.forgecompat;
+package io.github.gfander.dualforge;
 
 import cpw.mods.jarhandling.JarContents;
 import cpw.mods.modlauncher.api.ITransformer;
@@ -25,7 +25,7 @@ public final class RegistryBytecodeTest {
     static ClassNode read(byte[] b) { ClassNode n=new ClassNode(); new ClassReader(b).accept(n,0); return n; }
     static byte[] bytes(ClassNode n) { ClassWriter w=new ClassWriter(0); n.accept(w); return w.toByteArray(); }
     static MethodNode method(ClassNode n,String name) {return n.methods.stream().filter(m->m.name.equals(name)).findFirst().orElseThrow();}
-    static void reject(ForgeProbeConstructorTransformer t,ClassNode source,Consumer<ClassNode> edit,Path out,String label) throws Exception {
+    static void reject(DualForgeEntryTransformer t,ClassNode source,Consumer<ClassNode> edit,Path out,String label) throws Exception {
         ClassNode bad=read(bytes(source));edit.accept(bad);byte[] before=bytes(bad);
         Files.write(out.resolve(label+".before.class"),before);
         boolean rejected=false;
@@ -39,7 +39,7 @@ public final class RegistryBytecodeTest {
         ModFile file=(ModFile)new ForgeModReader().read(JarContents.of(Path.of(args[0])),ModFileDiscoveryAttributes.DEFAULT);
         file.setScanResult(file.compileContent(),null);
         LoadingModList.of(List.of(),List.of(file),List.of(),List.of(),Map.of());
-        var t=new ForgeProbeConstructorTransformer();
+        var t=new DualForgeEntryTransformer();
         check(t.targets().equals(Set.of(ITransformer.Target.targetClass("com.example.registryprobe.RegistryProbe"))),"only scan-owned registry entry targeted");
         ClassNode before=read(Files.readAllBytes(file.findResource("com/example/registryprobe/RegistryProbe.class")));
         byte[] original=bytes(before);ClassNode after=t.transform(before,null);

@@ -21,7 +21,7 @@ class StageConsistencyTest(unittest.TestCase):
         self.addCleanup(self.root_patch.stop)
         (self.root / "preflight").mkdir()
         events.w.save(self.root / "preflight/git.json", {"baseCommit": "a" * 40})
-        self.compat = self.root / "forgecompat-002-0l.jar"
+        self.compat = self.root / "dualforge.jar"
         self.compat.write_bytes(b"synthetic round A; not a JVM artifact")
         self.record = events.w.fingerprints([self.compat])[0]
         self.other_hash = hashlib.sha256(b"synthetic round B").hexdigest()

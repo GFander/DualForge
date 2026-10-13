@@ -1,0 +1,2375 @@
+{
+  "baseCommit": "87edda824dc9fb22eaa69a3fcb1b3653f9132b4e",
+  "productionCommit": "66d0cf3",
+  "oldProductionRoot": "spike001a/compat-002-0l/src",
+  "newProductionRoot": "dualforge/src",
+  "symbolMapping": [
+    [
+      "ForgeCompatTransformationService",
+      "DualForgeTransformationService"
+    ],
+    [
+      "ForgeCompatLanguageLoader",
+      "DualForgeLanguageLoader"
+    ],
+    [
+      "ForgeProbeConstructorTransformer",
+      "DualForgeEntryTransformer"
+    ],
+    [
+      "com.example.forgecompat",
+      "io.github.gfander.dualforge"
+    ],
+    [
+      "com/example/forgecompat",
+      "io/github/gfander/dualforge"
+    ],
+    [
+      "[FORGECOMPAT-EMPTY]",
+      "[DUALFORGE]"
+    ],
+    [
+      "[FORGECOMPAT-SUBSCRIBER]",
+      "[DUALFORGE]"
+    ],
+    [
+      "FORGECOMPAT",
+      "DUALFORGE"
+    ],
+    [
+      "forgecompat",
+      "dualforge"
+    ]
+  ],
+  "pathMapping": [
+    [
+      "spike001a/compat-002-0l/src",
+      "dualforge/src"
+    ],
+    [
+      "com/example/forgecompat",
+      "io/github/gfander/dualforge"
+    ],
+    [
+      "ForgeCompatTransformationService",
+      "DualForgeTransformationService"
+    ],
+    [
+      "ForgeCompatLanguageLoader",
+      "DualForgeLanguageLoader"
+    ],
+    [
+      "ForgeProbeConstructorTransformer",
+      "DualForgeEntryTransformer"
+    ]
+  ],
+  "forbiddenNames": [
+    "forgecompat",
+    "forge.compat",
+    "ForgeProbeConstructorTransformer",
+    "spike001a/compat-002-0l/src"
+  ],
+  "legacyModule": "forgecompat",
+  "protected": [
+    {
+      "path": "Dev Manuals/Convergence-001 交付报告.md",
+      "sha256": "f81d9b9287d15c18a3922182eaa361b7a2eb74cfdbd3a40de676d5ca44fb9746",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Convergence-001 交付报告.md"
+    },
+    {
+      "path": "Dev Manuals/Convergence-002 交付报告.md",
+      "sha256": "08aac74ce5d23548795f9f18fe1aacca38a660d335a04cebe4860becce699202",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Convergence-002 交付报告.md"
+    },
+    {
+      "path": "Dev Manuals/Convergence-003a 交付报告.md",
+      "sha256": "0e773ca74d99d943365c05ee7e30a7e268c44388f15aaa80dcce098750ca88cf",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Convergence-003a 交付报告.md"
+    },
+    {
+      "path": "Dev Manuals/Convergence-003a 证据索引.json",
+      "sha256": "65c394a65d0d7b9ebf89d1279eeacbfed5a71eda83b1515e09e0b6afb51871f5",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Convergence-003a 证据索引.json"
+    },
+    {
+      "path": "Dev Manuals/Convergence-003b 交付报告.md",
+      "sha256": "18eb4001f4eb408a96e62aefb6da898bf9d31c50d151e8d2a2fcc410e2cbb9ae",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Convergence-003b 交付报告.md"
+    },
+    {
+      "path": "Dev Manuals/Convergence-003b 证据索引.json",
+      "sha256": "5b818aa581c5a1ed2158f4a13feeda42c0c23adbd2e75b0c11c943a8ce593095",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Convergence-003b 证据索引.json"
+    },
+    {
+      "path": "Dev Manuals/Convergence-004 交付报告.md",
+      "sha256": "53f521f55d19599484900986f6619dc2fc84a9645a1fcbb91467bb00112189cc",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Convergence-004 交付报告.md"
+    },
+    {
+      "path": "Dev Manuals/Convergence-004 合并前补正记录.md",
+      "sha256": "39ade6fcffbf9edf762ec95f39967121ae9f060130a0577b1ce6c84caaa00cb3",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Convergence-004 合并前补正记录.md"
+    },
+    {
+      "path": "Dev Manuals/Convergence-004 证据索引.json",
+      "sha256": "bb94353a08405f9ae6b6dd6b994d079df29088210207a19f77c3773d471e2124",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Convergence-004 证据索引.json"
+    },
+    {
+      "path": "Dev Manuals/Convergence-005 交付报告.md",
+      "sha256": "99251ca9f24f3c71ca3b1416437a20036eb0f4ef2ad55bc164b4c37333006e92",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Convergence-005 交付报告.md"
+    },
+    {
+      "path": "Dev Manuals/Convergence-005 证据索引.json",
+      "sha256": "878cbe41a99ba989eb344a346df0f17672acdac3c9301e4a929721f3a4009f96",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Convergence-005 证据索引.json"
+    },
+    {
+      "path": "Dev Manuals/Convergence-005-C Mac部署准备.md",
+      "sha256": "3a230e42676dcf2c999cd108619e60db024c089e004dcf81f21083248abb650b",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Convergence-005-C Mac部署准备.md"
+    },
+    {
+      "path": "Dev Manuals/Convergence-005-C Mac部署证据索引.json",
+      "sha256": "947b4c4a665a7dc89da4e0d9dcbd50ce59276db7b2d83470874ed7b101fae262",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Convergence-005-C Mac部署证据索引.json"
+    },
+    {
+      "path": "Dev Manuals/Convergence-005-C 客户端验收与脚本修复.md",
+      "sha256": "4857290bf30f63f83405e22712c5bc7b200d592a9bafe9000c5541496ff74bca",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Convergence-005-C 客户端验收与脚本修复.md"
+    },
+    {
+      "path": "Dev Manuals/Convergence-005-C 客户端验收与脚本修复索引.json",
+      "sha256": "5ac4f7ba74b40483595a5d2057b3cd18ce4e3a4a641534170119e7ca1e945ad6",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Convergence-005-C 客户端验收与脚本修复索引.json"
+    },
+    {
+      "path": "Dev Manuals/Forge → NeoForge 兼容层开发手册.md",
+      "sha256": "a476f9019b7fe805081c2fb32c388f4caf1aa3accaa7ec610280810279ccf845",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Forge → NeoForge 兼容层开发手册.md"
+    },
+    {
+      "path": "Dev Manuals/Git 工作规范恢复调查.md",
+      "sha256": "d736840733d78569f91de65cf5cd8d929f5de3b227873031a2f706f3131d7152",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Git 工作规范恢复调查.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-000 实验报告.md",
+      "sha256": "16a64d47e8fbc6e1ff6605fa4b4b34d96ab95935d544755460d2a08ee99f9a86",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-000 实验报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-001a-0 实验报告.md",
+      "sha256": "5a69f443596ce6cd8583dd0399ffc6eb634263fd6b2e32b9a7251e5313a6937c",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-001a-0 实验报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-001b-0 源码分析报告.md",
+      "sha256": "d4868bb3aadc79c8073b3081dd9265675ecbf66b36feabdbe6578dd157a40f1d",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-001b-0 源码分析报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-001b-1 实验报告.md",
+      "sha256": "5ce246bc5a058e86846b2594e97cda01447349838d2099ab497be4f6098ba325",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-001b-1 实验报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-001b-3 实验报告.md",
+      "sha256": "e8a5ae25068f26b6964765dd2f97127def585211172808ea008839a25e26814b",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-001b-3 实验报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-001b-5 实验报告.md",
+      "sha256": "b17cd9ef4998d472aa78ee8c01c238c72919bd09cba6768d1ca48fbaf1355f47",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-001b-5 实验报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-001b-6 实验报告.md",
+      "sha256": "b4572c9ef0ea656ca6d55ac93b0404a75e540079c05d2ee43047a2cbf2f1c35f",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-001b-6 实验报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-001c-0 实验报告.md",
+      "sha256": "2c5dff560f1b4a9ddab79d8ca9ef849e1022ca030b8f7c3f798ba8c3860803db",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-001c-0 实验报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-001c-1 实验报告.md",
+      "sha256": "24e85ca78875d3e8d7f98734d1bbbbcc72e6cc96613c245b02acea5aff96dedc",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-001c-1 实验报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-001c-2 实验报告.md",
+      "sha256": "876c744e7f22bf495ba2a080b2435410d32f1d89779c3a3043b55284599e932f",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-001c-2 实验报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0a 实验报告.md",
+      "sha256": "9373fdd2db4419ffa36169f0b6fb22300d9c456f1aefe69d3258a68b63bf29a7",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0a 实验报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0b Step1 取证报告.md",
+      "sha256": "61ba81980557550f743bb14dc12eed777495b0f05cf45fcc3f88e5359a3fff09",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0b Step1 取证报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0b Step2-A v1.1 一致性核对报告.md",
+      "sha256": "f23bd88bdc4cbc2017896c602fc9c9a97c527aa526013913956724e0a73aa994",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0b Step2-A v1.1 一致性核对报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0b Step2-A v1.1 执行报告.md",
+      "sha256": "7bfbf49815e455c901529eee063858352bc6af0c806b50a1e89e8a4b34b41ba0",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0b Step2-A v1.1 执行报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0b Step2-A 执行报告.md",
+      "sha256": "962ddd73322e56042c93ad18bb670bc5424bab56a1b71f0494578deca969f661",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0b Step2-A 执行报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0b-1 取证报告.md",
+      "sha256": "55890c8cde39ba93c30096280a0a49ef5a5b55946dc77e54e6709c1dd53df5f3",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0b-1 取证报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0b-1b 取证报告.md",
+      "sha256": "9e5fc84acef01f6e84ff21968f8d264d4bda309fdd8b010220685d1b04ff5ab0",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0b-1b 取证报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0c G-1 四项前置取证（执行方）.md",
+      "sha256": "2519edc525953fffc09730e413673e72d8a2f0e815209cf1d8f5cd4436a86de4",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0c G-1 四项前置取证（执行方）.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0c 交付核对报告.md",
+      "sha256": "7335eacbb0d0c739fb30cfcae88d72f6a8e487c909f05ab0c9830b72d1f005c3",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0c 交付核对报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0c 反向意见（顾问方）.md",
+      "sha256": "b9da4edae4a9695c87cd1548326f8a1ddbb9fb056c1e10cb1a89f61d6128df88",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0c 反向意见（顾问方）.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0c 实验报告.md",
+      "sha256": "430576d5cfe497b8eaa98e75c9e613954020b8937a97e563999f28b6d2570424",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0c 实验报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0c 裁判审查与裁定报告.md",
+      "sha256": "0c7acb92cc508ae08c62d3ac1c197cbaebd15b9bb2793b2d3216c0903ef58e2e",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0c 裁判审查与裁定报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0c 裁判裁定修订（反向意见处理）.md",
+      "sha256": "1a8d01cf63f492f6637928ab07ec0f7c8faa487f81b32142fc85cfb23aa801e7",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0c 裁判裁定修订（反向意见处理）.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0d 审阅意见（顾问方·七处小修）.md",
+      "sha256": "7242ee0135adab8fc65edda546eb3aae737f962f793c3f2dd35331c3d026267d",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0d 审阅意见（顾问方·七处小修）.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0d 执行报告.md",
+      "sha256": "77abc0f3cb3b379b323d6f480c4e008927476f4f942b9dfb68133777d38490d8",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0d 执行报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0d 执行报告勘误附记（2026-10-11）.md",
+      "sha256": "a6634e9e5e40f514312429603be9cbd09d38415cc38747d6a0b56148dfa1280f",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0d 执行报告勘误附记（2026-10-11）.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0d 裁判审查与裁定报告.md",
+      "sha256": "238c1739197c253baa7a30c9340099c2badd5a5ce291b69e8ab292f9eea68d1c",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0d 裁判审查与裁定报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0e 冻结审查记录（2026-10-11）.md",
+      "sha256": "51727210cf6821f65e839e637fc7b9da053939676e13e3de34b6b838944d7635",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0e 冻结审查记录（2026-10-11）.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0e 执行报告.md",
+      "sha256": "ff19df21f6211f73a45b891f757f69c473fd6aa20ef8b260c359e9ab71c5464d",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0e 执行报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0e 裁判审查与裁定报告.md",
+      "sha256": "5159fb3f8070628447542f89b5bad1575c38dc6262dc204897def8d315d465d1",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0e 裁判审查与裁定报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0e 说明书（送审稿 v0.1）.md",
+      "sha256": "3b873af05b0f99e60941b81856ff32bcbaa0a0c4ff69f396cb73284436cca02c",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0e 说明书（送审稿 v0.1）.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0f 静态取证报告.md",
+      "sha256": "05fc06e210718a0bfcc45158c3d242554da54ccb0ece729b38d636439ae3a5bc",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0f 静态取证报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0f 顺序复核与裁定报告.md",
+      "sha256": "6683f18b1e9255d136ca1d019f82e643a955cff900868089ae0a765070fffcff",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0f 顺序复核与裁定报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0g 执行报告.md",
+      "sha256": "88c011a8ccf14bfe01340ee9b48e67ddf5a5e0d92c4d1f3ca6a86ef5b9921781",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0g 执行报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0g 顺序复核与裁定报告.md",
+      "sha256": "1d8699f47857cf083c7cfece86c7137b8f74dae8895e009905042435971059b7",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0g 顺序复核与裁定报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0h 静态取证报告.md",
+      "sha256": "5200d09e9fcac4ff3d9333b371b6363d5fd5ae262133d60340a7ba31d27c129e",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0h 静态取证报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0i 执行与顺序裁定报告.md",
+      "sha256": "15b941d729ba0102d59ee164628e2bdd45862056e70b9a671fe725d4241c228c",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0i 执行与顺序裁定报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0i-1 执行与顺序裁定报告.md",
+      "sha256": "cae747c593c9f127b493a3ff3df7e8bd419343e18649d02dfd6effcb8a835fc4",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0i-1 执行与顺序裁定报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0j 执行与顺序裁定报告.md",
+      "sha256": "e0f03b06b42da0b70b15a1230dd853f0edcc5b4d67520cc4d53b2168026dec96",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0j 执行与顺序裁定报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0k 静态取证与顺序裁定报告.md",
+      "sha256": "bce85bdb4d63397292790a3f7a96732068f5960da38b819a964af855a9bf3f3e",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0k 静态取证与顺序裁定报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0l 执行与顺序裁定报告.md",
+      "sha256": "3ec0c4233b16541d717cac956cab11a9dd28aaff4d423ad47025790d13bf7d53",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0l 执行与顺序裁定报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0m 静态取证与顺序裁定报告.md",
+      "sha256": "39961ea24fe28d651556b4211d77a9166bc4189c355a79604f06827d6873e369",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0m 静态取证与顺序裁定报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike-002-0n 执行与顺序裁定报告.md",
+      "sha256": "b0cc68d75e2384feb591b211c0f240fe198d58fdc94c472e37b306bcc09c9029",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike-002-0n 执行与顺序裁定报告.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_000.md",
+      "sha256": "3f8c51abb84bba0884a45590cec11ab59084a023c806861217c6e9611484643c",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_000.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_001a.md",
+      "sha256": "abbd4bb53e1469290b17c360dd663d3296f2782bd65d788855d96fd2708f4b90",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_001a.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_001b-1.md",
+      "sha256": "3e40e9b4054eca22782eca910e3649c8529a3c6220baf2da97287b22f8b1b1f7",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_001b-1.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_001b-3.md",
+      "sha256": "311f442bc3aad4a424e96c511315d01a289338f0e817bb82a81e7670affaaf57",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_001b-3.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_001b-5.md",
+      "sha256": "eb71eef1f0d5b74325829a24ff8291a6b717fe11c884a4099bb396bd730a09b8",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_001b-5.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_001b-6.md",
+      "sha256": "39b382f0e710c963d671dd1cd76c54a92c10c8d5ee23e3c97989f7be0738ae2c",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_001b-6.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_001b.md",
+      "sha256": "147d55cb01f621576be58a8595ca304fec879df175f51c62d07cc0ebe4aaeb1d",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_001b.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_001c-0.md",
+      "sha256": "edcabc7696a8ab19b4af525be2433de21616d68427e56b09d41d88bfa5158926",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_001c-0.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_001c-1.md",
+      "sha256": "971e9e464b4fcc240c2baccb355324bc9a8efab4b840927fb8f20cafb656c1f0",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_001c-1.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_001c-2.md",
+      "sha256": "eed420621ea57550665ff6be920d901ea8bc86dd575c53f60be16d478317d587",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_001c-2.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_002-0a.md",
+      "sha256": "b7ada930b2d0898aac4079ec1cf79c34845811c6ced3e90a473d481cd8c51a74",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_002-0a.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_002-0b Step2-A v1.1.md",
+      "sha256": "15a78e45089842ebf4cd69396ab0dfac7eb16165510a6c1e27cf3753bd9e784d",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_002-0b Step2-A v1.1.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_002-0b Step2-A v1.md",
+      "sha256": "19a8585559ea255d32e0a2bcc5488751ca6ad588d9c48ccf70cafb681cc8b9eb",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_002-0b Step2-A v1.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_002-0b-1b.md",
+      "sha256": "49d5373132718fc4daf85d4a4df6e5b276c65b739ce84366cdbe39960c13ccde",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_002-0b-1b.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_002-0b.md",
+      "sha256": "a685d93b1858e4a82e1bc2aef4235cad1cf5f4d01df0fd4d2f994a2d06243273",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_002-0b.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_002-0c.md",
+      "sha256": "bb43ffdd08edf48348d84bd6683b2d4c1fbac9a8c8092863f911783dc590b893",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_002-0c.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_002-0d v0.1（送审稿·存档）.md",
+      "sha256": "09cb21d4a87f541ddae4ee438a244f0a9dd71ff28637a14ed2692354ca37691e",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_002-0d v0.1（送审稿·存档）.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_002-0d.md",
+      "sha256": "c36fe57e7f1d5930df702eeb9e6adfca958806e7c2733b40fcd0ea5eb5428221",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_002-0d.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_002-0e.md",
+      "sha256": "072adccb6a063e1c037836769058958e08d376e807f774ec7c69f052ab7c6f2a",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_002-0e.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_002-0f v0.1（送审稿）.md",
+      "sha256": "df1f6a73b1497c0037891f70e38372753cbcd94966a8645ab433386df08491e6",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_002-0f v0.1（送审稿）.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_002-0f.md",
+      "sha256": "75d287edd1850defede17007f7ccafed7e4cfd265fdd27547cb8ff8393e285e8",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_002-0f.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_002-0g.md",
+      "sha256": "ca85323ca7229c0aaf4a6a2d955c123d9a6a191811482876b85e6f16945c0626",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_002-0g.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_002-0h.md",
+      "sha256": "f745576daf91c255482c44bf49835e94aaa0313b1a9df59664e44b1e5e385bf1",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_002-0h.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_002-0i-1.md",
+      "sha256": "b58a5d6a9d6517452eb72c336fa92260ba301001a6e354609a2dbeaee2aab440",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_002-0i-1.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_002-0i.md",
+      "sha256": "b07b4496cce5dba923c6a234b9498da394ff0163c7705d4997d6cc564e9c8836",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_002-0i.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_002-0j.md",
+      "sha256": "f83acb24e9d2f71cc5dc67f6d845c5eed24c9f02bc3e436a0c04397e97d79a4e",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_002-0j.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_002-0k.md",
+      "sha256": "367245a6a75b517e1478b33aec6652748c6e39c236474343c9831c7abecc9541",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_002-0k.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_002-0l.md",
+      "sha256": "8bc0ad7f8f21c8805ab7bffc0304f5bbb9f365b55d6da8ee5bea6eb1b532d63c",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_002-0l.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_002-0m.md",
+      "sha256": "99c48f3d2fd7c85b3c2e147230aa964532f025567af4a69a3d0024e473174caf",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_002-0m.md"
+    },
+    {
+      "path": "Dev Manuals/Spike_002-0n.md",
+      "sha256": "dafe0d5b3aaa708342941e26555df739888f7583c39c5a1c63874f58bb60276c",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/Spike_002-0n.md"
+    },
+    {
+      "path": "Dev Manuals/_backup_manual_20261007.md",
+      "sha256": "d6fa234e8d00b7661f8075001a0b6b2a413f0d5f61f3927187657afefe351461",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/_backup_manual_20261007.md"
+    },
+    {
+      "path": "Dev Manuals/archive/2026-10-11-pre-0d-writeback/Forge → NeoForge 兼容层开发手册.md",
+      "sha256": "61bd10f7b2aa038ee79d0f8e847878666b59f63c431a294fb28b8b77055ecda5",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/archive/2026-10-11-pre-0d-writeback/Forge → NeoForge 兼容层开发手册.md"
+    },
+    {
+      "path": "Dev Manuals/archive/2026-10-12-pre-0k-0m-writeback/Forge → NeoForge 兼容层开发手册.md",
+      "sha256": "0de4e2d3fda6d424e049583bf8395aae0584efe64f7902498d831ca75827d1e5",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/archive/2026-10-12-pre-0k-0m-writeback/Forge → NeoForge 兼容层开发手册.md"
+    },
+    {
+      "path": "Dev Manuals/archive/2026-10-12-pre-0n-writeback/Forge → NeoForge 兼容层开发手册.md",
+      "sha256": "dd0dd94739aa200f7c1a8cd33c1e5a73051204da486651b9f82225a3d863624e",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/archive/2026-10-12-pre-0n-writeback/Forge → NeoForge 兼容层开发手册.md"
+    },
+    {
+      "path": "Dev Manuals/v1.1 回写提案（002-0d 收尾·2026-10-11）.md",
+      "sha256": "6794d4e98656229d58205699627a7dde098776436493ae540bed2f803c28d298",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/v1.1 回写提案（002-0d 收尾·2026-10-11）.md"
+    },
+    {
+      "path": "Dev Manuals/总指挥令 R-0d-3（002-0d 审阅落实与冻结）.md",
+      "sha256": "d84a7de176d8b2f333fe37b1296da61162ecd77a1c8778a4fd6f20c735e5eb99",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/总指挥令 R-0d-3（002-0d 审阅落实与冻结）.md"
+    },
+    {
+      "path": "Dev Manuals/总指挥令 R-0d-4（002-0e 起草指派与裁定回复）.md",
+      "sha256": "aade622bfc918c817ec4e9bcc1d24c8c0f3c4846e2a70831bc9ff9b34a79cc78",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/总指挥令 R-0d-4（002-0e 起草指派与裁定回复）.md"
+    },
+    {
+      "path": "Dev Manuals/总指挥令 R-0e-1（自动推进与双代理恢复）.md",
+      "sha256": "3de199d692c1c0f0852c00321da5203927769980c8f2eca252ff3ca1c80c0847",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/总指挥令 R-0e-1（自动推进与双代理恢复）.md"
+    },
+    {
+      "path": "Dev Manuals/总指挥令 R-0f-1（串行流程与静态取证放行）.md",
+      "sha256": "8d68edc8d7d30898411532d3fae7fb1ada7b6b1508c7c3a85ecbcae0ee59071d",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/总指挥令 R-0f-1（串行流程与静态取证放行）.md"
+    },
+    {
+      "path": "Dev Manuals/裁判角色交接文档.md",
+      "sha256": "7fee8a005642311c7d7712df39c52ca28334e0f5fd4ab81a37411163de373a1a",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/裁判角色交接文档.md"
+    },
+    {
+      "path": "Dev Manuals/项目续接状态（2026-10-12）.md",
+      "sha256": "7577d580baedb5ce9577e8a385d1f9383e11d504b50cfbec9e037028822fddd0",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "Dev Manuals/项目续接状态（2026-10-12）.md"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-fixed/_sha256.txt",
+      "sha256": "282f4c3a33b1d90412452224b1363fbcd5dd1c55a6a80cbe4709386f11e0b9c3",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-fixed/_sha256.txt"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-fixed/main/java/com/example/forgecompat/ForgeCompatLanguageLoader.java",
+      "sha256": "d7ba951c31fcad4cfa86e2681b0ea21880250e5a4a2c636129c122f434f7c0a1",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-fixed/main/java/com/example/forgecompat/ForgeCompatLanguageLoader.java"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-fixed/main/java/com/example/forgecompat/ForgeCompatTransformationService.java",
+      "sha256": "c3f859a395aeae1aabf01558acaa0b1e763f8be2011ae910b359f70c83a47e33",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-fixed/main/java/com/example/forgecompat/ForgeCompatTransformationService.java"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-fixed/main/java/com/example/forgecompat/ForgeJarMetadata.java",
+      "sha256": "6d1e8d4ddc1316972237d9e98974fb659a9cbb8b7779d6518c196b4110511286",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-fixed/main/java/com/example/forgecompat/ForgeJarMetadata.java"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-fixed/main/java/com/example/forgecompat/ForgeModFileInfo.java",
+      "sha256": "830d22d0651f853e4afc1f5e3475983ada12873621e5b39f9fbbb7210631b537",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-fixed/main/java/com/example/forgecompat/ForgeModFileInfo.java"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-fixed/main/java/com/example/forgecompat/ForgeModFileInfoParser.java",
+      "sha256": "fe6bbcd18c7504ce794157cccb2dc51313dfef8476bfeea8ffa1dc4041908825",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-fixed/main/java/com/example/forgecompat/ForgeModFileInfoParser.java"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-fixed/main/java/com/example/forgecompat/ForgeModLocator.java",
+      "sha256": "3b010724c34f4537d5f759694a0454302882316e0223f33c9801375ae8a19472",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-fixed/main/java/com/example/forgecompat/ForgeModLocator.java"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-fixed/main/java/com/example/forgecompat/ForgeModReader.java",
+      "sha256": "eead3529eef70c865b31cfe0df4993ea5e65ee98ad5bee986ab80e1a5a1e8925",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-fixed/main/java/com/example/forgecompat/ForgeModReader.java"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-fixed/main/java/com/example/forgecompat/ForgeProbeConstructorTransformer.java",
+      "sha256": "cab00f3ac9cd2ce9ebfaf6bfda289d616c0b85bf733b58b76a9efa0058511b42",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-fixed/main/java/com/example/forgecompat/ForgeProbeConstructorTransformer.java"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-fixed/main/java/net/minecraftforge/eventbus/api/IEventBus.java",
+      "sha256": "5ac37276f9b441c3b2a18c5f8d394c39571a6a500e03f78c60d34661e39e5982",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-fixed/main/java/net/minecraftforge/eventbus/api/IEventBus.java"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-fixed/main/resources/META-INF/MANIFEST.MF",
+      "sha256": "d78f95581ec70c1b9265d81cdc2251cb8e2f45e9d05160927fd35bba20f26e93",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-fixed/main/resources/META-INF/MANIFEST.MF"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-fixed/main/resources/META-INF/services/cpw.mods.modlauncher.api.ITransformationService",
+      "sha256": "7be1179561be12f8c738a9feb87d2bf4cd85227ef495b42bc37d68268e03decf",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-fixed/main/resources/META-INF/services/cpw.mods.modlauncher.api.ITransformationService"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-fixed/main/resources/META-INF/services/net.neoforged.neoforgespi.language.IModLanguageLoader",
+      "sha256": "65968d8b635730f9ce29b77401ec97310d712574a3c266ebe7f7f23d50473941",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-fixed/main/resources/META-INF/services/net.neoforged.neoforgespi.language.IModLanguageLoader"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-fixed/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator",
+      "sha256": "2e232a7c8c1ed34ac4989866dec84f6488c1aace5dcd26ccc9a9a7a890b065a3",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-fixed/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-fixed/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader",
+      "sha256": "394a0017ea04610a7a8d6f7e6410797ed13df52c3f4885ca1df0136bcec81dd7",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-fixed/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-recovered/_sha256.txt",
+      "sha256": "f7c1f0e8f49f044bb69e1e60b6cbf5859c3c68bbc0c5fecee12205746c93053b",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-recovered/_sha256.txt"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-recovered/main/java/com/example/forgecompat/ForgeCompatLanguageLoader.java",
+      "sha256": "7cc41e6a71fa377859397e08a66226f9f8d7f24e6d923342d6f97c7b92a5b873",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-recovered/main/java/com/example/forgecompat/ForgeCompatLanguageLoader.java"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-recovered/main/java/com/example/forgecompat/ForgeCompatTransformationService.java",
+      "sha256": "c3f859a395aeae1aabf01558acaa0b1e763f8be2011ae910b359f70c83a47e33",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-recovered/main/java/com/example/forgecompat/ForgeCompatTransformationService.java"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-recovered/main/java/com/example/forgecompat/ForgeJarMetadata.java",
+      "sha256": "6d1e8d4ddc1316972237d9e98974fb659a9cbb8b7779d6518c196b4110511286",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-recovered/main/java/com/example/forgecompat/ForgeJarMetadata.java"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-recovered/main/java/com/example/forgecompat/ForgeModFileInfo.java",
+      "sha256": "830d22d0651f853e4afc1f5e3475983ada12873621e5b39f9fbbb7210631b537",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-recovered/main/java/com/example/forgecompat/ForgeModFileInfo.java"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-recovered/main/java/com/example/forgecompat/ForgeModFileInfoParser.java",
+      "sha256": "fe6bbcd18c7504ce794157cccb2dc51313dfef8476bfeea8ffa1dc4041908825",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-recovered/main/java/com/example/forgecompat/ForgeModFileInfoParser.java"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-recovered/main/java/com/example/forgecompat/ForgeModLocator.java",
+      "sha256": "3b010724c34f4537d5f759694a0454302882316e0223f33c9801375ae8a19472",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-recovered/main/java/com/example/forgecompat/ForgeModLocator.java"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-recovered/main/java/com/example/forgecompat/ForgeModReader.java",
+      "sha256": "eead3529eef70c865b31cfe0df4993ea5e65ee98ad5bee986ab80e1a5a1e8925",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-recovered/main/java/com/example/forgecompat/ForgeModReader.java"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-recovered/main/java/com/example/forgecompat/ForgeProbeConstructorTransformer.java",
+      "sha256": "cab00f3ac9cd2ce9ebfaf6bfda289d616c0b85bf733b58b76a9efa0058511b42",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-recovered/main/java/com/example/forgecompat/ForgeProbeConstructorTransformer.java"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-recovered/main/java/net/minecraftforge/eventbus/api/IEventBus.java",
+      "sha256": "5ac37276f9b441c3b2a18c5f8d394c39571a6a500e03f78c60d34661e39e5982",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-recovered/main/java/net/minecraftforge/eventbus/api/IEventBus.java"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-recovered/main/resources/META-INF/MANIFEST.MF",
+      "sha256": "d78f95581ec70c1b9265d81cdc2251cb8e2f45e9d05160927fd35bba20f26e93",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-recovered/main/resources/META-INF/MANIFEST.MF"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-recovered/main/resources/META-INF/services/cpw.mods.modlauncher.api.ITransformationService",
+      "sha256": "7be1179561be12f8c738a9feb87d2bf4cd85227ef495b42bc37d68268e03decf",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-recovered/main/resources/META-INF/services/cpw.mods.modlauncher.api.ITransformationService"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-recovered/main/resources/META-INF/services/net.neoforged.neoforgespi.language.IModLanguageLoader",
+      "sha256": "65968d8b635730f9ce29b77401ec97310d712574a3c266ebe7f7f23d50473941",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-recovered/main/resources/META-INF/services/net.neoforged.neoforgespi.language.IModLanguageLoader"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-recovered/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator",
+      "sha256": "2e232a7c8c1ed34ac4989866dec84f6488c1aace5dcd26ccc9a9a7a890b065a3",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-recovered/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator"
+    },
+    {
+      "path": "history/compat-002-0d/archive/src-recovered/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader",
+      "sha256": "394a0017ea04610a7a8d6f7e6410797ed13df52c3f4885ca1df0136bcec81dd7",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/archive/src-recovered/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader"
+    },
+    {
+      "path": "history/compat-002-0d/src/main/java/com/example/forgecompat/ForgeCompatLanguageLoader.java",
+      "sha256": "d7ba951c31fcad4cfa86e2681b0ea21880250e5a4a2c636129c122f434f7c0a1",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/src/main/java/com/example/forgecompat/ForgeCompatLanguageLoader.java"
+    },
+    {
+      "path": "history/compat-002-0d/src/main/java/com/example/forgecompat/ForgeCompatTransformationService.java",
+      "sha256": "c3f859a395aeae1aabf01558acaa0b1e763f8be2011ae910b359f70c83a47e33",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/src/main/java/com/example/forgecompat/ForgeCompatTransformationService.java"
+    },
+    {
+      "path": "history/compat-002-0d/src/main/java/com/example/forgecompat/ForgeJarMetadata.java",
+      "sha256": "6d1e8d4ddc1316972237d9e98974fb659a9cbb8b7779d6518c196b4110511286",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/src/main/java/com/example/forgecompat/ForgeJarMetadata.java"
+    },
+    {
+      "path": "history/compat-002-0d/src/main/java/com/example/forgecompat/ForgeModFileInfo.java",
+      "sha256": "830d22d0651f853e4afc1f5e3475983ada12873621e5b39f9fbbb7210631b537",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/src/main/java/com/example/forgecompat/ForgeModFileInfo.java"
+    },
+    {
+      "path": "history/compat-002-0d/src/main/java/com/example/forgecompat/ForgeModFileInfoParser.java",
+      "sha256": "fe6bbcd18c7504ce794157cccb2dc51313dfef8476bfeea8ffa1dc4041908825",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/src/main/java/com/example/forgecompat/ForgeModFileInfoParser.java"
+    },
+    {
+      "path": "history/compat-002-0d/src/main/java/com/example/forgecompat/ForgeModLocator.java",
+      "sha256": "3b010724c34f4537d5f759694a0454302882316e0223f33c9801375ae8a19472",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/src/main/java/com/example/forgecompat/ForgeModLocator.java"
+    },
+    {
+      "path": "history/compat-002-0d/src/main/java/com/example/forgecompat/ForgeModReader.java",
+      "sha256": "eead3529eef70c865b31cfe0df4993ea5e65ee98ad5bee986ab80e1a5a1e8925",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/src/main/java/com/example/forgecompat/ForgeModReader.java"
+    },
+    {
+      "path": "history/compat-002-0d/src/main/java/com/example/forgecompat/ForgeProbeConstructorTransformer.java",
+      "sha256": "cab00f3ac9cd2ce9ebfaf6bfda289d616c0b85bf733b58b76a9efa0058511b42",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/src/main/java/com/example/forgecompat/ForgeProbeConstructorTransformer.java"
+    },
+    {
+      "path": "history/compat-002-0d/src/main/java/net/minecraftforge/eventbus/api/IEventBus.java",
+      "sha256": "5ac37276f9b441c3b2a18c5f8d394c39571a6a500e03f78c60d34661e39e5982",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/src/main/java/net/minecraftforge/eventbus/api/IEventBus.java"
+    },
+    {
+      "path": "history/compat-002-0d/src/main/resources/META-INF/MANIFEST.MF",
+      "sha256": "d78f95581ec70c1b9265d81cdc2251cb8e2f45e9d05160927fd35bba20f26e93",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/src/main/resources/META-INF/MANIFEST.MF"
+    },
+    {
+      "path": "history/compat-002-0d/src/main/resources/META-INF/services/cpw.mods.modlauncher.api.ITransformationService",
+      "sha256": "7be1179561be12f8c738a9feb87d2bf4cd85227ef495b42bc37d68268e03decf",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/src/main/resources/META-INF/services/cpw.mods.modlauncher.api.ITransformationService"
+    },
+    {
+      "path": "history/compat-002-0d/src/main/resources/META-INF/services/net.neoforged.neoforgespi.language.IModLanguageLoader",
+      "sha256": "65968d8b635730f9ce29b77401ec97310d712574a3c266ebe7f7f23d50473941",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/src/main/resources/META-INF/services/net.neoforged.neoforgespi.language.IModLanguageLoader"
+    },
+    {
+      "path": "history/compat-002-0d/src/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator",
+      "sha256": "2e232a7c8c1ed34ac4989866dec84f6488c1aace5dcd26ccc9a9a7a890b065a3",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/src/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator"
+    },
+    {
+      "path": "history/compat-002-0d/src/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader",
+      "sha256": "394a0017ea04610a7a8d6f7e6410797ed13df52c3f4885ca1df0136bcec81dd7",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0d/src/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-after/main/java/com/example/forgecompat/ForgeCompatLanguageLoader.java",
+      "sha256": "d7ba951c31fcad4cfa86e2681b0ea21880250e5a4a2c636129c122f434f7c0a1",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-after/main/java/com/example/forgecompat/ForgeCompatLanguageLoader.java"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-after/main/java/com/example/forgecompat/ForgeCompatTransformationService.java",
+      "sha256": "c3f859a395aeae1aabf01558acaa0b1e763f8be2011ae910b359f70c83a47e33",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-after/main/java/com/example/forgecompat/ForgeCompatTransformationService.java"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-after/main/java/com/example/forgecompat/ForgeJarMetadata.java",
+      "sha256": "6d1e8d4ddc1316972237d9e98974fb659a9cbb8b7779d6518c196b4110511286",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-after/main/java/com/example/forgecompat/ForgeJarMetadata.java"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-after/main/java/com/example/forgecompat/ForgeModFileInfo.java",
+      "sha256": "830d22d0651f853e4afc1f5e3475983ada12873621e5b39f9fbbb7210631b537",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-after/main/java/com/example/forgecompat/ForgeModFileInfo.java"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-after/main/java/com/example/forgecompat/ForgeModFileInfoParser.java",
+      "sha256": "fe6bbcd18c7504ce794157cccb2dc51313dfef8476bfeea8ffa1dc4041908825",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-after/main/java/com/example/forgecompat/ForgeModFileInfoParser.java"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-after/main/java/com/example/forgecompat/ForgeModLocator.java",
+      "sha256": "3b010724c34f4537d5f759694a0454302882316e0223f33c9801375ae8a19472",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-after/main/java/com/example/forgecompat/ForgeModLocator.java"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-after/main/java/com/example/forgecompat/ForgeModReader.java",
+      "sha256": "eead3529eef70c865b31cfe0df4993ea5e65ee98ad5bee986ab80e1a5a1e8925",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-after/main/java/com/example/forgecompat/ForgeModReader.java"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-after/main/java/com/example/forgecompat/ForgeProbeConstructorTransformer.java",
+      "sha256": "210ea93692eb85f9befec8f98086c7f97b8a32565bbb74d9baa8f37d138eb694",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-after/main/java/com/example/forgecompat/ForgeProbeConstructorTransformer.java"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-after/main/java/net/minecraftforge/eventbus/api/IEventBus.java",
+      "sha256": "5ac37276f9b441c3b2a18c5f8d394c39571a6a500e03f78c60d34661e39e5982",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-after/main/java/net/minecraftforge/eventbus/api/IEventBus.java"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-after/main/resources/META-INF/MANIFEST.MF",
+      "sha256": "d78f95581ec70c1b9265d81cdc2251cb8e2f45e9d05160927fd35bba20f26e93",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-after/main/resources/META-INF/MANIFEST.MF"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-after/main/resources/META-INF/services/cpw.mods.modlauncher.api.ITransformationService",
+      "sha256": "7be1179561be12f8c738a9feb87d2bf4cd85227ef495b42bc37d68268e03decf",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-after/main/resources/META-INF/services/cpw.mods.modlauncher.api.ITransformationService"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-after/main/resources/META-INF/services/net.neoforged.neoforgespi.language.IModLanguageLoader",
+      "sha256": "65968d8b635730f9ce29b77401ec97310d712574a3c266ebe7f7f23d50473941",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-after/main/resources/META-INF/services/net.neoforged.neoforgespi.language.IModLanguageLoader"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-after/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator",
+      "sha256": "2e232a7c8c1ed34ac4989866dec84f6488c1aace5dcd26ccc9a9a7a890b065a3",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-after/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-after/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader",
+      "sha256": "394a0017ea04610a7a8d6f7e6410797ed13df52c3f4885ca1df0136bcec81dd7",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-after/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-before/main/java/com/example/forgecompat/ForgeCompatLanguageLoader.java",
+      "sha256": "d7ba951c31fcad4cfa86e2681b0ea21880250e5a4a2c636129c122f434f7c0a1",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-before/main/java/com/example/forgecompat/ForgeCompatLanguageLoader.java"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-before/main/java/com/example/forgecompat/ForgeCompatTransformationService.java",
+      "sha256": "c3f859a395aeae1aabf01558acaa0b1e763f8be2011ae910b359f70c83a47e33",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-before/main/java/com/example/forgecompat/ForgeCompatTransformationService.java"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-before/main/java/com/example/forgecompat/ForgeJarMetadata.java",
+      "sha256": "6d1e8d4ddc1316972237d9e98974fb659a9cbb8b7779d6518c196b4110511286",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-before/main/java/com/example/forgecompat/ForgeJarMetadata.java"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-before/main/java/com/example/forgecompat/ForgeModFileInfo.java",
+      "sha256": "830d22d0651f853e4afc1f5e3475983ada12873621e5b39f9fbbb7210631b537",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-before/main/java/com/example/forgecompat/ForgeModFileInfo.java"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-before/main/java/com/example/forgecompat/ForgeModFileInfoParser.java",
+      "sha256": "fe6bbcd18c7504ce794157cccb2dc51313dfef8476bfeea8ffa1dc4041908825",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-before/main/java/com/example/forgecompat/ForgeModFileInfoParser.java"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-before/main/java/com/example/forgecompat/ForgeModLocator.java",
+      "sha256": "3b010724c34f4537d5f759694a0454302882316e0223f33c9801375ae8a19472",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-before/main/java/com/example/forgecompat/ForgeModLocator.java"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-before/main/java/com/example/forgecompat/ForgeModReader.java",
+      "sha256": "eead3529eef70c865b31cfe0df4993ea5e65ee98ad5bee986ab80e1a5a1e8925",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-before/main/java/com/example/forgecompat/ForgeModReader.java"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-before/main/java/com/example/forgecompat/ForgeProbeConstructorTransformer.java",
+      "sha256": "cab00f3ac9cd2ce9ebfaf6bfda289d616c0b85bf733b58b76a9efa0058511b42",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-before/main/java/com/example/forgecompat/ForgeProbeConstructorTransformer.java"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-before/main/java/net/minecraftforge/eventbus/api/IEventBus.java",
+      "sha256": "5ac37276f9b441c3b2a18c5f8d394c39571a6a500e03f78c60d34661e39e5982",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-before/main/java/net/minecraftforge/eventbus/api/IEventBus.java"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-before/main/resources/META-INF/MANIFEST.MF",
+      "sha256": "d78f95581ec70c1b9265d81cdc2251cb8e2f45e9d05160927fd35bba20f26e93",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-before/main/resources/META-INF/MANIFEST.MF"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-before/main/resources/META-INF/services/cpw.mods.modlauncher.api.ITransformationService",
+      "sha256": "7be1179561be12f8c738a9feb87d2bf4cd85227ef495b42bc37d68268e03decf",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-before/main/resources/META-INF/services/cpw.mods.modlauncher.api.ITransformationService"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-before/main/resources/META-INF/services/net.neoforged.neoforgespi.language.IModLanguageLoader",
+      "sha256": "65968d8b635730f9ce29b77401ec97310d712574a3c266ebe7f7f23d50473941",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-before/main/resources/META-INF/services/net.neoforged.neoforgespi.language.IModLanguageLoader"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-before/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator",
+      "sha256": "2e232a7c8c1ed34ac4989866dec84f6488c1aace5dcd26ccc9a9a7a890b065a3",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-before/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator"
+    },
+    {
+      "path": "history/compat-002-0g/archive/src-before/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader",
+      "sha256": "394a0017ea04610a7a8d6f7e6410797ed13df52c3f4885ca1df0136bcec81dd7",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/archive/src-before/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader"
+    },
+    {
+      "path": "history/compat-002-0g/src/main/java/com/example/forgecompat/ForgeCompatLanguageLoader.java",
+      "sha256": "d7ba951c31fcad4cfa86e2681b0ea21880250e5a4a2c636129c122f434f7c0a1",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/src/main/java/com/example/forgecompat/ForgeCompatLanguageLoader.java"
+    },
+    {
+      "path": "history/compat-002-0g/src/main/java/com/example/forgecompat/ForgeCompatTransformationService.java",
+      "sha256": "c3f859a395aeae1aabf01558acaa0b1e763f8be2011ae910b359f70c83a47e33",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/src/main/java/com/example/forgecompat/ForgeCompatTransformationService.java"
+    },
+    {
+      "path": "history/compat-002-0g/src/main/java/com/example/forgecompat/ForgeJarMetadata.java",
+      "sha256": "6d1e8d4ddc1316972237d9e98974fb659a9cbb8b7779d6518c196b4110511286",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/src/main/java/com/example/forgecompat/ForgeJarMetadata.java"
+    },
+    {
+      "path": "history/compat-002-0g/src/main/java/com/example/forgecompat/ForgeModFileInfo.java",
+      "sha256": "830d22d0651f853e4afc1f5e3475983ada12873621e5b39f9fbbb7210631b537",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/src/main/java/com/example/forgecompat/ForgeModFileInfo.java"
+    },
+    {
+      "path": "history/compat-002-0g/src/main/java/com/example/forgecompat/ForgeModFileInfoParser.java",
+      "sha256": "fe6bbcd18c7504ce794157cccb2dc51313dfef8476bfeea8ffa1dc4041908825",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/src/main/java/com/example/forgecompat/ForgeModFileInfoParser.java"
+    },
+    {
+      "path": "history/compat-002-0g/src/main/java/com/example/forgecompat/ForgeModLocator.java",
+      "sha256": "3b010724c34f4537d5f759694a0454302882316e0223f33c9801375ae8a19472",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/src/main/java/com/example/forgecompat/ForgeModLocator.java"
+    },
+    {
+      "path": "history/compat-002-0g/src/main/java/com/example/forgecompat/ForgeModReader.java",
+      "sha256": "eead3529eef70c865b31cfe0df4993ea5e65ee98ad5bee986ab80e1a5a1e8925",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/src/main/java/com/example/forgecompat/ForgeModReader.java"
+    },
+    {
+      "path": "history/compat-002-0g/src/main/java/com/example/forgecompat/ForgeProbeConstructorTransformer.java",
+      "sha256": "210ea93692eb85f9befec8f98086c7f97b8a32565bbb74d9baa8f37d138eb694",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/src/main/java/com/example/forgecompat/ForgeProbeConstructorTransformer.java"
+    },
+    {
+      "path": "history/compat-002-0g/src/main/java/net/minecraftforge/eventbus/api/IEventBus.java",
+      "sha256": "5ac37276f9b441c3b2a18c5f8d394c39571a6a500e03f78c60d34661e39e5982",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/src/main/java/net/minecraftforge/eventbus/api/IEventBus.java"
+    },
+    {
+      "path": "history/compat-002-0g/src/main/resources/META-INF/MANIFEST.MF",
+      "sha256": "d78f95581ec70c1b9265d81cdc2251cb8e2f45e9d05160927fd35bba20f26e93",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/src/main/resources/META-INF/MANIFEST.MF"
+    },
+    {
+      "path": "history/compat-002-0g/src/main/resources/META-INF/services/cpw.mods.modlauncher.api.ITransformationService",
+      "sha256": "7be1179561be12f8c738a9feb87d2bf4cd85227ef495b42bc37d68268e03decf",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/src/main/resources/META-INF/services/cpw.mods.modlauncher.api.ITransformationService"
+    },
+    {
+      "path": "history/compat-002-0g/src/main/resources/META-INF/services/net.neoforged.neoforgespi.language.IModLanguageLoader",
+      "sha256": "65968d8b635730f9ce29b77401ec97310d712574a3c266ebe7f7f23d50473941",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/src/main/resources/META-INF/services/net.neoforged.neoforgespi.language.IModLanguageLoader"
+    },
+    {
+      "path": "history/compat-002-0g/src/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator",
+      "sha256": "2e232a7c8c1ed34ac4989866dec84f6488c1aace5dcd26ccc9a9a7a890b065a3",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/src/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator"
+    },
+    {
+      "path": "history/compat-002-0g/src/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader",
+      "sha256": "394a0017ea04610a7a8d6f7e6410797ed13df52c3f4885ca1df0136bcec81dd7",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0g/src/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-after/main/java/com/example/forgecompat/ForgeCompatLanguageLoader.java",
+      "sha256": "d7ba951c31fcad4cfa86e2681b0ea21880250e5a4a2c636129c122f434f7c0a1",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-after/main/java/com/example/forgecompat/ForgeCompatLanguageLoader.java"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-after/main/java/com/example/forgecompat/ForgeCompatTransformationService.java",
+      "sha256": "c3f859a395aeae1aabf01558acaa0b1e763f8be2011ae910b359f70c83a47e33",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-after/main/java/com/example/forgecompat/ForgeCompatTransformationService.java"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-after/main/java/com/example/forgecompat/ForgeEmptyRegistration.java",
+      "sha256": "29a5278ff6095d10f253ca18103e0eec4302bcf25a9d88dcc006094e7f93083a",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-after/main/java/com/example/forgecompat/ForgeEmptyRegistration.java"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-after/main/java/com/example/forgecompat/ForgeJarMetadata.java",
+      "sha256": "6d1e8d4ddc1316972237d9e98974fb659a9cbb8b7779d6518c196b4110511286",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-after/main/java/com/example/forgecompat/ForgeJarMetadata.java"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-after/main/java/com/example/forgecompat/ForgeModFileInfo.java",
+      "sha256": "830d22d0651f853e4afc1f5e3475983ada12873621e5b39f9fbbb7210631b537",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-after/main/java/com/example/forgecompat/ForgeModFileInfo.java"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-after/main/java/com/example/forgecompat/ForgeModFileInfoParser.java",
+      "sha256": "fe6bbcd18c7504ce794157cccb2dc51313dfef8476bfeea8ffa1dc4041908825",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-after/main/java/com/example/forgecompat/ForgeModFileInfoParser.java"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-after/main/java/com/example/forgecompat/ForgeModLocator.java",
+      "sha256": "3b010724c34f4537d5f759694a0454302882316e0223f33c9801375ae8a19472",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-after/main/java/com/example/forgecompat/ForgeModLocator.java"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-after/main/java/com/example/forgecompat/ForgeModReader.java",
+      "sha256": "eead3529eef70c865b31cfe0df4993ea5e65ee98ad5bee986ab80e1a5a1e8925",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-after/main/java/com/example/forgecompat/ForgeModReader.java"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-after/main/java/com/example/forgecompat/ForgeProbeConstructorTransformer.java",
+      "sha256": "e298ab18303429daa8e3e997db32803361ef7c3d2699ebf3d1abc137324844aa",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-after/main/java/com/example/forgecompat/ForgeProbeConstructorTransformer.java"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-after/main/java/net/minecraftforge/eventbus/api/IEventBus.java",
+      "sha256": "5ac37276f9b441c3b2a18c5f8d394c39571a6a500e03f78c60d34661e39e5982",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-after/main/java/net/minecraftforge/eventbus/api/IEventBus.java"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-after/main/resources/META-INF/MANIFEST.MF",
+      "sha256": "d78f95581ec70c1b9265d81cdc2251cb8e2f45e9d05160927fd35bba20f26e93",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-after/main/resources/META-INF/MANIFEST.MF"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-after/main/resources/META-INF/services/cpw.mods.modlauncher.api.ITransformationService",
+      "sha256": "7be1179561be12f8c738a9feb87d2bf4cd85227ef495b42bc37d68268e03decf",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-after/main/resources/META-INF/services/cpw.mods.modlauncher.api.ITransformationService"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-after/main/resources/META-INF/services/net.neoforged.neoforgespi.language.IModLanguageLoader",
+      "sha256": "65968d8b635730f9ce29b77401ec97310d712574a3c266ebe7f7f23d50473941",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-after/main/resources/META-INF/services/net.neoforged.neoforgespi.language.IModLanguageLoader"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-after/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator",
+      "sha256": "2e232a7c8c1ed34ac4989866dec84f6488c1aace5dcd26ccc9a9a7a890b065a3",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-after/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-after/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader",
+      "sha256": "394a0017ea04610a7a8d6f7e6410797ed13df52c3f4885ca1df0136bcec81dd7",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-after/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-before/main/java/com/example/forgecompat/ForgeCompatLanguageLoader.java",
+      "sha256": "d7ba951c31fcad4cfa86e2681b0ea21880250e5a4a2c636129c122f434f7c0a1",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-before/main/java/com/example/forgecompat/ForgeCompatLanguageLoader.java"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-before/main/java/com/example/forgecompat/ForgeCompatTransformationService.java",
+      "sha256": "c3f859a395aeae1aabf01558acaa0b1e763f8be2011ae910b359f70c83a47e33",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-before/main/java/com/example/forgecompat/ForgeCompatTransformationService.java"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-before/main/java/com/example/forgecompat/ForgeJarMetadata.java",
+      "sha256": "6d1e8d4ddc1316972237d9e98974fb659a9cbb8b7779d6518c196b4110511286",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-before/main/java/com/example/forgecompat/ForgeJarMetadata.java"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-before/main/java/com/example/forgecompat/ForgeModFileInfo.java",
+      "sha256": "830d22d0651f853e4afc1f5e3475983ada12873621e5b39f9fbbb7210631b537",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-before/main/java/com/example/forgecompat/ForgeModFileInfo.java"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-before/main/java/com/example/forgecompat/ForgeModFileInfoParser.java",
+      "sha256": "fe6bbcd18c7504ce794157cccb2dc51313dfef8476bfeea8ffa1dc4041908825",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-before/main/java/com/example/forgecompat/ForgeModFileInfoParser.java"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-before/main/java/com/example/forgecompat/ForgeModLocator.java",
+      "sha256": "3b010724c34f4537d5f759694a0454302882316e0223f33c9801375ae8a19472",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-before/main/java/com/example/forgecompat/ForgeModLocator.java"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-before/main/java/com/example/forgecompat/ForgeModReader.java",
+      "sha256": "eead3529eef70c865b31cfe0df4993ea5e65ee98ad5bee986ab80e1a5a1e8925",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-before/main/java/com/example/forgecompat/ForgeModReader.java"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-before/main/java/com/example/forgecompat/ForgeProbeConstructorTransformer.java",
+      "sha256": "210ea93692eb85f9befec8f98086c7f97b8a32565bbb74d9baa8f37d138eb694",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-before/main/java/com/example/forgecompat/ForgeProbeConstructorTransformer.java"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-before/main/java/net/minecraftforge/eventbus/api/IEventBus.java",
+      "sha256": "5ac37276f9b441c3b2a18c5f8d394c39571a6a500e03f78c60d34661e39e5982",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-before/main/java/net/minecraftforge/eventbus/api/IEventBus.java"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-before/main/resources/META-INF/MANIFEST.MF",
+      "sha256": "d78f95581ec70c1b9265d81cdc2251cb8e2f45e9d05160927fd35bba20f26e93",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-before/main/resources/META-INF/MANIFEST.MF"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-before/main/resources/META-INF/services/cpw.mods.modlauncher.api.ITransformationService",
+      "sha256": "7be1179561be12f8c738a9feb87d2bf4cd85227ef495b42bc37d68268e03decf",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-before/main/resources/META-INF/services/cpw.mods.modlauncher.api.ITransformationService"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-before/main/resources/META-INF/services/net.neoforged.neoforgespi.language.IModLanguageLoader",
+      "sha256": "65968d8b635730f9ce29b77401ec97310d712574a3c266ebe7f7f23d50473941",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-before/main/resources/META-INF/services/net.neoforged.neoforgespi.language.IModLanguageLoader"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-before/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator",
+      "sha256": "2e232a7c8c1ed34ac4989866dec84f6488c1aace5dcd26ccc9a9a7a890b065a3",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-before/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator"
+    },
+    {
+      "path": "history/compat-002-0j/archive/src-before/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader",
+      "sha256": "394a0017ea04610a7a8d6f7e6410797ed13df52c3f4885ca1df0136bcec81dd7",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/archive/src-before/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader"
+    },
+    {
+      "path": "history/compat-002-0j/src/main/java/com/example/forgecompat/ForgeCompatLanguageLoader.java",
+      "sha256": "d7ba951c31fcad4cfa86e2681b0ea21880250e5a4a2c636129c122f434f7c0a1",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/src/main/java/com/example/forgecompat/ForgeCompatLanguageLoader.java"
+    },
+    {
+      "path": "history/compat-002-0j/src/main/java/com/example/forgecompat/ForgeCompatTransformationService.java",
+      "sha256": "c3f859a395aeae1aabf01558acaa0b1e763f8be2011ae910b359f70c83a47e33",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/src/main/java/com/example/forgecompat/ForgeCompatTransformationService.java"
+    },
+    {
+      "path": "history/compat-002-0j/src/main/java/com/example/forgecompat/ForgeEmptyRegistration.java",
+      "sha256": "29a5278ff6095d10f253ca18103e0eec4302bcf25a9d88dcc006094e7f93083a",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/src/main/java/com/example/forgecompat/ForgeEmptyRegistration.java"
+    },
+    {
+      "path": "history/compat-002-0j/src/main/java/com/example/forgecompat/ForgeJarMetadata.java",
+      "sha256": "6d1e8d4ddc1316972237d9e98974fb659a9cbb8b7779d6518c196b4110511286",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/src/main/java/com/example/forgecompat/ForgeJarMetadata.java"
+    },
+    {
+      "path": "history/compat-002-0j/src/main/java/com/example/forgecompat/ForgeModFileInfo.java",
+      "sha256": "830d22d0651f853e4afc1f5e3475983ada12873621e5b39f9fbbb7210631b537",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/src/main/java/com/example/forgecompat/ForgeModFileInfo.java"
+    },
+    {
+      "path": "history/compat-002-0j/src/main/java/com/example/forgecompat/ForgeModFileInfoParser.java",
+      "sha256": "fe6bbcd18c7504ce794157cccb2dc51313dfef8476bfeea8ffa1dc4041908825",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/src/main/java/com/example/forgecompat/ForgeModFileInfoParser.java"
+    },
+    {
+      "path": "history/compat-002-0j/src/main/java/com/example/forgecompat/ForgeModLocator.java",
+      "sha256": "3b010724c34f4537d5f759694a0454302882316e0223f33c9801375ae8a19472",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/src/main/java/com/example/forgecompat/ForgeModLocator.java"
+    },
+    {
+      "path": "history/compat-002-0j/src/main/java/com/example/forgecompat/ForgeModReader.java",
+      "sha256": "eead3529eef70c865b31cfe0df4993ea5e65ee98ad5bee986ab80e1a5a1e8925",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/src/main/java/com/example/forgecompat/ForgeModReader.java"
+    },
+    {
+      "path": "history/compat-002-0j/src/main/java/com/example/forgecompat/ForgeProbeConstructorTransformer.java",
+      "sha256": "e298ab18303429daa8e3e997db32803361ef7c3d2699ebf3d1abc137324844aa",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/src/main/java/com/example/forgecompat/ForgeProbeConstructorTransformer.java"
+    },
+    {
+      "path": "history/compat-002-0j/src/main/java/net/minecraftforge/eventbus/api/IEventBus.java",
+      "sha256": "5ac37276f9b441c3b2a18c5f8d394c39571a6a500e03f78c60d34661e39e5982",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/src/main/java/net/minecraftforge/eventbus/api/IEventBus.java"
+    },
+    {
+      "path": "history/compat-002-0j/src/main/resources/META-INF/MANIFEST.MF",
+      "sha256": "d78f95581ec70c1b9265d81cdc2251cb8e2f45e9d05160927fd35bba20f26e93",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/src/main/resources/META-INF/MANIFEST.MF"
+    },
+    {
+      "path": "history/compat-002-0j/src/main/resources/META-INF/services/cpw.mods.modlauncher.api.ITransformationService",
+      "sha256": "7be1179561be12f8c738a9feb87d2bf4cd85227ef495b42bc37d68268e03decf",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/src/main/resources/META-INF/services/cpw.mods.modlauncher.api.ITransformationService"
+    },
+    {
+      "path": "history/compat-002-0j/src/main/resources/META-INF/services/net.neoforged.neoforgespi.language.IModLanguageLoader",
+      "sha256": "65968d8b635730f9ce29b77401ec97310d712574a3c266ebe7f7f23d50473941",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/src/main/resources/META-INF/services/net.neoforged.neoforgespi.language.IModLanguageLoader"
+    },
+    {
+      "path": "history/compat-002-0j/src/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator",
+      "sha256": "2e232a7c8c1ed34ac4989866dec84f6488c1aace5dcd26ccc9a9a7a890b065a3",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/src/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator"
+    },
+    {
+      "path": "history/compat-002-0j/src/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader",
+      "sha256": "394a0017ea04610a7a8d6f7e6410797ed13df52c3f4885ca1df0136bcec81dd7",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0j/src/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-after/main/java/com/example/forgecompat/ForgeCompatLanguageLoader.java",
+      "sha256": "d7ba951c31fcad4cfa86e2681b0ea21880250e5a4a2c636129c122f434f7c0a1",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-after/main/java/com/example/forgecompat/ForgeCompatLanguageLoader.java"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-after/main/java/com/example/forgecompat/ForgeCompatTransformationService.java",
+      "sha256": "c3f859a395aeae1aabf01558acaa0b1e763f8be2011ae910b359f70c83a47e33",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-after/main/java/com/example/forgecompat/ForgeCompatTransformationService.java"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-after/main/java/com/example/forgecompat/ForgeEmptyRegistration.java",
+      "sha256": "2edf8f49dfc3f369ee81cbc30a99d2dd76fad7df1732ec64e629595f712468dd",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-after/main/java/com/example/forgecompat/ForgeEmptyRegistration.java"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-after/main/java/com/example/forgecompat/ForgeJarMetadata.java",
+      "sha256": "6d1e8d4ddc1316972237d9e98974fb659a9cbb8b7779d6518c196b4110511286",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-after/main/java/com/example/forgecompat/ForgeJarMetadata.java"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-after/main/java/com/example/forgecompat/ForgeModFileInfo.java",
+      "sha256": "830d22d0651f853e4afc1f5e3475983ada12873621e5b39f9fbbb7210631b537",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-after/main/java/com/example/forgecompat/ForgeModFileInfo.java"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-after/main/java/com/example/forgecompat/ForgeModFileInfoParser.java",
+      "sha256": "fe6bbcd18c7504ce794157cccb2dc51313dfef8476bfeea8ffa1dc4041908825",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-after/main/java/com/example/forgecompat/ForgeModFileInfoParser.java"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-after/main/java/com/example/forgecompat/ForgeModLocator.java",
+      "sha256": "3b010724c34f4537d5f759694a0454302882316e0223f33c9801375ae8a19472",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-after/main/java/com/example/forgecompat/ForgeModLocator.java"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-after/main/java/com/example/forgecompat/ForgeModReader.java",
+      "sha256": "eead3529eef70c865b31cfe0df4993ea5e65ee98ad5bee986ab80e1a5a1e8925",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-after/main/java/com/example/forgecompat/ForgeModReader.java"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-after/main/java/com/example/forgecompat/ForgeProbeConstructorTransformer.java",
+      "sha256": "10b0744d0c8fbcdb8ef270bdfb8b0bafcb8f754d810a339156ac4ab552dd5e1f",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-after/main/java/com/example/forgecompat/ForgeProbeConstructorTransformer.java"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-after/main/java/net/minecraftforge/eventbus/api/IEventBus.java",
+      "sha256": "5ac37276f9b441c3b2a18c5f8d394c39571a6a500e03f78c60d34661e39e5982",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-after/main/java/net/minecraftforge/eventbus/api/IEventBus.java"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-after/main/resources/META-INF/MANIFEST.MF",
+      "sha256": "d78f95581ec70c1b9265d81cdc2251cb8e2f45e9d05160927fd35bba20f26e93",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-after/main/resources/META-INF/MANIFEST.MF"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-after/main/resources/META-INF/services/cpw.mods.modlauncher.api.ITransformationService",
+      "sha256": "7be1179561be12f8c738a9feb87d2bf4cd85227ef495b42bc37d68268e03decf",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-after/main/resources/META-INF/services/cpw.mods.modlauncher.api.ITransformationService"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-after/main/resources/META-INF/services/net.neoforged.neoforgespi.language.IModLanguageLoader",
+      "sha256": "65968d8b635730f9ce29b77401ec97310d712574a3c266ebe7f7f23d50473941",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-after/main/resources/META-INF/services/net.neoforged.neoforgespi.language.IModLanguageLoader"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-after/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator",
+      "sha256": "2e232a7c8c1ed34ac4989866dec84f6488c1aace5dcd26ccc9a9a7a890b065a3",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-after/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-after/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader",
+      "sha256": "394a0017ea04610a7a8d6f7e6410797ed13df52c3f4885ca1df0136bcec81dd7",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-after/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-before/main/java/com/example/forgecompat/ForgeCompatLanguageLoader.java",
+      "sha256": "d7ba951c31fcad4cfa86e2681b0ea21880250e5a4a2c636129c122f434f7c0a1",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-before/main/java/com/example/forgecompat/ForgeCompatLanguageLoader.java"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-before/main/java/com/example/forgecompat/ForgeCompatTransformationService.java",
+      "sha256": "c3f859a395aeae1aabf01558acaa0b1e763f8be2011ae910b359f70c83a47e33",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-before/main/java/com/example/forgecompat/ForgeCompatTransformationService.java"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-before/main/java/com/example/forgecompat/ForgeEmptyRegistration.java",
+      "sha256": "29a5278ff6095d10f253ca18103e0eec4302bcf25a9d88dcc006094e7f93083a",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-before/main/java/com/example/forgecompat/ForgeEmptyRegistration.java"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-before/main/java/com/example/forgecompat/ForgeJarMetadata.java",
+      "sha256": "6d1e8d4ddc1316972237d9e98974fb659a9cbb8b7779d6518c196b4110511286",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-before/main/java/com/example/forgecompat/ForgeJarMetadata.java"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-before/main/java/com/example/forgecompat/ForgeModFileInfo.java",
+      "sha256": "830d22d0651f853e4afc1f5e3475983ada12873621e5b39f9fbbb7210631b537",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-before/main/java/com/example/forgecompat/ForgeModFileInfo.java"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-before/main/java/com/example/forgecompat/ForgeModFileInfoParser.java",
+      "sha256": "fe6bbcd18c7504ce794157cccb2dc51313dfef8476bfeea8ffa1dc4041908825",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-before/main/java/com/example/forgecompat/ForgeModFileInfoParser.java"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-before/main/java/com/example/forgecompat/ForgeModLocator.java",
+      "sha256": "3b010724c34f4537d5f759694a0454302882316e0223f33c9801375ae8a19472",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-before/main/java/com/example/forgecompat/ForgeModLocator.java"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-before/main/java/com/example/forgecompat/ForgeModReader.java",
+      "sha256": "eead3529eef70c865b31cfe0df4993ea5e65ee98ad5bee986ab80e1a5a1e8925",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-before/main/java/com/example/forgecompat/ForgeModReader.java"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-before/main/java/com/example/forgecompat/ForgeProbeConstructorTransformer.java",
+      "sha256": "e298ab18303429daa8e3e997db32803361ef7c3d2699ebf3d1abc137324844aa",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-before/main/java/com/example/forgecompat/ForgeProbeConstructorTransformer.java"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-before/main/java/net/minecraftforge/eventbus/api/IEventBus.java",
+      "sha256": "5ac37276f9b441c3b2a18c5f8d394c39571a6a500e03f78c60d34661e39e5982",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-before/main/java/net/minecraftforge/eventbus/api/IEventBus.java"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-before/main/resources/META-INF/MANIFEST.MF",
+      "sha256": "d78f95581ec70c1b9265d81cdc2251cb8e2f45e9d05160927fd35bba20f26e93",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-before/main/resources/META-INF/MANIFEST.MF"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-before/main/resources/META-INF/services/cpw.mods.modlauncher.api.ITransformationService",
+      "sha256": "7be1179561be12f8c738a9feb87d2bf4cd85227ef495b42bc37d68268e03decf",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-before/main/resources/META-INF/services/cpw.mods.modlauncher.api.ITransformationService"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-before/main/resources/META-INF/services/net.neoforged.neoforgespi.language.IModLanguageLoader",
+      "sha256": "65968d8b635730f9ce29b77401ec97310d712574a3c266ebe7f7f23d50473941",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-before/main/resources/META-INF/services/net.neoforged.neoforgespi.language.IModLanguageLoader"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-before/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator",
+      "sha256": "2e232a7c8c1ed34ac4989866dec84f6488c1aace5dcd26ccc9a9a7a890b065a3",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-before/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator"
+    },
+    {
+      "path": "history/compat-002-0l-archive/src-before/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader",
+      "sha256": "394a0017ea04610a7a8d6f7e6410797ed13df52c3f4885ca1df0136bcec81dd7",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-002-0l-archive/src-before/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader"
+    },
+    {
+      "path": "history/compat-build.gradle.deprecated",
+      "sha256": "9a4f2e40740267ebcc10b3846e4078881901990da68f93bac5e75e9d05728c45",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/compat-build.gradle.deprecated"
+    },
+    {
+      "path": "history/spike000/logs/spike002-0e-artifacts/2Ed-static-gates.md",
+      "sha256": "9859b7b8378578b3d55361b98f50f821620d9c430cc5438542279486f9bf8e11",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/logs/spike002-0e-artifacts/2Ed-static-gates.md"
+    },
+    {
+      "path": "history/spike000/logs/spike002-0e-artifacts/2Ee-control-gate.md",
+      "sha256": "bd9decb8b2cf8e25684a95345d81711f8bfafb194f9d6828e487946c11aa5fe0",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/logs/spike002-0e-artifacts/2Ee-control-gate.md"
+    },
+    {
+      "path": "history/spike000/logs/spike002-0f-artifacts/capture-note.md",
+      "sha256": "8629c4800f36c84555210b8da62e57a5a21cedcf4dbed582a7cf424396371034",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/logs/spike002-0f-artifacts/capture-note.md"
+    },
+    {
+      "path": "history/spike000/logs/spike002-0g-artifacts/control-gate.md",
+      "sha256": "48898c651bb5874157aac0a3178ca8548b5f48d289ac4d950673aae00d3a6020",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/logs/spike002-0g-artifacts/control-gate.md"
+    },
+    {
+      "path": "history/spike000/logs/spike002-0g-artifacts/prelaunch-correction.md",
+      "sha256": "5e696e621ab9b34d4f594240e5a294b2f7c2c9bbfd335538bdbcaf9c7587de81",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/logs/spike002-0g-artifacts/prelaunch-correction.md"
+    },
+    {
+      "path": "history/spike000/logs/spike002-0i-artifacts/EmptyRegistrationFixture.java",
+      "sha256": "5fd686b4326f0f0f6ca913e78521dde88879bfd479a351e1c6446066391e480e",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/logs/spike002-0i-artifacts/EmptyRegistrationFixture.java"
+    },
+    {
+      "path": "history/spike000/logs/spike002-0i-artifacts/precompile-correction.md",
+      "sha256": "74d944c3d94ad76bcbca71c5372959a23309d67119bce40502faa7c0399da787",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/logs/spike002-0i-artifacts/precompile-correction.md"
+    },
+    {
+      "path": "history/spike000/logs/spike002-0j-artifacts/control-gate.md",
+      "sha256": "18bee39e7f2164518192c3d225289bcda10a07154ba852e6d28296861bccd554",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/logs/spike002-0j-artifacts/control-gate.md"
+    },
+    {
+      "path": "history/spike000/logs/spike002-0n-artifacts/SemanticVerifier.java",
+      "sha256": "f08e187dc5b85f1e220a26d5245b6bc0c49214e4e69701439bd0a685f77eb310",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/logs/spike002-0n-artifacts/SemanticVerifier.java"
+    },
+    {
+      "path": "history/spike000/probe-002-0e/archive/src-after-sha256.json",
+      "sha256": "a9a2f419c8cc343c1b1e77c2039b0bf0560a48f4fd83cedd1183ea4c22f21add",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/probe-002-0e/archive/src-after-sha256.json"
+    },
+    {
+      "path": "history/spike000/probe-002-0e/archive/src-after/main/java/com/example/forgeprobe/ForgeProbe.java",
+      "sha256": "f735ef5c9119fc680d1a0475b8a18662ea5bc8d81694c6e4863b01de290bb959",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/probe-002-0e/archive/src-after/main/java/com/example/forgeprobe/ForgeProbe.java"
+    },
+    {
+      "path": "history/spike000/probe-002-0e/archive/src-after/main/resources/META-INF/MANIFEST.MF",
+      "sha256": "ac0b123f98fc1b1d0fb78c04fb2493a58a299a6ed4d0a444100023d10dca3382",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/probe-002-0e/archive/src-after/main/resources/META-INF/MANIFEST.MF"
+    },
+    {
+      "path": "history/spike000/probe-002-0e/archive/src-after/main/resources/META-INF/mods.toml",
+      "sha256": "b32cf69b88fbe053c2580fc739b30fedc43d96984c72ff78cd6725c7f3a1ce6e",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/probe-002-0e/archive/src-after/main/resources/META-INF/mods.toml"
+    },
+    {
+      "path": "history/spike000/probe-002-0e/archive/src-before-sha256.json",
+      "sha256": "aa00ad88c01bed14ae1aaf8f49bb41f53e4801d0bced440e518f17d201f3c5e1",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/probe-002-0e/archive/src-before-sha256.json"
+    },
+    {
+      "path": "history/spike000/probe-002-0e/archive/src-before/main/java/com/example/forgeprobe/ForgeProbe.java",
+      "sha256": "6092cc3d402f6d0132a8f15c6a298bc1ae8d4effbd8cd91b01c9d734fc1ebbf5",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/probe-002-0e/archive/src-before/main/java/com/example/forgeprobe/ForgeProbe.java"
+    },
+    {
+      "path": "history/spike000/probe-002-0e/archive/src-before/main/resources/META-INF/MANIFEST.MF",
+      "sha256": "ac0b123f98fc1b1d0fb78c04fb2493a58a299a6ed4d0a444100023d10dca3382",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/probe-002-0e/archive/src-before/main/resources/META-INF/MANIFEST.MF"
+    },
+    {
+      "path": "history/spike000/probe-002-0e/archive/src-before/main/resources/META-INF/mods.toml",
+      "sha256": "b32cf69b88fbe053c2580fc739b30fedc43d96984c72ff78cd6725c7f3a1ce6e",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/probe-002-0e/archive/src-before/main/resources/META-INF/mods.toml"
+    },
+    {
+      "path": "history/spike000/probe-002-0e/src/main/java/com/example/forgeprobe/ForgeProbe.java",
+      "sha256": "f735ef5c9119fc680d1a0475b8a18662ea5bc8d81694c6e4863b01de290bb959",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/probe-002-0e/src/main/java/com/example/forgeprobe/ForgeProbe.java"
+    },
+    {
+      "path": "history/spike000/probe-002-0e/src/main/resources/META-INF/MANIFEST.MF",
+      "sha256": "ac0b123f98fc1b1d0fb78c04fb2493a58a299a6ed4d0a444100023d10dca3382",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/probe-002-0e/src/main/resources/META-INF/MANIFEST.MF"
+    },
+    {
+      "path": "history/spike000/probe-002-0e/src/main/resources/META-INF/mods.toml",
+      "sha256": "b32cf69b88fbe053c2580fc739b30fedc43d96984c72ff78cd6725c7f3a1ce6e",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/probe-002-0e/src/main/resources/META-INF/mods.toml"
+    },
+    {
+      "path": "history/spike000/probe-002-0l/archive/src-after/main/java/com/example/forgeprobe/ForgeProbe.java",
+      "sha256": "389dba54c584bb8bf6145fe40c0c62e57f7a13e9752ad5be5cc92af4f1910a0f",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/probe-002-0l/archive/src-after/main/java/com/example/forgeprobe/ForgeProbe.java"
+    },
+    {
+      "path": "history/spike000/probe-002-0l/archive/src-after/main/java/com/example/forgeprobe/ProbeEvent.java",
+      "sha256": "559dc479d74598557d8a6717e13c0cb2066fb0caae981beae09339b015f5d96f",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/probe-002-0l/archive/src-after/main/java/com/example/forgeprobe/ProbeEvent.java"
+    },
+    {
+      "path": "history/spike000/probe-002-0l/archive/src-after/main/resources/META-INF/MANIFEST.MF",
+      "sha256": "ac0b123f98fc1b1d0fb78c04fb2493a58a299a6ed4d0a444100023d10dca3382",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/probe-002-0l/archive/src-after/main/resources/META-INF/MANIFEST.MF"
+    },
+    {
+      "path": "history/spike000/probe-002-0l/archive/src-after/main/resources/META-INF/mods.toml",
+      "sha256": "b32cf69b88fbe053c2580fc739b30fedc43d96984c72ff78cd6725c7f3a1ce6e",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/probe-002-0l/archive/src-after/main/resources/META-INF/mods.toml"
+    },
+    {
+      "path": "history/spike000/probe-002-0l/archive/src-before/main/java/com/example/forgeprobe/ForgeProbe.java",
+      "sha256": "f735ef5c9119fc680d1a0475b8a18662ea5bc8d81694c6e4863b01de290bb959",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/probe-002-0l/archive/src-before/main/java/com/example/forgeprobe/ForgeProbe.java"
+    },
+    {
+      "path": "history/spike000/probe-002-0l/archive/src-before/main/resources/META-INF/MANIFEST.MF",
+      "sha256": "ac0b123f98fc1b1d0fb78c04fb2493a58a299a6ed4d0a444100023d10dca3382",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/probe-002-0l/archive/src-before/main/resources/META-INF/MANIFEST.MF"
+    },
+    {
+      "path": "history/spike000/probe-002-0l/archive/src-before/main/resources/META-INF/mods.toml",
+      "sha256": "b32cf69b88fbe053c2580fc739b30fedc43d96984c72ff78cd6725c7f3a1ce6e",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/probe-002-0l/archive/src-before/main/resources/META-INF/mods.toml"
+    },
+    {
+      "path": "history/spike000/probe-002-0l/src/main/java/com/example/forgeprobe/ForgeProbe.java",
+      "sha256": "389dba54c584bb8bf6145fe40c0c62e57f7a13e9752ad5be5cc92af4f1910a0f",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/probe-002-0l/src/main/java/com/example/forgeprobe/ForgeProbe.java"
+    },
+    {
+      "path": "history/spike000/probe-002-0l/src/main/java/com/example/forgeprobe/ProbeEvent.java",
+      "sha256": "559dc479d74598557d8a6717e13c0cb2066fb0caae981beae09339b015f5d96f",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/probe-002-0l/src/main/java/com/example/forgeprobe/ProbeEvent.java"
+    },
+    {
+      "path": "history/spike000/probe-002-0l/src/main/resources/META-INF/MANIFEST.MF",
+      "sha256": "ac0b123f98fc1b1d0fb78c04fb2493a58a299a6ed4d0a444100023d10dca3382",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/probe-002-0l/src/main/resources/META-INF/MANIFEST.MF"
+    },
+    {
+      "path": "history/spike000/probe-002-0l/src/main/resources/META-INF/mods.toml",
+      "sha256": "b32cf69b88fbe053c2580fc739b30fedc43d96984c72ff78cd6725c7f3a1ce6e",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/probe-002-0l/src/main/resources/META-INF/mods.toml"
+    },
+    {
+      "path": "history/spike000/subscriber-002-0n/archive/src-frozen/ProfileRewriter.java",
+      "sha256": "8a809866b5510437b86b95ed2c70ed1975b13c52403ae1cf6658724cc5932819",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/subscriber-002-0n/archive/src-frozen/ProfileRewriter.java"
+    },
+    {
+      "path": "history/spike000/subscriber-002-0n/archive/src-frozen/com/example/forgeprobe/FixtureDriver.java",
+      "sha256": "9022e91de8f7e1145831cd4f7dd86ed7e733dd98d8aa209457e79dc7c02c1a03",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/subscriber-002-0n/archive/src-frozen/com/example/forgeprobe/FixtureDriver.java"
+    },
+    {
+      "path": "history/spike000/subscriber-002-0n/archive/src-frozen/com/example/forgeprobe/SubscriberFixture.java",
+      "sha256": "d3c7f07c10a0a86e055df79fb944d0f97b1079b418440ffd80108b12090fe6d3",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/subscriber-002-0n/archive/src-frozen/com/example/forgeprobe/SubscriberFixture.java"
+    },
+    {
+      "path": "history/spike000/subscriber-002-0n/src/ProfileRewriter.java",
+      "sha256": "8a809866b5510437b86b95ed2c70ed1975b13c52403ae1cf6658724cc5932819",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/subscriber-002-0n/src/ProfileRewriter.java"
+    },
+    {
+      "path": "history/spike000/subscriber-002-0n/src/com/example/forgeprobe/FixtureDriver.java",
+      "sha256": "9022e91de8f7e1145831cd4f7dd86ed7e733dd98d8aa209457e79dc7c02c1a03",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/subscriber-002-0n/src/com/example/forgeprobe/FixtureDriver.java"
+    },
+    {
+      "path": "history/spike000/subscriber-002-0n/src/com/example/forgeprobe/SubscriberFixture.java",
+      "sha256": "d3c7f07c10a0a86e055df79fb944d0f97b1079b418440ffd80108b12090fe6d3",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "history/spike000/subscriber-002-0n/src/com/example/forgeprobe/SubscriberFixture.java"
+    },
+    {
+      "path": "spike000/neoforge-server/config/fml.toml",
+      "sha256": "cc59fb1039726fda3ab1eb69b06d9b9aebb7496604ea579cfb735bc5377e7825",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "spike000/neoforge-server/config/fml.toml"
+    },
+    {
+      "path": "spike000/neoforge-server/config/neoforge-common.toml",
+      "sha256": "fe878a2717a145cd890621eac5b3be1e1fd656f7ff9abc6e8d53f670d37474c4",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "spike000/neoforge-server/config/neoforge-common.toml"
+    },
+    {
+      "path": "spike000/neoforge-server/config/neoforge-server.toml",
+      "sha256": "b1e3b38d612295f8d9dfa0fbdb538a992b7a1a3b7a766c491b4e9fdf3823396f",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "spike000/neoforge-server/config/neoforge-server.toml"
+    },
+    {
+      "path": "spike000/probe/build.gradle",
+      "sha256": "3056f0b920a19abde57ca8e4ee7a2e6a68d74450bb52dc15e59f4dc50f5d91ff",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "spike000/probe/build.gradle"
+    },
+    {
+      "path": "spike000/probe/src/main/java/com/example/forgeprobe/ForgeProbe.java",
+      "sha256": "6092cc3d402f6d0132a8f15c6a298bc1ae8d4effbd8cd91b01c9d734fc1ebbf5",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "spike000/probe/src/main/java/com/example/forgeprobe/ForgeProbe.java"
+    },
+    {
+      "path": "spike000/probe/src/main/resources/META-INF/MANIFEST.MF",
+      "sha256": "ac0b123f98fc1b1d0fb78c04fb2493a58a299a6ed4d0a444100023d10dca3382",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "spike000/probe/src/main/resources/META-INF/MANIFEST.MF"
+    },
+    {
+      "path": "spike000/probe/src/main/resources/META-INF/mods.toml",
+      "sha256": "b32cf69b88fbe053c2580fc739b30fedc43d96984c72ff78cd6725c7f3a1ce6e",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "spike000/probe/src/main/resources/META-INF/mods.toml"
+    },
+    {
+      "path": "spike001a/compat/DEPRECATED.md",
+      "sha256": "7b9f5af6dd33bfef67a73a832d52cc0167a9438140896a629fa1f8ded731fa0b",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "spike001a/compat/DEPRECATED.md"
+    },
+    {
+      "path": "spike001a/compat/archive/src-001b1/_sha256.txt",
+      "sha256": "b4764e8fd23b59d0e9fe6e2cf95ecbc3e68b1b41fd0b1307cbed83bd8fac8a66",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "spike001a/compat/archive/src-001b1/_sha256.txt"
+    },
+    {
+      "path": "spike001a/compat/archive/src-001b1/main/java/com/example/forgecompat/ForgeJarMetadata.java",
+      "sha256": "6d1e8d4ddc1316972237d9e98974fb659a9cbb8b7779d6518c196b4110511286",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "spike001a/compat/archive/src-001b1/main/java/com/example/forgecompat/ForgeJarMetadata.java"
+    },
+    {
+      "path": "spike001a/compat/archive/src-001b1/main/java/com/example/forgecompat/ForgeModFileInfo.java",
+      "sha256": "ed8e78ddeb25896d8161d8472eea9ce2d38845495bc2a77629726ce7ea35c50d",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "spike001a/compat/archive/src-001b1/main/java/com/example/forgecompat/ForgeModFileInfo.java"
+    },
+    {
+      "path": "spike001a/compat/archive/src-001b1/main/java/com/example/forgecompat/ForgeModFileInfoParser.java",
+      "sha256": "dcbec1d7f40e28df29a682c3431555cbf89af604abe8f393a895d9723bbac9ca",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "spike001a/compat/archive/src-001b1/main/java/com/example/forgecompat/ForgeModFileInfoParser.java"
+    },
+    {
+      "path": "spike001a/compat/archive/src-001b1/main/java/com/example/forgecompat/ForgeModLocator.java",
+      "sha256": "3b010724c34f4537d5f759694a0454302882316e0223f33c9801375ae8a19472",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "spike001a/compat/archive/src-001b1/main/java/com/example/forgecompat/ForgeModLocator.java"
+    },
+    {
+      "path": "spike001a/compat/archive/src-001b1/main/java/com/example/forgecompat/ForgeModReader.java",
+      "sha256": "eead3529eef70c865b31cfe0df4993ea5e65ee98ad5bee986ab80e1a5a1e8925",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "spike001a/compat/archive/src-001b1/main/java/com/example/forgecompat/ForgeModReader.java"
+    },
+    {
+      "path": "spike001a/compat/archive/src-001b1/main/resources/META-INF/MANIFEST.MF",
+      "sha256": "d78f95581ec70c1b9265d81cdc2251cb8e2f45e9d05160927fd35bba20f26e93",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "spike001a/compat/archive/src-001b1/main/resources/META-INF/MANIFEST.MF"
+    },
+    {
+      "path": "spike001a/compat/archive/src-001b1/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator",
+      "sha256": "2e232a7c8c1ed34ac4989866dec84f6488c1aace5dcd26ccc9a9a7a890b065a3",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "spike001a/compat/archive/src-001b1/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator"
+    },
+    {
+      "path": "spike001a/compat/archive/src-001b1/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader",
+      "sha256": "394a0017ea04610a7a8d6f7e6410797ed13df52c3f4885ca1df0136bcec81dd7",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "spike001a/compat/archive/src-001b1/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader"
+    },
+    {
+      "path": "spike001a/compat/src/main/java/com/example/forgecompat/ForgeJarMetadata.java",
+      "sha256": "6d1e8d4ddc1316972237d9e98974fb659a9cbb8b7779d6518c196b4110511286",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "spike001a/compat/src/main/java/com/example/forgecompat/ForgeJarMetadata.java"
+    },
+    {
+      "path": "spike001a/compat/src/main/java/com/example/forgecompat/ForgeModFileInfo.java",
+      "sha256": "ed8e78ddeb25896d8161d8472eea9ce2d38845495bc2a77629726ce7ea35c50d",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "spike001a/compat/src/main/java/com/example/forgecompat/ForgeModFileInfo.java"
+    },
+    {
+      "path": "spike001a/compat/src/main/java/com/example/forgecompat/ForgeModFileInfoParser.java",
+      "sha256": "dcbec1d7f40e28df29a682c3431555cbf89af604abe8f393a895d9723bbac9ca",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "spike001a/compat/src/main/java/com/example/forgecompat/ForgeModFileInfoParser.java"
+    },
+    {
+      "path": "spike001a/compat/src/main/java/com/example/forgecompat/ForgeModLocator.java",
+      "sha256": "3b010724c34f4537d5f759694a0454302882316e0223f33c9801375ae8a19472",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "spike001a/compat/src/main/java/com/example/forgecompat/ForgeModLocator.java"
+    },
+    {
+      "path": "spike001a/compat/src/main/java/com/example/forgecompat/ForgeModReader.java",
+      "sha256": "eead3529eef70c865b31cfe0df4993ea5e65ee98ad5bee986ab80e1a5a1e8925",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "spike001a/compat/src/main/java/com/example/forgecompat/ForgeModReader.java"
+    },
+    {
+      "path": "spike001a/compat/src/main/resources/META-INF/MANIFEST.MF",
+      "sha256": "d78f95581ec70c1b9265d81cdc2251cb8e2f45e9d05160927fd35bba20f26e93",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "spike001a/compat/src/main/resources/META-INF/MANIFEST.MF"
+    },
+    {
+      "path": "spike001a/compat/src/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator",
+      "sha256": "2e232a7c8c1ed34ac4989866dec84f6488c1aace5dcd26ccc9a9a7a890b065a3",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "spike001a/compat/src/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator"
+    },
+    {
+      "path": "spike001a/compat/src/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader",
+      "sha256": "394a0017ea04610a7a8d6f7e6410797ed13df52c3f4885ca1df0136bcec81dd7",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "spike001a/compat/src/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader"
+    },
+    {
+      "path": "spike001b5/probe/ModInfoContractProbe.java",
+      "sha256": "00cb2838bd4c53aa079bd17c9bb3828bc32a2ba92f3d274d5539611ccf0480b5",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "spike001b5/probe/ModInfoContractProbe.java"
+    },
+    {
+      "path": "tests/dependencies/A-single.toml",
+      "sha256": "5deb820c6694ca9e52263af1619caf6fa6e82f15c7eef6b91e173fa280a90c82",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/dependencies/A-single.toml"
+    },
+    {
+      "path": "tests/dependencies/B-owners.toml",
+      "sha256": "1b14eb335909ca8073ddc55d7783d65b34160e3903ec2e142d4f602062f6b40f",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/dependencies/B-owners.toml"
+    },
+    {
+      "path": "tests/dependencies/C-satisfied.toml",
+      "sha256": "8d27e295d38712153982e0e9b2daaf841ca2f67696398ac4a9cedde0cf065f2f",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/dependencies/C-satisfied.toml"
+    },
+    {
+      "path": "tests/dependencies/D-missing-required.toml",
+      "sha256": "a5536883369ab2a56a43f16e557fa232155398fdec47b9943748b514c9f517e6",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/dependencies/D-missing-required.toml"
+    },
+    {
+      "path": "tests/dependencies/E-missing-optional.toml",
+      "sha256": "7880d7f65550c57ccecccd334a65305854fd07df21f1eb209f1abd6fbccbe644",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/dependencies/E-missing-optional.toml"
+    },
+    {
+      "path": "tests/dependencies/F-wrong-version.toml",
+      "sha256": "3e8268b0869a36ae5b9e75b2a51c330c2604b30c195001520ea1bb34d93986d5",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/dependencies/F-wrong-version.toml"
+    },
+    {
+      "path": "tests/events/GATE0.md",
+      "sha256": "22eb0c747390e9c9d5d10ac2eb73c6f50bbad9c0c10ac4534214a37a75aee9e3",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/events/GATE0.md"
+    },
+    {
+      "path": "tests/events/controls/RejectedEvent.java",
+      "sha256": "238509c8cdffcb3c6262a634c50a665060888dc3c7718c92c73cef03d2d2ecb1",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/events/controls/RejectedEvent.java"
+    },
+    {
+      "path": "tests/events/controls/RejectedProbe.java",
+      "sha256": "1b283334c1f47f452073c2dc671dfbf66c38e993f5f25e9f4f61943c1a768b1b",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/events/controls/RejectedProbe.java"
+    },
+    {
+      "path": "tests/events/controls/UnclaimedMarker.java",
+      "sha256": "43e2c3498e9af501d001bf21b977b589ad34c4b14fdadac06ffe20f846483810",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/events/controls/UnclaimedMarker.java"
+    },
+    {
+      "path": "tests/events/driver/main/java/com/example/dispatchdriver/DispatchDriver.java",
+      "sha256": "4c58fde8611b49c630c2903b1c60d90a4ddb48b6009d5064aa4c4b6a0243714c",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/events/driver/main/java/com/example/dispatchdriver/DispatchDriver.java"
+    },
+    {
+      "path": "tests/events/driver/main/resources/META-INF/MANIFEST.MF",
+      "sha256": "62a1ae01874650c5577ea6a26e9a46fb096b4360142611d4ff1118f7d28b2248",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/events/driver/main/resources/META-INF/MANIFEST.MF"
+    },
+    {
+      "path": "tests/events/driver/main/resources/META-INF/neoforge.mods.toml",
+      "sha256": "373a67ae438b1f448e5f0b5dabbf38360642ec321722cc67327bb5d0b55ab32d",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/events/driver/main/resources/META-INF/neoforge.mods.toml"
+    },
+    {
+      "path": "tests/events/src/main/java/com/example/dispatchcheck/DispatchEvent.java",
+      "sha256": "9ef1dd53e50fccada13c16e578a86f9d195f7fdedee2bea993438dd797a17820",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/events/src/main/java/com/example/dispatchcheck/DispatchEvent.java"
+    },
+    {
+      "path": "tests/events/src/main/java/com/example/dispatchcheck/DispatchProbe.java",
+      "sha256": "2560a509a78e406da9341e876ce05f2b8753497d6ff3c38b4224d3239ad0d9b6",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/events/src/main/java/com/example/dispatchcheck/DispatchProbe.java"
+    },
+    {
+      "path": "tests/events/src/main/resources/META-INF/MANIFEST.MF",
+      "sha256": "73d3a59840f0a0b367bc63270ca2a006503e4cf569d82f0f506c9f0113d83ad6",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/events/src/main/resources/META-INF/MANIFEST.MF"
+    },
+    {
+      "path": "tests/events/src/main/resources/META-INF/mods.toml",
+      "sha256": "9dc623ad0df5b5d9f091b76ab33185ba2a4ecb4be4b0ddfc11385e962f966bcd",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/events/src/main/resources/META-INF/mods.toml"
+    },
+    {
+      "path": "tests/identity/controls/NativeControl.java",
+      "sha256": "d634dfd1226bcc1a0f244376c1829383d49748276816ac928099f72627131c86",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/identity/controls/NativeControl.java"
+    },
+    {
+      "path": "tests/identity/controls/Ordinary.java",
+      "sha256": "722baa7f9238d040df765461071abe385139992dca4b8f1d6a9b428e15901e7b",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/identity/controls/Ordinary.java"
+    },
+    {
+      "path": "tests/identity/controls/UnownedEntry.java",
+      "sha256": "bdc055461f01ba2606ce44e9e180287985ec9ef2b162b092c565ecb8a47e47d3",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/identity/controls/UnownedEntry.java"
+    },
+    {
+      "path": "tests/identity/controls/UnrelatedEvent.java",
+      "sha256": "3dc9aad9cd9e3d9aed3c9175715725d827078ef3743d4423ad8884091b1e697a",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/identity/controls/UnrelatedEvent.java"
+    },
+    {
+      "path": "tests/identity/src/main/java/com/example/identitycheck/IdentityEvent.java",
+      "sha256": "019963b1a2f8eefd6be06224f135db743c1296f7ef7f866816fbeb50c8fb5b86",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/identity/src/main/java/com/example/identitycheck/IdentityEvent.java"
+    },
+    {
+      "path": "tests/identity/src/main/java/com/example/identitycheck/IdentityProbe.java",
+      "sha256": "19345c096b1b87744493949e9225089d495e4769e49f467d6db8d497515fdcc8",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/identity/src/main/java/com/example/identitycheck/IdentityProbe.java"
+    },
+    {
+      "path": "tests/identity/src/main/resources/META-INF/MANIFEST.MF",
+      "sha256": "d502344e1880c764ed74b0560543c1d2161a4069943638cef1eb6b16161be072",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/identity/src/main/resources/META-INF/MANIFEST.MF"
+    },
+    {
+      "path": "tests/identity/src/main/resources/META-INF/mods.toml",
+      "sha256": "01629813ff8b8ad42075265fb2472817fecc6f9b9130bea9f3214e6a5e9b1bcb",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/identity/src/main/resources/META-INF/mods.toml"
+    },
+    {
+      "path": "tests/registry/ABI.md",
+      "sha256": "a5986f488a9fbcec92515169ef693be70321d6acadd9b772b3b98908e589db46",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/registry/ABI.md"
+    },
+    {
+      "path": "tests/registry/contract/RegistryAbiCompile.java",
+      "sha256": "08ab3cab8a916c596817f0020d4afe924ac881270d5af5790e28e3150ecfcf45",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/registry/contract/RegistryAbiCompile.java"
+    },
+    {
+      "path": "tests/registry/driver/main/java/com/example/registrydriver/RegistryDriver.java",
+      "sha256": "8120126737a30480d1dff8880fbba4521d07caae9b445ff555cb6315fc868794",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/registry/driver/main/java/com/example/registrydriver/RegistryDriver.java"
+    },
+    {
+      "path": "tests/registry/driver/main/resources/META-INF/MANIFEST.MF",
+      "sha256": "5122fc5abb7e8a90f74291ce5f4a5b1e24ab4227e6383b33c17d09e75da2107c",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/registry/driver/main/resources/META-INF/MANIFEST.MF"
+    },
+    {
+      "path": "tests/registry/driver/main/resources/META-INF/neoforge.mods.toml",
+      "sha256": "8dde690464f7d4b16123f473b3ceb672f5c85a9847e15acb2ac7472c44dae133",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/registry/driver/main/resources/META-INF/neoforge.mods.toml"
+    },
+    {
+      "path": "tests/registry/mac-legacy/CHECKLIST.md",
+      "sha256": "aeb67f189e3703d6589021ad7d8bc8eda8a1752738fdac0c361998e454377c10",
+      "reason": "Legacy 005-C kit, moved intact",
+      "baselinePath": "tests/registry/mac/CHECKLIST.md"
+    },
+    {
+      "path": "tests/registry/mac-legacy/JVM-ARGS.txt",
+      "sha256": "364115b2d3f227412b4bc42530af46a97a34f898a030d45a58473d126f2b737d",
+      "reason": "Legacy 005-C kit, moved intact",
+      "baselinePath": "tests/registry/mac/JVM-ARGS.txt"
+    },
+    {
+      "path": "tests/registry/mac-legacy/MAC-SETUP.md",
+      "sha256": "51ec395d13026a03ceb182a49b8249cb0ff7be8cf64eed329bd2619489b10cf4",
+      "reason": "Legacy 005-C kit, moved intact",
+      "baselinePath": "tests/registry/mac/MAC-SETUP.md"
+    },
+    {
+      "path": "tests/registry/mac-legacy/README.md",
+      "sha256": "b1d6e8c3ab50204cd551ccc507e366512e5d19ae07ed4994831e00432b8eb032",
+      "reason": "Legacy 005-C kit, moved intact",
+      "baselinePath": "tests/registry/mac/README.md"
+    },
+    {
+      "path": "tests/registry/mac-legacy/build-kit.zsh",
+      "sha256": "576c5fffccf9934fcb172d43c267568835972fc9202bb706cb558e68f109be57",
+      "reason": "Legacy 005-C kit, moved intact",
+      "baselinePath": "tests/registry/mac/build-kit.zsh"
+    },
+    {
+      "path": "tests/registry/mac-legacy/build_kit.py",
+      "sha256": "387cb6c85ec1ab322a2356b7faac5ca3cb0541849cbbdd7c727bd89659dda997",
+      "reason": "Legacy 005-C kit, moved intact",
+      "baselinePath": "tests/registry/mac/build_kit.py"
+    },
+    {
+      "path": "tests/registry/mac-legacy/scripts/mac-collect-logs.zsh",
+      "sha256": "88988662b4c7641f152e430bc3171645245fc64356b823817ab446fd17c7eb1b",
+      "reason": "Legacy 005-C kit, moved intact",
+      "baselinePath": "tests/registry/mac/scripts/mac-collect-logs.zsh"
+    },
+    {
+      "path": "tests/registry/mac-legacy/scripts/mac-common.zsh",
+      "sha256": "98c9125d856b4f9772bb42984534ed3bfa0805aafc174efc325aa9b7ad54e8ad",
+      "reason": "Legacy 005-C kit, moved intact",
+      "baselinePath": "tests/registry/mac/scripts/mac-common.zsh"
+    },
+    {
+      "path": "tests/registry/mac-legacy/scripts/mac-install.zsh",
+      "sha256": "263ef259aac73820606bf140a6b8c8b1615cd517a06ceb67ab2dc2a986c201ff",
+      "reason": "Legacy 005-C kit, moved intact",
+      "baselinePath": "tests/registry/mac/scripts/mac-install.zsh"
+    },
+    {
+      "path": "tests/registry/mac-legacy/scripts/mac-preflight.zsh",
+      "sha256": "6f25cb4423e60866acd00c8e423acf792c0d7ef2f627cc45484631410f4aba15",
+      "reason": "Legacy 005-C kit, moved intact",
+      "baselinePath": "tests/registry/mac/scripts/mac-preflight.zsh"
+    },
+    {
+      "path": "tests/registry/mac-legacy/test_mac_kit.py",
+      "sha256": "5633ca99fe0bb8853a982a81192a3a1d856e0bddd92dd6496beaa24458c4616f",
+      "reason": "Legacy 005-C kit, moved intact",
+      "baselinePath": "tests/registry/mac/test_mac_kit.py"
+    },
+    {
+      "path": "tests/registry/src/main/java/com/example/registryprobe/RegistryProbe.java",
+      "sha256": "3d733991c0599d91d9a81bb7b7a9d3480790161d1e8ecd1ebf3013d699609996",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/registry/src/main/java/com/example/registryprobe/RegistryProbe.java"
+    },
+    {
+      "path": "tests/registry/src/main/resources/META-INF/MANIFEST.MF",
+      "sha256": "4239307ab45e6f7537c790178539fc6f97341aab60f501c98c046dcba1101567",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/registry/src/main/resources/META-INF/MANIFEST.MF"
+    },
+    {
+      "path": "tests/registry/src/main/resources/META-INF/mods.toml",
+      "sha256": "ae331f26b7005e363caad6030bf5f6f894182a52033e8aa21f8f1de5eb4e066f",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/registry/src/main/resources/META-INF/mods.toml"
+    },
+    {
+      "path": "tests/registry/src/main/resources/assets/registryprobe/lang/en_us.json",
+      "sha256": "c6846d4dd0afa6c97363bdcd65bfa8e8bc51656f79e692545037f5778f587f65",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/registry/src/main/resources/assets/registryprobe/lang/en_us.json"
+    },
+    {
+      "path": "tests/registry/src/main/resources/assets/registryprobe/lang/zh_cn.json",
+      "sha256": "8905a599dee672be2691b8a47a7047b3d0027333f8a335ac5fdd65f7aae3052a",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/registry/src/main/resources/assets/registryprobe/lang/zh_cn.json"
+    },
+    {
+      "path": "tests/registry/src/main/resources/assets/registryprobe/models/item/ice_ether.json",
+      "sha256": "c1a59acc99caf2bb7aafbe072d7fe39f928ee88dbd3661cbdbfa14dd97422563",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/registry/src/main/resources/assets/registryprobe/models/item/ice_ether.json"
+    },
+    {
+      "path": "tests/registry/src/main/resources/assets/registryprobe/textures/item/ice_ether.png",
+      "sha256": "2c810e0c1cca3c451a536a4cf1d72448a5809f999933acc45ca01240315f1681",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/registry/src/main/resources/assets/registryprobe/textures/item/ice_ether.png"
+    },
+    {
+      "path": "tests/registry/texture-source.json",
+      "sha256": "5f5a15a78ec527e11244b75774f364125a4762551fdd988078aca92fe41022f7",
+      "reason": "Frozen source, input, configuration or historical record",
+      "baselinePath": "tests/registry/texture-source.json"
+    }
+  ],
+  "lineExemptions": [
+    {
+      "path": "STRUCTURE.md",
+      "text": "| `tools/forgecompat.zsh` | `tools/entry/forgecompat.zsh`（该轮；现入口见上节） |",
+      "reason": "Earlier structure-task mapping is historical; current entry is separately documented."
+    },
+    {
+      "path": "tools/lib/unix_workflow.py",
+      "text": "            if re.search(r\"^Automatic-Module-Name: (dualforge|forgecompat)\\s*$\", manifest, re.M):",
+      "reason": "Explicit Legacy module detection rejects duplicate compatibility JARs, even renamed files."
+    },
+    {
+      "path": "tests/identity/README.md",
+      "text": "  --jar /absolute/before-build/forgecompat-002-0l.jar \\",
+      "reason": "Historical before-fix artifact example; explicitly requires the original report checkout."
+    },
+    {
+      "path": "tests/registry/README.md",
+      "text": "DF_BASELINE='/absolute/path/to/004-clean-build/forgecompat-002-0l.jar' # Legacy",
+      "reason": "Historical 004 baseline rejection example; explicitly requires the original 005 checkout."
+    },
+    {
+      "path": "tests/registry/mac/scripts/mac-common.zsh",
+      "text": "      forgecompat-002-0l.jar) df_die 'Legacy compatibility JAR found; use a fresh instance for this DualForge cohort.' ;;",
+      "reason": "Explicit Legacy JAR/property rejection; old identities are never accepted as the current cohort."
+    },
+    {
+      "path": "tests/registry/mac/scripts/mac-common.zsh",
+      "text": "    [[ \"$value\" != -Dforgecompat.* ]] || df_die 'Legacy JVM property refused: use this kit JVM-ARGS.txt.'",
+      "reason": "Explicit Legacy JAR/property rejection; old identities are never accepted as the current cohort."
+    },
+    {
+      "path": "tests/registry/mac/test_mac_kit.py",
+      "text": "        self.cfg.write_text(self.cfg.read_text().rstrip() + \" -Dforgecompat.2a.rewrite=true\\n\")",
+      "reason": "Automatic negative example proves Legacy properties cannot mix with the new cohort."
+    },
+    {
+      "path": "tests/project_identity/run_identity_unification.py",
+      "text": "                  'old identity absent': all(b'forgecompat' not in archive.read(n).lower() for n in names if not n.endswith('/')),",
+      "reason": "Negative binary-content check rejects the old project identity."
+    }
+  ],
+  "migrationDocumentExemptions": [
+    {
+      "path": "Dev Manuals/DualForge 命名审计.json",
+      "reason": "Pre-edit audit preserves original identities and frozen paths."
+    },
+    {
+      "path": "Dev Manuals/DualForge 命名统一迁移索引.json",
+      "reason": "Explicit old/new mapping, individual protection fingerprints and approved exceptions."
+    },
+    {
+      "path": "Dev Manuals/DualForge 命名统一迁移报告.md",
+      "reason": "Migration report documents old versus new identities."
+    }
+  ]
+}
