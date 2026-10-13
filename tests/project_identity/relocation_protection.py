@@ -26,6 +26,7 @@ def protect(root, items, relocations, tracked):
     mapping = {}
     targets = set()
     for item in relocations:
+        assert set(item) == {'oldPath', 'newPath', 'sha256'}, 'Unknown relocation metadata'
         old, new = item['oldPath'], item['newPath']
         for name in (old, new):
             path = PurePosixPath(name)

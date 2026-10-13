@@ -69,6 +69,11 @@ class RelocationProtectionTest(unittest.TestCase):
         with self.assertRaisesRegex(AssertionError, 'hash differs'):
             self.run_check()
 
+    def test_extra_metadata_rejected(self):
+        self.moves[0]['note'] = 'unapproved identity text'
+        with self.assertRaisesRegex(AssertionError, 'Unknown relocation metadata'):
+            self.run_check()
+
     def test_untracked_target(self):
         self.tracked.remove(self.new)
         with self.assertRaisesRegex(AssertionError, 'Missing protected tracked file'):
