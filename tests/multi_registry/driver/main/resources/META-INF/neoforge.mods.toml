@@ -1,0 +1,13 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+[[mods]]
+modId="multiregistrydriver"
+version="1.0.0"
+displayName="Multi Registry Driver"
+[[dependencies.multiregistrydriver]]
+modId="multiregistryprobe"
+type="required"
+versionRange="[1.0.0]"
+ordering="AFTER"
+side="SERVER"

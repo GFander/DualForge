@@ -87,9 +87,11 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
             if (registryEntries.containsKey(input.name)) {
                 if (!rewriteEnabled) return input;
                 if (!apiRewriteEnabled) throw new IllegalStateException("005 requires apiRewrite=true");
-                ControlledForgeItemProfile.rewrite(input, registryEntries.get(input.name));
+                var stats = ControlledForgeItemProfile.rewrite(input, registryEntries.get(input.name));
                 log("REGISTRY_PROFILE entry=" + input.name + " modId=" + registryEntries.get(input.name)
-                        + " createHits=1 supplierHits=1 modBusAttachHits=1 holderGetHits=1");
+                        + " createHits=1 supplierHits=" + stats.declarations()
+                        + " modBusAttachHits=1 holderGetHits=" + stats.accessors()
+                        + " supplierImplementationHits=" + stats.suppliers());
                 dumpProfile(input);
                 return input;
             }
@@ -349,10 +351,11 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
                         } catch (java.io.IOException e) {
                             throw new IllegalStateException("005 cannot inspect owned entry " + entry, e);
                         }
-                        ControlledForgeItemProfile.validate(candidate, info.getModId());
+                        var stats = ControlledForgeItemProfile.validate(candidate, info.getModId());
                         registryEntries.put(internal, info.getModId());
                         targets.add(ITransformer.Target.targetClass(entry));
-                        log("TARGET modId=" + info.getModId() + " entry=" + entry + " profile=single-item"
+                        log("TARGET modId=" + info.getModId() + " entry=" + entry
+                                + " profile=" + (stats.declarations() == 1 ? "single-item" : "controlled-items")
                                 + " file=" + file.getFile().getFilePath());
                         continue;
                     }

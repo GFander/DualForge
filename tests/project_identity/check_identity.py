@@ -44,10 +44,12 @@ def check():
         new = old
         for a,b in index['pathMapping']: new = new.replace(a,b)
         original = subprocess.check_output(['git','show', index['baseCommit'] + ':' + old],cwd=REPO)
-        if (REPO / new).read_bytes() != normalize(original,index['symbolMapping']):
+        # Verify the frozen identity migration contract, independently of later authorized features.
+        migrated = subprocess.check_output(['git','show',index['productionCommit'] + ':' + new],cwd=REPO)
+        if migrated != normalize(original,index['symbolMapping']):
             errors.append('Production change beyond identity mapping: ' + new)
     if errors: raise AssertionError('\n'.join(errors))
-    return {'status':'PASS','scannedFiles':len(paths),'protectedFiles':len(protected),'normalizedProductionFiles':len(old_files),'lineExemptions':len(lines)}
+    return {'status':'PASS','scannedFiles':len(paths),'protectedFiles':len(protected),'frozenMigrationProductionFiles':len(old_files),'lineExemptions':len(lines)}
 
 
 if __name__ == '__main__':

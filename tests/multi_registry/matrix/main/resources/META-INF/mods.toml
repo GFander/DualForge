@@ -1,0 +1,13 @@
+modLoader="javafml"
+loaderVersion="[52,)"
+license="MIT"
+[[mods]]
+modId="matrixregistryprobe"
+version="1.0.0"
+displayName="Local Registry Matrix Probe"
+[[dependencies.matrixregistryprobe]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.21.1]"
+ordering="NONE"
+side="BOTH"

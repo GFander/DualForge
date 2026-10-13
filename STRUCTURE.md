@@ -35,7 +35,8 @@ DualForge/
 │   ├── registry/                         活跃：005 原生 Forge 单 Item、注册 C/T、资源检查
 │   │   ├── mac/                          活跃：新 DualForge 制品的 Mac kit
 │   │   └── mac-legacy/                   Legacy：固定旧 cohort 的部署工具
-│   └── project_identity/                 活跃：命名、SPI、Module Layer、全回归
+│   ├── project_identity/                 活跃：命名、SPI、Module Layer、全回归
+│   └── multi_registry/                   活跃：006A 双 Item、ABI矩阵、范围/原子性、C/T
 ├── history/
 │   ├── compat-002-0d/                    归档：旧生产候选及冻结副本
 │   ├── compat-002-0g/                    归档：旧 API 转换迭代
@@ -140,3 +141,5 @@ Mac 实机验收为 NOT RUN。`tests/registry/mac-legacy/` 保留原 005-C 固�
 
 新构建、日志、断言和 dump 保存于当前仓库 out 下的全新目录，
 不覆盖旧证据。所有 JVM 验证串行，运行使用物理副本。
+
+`tests/multi_registry/` 保存006A新原生Forge fixture、只查询的NeoForge driver及实际编译的Bootstrap/局部别名矩阵；不改变原005目录、JAR和贴图。受控服务端006A-S PASS，客户端006A-C NOT RUN。运行方式见 [README](tests/multi_registry/README.md)。

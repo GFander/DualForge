@@ -142,3 +142,11 @@ Manifest/SPI/模块/属性检查、官方 Module Layer 实际观测及串行兼�
 所有 C/T 和回归使用同一个重新编译的 `dualforge.jar`；原 Forge 输入和资源不变。
 新 Mac kit 见 [registry/mac/README.md](registry/mac/README.md)，
 固定历史 kit 见 [registry/mac-legacy/LEGACY.md](registry/mac-legacy/LEGACY.md)。
+
+## multi_registry：006A 调用点与数据依赖验证
+
+[006A入口](multi_registry/README.md) 独立保存原生 Forge 的两个Item声明：普通lambda与同入口静态method reference。
+用同一compat/fixture/driver仅切换DF006_REGISTER，验证真实两个注册、各supplier一次、holder身份、实际MODbus及官方栈；
+独立本轮矩阵覆盖不同字段/ID/方法名和实际局部寄存器别名。
+重复ID、捕获、未知Bootstrap/额外ForgeAPI/错误Registry/Bus和部分失败均明确拒绝且原ClassNode不污染。
+原005和所有历史回归保持原严格断言；Beta资源更新版006A-C由用户macOS arm64人工验收受控PASS，见 [客户端报告](../Dev%20Manuals/Convergence-006A-C%20macOS%20客户端人工验收报告.md)。Codex取得的是用户控制台摘录/审查报告，独立新版服务端C/T和Intel Mac仍NOT RUN。
