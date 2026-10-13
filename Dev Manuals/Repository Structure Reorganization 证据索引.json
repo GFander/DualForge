@@ -15,7 +15,7 @@
     "jvmCommandsSerial": 100,
     "sameCompatSHA256": "1b2729c6638c7f747d5121a8b624a80d1ac4aa4df83357f13ea5e6db5c176c9c",
     "allJarEntryBytesIdentical": true,
-    "pythonTests": 37,
+    "pythonTests": 65,
     "zshSyntaxChecks": 22,
     "documentLinks": 108,
     "smokeResult": "/workspace/DualForge-reorganization/out/reorganization/smoke/20261013-225803-bc0f0b73/result.json",
@@ -26,7 +26,18 @@
     },
     "cTOnlyDF006_REGISTERBusinessDifference": true,
     "clientNewJarStatus": "NOT RUN",
-    "userMachineDataMigration": "NOT RUN; documented steps, source inaccessible"
+    "userMachineDataMigration": "NOT RUN; documented steps, source inaccessible",
+    "standardCIUnitTests": 37,
+    "macMockedUnitTests": {
+      "current": 15,
+      "legacy": 13,
+      "scope": "Linux mocked Mac/Prism/Java; not graphical Mac or new-JAR server validation",
+      "compatInputsSHA256": [
+        "4c0c11448cef6b22381ef94393ff23c6fd582613b7e8d441b2473917fd3c6af6",
+        "ed572ca9762e235e7d264355d35b3c9d3ab9ecf1da3f2c3234b1e28056aad752"
+      ],
+      "fixtureSHA256": "312a4f697c1dc617ed48822c10179384b6559f4e6399db9210c15541c774132c"
+    }
   },
   "migrationMap": "tests/project_identity/structure_relocation.json",
   "migrationMapSHA256": "d78cef2086412541e9d6a2531dec779469261e00548fdb3e73bf8aef04884472",
@@ -261,8 +272,8 @@
     },
     {
       "path": "/workspace/DualForge-reorganization/out/reorganization/verification.json",
-      "sha256": "9c4708bc7a45209cf7a26dac25a59ef185bd66175643055c97b8780432f21fd6",
-      "bytes": 1185
+      "sha256": "9717be18d85f4b8623f920038c7019eba47c01d421674b36ac5a1feca2a97c24",
+      "bytes": 1644
     },
     {
       "path": "/workspace/DualForge-reorganization/out/convergence-006a/contract/20261013-225852-20044674/bytecode.command.json",
@@ -2463,6 +2474,26 @@
       "path": "/workspace/DualForge-reorganization/out/convergence-006a/treatment/20261013-225938-cf4fecb4/result.json",
       "sha256": "a1e6dcb7b25fe107486dd5b75dcc368d9d276c02a4110fb5c16b7ad3599d2c5b",
       "bytes": 40129
+    },
+    {
+      "path": "/workspace/DualForge-reorganization/out/reorganization/mac-legacy-unit.stderr.log",
+      "sha256": "98164daf40a8b72014cae7d6da8700e9b072d9c69d99dd2bf5e04a05f8985751",
+      "bytes": 1703
+    },
+    {
+      "path": "/workspace/DualForge-reorganization/out/reorganization/mac-legacy-unit.stdout.log",
+      "sha256": "c445b1693c24fe58cc9df250535476bae8efa646edcf727446473efc9a0ed61f",
+      "bytes": 1303
+    },
+    {
+      "path": "/workspace/DualForge-reorganization/out/reorganization/mac-unit.stderr.log",
+      "sha256": "ced79c42bdb528f8c1521df603e83f91e6bdc66b97681d2de4b2a3da15c3f8fc",
+      "bytes": 1959
+    },
+    {
+      "path": "/workspace/DualForge-reorganization/out/reorganization/mac-unit.stdout.log",
+      "sha256": "c1b1efe8f174735d9607a9ad8f938c0f83dc02f645da41b23efa72432ed6743a",
+      "bytes": 1292
     }
   ],
   "attachmentsUploaded": false,

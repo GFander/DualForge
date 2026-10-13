@@ -45,7 +45,7 @@
 
 ## Gate 2：静态与自动检查 PASS
 
-[E] 37项当前Python单测（events7、registry6、project_identity15、multi_registry9）全部PASS；其中新增迁移保护13项。
+[E] 65项当前Python单测全部PASS：常规37项（events7、registry6、project_identity15、multi_registry9），其中新增迁移保护13项；另当前Mac脚本15项、Legacy13项使用原已验收冻结输入在Linux mock执行。后28项不等于真实Mac验收或新JAR服务端回归，未伪造验证报告。Legacy要求的相对out输入用原制品物理复制且SHA匹配，历史源码原字节不动。
 22个活跃zsh脚本逐一 `zsh -n` PASS；命名保护checker PASS、全部374保护文件匹配。
 108个活跃文档链接核验存在，历史文档内部旧链接/命令保持原文；git diff --check PASS。
 生产Java/SPI/Manifest/资源及全部Forge fixture源码/资源、历史Java/TOML/Gradle/指纹、原配置、原报告/索引、LICENSE均按起点SHA核对不变。
