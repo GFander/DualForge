@@ -120,3 +120,17 @@ regress 包含干净构建和原 A 严格 smoke。独立 harness 负责隔离运
 注册组真实 post 一次／回调一次；打印点调用栈确认实际 EventBus 链。
 仅支持当前 marker-only listener 与普通自定义 Event，不实现 Forge post ABI，
 不将 driver 的原生 NeoForge API 用法计入 Forge 兼容范围。
+
+## registry：005 受控单 Item 注册
+
+`tests/registry/src/` 从原生 Forge 52.1.0 和未打补丁的 Minecraft 字节编译；
+`driver/` 是只查询真实注册表和观察 supplier 调用栈的原生 NeoForge 输入。
+两组用同一制品，只有 `DF005_REGISTER` 决定是否挂接注入的 MOD bus。
+Run C 查询 `registryprobe:ice_ether` 不存在；Run T 验证实际 Item、key、
+非 AIR、holder get 对象身份和官方注册调用栈。
+
+入口 `zsh tests/registry/run-registry.zsh`，阶段、依赖纯度、夹具、资源检查和
+客户端人工步骤见 [registry/README.md](registry/README.md)。负例在
+`RegistryBytecodeTest.java`；`test_stage_results.py` 拒绝跨阶段制品错配。
+assets 已核对四份真实资源及用户原始 16×16 PNG 的 SHA；服务端和资源
+静态检查 PASS。真实客户端仍 NOT RUN，不能将静态资源检查当作渲染 PASS。

@@ -1,0 +1,13 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+[[mods]]
+modId="registrydriver"
+version="1.0.0"
+displayName="Registry Driver"
+[[dependencies.registrydriver]]
+modId="registryprobe"
+type="required"
+versionRange="[1.0.0]"
+ordering="AFTER"
+side="SERVER"

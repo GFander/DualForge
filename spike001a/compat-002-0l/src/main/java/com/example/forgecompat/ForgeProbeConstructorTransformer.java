@@ -5,6 +5,7 @@ import cpw.mods.modlauncher.api.ITransformerVotingContext;
 import cpw.mods.modlauncher.api.TargetType;
 import cpw.mods.modlauncher.api.TransformerVoteResult;
 import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.AbstractInsnNode;
@@ -46,6 +47,7 @@ public final class ForgeProbeConstructorTransformer implements ITransformer<Clas
     private final boolean subscriberRewriteEnabled;
     private final Map<String, String> entryEvents = new HashMap<>();
     private final Set<String> eventClasses = new HashSet<>();
+    private final Map<String, String> registryEntries = new HashMap<>();
 
     public ForgeProbeConstructorTransformer() {
         String value = System.getProperty("forgecompat.2a.rewrite");
@@ -82,6 +84,15 @@ public final class ForgeProbeConstructorTransformer implements ITransformer<Clas
         original.accept(input);
         try {
             log("offered: " + input.name);
+            if (registryEntries.containsKey(input.name)) {
+                if (!rewriteEnabled) return input;
+                if (!apiRewriteEnabled) throw new IllegalStateException("005 requires apiRewrite=true");
+                ControlledForgeItemProfile.rewrite(input, registryEntries.get(input.name));
+                log("REGISTRY_PROFILE entry=" + input.name + " modId=" + registryEntries.get(input.name)
+                        + " createHits=1 supplierHits=1 modBusAttachHits=1 holderGetHits=1");
+                dumpProfile(input);
+                return input;
+            }
             if (eventClasses.contains(input.name)) {
                 rewriteProbeEvent(input);
                 dumpProfile(input);
@@ -302,6 +313,7 @@ public final class ForgeProbeConstructorTransformer implements ITransformer<Clas
     public Set<ITransformer.Target<ClassNode>> targets() {
         entryEvents.clear();
         eventClasses.clear();
+        registryEntries.clear();
         Set<ITransformer.Target<ClassNode>> targets = new HashSet<>();
         // ModLauncher registers targets after FML completeScan, before the GAME layer.
         // getScanResult waits for the host's background scan; no classes are loaded here.
@@ -328,6 +340,21 @@ public final class ForgeProbeConstructorTransformer implements ITransformer<Clas
                                 && Type.getObjectType("net/minecraftforge/eventbus/api/Event").equals(c.parent()))) {
                             events.add(args[0].getInternalName());
                         }
+                    }
+                    if (events.isEmpty()) {
+                        // Read only this @Mod-owned entry from the same scanned file; never load it here.
+                        ClassNode candidate = new ClassNode();
+                        try {
+                            new ClassReader(Files.readAllBytes(file.getFile().findResource(internal + ".class"))).accept(candidate, 0);
+                        } catch (java.io.IOException e) {
+                            throw new IllegalStateException("005 cannot inspect owned entry " + entry, e);
+                        }
+                        ControlledForgeItemProfile.validate(candidate, info.getModId());
+                        registryEntries.put(internal, info.getModId());
+                        targets.add(ITransformer.Target.targetClass(entry));
+                        log("TARGET modId=" + info.getModId() + " entry=" + entry + " profile=single-item"
+                                + " file=" + file.getFile().getFilePath());
+                        continue;
                     }
                     if (events.size() != 1) throw new IllegalStateException("0l expected one same-file event profile for " + entry);
                     String event = events.iterator().next();

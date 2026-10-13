@@ -27,11 +27,12 @@ DualForge/
 │   ├── harness/run-server.zsh             活跃：独立隔离服务端 harness
 │   └── UNIX.md                           当前运行环境说明
 ├── tests/
-│   ├── README.md                         四类测试的统一说明
+│   ├── README.md                         五类测试的统一说明
 │   ├── dependencies/                     活跃：TOML 夹具和 FML metadata 契约
 │   ├── discovery/                        活跃：实际发现 pipeline 与边界
 │   ├── identity/                         活跃：原生 Forge 身份夹具与范围对照
-│   └── events/                           活跃：004 受控事件投递、C/T 和阶段一致性
+│   ├── events/                           活跃：004 受控事件投递、C/T 和阶段一致性
+│   └── registry/                         活跃：005 原生 Forge 单 Item、注册 C/T、资源检查
 ├── history/
 │   ├── compat-002-0d/                    归档：旧生产候选及冻结副本
 │   ├── compat-002-0g/                    归档：旧 API 转换迭代
@@ -74,6 +75,18 @@ Forge 源码编译；dependencies 的动态夹具只替换原 A 的 TOML；disco
 入口为 `zsh tests/events/run-events.zsh`，参数与证据布局见
 [tests/events/README.md](tests/events/README.md)。归档源码不参与生产编译。
 
+registry 的 Forge 输入位于 `tests/registry/src/`，原生 NeoForge 查询／栈观察
+driver 位于 `driver/`；拒绝及原子性对照在 `RegistryBytecodeTest.java`。
+入口 `zsh tests/registry/run-registry.zsh` 复用现有 Python harness。
+单 Item ID 为 `registryprobe:ice_ether`；用户原始 16×16 PNG 已原字节打包，
+服务端与资源静态验收 PASS，用户 Mac arm64 客户端受控人工验收 PASS。阶段、输入和重跑方式见 [tests/registry/README.md](tests/registry/README.md)。
+
+`tests/registry/mac/` 是活跃的 005-C 部署准备：云端 kit packager、Mac
+preflight／安装回滚／本地脱敏日志 zsh 脚本及 A/B/C 人工清单，说明见
+[Mac kit README](tests/registry/mac/README.md)。不打包运行库或账号，不代表
+修订脚本已在 Mac 实机复测；用户此前的真实客户端证据另见新验收报告。
+最终 ZIP 仍保存于被忽略的 out/。
+
 ## 新旧路径映射
 
 本轮基线为 `4078888fb13958c61829c4041f832b88164a7c01`，所有已有文件的
@@ -107,7 +120,7 @@ Forge 源码编译；dependencies 的动态夹具只替换原 A 的 TOML；disco
 [DEPRECATED.md](spike001a/compat/DEPRECATED.md)。这两个目录及其中的
 旧 Gradle 记录不提供当前构建入口。
 `spike001b5/probe/` 的早期 metadata 契约探针同样保留原位置，不属于
-当前 dependencies/discovery/identity/events 测试入口。
+当前 dependencies/discovery/identity/events/registry 测试入口。
 
 ## 保全与输出
 

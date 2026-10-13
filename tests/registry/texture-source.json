@@ -1,0 +1,11 @@
+{
+  "source": "user-uploaded ice_ether.png.zip",
+  "zipSHA256": "8ef25a5f7d7aba41faa8cc39f1da975b6cc2a3c74e3c320faea23d607c7c9e05",
+  "pngSHA256": "2c810e0c1cca3c451a536a4cf1d72448a5809f999933acc45ca01240315f1681",
+  "bytes": 276,
+  "width": 16,
+  "height": 16,
+  "mode": "RGBA",
+  "preservedOriginalBytes": true,
+  "dimensionDecision": "Use user-provided original 16x16 instead of earlier 32x32 generation requirement; no resizing."
+}
