@@ -105,9 +105,11 @@ def run(args):
     stdout = (output / 'stdout.log').read_text(errors='replace')
     stderr = (output / 'stderr.log').read_text(errors='replace')
     runtime = '\n'.join(p.read_text(errors='replace') for p in (output / 'logs').glob('*.log'))
-    severity = severity_records(stdout)
+    severity = severity_records(stdout + '\n' + runtime)
     baseline = json.loads(args.baseline.read_text()) if args.baseline else None
-    if baseline and not (baseline['assertions']['DoneStopExit0'] and baseline['zeroDualForgeParameters']):
+    if baseline and not (baseline['assertions']['DoneStopExit0'] and baseline['zeroDualForgeParameters']
+                         and baseline['installedMods'] == []
+                         and not any('/FATAL]' in key for key in baseline['severityRecords'])):
         raise ValueError('Baseline must be an actual successful stock lifecycle')
     checks = {'stockCommandCaptured': seen_java, 'DoneStopExit0': done and process.returncode == 0
               and 'Stopping server' in stdout, 'stderrEmpty': not stderr,
@@ -128,6 +130,7 @@ def run(args):
          'compatSHA256': next((v['sha256'] for v in records if v['path'] == 'mods/DualForge.jar'), None),
          'zeroDualForgeParameters': True, 'assertions': checks, 'severityRecords': severity,
          'baseline': str(args.baseline.resolve()) if args.baseline else None,
+         'installedMods': [v for v in records if v['path'].startswith('mods/')],
          'strictNoErrors': checks['noErrorFatalDumpFail']})
     # Retain raw logs/results and fingerprints; redundant official dependency copies are excluded.
     if not args.keep_runtime:
