@@ -1,8 +1,12 @@
 # DualForge
 
-DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。main 已合并 Convergence-006A；本分支实现006B受控Block与关联BlockItem注册。唯一生产源码位于 [dualforge/src/main](dualforge/src/main)，当前构建从源码与资源全量编译并生成 `dualforge.jar`。本轮新制品验证见 [006B 报告](<Dev Manuals/Convergence-006B 交付报告.md>)；[006A 报告](<Dev Manuals/Convergence-006A 交付报告.md>) 保存前阶段事实；[命名迁移报告](<Dev Manuals/DualForge 命名统一迁移报告.md>) 保存历史基线。
+DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。main 已合并 Convergence-006B；本分支交付007A默认启动与可选诊断，保留已有受控范围。唯一生产源码位于 [dualforge/src/main](dualforge/src/main)，构建生成 `dualforge.jar`，交付副本命名为 `DualForge.jar`。本轮记录见 [007报告](<Dev Manuals/Convergence-007 Drop-in Runtime 交付报告.md>)，历史事实保留在 [006B报告](<Dev Manuals/Convergence-006B 交付报告.md>)。
 
 仓库只维护 **zsh 脚本入口**。Python 3 标准库负责内部的构建编排、JSON、JAR 指纹、进程及日志捕获；运行不需要 Windows 或 PowerShell。当前仍使用原单参数构造器 ABI；004 的监听器支持范围如下。
+
+## 用户安装
+
+正常安装 NeoForge 后，将 `DualForge.jar` 和当前受支持的原生 Forge JAR 放入 `mods/`，照常启动；不需要 DualForge JVM 参数或开发工具。支持边界与诊断见 [安装指南](docs/INSTALL.md)。默认启动成功不代表任意 Forge 模组兼容；本轮 Mac 图形验收 NOT RUN。
 
 ## 仓库结构
 
@@ -21,7 +25,7 @@ DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。main 已
 
 006A 在保持原构造器 ABI、Mod Event Bus 和 Supplier 业务字节不变的前提下，将整类固定计数改为逐 API 调用点与数据依赖验证。一个原生 Forge 模组通过同一个 DeferredRegister<Item> 声明 lambda Alpha 与静态 method reference Beta，006A-S 原冻结 fixture 动态 PASS；Beta 资源更新版 006A-C 在用户 macOS arm64 人工验收中受控 PASS，见 [客户端报告](<Dev Manuals/Convergence-006A-C macOS 客户端人工验收报告.md>)。Codex仅取得用户控制台摘录/审查报告，未独立取得原始日志或截图。详见 [006A 报告](<Dev Manuals/Convergence-006A 交付报告.md>) 和 [新测试入口](tests/multi_registry/README.md)。
 
-这是受控原型，不代表任意 Forge 模组兼容。一般 Forge post API、取消／优先级／自动／静态订阅、多 Forge 同时完整启动、一般 RegistryObject API、Block／自定义 Registry、Capability 和 Fabric 尚未验证或实现。受控真实投递不代表一般 Forge Event 系统兼容。历史 PASS 见交付报告；每轮运行以新生成的 `result.json` 和原始日志为准。
+这是受控原型，不代表任意 Forge 模组兼容。一般 Forge post API、取消／优先级／自动／静态订阅、多 Forge 同时完整启动、一般 RegistryObject API、一般Block／自定义 Registry、Capability 和 Fabric 尚未验证或实现。受控真实投递不代表一般 Forge Event 系统兼容。历史 PASS 见交付报告；每轮运行以新生成的 `result.json` 和原始日志为准。
 
 006A 双 Item 的独立人工输入包说明见 [006A Mac门槛](tests/multi_registry/MAC-SETUP.md)，Beta 资源更新版客户端受控人工验收 PASS；原服务端 fixture 与新客户端 fixture 分别记录。
 原005 fixture 的命名迁移 cohort 部署工具见 [Mac kit](tests/registry/mac/README.md)：
@@ -88,9 +92,9 @@ zsh tests/discovery/run-discovery.zsh \
 
 `--mode regress` 合并干净构建和原 Probe smoke；独立 `--mode smoke` 核验指定新 JAR。IdentityProbe 原生 Forge 编译、修改前复现、完整加载和范围对照的 zsh 命令见 [tests/identity/README.md](tests/identity/README.md)。
 
-所有服务端运行需要 `--allow-server-start`。入口要求没有其他 Java 进程且 25565 可用；运行物理复制完整输入，绑定 127.0.0.1，停止后等待 JVM 退出。固定 server.properties 由内部实现直接生成，运行不读取旧脚本。dump 写入每轮新目录，原安装、输入和世界均复核指纹。
+以下历史隔离回归入口需要 `--allow-server-start`；普通用户标准NeoForge启动不使用这些开发入口。入口要求没有其他 Java 进程且 25565 可用；运行物理复制完整输入，绑定 127.0.0.1，停止后等待 JVM 退出。固定 server.properties 由内部实现直接生成，运行不读取旧脚本。dump 写入每轮新目录，原安装、输入和世界均复核指纹。
 
-云端代理／CA 和 Authlib public-key relay 的实际参数见 [tools/UNIX.md](tools/UNIX.md)。当前云环境启动时还需传入 `--java-network-args /workspace/dualforge-cloud/java-network.args --public-key-relay`；普通本地环境不应照搬云端文件路径。
+云端代理／CA 和 Authlib public-key relay 的实际参数见 [tools/UNIX.md](tools/UNIX.md)。历史严格回归在当前云环境使用 `--java-network-args /workspace/dualforge-cloud/java-network.args --public-key-relay`；普通本地环境不应照搬云端文件路径。
 
 ## zsh 入口与结果
 
@@ -128,12 +132,14 @@ Git 保存第一方源码、fixture、zsh 入口、内部实现、报告和指�
 
 生产 package 为 `io.github.gfander.dualforge`，自动模块为 `dualforge`，
 ModLauncher 服务为 `dualforge-transform`。LanguageLoader 保留 `javafml` / `9999` 契约。
-启用参数为 `-Ddualforge.2a.rewrite=true`、`-Ddualforge.0g.apiRewrite=true`、
-`-Ddualforge.0j.emptyRegistration=true`、`-Ddualforge.0l.subscriberRewrite=true`；
-dump 属性为 `dualforge.dump.path` / `dualforge.dump.profileDir`。
+四个生产开关未设置时默认true；开发者显式覆盖可用 `-Ddualforge.2a.rewrite=false` 等。属性为 `dualforge.2a.rewrite`、`dualforge.0g.apiRewrite`、
+`dualforge.0j.emptyRegistration`、`dualforge.0l.subscriberRewrite`；非法布尔值明确拒绝。
+默认不创建dump；仅显式设置 `dualforge.dump.path` / `dualforge.dump.profileDir` 才输出，I/O失败拒绝转换。
 新工具不接受历史制品或旧参数混用；当前身份检查入口见
 [project_identity](tests/project_identity/README.md)。所有历史 API/ABI 支持范围保持原样。
 
 006B新增独立Block/BlockItem受控profile，保留006A Item规则和原构造器ABI；支持范围与实际证据见 [006B报告](<Dev Manuals/Convergence-006B 交付报告.md>)、[测试入口](tests/block_registry/README.md)。006B-C当前为 **PASS（用户macOS Apple Silicon实机人工验收，本轮截图WAIVED）**，见[人工验收报告](<Dev Manuals/Convergence-006B-C macOS 客户端人工验收报告.md>)；不继承旧客户端cohort。
 
-最新客户端输入已将实际对象统一为ice_ether、raw_ice_ether、ice_ether_block，Java声明、Registry路径、资源同名，原冻结合约回归保留；见[client_objects](tests/client_objects/README.md)及[交付](<Dev Manuals/Ice Ether 实际对象命名统一交付.md>)。两组服务端Contract/C/T为此前实际PASS；Block组Mac人工验收现已PASS，新版双Item组Mac验收仍NOT RUN。原始服务端证据归档仍未远端持久化。
+最新客户端输入已将实际对象统一为ice_ether、raw_ice_ether、ice_ether_block，Java声明、Registry路径、资源同名，原冻结合约回归保留；见[client_objects](tests/client_objects/README.md)及[交付](<Dev Manuals/Ice Ether 实际对象命名统一交付.md>)。两组服务端Contract/C/T为此前实际PASS；Block组Mac人工验收现已PASS，新版双Item组Mac验收仍NOT RUN。原始服务端证据ZIP已在007前置检查中独立远端下载并逐项核验，当前PERSISTED / VERIFIED；后续客户端输入/人工报告不属于该ZIP覆盖范围。
+
+007零参数SPI/启动、原生共存与诊断验证见 [bootstrap](tests/bootstrap/README.md)。真实第三方Clumps因现有TOML准入限制未加载；整体007不因启动成功而宣称PASS。

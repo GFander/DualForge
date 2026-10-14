@@ -15,6 +15,7 @@ DualForge/
 │   ├── registry/                   活跃：005 Item / assets
 │   │   ├── mac/                    当前命名工具
 │   │   └── mac-legacy/             Legacy固定旧cohort，原字节
+│   ├── bootstrap/              活跃：007A标准启动、默认配置与原生共存
 │   ├── block_registry/             活跃：006B Block/BlockItem ABI、Contract、C/T
 │   │   ├── client_resources/       活跃：006B-C方块模型/用户贴图，实机验收独立
 │   │   └── client_translations/    活跃：冰之以太三组名称覆盖，不修改冻结模组
@@ -70,7 +71,7 @@ DualForge/
 `zsh tools/entry/dualforge.zsh --mode build` 使用新默认 `runtime/neoforge-server`。`--server-input`仍支持外部路径。依赖入口 `tools/entry/test-forge-dependencies.zsh`，独立harness `tools/harness/run-server.zsh`，具体测试见 [tests/README](tests/README.md)。
 完整运行库和原世界必须外部准备；本地复制步骤见 [docs/runtime](docs/runtime.md)。原A回归只使用SHA匹配的原JAR，默认位置仍为 `history/spike000/probe-002-0l/build/forgeprobe.jar`，可用 `--probe`指定外部制品。绝不重建替代。
 
-所有JVM串行、运行使用物理副本；dump由现有JVM属性定位到每轮out，不改Java旧fallback。运行数据、第三方库和原日志不入Git；不删除旧安装。
+所有JVM串行、运行使用物理副本；旧回归显式dump到每轮out；007A默认关闭dump，不再使用历史Windows fallback。运行数据、第三方库和原日志不入Git；不删除旧安装。
 
 ## 历史路径追溯
 

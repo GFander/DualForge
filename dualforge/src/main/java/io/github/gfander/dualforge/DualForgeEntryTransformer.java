@@ -37,10 +37,6 @@ import net.neoforged.neoforgespi.language.ModFileScanData;
 public final class DualForgeEntryTransformer implements ITransformer<ClassNode> {
     private static final String OLD_DESC = "(Lnet/minecraftforge/eventbus/api/IEventBus;)V";
     private static final String NEW_DESC = "(Lnet/neoforged/bus/api/IEventBus;)V";
-    private static final Path DUMP_PATH =
-            Path.of(System.getProperty("dualforge.dump.path",
-                    "D:\\DualForge\\spike000\\logs\\spike002-0b-2a-v1.1\\ForgeProbe.rewritten.class"));
-
     private final boolean rewriteEnabled;
     private final boolean apiRewriteEnabled;
     private final boolean emptyRegistrationEnabled;
@@ -51,31 +47,24 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
     private final Map<String, String> blockEntries = new HashMap<>();
 
     public DualForgeEntryTransformer() {
-        String value = System.getProperty("dualforge.2a.rewrite");
-        if (value == null) {
-            throw new IllegalStateException(
-                    "[DUALFORGE-XFORM] required system property 'dualforge.2a.rewrite' is not set (must be explicitly true or false)");
-        }
-        this.rewriteEnabled = Boolean.parseBoolean(value);
+        this.rewriteEnabled = enabled("dualforge.2a.rewrite");
         log("rewriteEnabled=" + rewriteEnabled);
-        String apiValue = System.getProperty("dualforge.0g.apiRewrite");
-        if (!"true".equals(apiValue) && !"false".equals(apiValue)) {
-            throw new IllegalStateException("[DUALFORGE-XFORM] required dualforge.0g.apiRewrite must be true or false");
-        }
-        this.apiRewriteEnabled = Boolean.parseBoolean(apiValue);
+        this.apiRewriteEnabled = enabled("dualforge.0g.apiRewrite");
         log("apiRewriteEnabled=" + apiRewriteEnabled);
-        String emptyValue = System.getProperty("dualforge.0j.emptyRegistration");
-        if (!"true".equals(emptyValue) && !"false".equals(emptyValue)) {
-            throw new IllegalStateException("[DUALFORGE-XFORM] required dualforge.0j.emptyRegistration must be true or false");
-        }
-        this.emptyRegistrationEnabled = Boolean.parseBoolean(emptyValue);
+        this.emptyRegistrationEnabled = enabled("dualforge.0j.emptyRegistration");
         log("emptyRegistrationEnabled=" + emptyRegistrationEnabled);
-        String subscriberValue = System.getProperty("dualforge.0l.subscriberRewrite");
-        if (!"true".equals(subscriberValue) && !"false".equals(subscriberValue)) {
-            throw new IllegalStateException("[DUALFORGE-XFORM] required dualforge.0l.subscriberRewrite must be true or false");
-        }
-        this.subscriberRewriteEnabled = Boolean.parseBoolean(subscriberValue);
+        this.subscriberRewriteEnabled = enabled("dualforge.0l.subscriberRewrite");
         log("subscriberRewriteEnabled=" + subscriberRewriteEnabled);
+    }
+
+    private static boolean enabled(String property) {
+        String value = System.getProperty(property);
+        if (value == null) return true;
+        if (!"true".equals(value) && !"false".equals(value)) {
+            throw new IllegalStateException("[DUALFORGE-XFORM] invalid system property '"
+                    + property + "': expected true or false");
+        }
+        return Boolean.parseBoolean(value);
     }
 
     @Override
@@ -238,13 +227,14 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
     }
 
     private void dumpProfile(ClassNode node) throws java.io.IOException {
-        Path path = Path.of(System.getProperty("dualforge.dump.profileDir",
-                        "D:\\DualForge\\spike000\\logs\\spike002-0l-current"),
+        String directory = System.getProperty("dualforge.dump.profileDir");
+        if (directory == null) return;
+        Path path = Path.of(directory,
                 node.name.substring(node.name.lastIndexOf('/') + 1) + ".class");
         ClassWriter writer = new ClassWriter(0);
         node.accept(writer);
         byte[] bytes = writer.toByteArray();
-        Files.createDirectories(path.getParent());
+        Files.createDirectories(path.toAbsolutePath().getParent());
         Files.write(path, bytes);
         log("PROFILE dump OK path=" + path + " bytes=" + bytes.length);
     }
@@ -305,17 +295,16 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
         return next;
     }
 
-    private void dump(ClassNode node) {
-        try {
-            ClassWriter writer = new ClassWriter(0);
-            node.accept(writer);
-            byte[] bytes = writer.toByteArray();
-            Files.createDirectories(DUMP_PATH.getParent());
-            Files.write(DUMP_PATH, bytes);
-            log("dump OK path=" + DUMP_PATH + " bytes=" + bytes.length);
-        } catch (Throwable t) {
-            log("dump FAIL " + t);
-        }
+    private void dump(ClassNode node) throws java.io.IOException {
+        String destination = System.getProperty("dualforge.dump.path");
+        if (destination == null) return;
+        Path path = Path.of(destination);
+        ClassWriter writer = new ClassWriter(0);
+        node.accept(writer);
+        byte[] bytes = writer.toByteArray();
+        Files.createDirectories(path.toAbsolutePath().getParent());
+        Files.write(path, bytes);
+        log("dump OK path=" + path + " bytes=" + bytes.length);
     }
 
     @Override

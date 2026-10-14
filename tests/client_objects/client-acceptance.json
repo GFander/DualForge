@@ -154,10 +154,22 @@
   "newJVMOrClientRunByCodex": false,
   "newJarBuild": false,
   "historicalEvidenceArchive": {
-    "status": "ARCHIVE_READY / NOT PERSISTED",
-    "remoteUpload": "NOT RUN",
-    "remoteDownloadVerification": "NOT RUN",
-    "remoteUrl": null
+    "status": "PERSISTED / VERIFIED",
+    "remoteUpload": "user-uploaded PR13 attachment; original generated archive unchanged",
+    "remoteDownloadVerification": "PASS",
+    "remoteUrl": "https://github.com/user-attachments/files/33419811/dualforge-006b-runtime-evidence.zip",
+    "SHA256": "8829de2cbbad04701aec42aeb5483fc6b5bd42e19a110e3229174a4e02432a11",
+    "bytes": 4961881,
+    "files": 2965,
+    "verifiedDate": "2026-10-14 Asia/Shanghai",
+    "scope": "original 006B server and historical regression selected evidence; excludes later canonical client fixtures/manual acceptance",
+    "previousObservation": {
+      "status": "ARCHIVE_READY / NOT PERSISTED",
+      "remoteUpload": "NOT RUN",
+      "remoteDownloadVerification": "NOT RUN",
+      "remoteUrl": null
+    },
+    "verificationRecord": "Dev Manuals/Convergence-006B 原始证据远端复核.json"
   },
   "prDisposition": "keep Draft; no automatic merge, release or 006C"
 }
