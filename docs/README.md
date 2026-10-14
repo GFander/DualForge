@@ -3,6 +3,12 @@
 本页链接当前实现、测试及冻结报告，不复制报告，也不将旧实验能力升级为当前支持。
 唯一生产源码在 `dualforge/src/main`。当前运行方式见 [根README](../README.md)、[UNIX说明](../tools/UNIX.md) 和 [测试入口](../tests/README.md)。
 
+第三方输入的实际范围见 [COMPATIBILITY](COMPATIBILITY.md)。007C Food N' Fuel 的
+[原生基线](<../Dev Manuals/Convergence-007C Food N Fuel 原生Forge基线.md>)、
+[ABI/首失败](<../Dev Manuals/Convergence-007C 第三方Item ABI取证.md>)、
+[PARTIAL交付](<../Dev Manuals/Convergence-007C 真实物品兼容交付报告.md>)及
+[重跑入口](../tests/real_mods/food_n_fuel/README.md)分开记录，本轮没有生产功能扩展。
+
 | 主题 | 当前实现与验证 | 历史/决策/证据 |
 |---|---|---|
 | Architecture / Loader | [LanguageLoader](../dualforge/src/main/java/io/github/gfander/dualforge/DualForgeLanguageLoader.java)、[TransformationService](../dualforge/src/main/java/io/github/gfander/dualforge/DualForgeTransformationService.java) | [开发手册](<../Dev Manuals/Forge → NeoForge 兼容层开发手册.md>)、[身份迁移报告](<../Dev Manuals/DualForge 命名统一迁移报告.md>) |

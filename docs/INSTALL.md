@@ -2,6 +2,8 @@
 
 目标环境：Minecraft 1.21.1、NeoForge 21.1.256、Java 21。
 
+具体第三方结果见 [COMPATIBILITY](COMPATIBILITY.md)：Food N' Fuel Forge1.3当前在发现阶段被跳过，尚不能按本安装方式正常使用；原生Forge对照不是DualForge兼容PASS。
+
 1. 安装正常的 NeoForge。
 2. 将 `DualForge.jar` 放入实例的 `mods/`。
 3. 将当前受支持的原生 Forge 模组 JAR 放入同一 `mods/`。

@@ -5,6 +5,12 @@ tests 下现有文件位置保持不变。生产源码和工具布局见
 [tools/UNIX.md](../tools/UNIX.md)。从仓库根目录执行以下命令，所有
 JVM 编译、metadata 测试和服务端运行均严格串行。
 
+## real_mods/food_n_fuel：007C真实第三方取证
+
+[输入、原生运行和人工补充](real_mods/food_n_fuel/README.md)使用未改字节的官方发行JAR。
+独立Forge/NeoForge标准运行只声明生命周期；原生Registry/燃料子项不等于DualForge兼容。
+原生基线PARTIAL、NeoForge发现FAIL；本轮生产未改，实际食用和Mac仍NOT RUN。
+
 先通过新入口干净构建兼容层，再使用 result.json 中实际的新 JAR：
 
 ```zsh
