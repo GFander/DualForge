@@ -1,5 +1,7 @@
 # Convergence-006B：受控 Block + BlockItem
 
+本目录保留原006B回归身份。最新客户端实际对象ID已统一为ice_ether/raw_ice_ether/ice_ether_block，源码、验证与测试包见[client_objects](../client_objects/README.md)。下方sample_block及资源覆盖包属于先前已记录cohort，不是最新客户端对象名称。
+
 原生 Forge52.1.0 fixture：一个扫描归属明确的@Mod、两个typed DeferredRegister，分别注册普通Block和引用其Holder的普通BlockItem。
 两Registry允许同一个ID `blockregistryprobe:sample_block`；不是同Registry重复注册。
 生产profile按actual registry源、field泛型、独立声明、标准零捕获Bootstrap、Supplier体和跨方法Block Holder引用验证，不依赖fixture类/字段/modId名字。

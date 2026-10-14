@@ -60,3 +60,6 @@ python3 -B tests/project_identity/check_identity.py
 完整附件保存在新 `out/convergence-006a/`；历史回归可能在独立验证 worktree 的 out。
 源码/制品/环境/命令/退出/字节 dump/原始日志路径与 SHA 见本轮证据索引。
 006A-S 与 006A-C 独立：资源静态和服务端成功不代表客户端渲染。
+# 最新客户端实际对象身份
+
+原006A回归fixture的alpha_item/beta_item保持原字节。最新客户端源码与实际注册IDice_ether/raw_ice_ether见[client_objects](../client_objects/README.md)，不把旧语言覆盖视为对象重命名。

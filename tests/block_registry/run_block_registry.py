@@ -36,6 +36,7 @@ def dynamic(args,run,binary):
     w.server_preflight(args,args.jar);w.save(run/'artifacts.json',records)
     meta,logs,server=w.harness(args,run,binary,args.fixture,args.jar,installed_mod_name=args.fixture.name,extra_mods=(args.driver,),extra_jvm_args=('-DDF006B_REGISTER='+value,))
     label='spike002-0l-treatment';stdout=(logs/(label+'.stdout.log')).read_text(errors='replace');debug=(logs/(label+'.debug.log')).read_text(errors='replace')
+    registry_id=getattr(args,'registry_id','blockregistryprobe:sample_block')
     injected=re.findall(r'\[DF006B\] INJECTED MODBUS=(\d+)',stdout);container=re.findall(r'\[DF006B\] CONTAINER MODBUS=(\d+) GLOBALBUS=(\d+)',stdout)
     checks={'exactThreeArtifacts':sorted(p.name for p in (server/'mods').iterdir())==sorted(p.name for p in artifacts) and all(w.digest(server/'mods'/p.name)==w.digest(p) for p in artifacts),
         'discoveryReaderAndMetadataOnce':debug.count('Found mod file "block-registry-probe.jar" [locator: dualforge locator')==1 and 'Found valid mod file block-registry-probe.jar with {blockregistryprobe} mods' in debug,
@@ -51,7 +52,7 @@ def dynamic(args,run,binary):
         'blockSupplierExactlyOnceOrZero':stdout.count('[DF006B] BLOCK SUPPLIER REACHED')==int(enabled),
         'itemSupplierExactlyOnceOrZero':stdout.count('[DF006B] BLOCKITEM SUPPLIER REACHED')==int(enabled),
         'holderAvailableDuringItemSupplier':stdout.count('[DF006B] ITEM_PHASE blockRegistered=true holderBound=true sequence=2')==int(enabled),
-        'objectHolderRegistryAndOrder':stdout.count('[DF006B] VERIFIED blockKey=blockregistryprobe:sample_block itemKey=blockregistryprobe:sample_block sameBlock=true holdersGet=true holderRegistries=true blockBeforeItem=true')==int(enabled),
+        'objectHolderRegistryAndOrder':stdout.count(f'[DF006B] VERIFIED blockKey={registry_id} itemKey={registry_id} sameBlock=true holdersGet=true holderRegistries=true blockBeforeItem=true')==int(enabled),
         'queryOnce':stdout.count('[DF006B] QUERY PASS')==1}
     for role in (0,1):
         checks['officialLifecycle'+str(role)]=(all('[DF006B] FRAME role='+str(role)+' '+f in stdout for f in ('net.neoforged.neoforge.registries.RegisterEvent.register','net.neoforged.neoforge.registries.DeferredRegister.addEntries','net.neoforged.fml.ModLoader.postEventWrapContainerInModOrder')) if enabled else '[DF006B] FRAME role='+str(role) not in stdout)

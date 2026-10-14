@@ -1,0 +1,13 @@
+modLoader="javafml"
+loaderVersion="[52,)"
+license="MIT"
+[[mods]]
+modId="multiregistryprobe"
+version="1.0.0"
+displayName="Multi Registry Probe"
+[[dependencies.multiregistryprobe]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.21.1]"
+ordering="NONE"
+side="BOTH"

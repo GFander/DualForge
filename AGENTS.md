@@ -103,3 +103,4 @@
 - docs/README.md 是按功能导航；Dev Manuals 中冻结事实及旧命令不改写。历史路径迁移由 tests/project_identity/structure_relocation.json 精确记录，旧命名索引不改；保护全部374项，禁止目录级豁免。
 
 - 006B通过独立Block+BlockItem profile验证两个typed Registry及精确Holder依赖，原006A Item规则不放宽。原fixture/JAR/报告不变；006B-C独立NOT RUN，所有回归绑定最终同一新JAR。
+- 最新客户端对象统一输入在tests/client_objects/：实际ID ice_ether/raw_ice_ether/ice_ether_block与Java声明/资源同名；原005/006A/006B输入保留作冻结回归，不覆盖旧结果。两角色分开安装，实机NOT RUN不能以旧名称或语言覆盖PASS代替。

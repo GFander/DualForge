@@ -1,0 +1,26 @@
+{
+  "items": [
+    "multi_registry",
+    {
+      "alpha_item": "ice_ether",
+      "beta_item": "raw_ice_ether",
+      "PRIMARY": "ICE_ETHER",
+      "SECONDARY": "RAW_ICE_ETHER",
+      "alphaValue": "iceEtherValue",
+      "betaValue": "rawIceEtherValue",
+      "createSecondItem": "createRawIceEther",
+      "ALPHA SUPPLIER": "ICE_ETHER SUPPLIER",
+      "BETA SUPPLIER": "RAW_ICE_ETHER SUPPLIER"
+    }
+  ],
+  "block": [
+    "block_registry",
+    {
+      "sample_block": "ice_ether_block",
+      "SAMPLE_BLOCK": "ICE_ETHER_BLOCK",
+      "SAMPLE_ITEM": "ICE_ETHER_BLOCK_ITEM",
+      "blockValue": "iceEtherBlockValue",
+      "itemValue": "iceEtherBlockItemValue"
+    }
+  ]
+}
