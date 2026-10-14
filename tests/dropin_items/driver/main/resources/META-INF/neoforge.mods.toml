@@ -1,0 +1,7 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+[[mods]]
+modId="dropindriver"
+version="1.0.0"
+displayName="Drop-in Query Observer"

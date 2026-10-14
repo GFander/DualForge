@@ -166,3 +166,7 @@ Manifest/SPI/模块/属性检查、官方 Module Layer 实际观测及串行兼�
 ## bootstrap：007A标准入口与默认配置
 
 [入口与契约](bootstrap/README.md)记录无参数标准NeoForge运行、可选dump、显式布尔覆盖、原生共存和严格错误基线比较。旧回归与新零参数证据分别保存，不把历史harness称为用户启动方式。
+
+## dropin_items：007B普通Forge输入
+
+[原生构建、范围/原子性与零参数包](dropin_items/README.md)支持无业务属性Item注册与独立查询。原始Forge JAR保持不变，automatic模块身份按真实FML metadata对齐；显式模块不匹配拒绝。客户端图形NOT RUN，旧阶段回归使用最终同一新JAR。

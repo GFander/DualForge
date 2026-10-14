@@ -1,3 +1,14 @@
+# Convergence-007 当前总体交付
+
+最终007A+007B：ZERO-CONFIG-CORE PASS、DROP-IN-RUNTIME PASS、THIRD-PARTY-COMPATIBILITY FAIL、LINUX-SERVER受控PASS、MACOS-CLIENT NOT RUN、CONVERGENCE-007 PARTIAL。
+最终JAR SHA `dbb70bfa48ccd299c9a0bc74fc8fe07f645fce370a2131264cfdc44e5d235a36`。
+普通Forge输入保持原字节、无业务参数并完成双Item真实注册；第三方Clumps因既有多行TOML排除未加载。新版Mac零参数包就绪，图形实测未执行。
+完整最终运行、模块身份补充取证、同JAR全部历史回归及新证据见 [007B最终报告](<Convergence-007B Drop-in Runtime 交付报告.md>)、[007B取证](<Convergence-007B 普通Forge注册与模块身份取证.md>)、[007B索引](<Convergence-007B 证据索引.json>)。
+
+以下保留007A提交2ca2d20的阶段事实与当时状态；其cf944制品和普通Profile拒绝不能冒充最终dbb70结果。
+
+---
+
 # Convergence-007 Drop-in Runtime：007A交付
 
 日期2026-10-14（Asia/Shanghai），分支 `codex/convergence-007-drop-in-bootstrap`，main基线 `ac4c4d7ef50ea35a634925d30dead0b93d798400`。独立007B处理经取证必要的普通Item Profile；本PR不新增构造器ABI、API或加载架构。

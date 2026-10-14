@@ -10,8 +10,8 @@
 无需填写 DualForge JVM 参数、添加 Agent、替换官方运行库或预转换模组。
 用户运行 JAR 不需要 Python、zsh 或开发工具。构建工具只用于开发者从源码制作 JAR。
 
-当前 007A 交付默认启动与可选诊断，保留原受控兼容范围。普通无条件 Item 注册需要独立 007B Profile 扩展；实验 fixture 的 C/T 业务开关不能当作普通用户安装步骤。
-简单 TOML、单 `IEventBus` 构造器与经过验证的调用点限制仍适用。第三方 Clumps 19.0.0.1 的 Forge 1.21.1 版尚不兼容：其多行 TOML 描述被当前候选准入排除，宿主日志显示 `cannot be loaded`，不能把随后游戏启动成功解释为模组成功。
+当前007B在007A基础上验证普通无条件Item注册：单IEventBus构造器、同类零捕获纯Item工厂、typed字段及get-only访问。原005/006A/006B实验fixture的C/T业务开关保留，不能当作普通用户安装步骤。
+简单TOML、单IEventBus构造器与经过验证的调用点限制仍适用；automatic模块默认名由真实FML metadata对齐，不匹配的显式JPMS descriptor拒绝。第三方 Clumps 19.0.0.1 的 Forge 1.21.1 版尚不兼容：其多行 TOML 描述被当前候选准入排除，宿主日志显示 `cannot be loaded`，不能把随后游戏启动成功解释为模组成功。
 
 诊断从实例 `logs/latest.log`、`logs/debug.log` 查找。`Controlled Forge transformation rejected` 或 `unsupported Item profile` 表示结构超出当前范围；保留原 JAR、版本和日志以定位原因。`Skipping jar ... cannot be loaded` 表示该模组未加载，不能忽略后宣布兼容。
 

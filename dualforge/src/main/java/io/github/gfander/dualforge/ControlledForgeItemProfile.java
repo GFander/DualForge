@@ -79,15 +79,29 @@ final class ControlledForgeItemProfile {
         }
     }
 
-    static Stats validate(ClassNode node, String modId) { return plan(node, modId).stats(); }
+    static Stats validate(ClassNode node, String modId) { return plan(node, modId, false).stats(); }
 
     static Stats rewrite(ClassNode node, String modId) {
-        Plan plan = plan(node, modId);
+        Plan plan = plan(node, modId, false);
         plan.apply();
         return plan.stats();
     }
 
-    private static Plan plan(ClassNode node, String modId) {
+    /** A separately validated straight-line attachment, using the existing one-bus ABI. */
+    static boolean isNormalCandidate(ClassNode node) {
+        return node.methods.stream().anyMatch(m -> "<init>".equals(m.name) && OLD_BUS.equals(m.desc)
+                && opcodes(m).size() == 6);
+    }
+
+    static Stats validateNormal(ClassNode node, String modId) { return plan(node, modId, true).stats(); }
+
+    static Stats rewriteNormal(ClassNode node, String modId) {
+        Plan plan = plan(node, modId, true);
+        plan.apply();
+        return plan.stats();
+    }
+
+    private static Plan plan(ClassNode node, String modId, boolean normal) {
         require(node.access == (Opcodes.ACC_PUBLIC | Opcodes.ACC_FINAL | Opcodes.ACC_SUPER)
                 && "java/lang/Object".equals(node.superName) && node.interfaces.isEmpty()
                 && node.signature == null, "class structure");
@@ -116,21 +130,32 @@ final class ControlledForgeItemProfile {
                     && (m.invisibleAnnotations == null || m.invisibleAnnotations.isEmpty()), "method metadata");
         }
         Plan plan = new Plan(register, holders, ctor);
-        validateInitializer(node, init, modId, plan);
-        // Preserve the original constructor's ABI, branch layout and injected argument provenance.
-        expect(ctor, "V25:0", call(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", "()V"),
-                OUT, "S", call(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", PRINT),
-                OUT, "S", call(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "print", PRINT),
-                OUT, "V25:1", call(Opcodes.INVOKESTATIC, "java/lang/System", "identityHashCode", "(Ljava/lang/Object;)I"),
-                call(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(I)V"),
-                "S", call(Opcodes.INVOKESTATIC, "java/lang/Boolean", "getBoolean", "(Ljava/lang/String;)Z"), "J153:22",
-                field(Opcodes.GETSTATIC, node.name, register.name, register.desc), "V25:1",
-                call(Opcodes.INVOKEVIRTUAL, F + "DeferredRegister", "register", OLD_BUS),
-                OUT, "S", call(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", PRINT), "J167:25",
-                OUT, "S", call(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", PRINT), "177");
-        List<AbstractInsnNode> ctorOps = opcodes(ctor);
-        plan.fieldUses.add(new FieldUse((FieldInsnNode) ctorOps.get(15), register));
-        plan.attach = (MethodInsnNode) ctorOps.get(17);
+        validateInitializer(node, init, modId, plan, normal);
+        if (normal) {
+            // Every instruction is accounted for: this initialization, owned register, injected bus.
+            // No branch/property, alternate receiver, added API call or constructor ABI is accepted.
+            expect(ctor, "V25:0", call(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", "()V"),
+                    field(Opcodes.GETSTATIC, node.name, register.name, register.desc), "V25:1",
+                    call(Opcodes.INVOKEVIRTUAL, F + "DeferredRegister", "register", OLD_BUS), "177");
+            List<AbstractInsnNode> ctorOps = opcodes(ctor);
+            plan.fieldUses.add(new FieldUse((FieldInsnNode) ctorOps.get(2), register));
+            plan.attach = (MethodInsnNode) ctorOps.get(4);
+        } else {
+            // Preserve the original constructor's ABI, branch layout and injected argument provenance.
+            expect(ctor, "V25:0", call(Opcodes.INVOKESPECIAL, "java/lang/Object", "<init>", "()V"),
+                    OUT, "S", call(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", PRINT),
+                    OUT, "S", call(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "print", PRINT),
+                    OUT, "V25:1", call(Opcodes.INVOKESTATIC, "java/lang/System", "identityHashCode", "(Ljava/lang/Object;)I"),
+                    call(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(I)V"),
+                    "S", call(Opcodes.INVOKESTATIC, "java/lang/Boolean", "getBoolean", "(Ljava/lang/String;)Z"), "J153:22",
+                    field(Opcodes.GETSTATIC, node.name, register.name, register.desc), "V25:1",
+                    call(Opcodes.INVOKEVIRTUAL, F + "DeferredRegister", "register", OLD_BUS),
+                    OUT, "S", call(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", PRINT), "J167:25",
+                    OUT, "S", call(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", PRINT), "177");
+            List<AbstractInsnNode> ctorOps = opcodes(ctor);
+            plan.fieldUses.add(new FieldUse((FieldInsnNode) ctorOps.get(15), register));
+            plan.attach = (MethodInsnNode) ctorOps.get(17);
+        }
 
         Set<FieldNode> accessed = new HashSet<>();
         for (MethodNode getter : node.methods) {
@@ -152,7 +177,7 @@ final class ControlledForgeItemProfile {
     }
 
     /** A restricted data-flow walk, not an instruction-count template or namespace remapper. */
-    private static void validateInitializer(ClassNode node, MethodNode init, String modId, Plan plan) {
+    private static void validateInitializer(ClassNode node, MethodNode init, String modId, Plan plan, boolean normal) {
         List<Object> stack = new ArrayList<>();
         Set<Integer> locals = new HashSet<>();
         Set<Integer> readLocals = new HashSet<>();
@@ -200,7 +225,7 @@ final class ControlledForgeItemProfile {
                     stack.add(Value.REGISTER);
                 }
             } else if (instruction instanceof InvokeDynamicInsnNode indy) {
-                Supplier supplier = validateSupplier(node, indy);
+                Supplier supplier = validateSupplier(node, indy, normal);
                 plan.suppliers.add(supplier.method);
                 stack.add(supplier);
             } else if (instruction instanceof MethodInsnNode method) {
@@ -233,7 +258,7 @@ final class ControlledForgeItemProfile {
                 && readLocals.equals(locals), "complete initializer assignments and data flow");
     }
 
-    private static Supplier validateSupplier(ClassNode node, InvokeDynamicInsnNode indy) {
+    private static Supplier validateSupplier(ClassNode node, InvokeDynamicInsnNode indy, boolean normal) {
         Handle metafactory = new Handle(Opcodes.H_INVOKESTATIC, "java/lang/invoke/LambdaMetafactory", "metafactory",
                 "(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;", false);
         require(indy.bsm.equals(metafactory) && "get".equals(indy.name)
@@ -249,10 +274,18 @@ final class ControlledForgeItemProfile {
         MethodNode method = methods.getFirst();
         require(method.access == (Opcodes.ACC_PRIVATE | Opcodes.ACC_STATIC)
                 || method.access == (Opcodes.ACC_PRIVATE | Opcodes.ACC_STATIC | Opcodes.ACC_SYNTHETIC), "supplier method role");
-        expect(method, OUT, "S", call(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", PRINT),
+        String[] creation = {
                 "T187:" + ITEM, "89", "T187:" + ITEM + "$Properties", "89",
                 call(Opcodes.INVOKESPECIAL, ITEM + "$Properties", "<init>", "()V"),
-                call(Opcodes.INVOKESPECIAL, ITEM, "<init>", "(L" + ITEM + "$Properties;)V"), "176");
+                call(Opcodes.INVOKESPECIAL, ITEM, "<init>", "(L" + ITEM + "$Properties;)V"), "176"};
+        if (normal) {
+            expect(method, creation);
+        } else {
+            List<String> marked = new ArrayList<>(List.of(OUT, "S",
+                    call(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", PRINT)));
+            marked.addAll(List.of(creation));
+            expect(method, marked.toArray(String[]::new));
+        }
         return new Supplier(method);
     }
 

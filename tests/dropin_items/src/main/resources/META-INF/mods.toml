@@ -1,0 +1,13 @@
+modLoader="javafml"
+loaderVersion="[52,)"
+license="MIT"
+[[mods]]
+modId="dropinprobe"
+version="1.0.0"
+displayName="Drop-in Items"
+[[dependencies.dropinprobe]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.21.1]"
+ordering="NONE"
+side="BOTH"

@@ -1,6 +1,6 @@
 # DualForge
 
-DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。main 已合并 Convergence-006B；本分支交付007A默认启动与可选诊断，保留已有受控范围。唯一生产源码位于 [dualforge/src/main](dualforge/src/main)，构建生成 `dualforge.jar`，交付副本命名为 `DualForge.jar`。本轮记录见 [007报告](<Dev Manuals/Convergence-007 Drop-in Runtime 交付报告.md>)，历史事实保留在 [006B报告](<Dev Manuals/Convergence-006B 交付报告.md>)。
+DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。main 已合并 Convergence-006B；本分支累积007A默认启动，并独立实现007B普通无开关Item注册及经实际失败证明必要的automatic模块身份对齐。唯一生产源码位于 [dualforge/src/main](dualforge/src/main)，构建生成 `dualforge.jar`，交付副本命名为 `DualForge.jar`。本轮记录见 [007B报告](<Dev Manuals/Convergence-007B Drop-in Runtime 交付报告.md>)，独立前置结果保留在 [007A报告](<Dev Manuals/Convergence-007 Drop-in Runtime 交付报告.md>)，历史事实保留在 [006B报告](<Dev Manuals/Convergence-006B 交付报告.md>)。
 
 仓库只维护 **zsh 脚本入口**。Python 3 标准库负责内部的构建编排、JSON、JAR 指纹、进程及日志捕获；运行不需要 Windows 或 PowerShell。当前仍使用原单参数构造器 ABI；004 的监听器支持范围如下。
 
@@ -143,3 +143,5 @@ ModLauncher 服务为 `dualforge-transform`。LanguageLoader 保留 `javafml` / 
 最新客户端输入已将实际对象统一为ice_ether、raw_ice_ether、ice_ether_block，Java声明、Registry路径、资源同名，原冻结合约回归保留；见[client_objects](tests/client_objects/README.md)及[交付](<Dev Manuals/Ice Ether 实际对象命名统一交付.md>)。两组服务端Contract/C/T为此前实际PASS；Block组Mac人工验收现已PASS，新版双Item组Mac验收仍NOT RUN。原始服务端证据ZIP已在007前置检查中独立远端下载并逐项核验，当前PERSISTED / VERIFIED；后续客户端输入/人工报告不属于该ZIP覆盖范围。
 
 007零参数SPI/启动、原生共存与诊断验证见 [bootstrap](tests/bootstrap/README.md)。真实第三方Clumps因现有TOML准入限制未加载；整体007不因启动成功而宣称PASS。
+
+007B在已识别的Forge入口内支持无条件单Mod Bus挂接与纯Item工厂；真实双Item Registry/Holder/对象身份通过，匹配的历史ModuleDescriptor不变，automatic名称不匹配使用官方FML metadata，显式JPMS不匹配拒绝。新客户端包见 [dropin_items](tests/dropin_items/README.md)，Mac零参数图形验收NOT RUN。Clumps仍因多行TOML未加载，007整体PARTIAL。
