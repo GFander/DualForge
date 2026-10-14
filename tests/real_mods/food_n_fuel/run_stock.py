@@ -52,7 +52,10 @@ def run(args):
     server = output / 'server'
     server.mkdir()
     shutil.copytree(source / 'libraries', server / 'libraries')
-    for name in ('run.sh', 'user_jvm_args.txt'):
+    startup_files = ['run.sh', 'user_jvm_args.txt']
+    if args.host == 'forge':
+        startup_files.append('forge-1.21.1-52.1.0-shim.jar')
+    for name in startup_files:
         shutil.copyfile(source / name, server / name)
     (server / 'eula.txt').write_text('eula=true\n')
     (server / 'mods').mkdir()
@@ -61,7 +64,7 @@ def run(args):
         if target.exists():
             raise ValueError('Duplicate installed filename')
         shutil.copyfile(jar, target)
-    paths = [server / 'run.sh', server / 'user_jvm_args.txt',
+    paths = [*[server / name for name in startup_files],
              *sorted((server / 'libraries').rglob('*')), *sorted((server / 'mods').iterdir())]
     records = [{'path': str(p.relative_to(server)), 'sha256': sha(p), 'bytes': p.stat().st_size}
                for p in paths if p.is_file()]
@@ -85,6 +88,9 @@ def run(args):
                         try:
                             if (proc / 'exe').resolve().name == 'java' and (proc / 'cwd').resolve() == server:
                                 actual = [v.decode() for v in (proc / 'cmdline').read_bytes().split(b'\0') if v]
+                                if args.host == 'forge' and actual[1:] == ['-jar', startup_files[-1], '--onlyCheckJava']:
+                                    save(output / 'official-java-check-command.json', actual)
+                                    continue
                                 save(output / 'actual-java-command.json', actual)
                                 if actual[1:] != expected:
                                     raise ValueError('Non-stock actual JVM command')
