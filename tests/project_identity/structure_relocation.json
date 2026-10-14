@@ -1,0 +1,132 @@
+[
+  {
+    "oldPath": "spike000/neoforge-server/config/fml.toml",
+    "newPath": "runtime/neoforge-server/config/fml.toml",
+    "sha256": "cc59fb1039726fda3ab1eb69b06d9b9aebb7496604ea579cfb735bc5377e7825"
+  },
+  {
+    "oldPath": "spike000/neoforge-server/config/neoforge-common.toml",
+    "newPath": "runtime/neoforge-server/config/neoforge-common.toml",
+    "sha256": "fe878a2717a145cd890621eac5b3be1e1fd656f7ff9abc6e8d53f670d37474c4"
+  },
+  {
+    "oldPath": "spike000/neoforge-server/config/neoforge-server.toml",
+    "newPath": "runtime/neoforge-server/config/neoforge-server.toml",
+    "sha256": "b1e3b38d612295f8d9dfa0fbdb538a992b7a1a3b7a766c491b4e9fdf3823396f"
+  },
+  {
+    "oldPath": "spike000/probe/build.gradle",
+    "newPath": "history/early-spikes/forge-probe-000/build.gradle",
+    "sha256": "3056f0b920a19abde57ca8e4ee7a2e6a68d74450bb52dc15e59f4dc50f5d91ff"
+  },
+  {
+    "oldPath": "spike000/probe/src/main/java/com/example/forgeprobe/ForgeProbe.java",
+    "newPath": "history/early-spikes/forge-probe-000/src/main/java/com/example/forgeprobe/ForgeProbe.java",
+    "sha256": "6092cc3d402f6d0132a8f15c6a298bc1ae8d4effbd8cd91b01c9d734fc1ebbf5"
+  },
+  {
+    "oldPath": "spike000/probe/src/main/resources/META-INF/MANIFEST.MF",
+    "newPath": "history/early-spikes/forge-probe-000/src/main/resources/META-INF/MANIFEST.MF",
+    "sha256": "ac0b123f98fc1b1d0fb78c04fb2493a58a299a6ed4d0a444100023d10dca3382"
+  },
+  {
+    "oldPath": "spike000/probe/src/main/resources/META-INF/mods.toml",
+    "newPath": "history/early-spikes/forge-probe-000/src/main/resources/META-INF/mods.toml",
+    "sha256": "b32cf69b88fbe053c2580fc739b30fedc43d96984c72ff78cd6725c7f3a1ce6e"
+  },
+  {
+    "oldPath": "spike001a/compat/DEPRECATED.md",
+    "newPath": "history/early-spikes/discovery-001a/DEPRECATED.md",
+    "sha256": "7b9f5af6dd33bfef67a73a832d52cc0167a9438140896a629fa1f8ded731fa0b"
+  },
+  {
+    "oldPath": "spike001a/compat/archive/src-001b1/_sha256.txt",
+    "newPath": "history/early-spikes/discovery-001a/archive/src-001b1/_sha256.txt",
+    "sha256": "b4764e8fd23b59d0e9fe6e2cf95ecbc3e68b1b41fd0b1307cbed83bd8fac8a66"
+  },
+  {
+    "oldPath": "spike001a/compat/archive/src-001b1/main/java/com/example/forgecompat/ForgeJarMetadata.java",
+    "newPath": "history/early-spikes/discovery-001a/archive/src-001b1/main/java/com/example/forgecompat/ForgeJarMetadata.java",
+    "sha256": "6d1e8d4ddc1316972237d9e98974fb659a9cbb8b7779d6518c196b4110511286"
+  },
+  {
+    "oldPath": "spike001a/compat/archive/src-001b1/main/java/com/example/forgecompat/ForgeModFileInfo.java",
+    "newPath": "history/early-spikes/discovery-001a/archive/src-001b1/main/java/com/example/forgecompat/ForgeModFileInfo.java",
+    "sha256": "ed8e78ddeb25896d8161d8472eea9ce2d38845495bc2a77629726ce7ea35c50d"
+  },
+  {
+    "oldPath": "spike001a/compat/archive/src-001b1/main/java/com/example/forgecompat/ForgeModFileInfoParser.java",
+    "newPath": "history/early-spikes/discovery-001a/archive/src-001b1/main/java/com/example/forgecompat/ForgeModFileInfoParser.java",
+    "sha256": "dcbec1d7f40e28df29a682c3431555cbf89af604abe8f393a895d9723bbac9ca"
+  },
+  {
+    "oldPath": "spike001a/compat/archive/src-001b1/main/java/com/example/forgecompat/ForgeModLocator.java",
+    "newPath": "history/early-spikes/discovery-001a/archive/src-001b1/main/java/com/example/forgecompat/ForgeModLocator.java",
+    "sha256": "3b010724c34f4537d5f759694a0454302882316e0223f33c9801375ae8a19472"
+  },
+  {
+    "oldPath": "spike001a/compat/archive/src-001b1/main/java/com/example/forgecompat/ForgeModReader.java",
+    "newPath": "history/early-spikes/discovery-001a/archive/src-001b1/main/java/com/example/forgecompat/ForgeModReader.java",
+    "sha256": "eead3529eef70c865b31cfe0df4993ea5e65ee98ad5bee986ab80e1a5a1e8925"
+  },
+  {
+    "oldPath": "spike001a/compat/archive/src-001b1/main/resources/META-INF/MANIFEST.MF",
+    "newPath": "history/early-spikes/discovery-001a/archive/src-001b1/main/resources/META-INF/MANIFEST.MF",
+    "sha256": "d78f95581ec70c1b9265d81cdc2251cb8e2f45e9d05160927fd35bba20f26e93"
+  },
+  {
+    "oldPath": "spike001a/compat/archive/src-001b1/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator",
+    "newPath": "history/early-spikes/discovery-001a/archive/src-001b1/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator",
+    "sha256": "2e232a7c8c1ed34ac4989866dec84f6488c1aace5dcd26ccc9a9a7a890b065a3"
+  },
+  {
+    "oldPath": "spike001a/compat/archive/src-001b1/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader",
+    "newPath": "history/early-spikes/discovery-001a/archive/src-001b1/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader",
+    "sha256": "394a0017ea04610a7a8d6f7e6410797ed13df52c3f4885ca1df0136bcec81dd7"
+  },
+  {
+    "oldPath": "spike001a/compat/src/main/java/com/example/forgecompat/ForgeJarMetadata.java",
+    "newPath": "history/early-spikes/discovery-001a/src/main/java/com/example/forgecompat/ForgeJarMetadata.java",
+    "sha256": "6d1e8d4ddc1316972237d9e98974fb659a9cbb8b7779d6518c196b4110511286"
+  },
+  {
+    "oldPath": "spike001a/compat/src/main/java/com/example/forgecompat/ForgeModFileInfo.java",
+    "newPath": "history/early-spikes/discovery-001a/src/main/java/com/example/forgecompat/ForgeModFileInfo.java",
+    "sha256": "ed8e78ddeb25896d8161d8472eea9ce2d38845495bc2a77629726ce7ea35c50d"
+  },
+  {
+    "oldPath": "spike001a/compat/src/main/java/com/example/forgecompat/ForgeModFileInfoParser.java",
+    "newPath": "history/early-spikes/discovery-001a/src/main/java/com/example/forgecompat/ForgeModFileInfoParser.java",
+    "sha256": "dcbec1d7f40e28df29a682c3431555cbf89af604abe8f393a895d9723bbac9ca"
+  },
+  {
+    "oldPath": "spike001a/compat/src/main/java/com/example/forgecompat/ForgeModLocator.java",
+    "newPath": "history/early-spikes/discovery-001a/src/main/java/com/example/forgecompat/ForgeModLocator.java",
+    "sha256": "3b010724c34f4537d5f759694a0454302882316e0223f33c9801375ae8a19472"
+  },
+  {
+    "oldPath": "spike001a/compat/src/main/java/com/example/forgecompat/ForgeModReader.java",
+    "newPath": "history/early-spikes/discovery-001a/src/main/java/com/example/forgecompat/ForgeModReader.java",
+    "sha256": "eead3529eef70c865b31cfe0df4993ea5e65ee98ad5bee986ab80e1a5a1e8925"
+  },
+  {
+    "oldPath": "spike001a/compat/src/main/resources/META-INF/MANIFEST.MF",
+    "newPath": "history/early-spikes/discovery-001a/src/main/resources/META-INF/MANIFEST.MF",
+    "sha256": "d78f95581ec70c1b9265d81cdc2251cb8e2f45e9d05160927fd35bba20f26e93"
+  },
+  {
+    "oldPath": "spike001a/compat/src/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator",
+    "newPath": "history/early-spikes/discovery-001a/src/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator",
+    "sha256": "2e232a7c8c1ed34ac4989866dec84f6488c1aace5dcd26ccc9a9a7a890b065a3"
+  },
+  {
+    "oldPath": "spike001a/compat/src/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader",
+    "newPath": "history/early-spikes/discovery-001a/src/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader",
+    "sha256": "394a0017ea04610a7a8d6f7e6410797ed13df52c3f4885ca1df0136bcec81dd7"
+  },
+  {
+    "oldPath": "spike001b5/probe/ModInfoContractProbe.java",
+    "newPath": "history/early-spikes/modinfo-001b5/ModInfoContractProbe.java",
+    "sha256": "00cb2838bd4c53aa079bd17c9bb3828bc32a2ba92f3d274d5539611ccf0480b5"
+  }
+]

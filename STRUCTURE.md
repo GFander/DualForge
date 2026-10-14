@@ -1,145 +1,77 @@
 # 仓库结构
 
-唯一生产源码为 `dualforge/src/main/`，当前开发制品为 `dualforge.jar`。
-历史编号只表示冻结迭代或验证系列，不提供并行生产版本。
+唯一生产源码为 `dualforge/src/main/`，制品 `dualforge.jar`。功能入口见 [README](README.md)、[tests](tests/README.md)、[tools](tools/UNIX.md)；按功能查文档见 [docs](docs/README.md)。
 
 ```text
 DualForge/
 ├── dualforge/src/main/
-│   ├── java/                             活跃：唯一生产 Java
-│   └── resources/                        活跃：manifest 与 SPI
-├── spike001a/
-│   └── compat/
-│       ├── src/、archive/                历史：保留原位置的早期副本
-│       └── DEPRECATED.md                 弃用说明
-├── spike000/
-│   ├── neoforge-server/config/            活跃：服务端环境配置
-│   └── probe/                            历史：保留原位置的早期 Probe
-├── spike001b5/probe/                      历史：保留原位置的 metadata 契约探针
-├── tools/
-│   ├── entry/
-│   │   ├── dualforge.zsh                  活跃：build / smoke / regress
-│   │   ├── prepare-unix.zsh               活跃：八个编译依赖的准备
-│   │   └── test-forge-dependencies.zsh    活跃：依赖 metadata / 动态回归
-│   ├── lib/
-│   │   ├── unix_workflow.py               活跃：构建、运行、指纹与断言
-│   │   └── prepare_unix.py                活跃：依赖下载与校验
-│   ├── harness/run-server.zsh             活跃：独立隔离服务端 harness
-│   └── UNIX.md                           当前运行环境说明
+│   ├── java/                       活跃：唯一生产Java
+│   └── resources/                  活跃：Manifest与SPI
 ├── tests/
-│   ├── README.md                         兼容测试与身份迁移验证的统一说明
-│   ├── dependencies/                     活跃：TOML 夹具和 FML metadata 契约
-│   ├── discovery/                        活跃：实际发现 pipeline 与边界
-│   ├── identity/                         活跃：原生 Forge 身份夹具与范围对照
-│   ├── events/                           活跃：004 受控事件投递、C/T 和阶段一致性
-│   ├── registry/                         活跃：005 原生 Forge 单 Item、注册 C/T、资源检查
-│   │   ├── mac/                          活跃：新 DualForge 制品的 Mac kit
-│   │   └── mac-legacy/                   Legacy：固定旧 cohort 的部署工具
-│   ├── project_identity/                 活跃：命名、SPI、Module Layer、全回归
-│   └── multi_registry/                   活跃：006A 双 Item、ABI矩阵、范围/原子性、C/T
+│   ├── dependencies/               活跃：002 metadata / CDEF
+│   ├── discovery/                  活跃：003a 发现与边界
+│   ├── identity/                   活跃：003b 入口与范围
+│   ├── events/                     活跃：004 事件C/T
+│   ├── registry/                   活跃：005 Item / assets
+│   │   ├── mac/                    当前命名工具
+│   │   └── mac-legacy/             Legacy固定旧cohort，原字节
+│   ├── multi_registry/             活跃：006A多Item与ABI/原子性
+│   └── project_identity/           活跃：身份及精确历史迁移保护
+├── tools/
+│   ├── entry/                      活跃zsh构建/依赖入口
+│   ├── lib/                        Python内部实现
+│   └── harness/run-server.zsh      活跃独立物理复制harness
+├── runtime/neoforge-server/
+│   ├── config/                     活跃：三个tracked原配置
+│   ├── libraries/                  ignored / 外部依赖
+│   ├── defaultconfigs/             ignored / 外部输入，空目录也保留
+│   └── spike000world/              ignored / 原世界名不变
 ├── history/
-│   ├── compat-002-0d/                    归档：旧生产候选及冻结副本
-│   ├── compat-002-0g/                    归档：旧 API 转换迭代
-│   ├── compat-002-0j/                    归档：旧注册路径迭代
-│   ├── compat-002-0l-archive/             归档：0l 的 src-before / src-after
-│   ├── compat-build.gradle.deprecated    归档：原字节 Gradle 实验记录
-│   └── spike000/
-│       ├── logs/                         归档：第一方源码和冻结说明
-│       ├── probe-002-0e/                 归档：早期 Forge Probe
-│       ├── probe-002-0l/                 归档：原 A 的源码及冻结副本
-│       └── subscriber-002-0n/            归档：独立订阅语义实验
-├── Dev Manuals/                          历史说明书、报告和证据索引
-├── out/                                  外置／Git 忽略：每轮新输出
-├── README.md                             当前使用说明
-└── AGENTS.md                             Git 交付与结构约定
+│   ├── early-spikes/
+│   │   ├── forge-probe-000/         归档：早期Probe源码/Gradle
+│   │   ├── discovery-001a/          归档：metadata/Locator早期副本
+│   │   └── modinfo-001b5/           归档：metadata契约探针
+│   ├── compat-002-0d/              原字节历史候选
+│   ├── compat-002-0g/              原字节API迭代
+│   ├── compat-002-0j/              原字节注册迭代
+│   ├── compat-002-0l-archive/       原字节冻结副本
+│   ├── compat-build.gradle.deprecated
+│   └── spike000/                   原Probe/订阅实验及冻结记录
+├── docs/                          活跃：功能导航及runtime迁移说明
+├── Dev Manuals/                   冻结事实、报告、原始证据索引
+├── .github/workflows/ci.yml        静态/单测CI
+├── out/                           ignored：每轮新日志/制品/断言
+├── README.md
+├── AGENTS.md                       完整六节Git规则
+└── LICENSE                         原样保留
 ```
 
-## 活跃入口和输入
+## 本轮精确路径迁移
 
-从仓库根目录执行 `zsh tools/entry/dualforge.zsh --mode build`。
-其他构建／依赖参数见 [README.md](README.md) 和
-[tools/UNIX.md](tools/UNIX.md)，测试入口见 [tests/README.md](tests/README.md)。
+基线main `40577b6866b49952769caf2951dfbb231900b4e9`。所有26个tracked文件使用git mv；23个早期文件及3个运行配置原字节不变。完整逐文件SHA见 [structure_relocation.json](tests/project_identity/structure_relocation.json)。
 
-`tools/harness/run-server.zsh` 仍是活跃独立入口；它调用
-`tools/lib/unix_workflow.py` 的 harness 模式，没有归档为历史脚本。
-三个 tools/entry 入口同样只调用 tools/lib 中的实现。Python 实现按其
-新位置计算仓库根目录，生产 SOURCE 路径指向 dualforge/src。
-
-`spike000/neoforge-server/` 继续作为默认服务端输入位置，完整运行库、
-原配置、defaultconfigs 和世界需外部准备，不因归档历史源码而迁移。
-原 A 的源码在 history/spike000/probe-002-0l，但回归使用的是原制品，
-不会重建它。默认原制品路径相应为
-`history/spike000/probe-002-0l/build/forgeprobe.jar`；也可通过 `--probe`
-指定外部原 JAR，其固定 SHA-256 校验不变。build/ 和 JAR 仍不入 Git。
-
-所有 tests 文件保持原位置。IdentityProbe 在 tests/identity/src 内从原生
-Forge 源码编译；dependencies 的动态夹具只替换原 A 的 TOML；discovery
-通过实际 FML pipeline 验证候选交接。events 的独立原生 Forge fixture 与
-测试型 NeoForge driver 验证一次真实受控投递；阶段一致性自动负例不启动 JVM。
-入口为 `zsh tests/events/run-events.zsh`，参数与证据布局见
-[tests/events/README.md](tests/events/README.md)。归档源码不参与生产编译。
-
-registry 的 Forge 输入位于 `tests/registry/src/`，原生 NeoForge 查询／栈观察
-driver 位于 `driver/`；拒绝及原子性对照在 `RegistryBytecodeTest.java`。
-入口 `zsh tests/registry/run-registry.zsh` 复用现有 Python harness。
-单 Item ID 为 `registryprobe:ice_ether`；用户原始 16×16 PNG 已原字节打包，
-服务端与资源静态验收 PASS；旧 cohort 用户 Mac arm64 客户端受控人工验收 PASS，
-新 JAR 客户端为 NOT RUN。阶段、输入和重跑方式见 [tests/registry/README.md](tests/registry/README.md)。
-
-`tests/registry/mac/` 面向新的 DualForge 制品，必须在其实际服务端回归后打包。
-Mac 实机验收为 NOT RUN。`tests/registry/mac-legacy/` 保留原 005-C 固定 SHA、
-参数、安装和回滚逻辑；旧客户端 PASS 只属于历史制品。ZIP 保存在 out/。
-
-## 本轮生产身份迁移
-
-原生产 src/main 已通过 git mv 移至 `dualforge/src/main/`，Java 包为
-`io.github.gfander.dualforge`；主入口为 `tools/entry/dualforge.zsh`。
-旧 Mac 工具整体移至 `tests/registry/mac-legacy/`，原字节保留。
-本轮完整对照与保护结果见 [迁移报告](<Dev Manuals/DualForge 命名统一迁移报告.md>)。
-
-## 新旧路径映射
-
-本轮基线为 `4078888fb13958c61829c4041f832b88164a7c01`，所有已有文件的
-位置变更使用 `git mv`。以下映射适用于当前仓库文件及入口：
-
-| 旧路径 | 当前路径 |
+| 原位置 | 当前位置 |
 |---|---|
-| `spike001a/compat-002-0d/` | `history/compat-002-0d/` |
-| `spike001a/compat-002-0g/` | `history/compat-002-0g/` |
-| `spike001a/compat-002-0j/` | `history/compat-002-0j/` |
-| `spike001a/compat-002-0l/archive/` | `history/compat-002-0l-archive/` |
-| `spike000/logs/` | `history/spike000/logs/` |
-| `spike000/probe-002-0e/` | `history/spike000/probe-002-0e/` |
-| `spike000/probe-002-0l/` | `history/spike000/probe-002-0l/` |
-| `spike000/subscriber-002-0n/` | `history/spike000/subscriber-002-0n/` |
-| `spike000/run-server.zsh` | `tools/harness/run-server.zsh` |
-| `spike001a/compat/build.gradle` | `history/compat-build.gradle.deprecated` |
-| `tools/forgecompat.zsh` | `tools/entry/forgecompat.zsh`（该轮；现入口见上节） |
-| `tools/prepare-unix.zsh` | `tools/entry/prepare-unix.zsh` |
-| `tools/test-forge-dependencies.zsh` | `tools/entry/test-forge-dependencies.zsh` |
-| `tools/unix_workflow.py` | `tools/lib/unix_workflow.py` |
-| `tools/prepare_unix.py` | `tools/lib/prepare_unix.py` |
+| spike000/probe/ | history/early-spikes/forge-probe-000/ |
+| spike001a/compat/ | history/early-spikes/discovery-001a/ |
+| spike001b5/probe/ | history/early-spikes/modinfo-001b5/ |
+| spike000/neoforge-server/config/ | runtime/neoforge-server/config/ |
 
-历史报告、索引中的现场绝对路径、命令和指纹仍描述原执行时的输入，
-不全局重写。需要定位当前仓库文件时使用上述映射；需要复核原提交
-时使用基线或报告记录的 Git SHA。Java 内的旧 dump 默认路径也保留
-原字节，当前 harness 已通过 JVM 属性将输出定位到每轮隔离目录。
+原命名迁移索引仍记录原现场路径；保护器将授权项定位到新位置，严格核对原SHA和一对一目标。374项保护不减少，禁止目录级豁免。未迁移项继续要求原位置存在。
 
-`spike001a/compat/` 的 src/archive 和不带版本后缀的 `spike000/probe/`
-按本轮确认范围保留原位置，均为遗留记录；前者说明见
-[DEPRECATED.md](spike001a/compat/DEPRECATED.md)。这两个目录及其中的
-旧 Gradle 记录不提供当前构建入口。
-`spike001b5/probe/` 的早期 metadata 契约探针同样保留原位置，不属于
-当前 dependencies/discovery/identity/events/registry 测试入口。
+早期DEPRECATED中的旧命令保留原文，仅为历史记录；[归档说明](history/early-spikes/discovery-001a/DEPRECATED.md)。历史Java包、Gradle、TOML、SPI、指纹不改，不重新构建冻结JAR。
 
-## 保全与输出
+## 当前构建、测试与运行输入
 
-历史 Java、资源、manifest、指纹文件和冻结说明只移动位置，保持原
-字节。不删除文件，不迁移世界，不将历史目录误作活跃版本。
-忽略规则继续排除完整运行附件、JAR、class 和依赖；归档 logs 中
-的第一方 Java 和说明文件有明确例外。
+`zsh tools/entry/dualforge.zsh --mode build` 使用新默认 `runtime/neoforge-server`。`--server-input`仍支持外部路径。依赖入口 `tools/entry/test-forge-dependencies.zsh`，独立harness `tools/harness/run-server.zsh`，具体测试见 [tests/README](tests/README.md)。
+完整运行库和原世界必须外部准备；本地复制步骤见 [docs/runtime](docs/runtime.md)。原A回归只使用SHA匹配的原JAR，默认位置仍为 `history/spike000/probe-002-0l/build/forgeprobe.jar`，可用 `--probe`指定外部制品。绝不重建替代。
 
-新构建、日志、断言和 dump 保存于当前仓库 out 下的全新目录，
-不覆盖旧证据。所有 JVM 验证串行，运行使用物理副本。
+所有JVM串行、运行使用物理副本；dump由现有JVM属性定位到每轮out，不改Java旧fallback。运行数据、第三方库和原日志不入Git；不删除旧安装。
 
-`tests/multi_registry/` 保存006A新原生Forge fixture、只查询的NeoForge driver及实际编译的Bootstrap/局部别名矩阵；不改变原005目录、JAR和贴图。受控服务端006A-S PASS，客户端006A-C NOT RUN。运行方式见 [README](tests/multi_registry/README.md)。
+## 历史路径追溯
+
+先前归档的 `spike001a/compat-002-0d/0g/0j`、`compat-002-0l/archive` 分别位于 `history/compat-*`；旧 `spike000/logs`、`probe-002-0e/0l`、`subscriber-002-0n` 位于 `history/spike000`。旧run-server入口在tools/harness；旧tools顶层入口和内部实现分别在tools/entry和tools/lib。命名迁移后的唯一生产目录为dualforge。
+
+历史报告内绝对路径、实验命令及SHA不重写。需要复核原现场时使用报告的Git提交；需要当前位置时按精确映射导航。历史实验不提供并行生产版本，也不代表当前兼容能力。
+
+006A-S原冻结服务端fixture与006A-C Beta资源更新版分别保存；后者用户macOS arm64受控人工PASS，不继承其他cohort或平台。详见 [客户端报告](<Dev Manuals/Convergence-006A-C macOS 客户端人工验收报告.md>)。

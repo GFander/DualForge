@@ -86,7 +86,7 @@
 - tools/entry/ 存放 zsh 入口，tools/lib/ 存放 Python 内部实现，tools/harness/run-server.zsh 是活跃独立 harness。
 - tests/dependencies、tests/discovery、tests/identity、tests/events、tests/registry、tests/project_identity、tests/multi_registry 是当前测试；测试文件的位置保持不变。Registry 阶段和受控范围见 tests/registry/README.md，资源静态检查不代表真实客户端渲染。
 - history/ 是历史迭代、冻结源码、夹具及记录的归档，不作为生产构建输入。原 Probe 是历史冻结回归输入，只使用指纹匹配的原制品，不重建替代。
-- spike001a/compat/ 和 spike000/probe/ 是保留原位置的遗留目录，不是活跃实现。Gradle 记录已弃用，说明见 spike001a/compat/DEPRECATED.md。
+- history/early-spikes/ 保存三个早期 Spike 的原字节，不是活跃实现。旧 Gradle/DEPRECATED 命令仅为历史记录，当前 zsh 入口不使用它们。
 - 移动文件使用 git mv，冻结记录保持原字节；历史命名迁移的允许差异限于身份；后续功能按用户明确任务范围实现和验证；同步更新活跃脚本、文档和忽略规则。
 - 冻结报告、索引及 Java 中的历史现场绝对路径保持原样；新旧仓库路径映射见 STRUCTURE.md，不进行全局字符串替换。
 - 运行附件、依赖、制品和世界继续外部保存或存入被忽略的 out/；所有 JVM 验证串行执行。
@@ -98,3 +98,6 @@
 - 006A 的 tests/multi_registry/ 使用独立原生Forge双Item输入和NeoForge查询driver；原005输入及贴图冻结不变。验证器按逐调用/字段数据依赖匹配，禁止新增fixture身份白名单或通用命名空间替换。
 - tests/project_identity/check_identity.py 的生产规范化对照验证冻结命名迁移提交；当前命名扫描和逐路径保护继续严格。新的兼容功能必须用自己的最终新JAR重新动态验证。
 - 006A-S与006A-C分别交付；服务端证据不继承客户端PASS，不能以资源静态或打包代替实机验收。
+
+- 默认服务端输入为 runtime/neoforge-server/；只跟踪三个原配置。运行库、mods、defaultconfigs 和 spike000world 外置或忽略；复制迁移时保留原数据并核对 SHA，禁止覆盖已有不同字节文件。
+- docs/README.md 是按功能导航；Dev Manuals 中冻结事实及旧命令不改写。历史路径迁移由 tests/project_identity/structure_relocation.json 精确记录，旧命名索引不改；保护全部374项，禁止目录级豁免。

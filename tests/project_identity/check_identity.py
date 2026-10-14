@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import re
 import subprocess
+from relocation_protection import protect
 
 REPO = Path(__file__).resolve().parents[2]
 INDEX = REPO / 'Dev Manuals/DualForge 命名统一迁移索引.json'
@@ -19,6 +20,14 @@ def check():
     index = json.loads(INDEX.read_text())
     paths = set(subprocess.check_output(['git','ls-files','-z','--cached','--others','--exclude-standard'], cwd=REPO).decode().strip('\0').split('\0'))
     protected = {item['path']: item for item in index['protected']}
+    tracked = set(subprocess.check_output(['git','ls-files','-z'], cwd=REPO).decode().strip('\0').split('\0'))
+    relocation_file = Path(__file__).with_name('structure_relocation.json')
+    relocations = json.loads(relocation_file.read_text()) if relocation_file.exists() else []
+    protected_current = protect(REPO, index['protected'], relocations, tracked)
+    # Only exact, already-validated path values inherit their original frozen identity.
+    relocation_lines = {f'"{key}": {json.dumps(item[key])},'
+                        for item in relocations for key in ('oldPath', 'newPath')}
+    relocation_name = str(relocation_file.relative_to(REPO))
     documents = {item['path']: item for item in index['migrationDocumentExemptions']}
     lines = {(item['path'], item['text']): item['reason'] for item in index['lineExemptions']}
     errors = []
@@ -27,14 +36,14 @@ def check():
         if not path.is_file():
             errors.append('Missing tracked file: ' + name); continue
         data = path.read_bytes()
-        if name in protected:
-            if hashlib.sha256(data).hexdigest() != protected[name]['sha256']:
-                errors.append('Protected bytes changed: ' + name)
+        if name in protected_current:
             continue
         if name in documents: continue
         try: text = data.decode()
         except UnicodeError: continue
         for line in text.splitlines():
+            if name == relocation_name and line.strip() in relocation_lines:
+                continue
             if any(term.lower() in line.lower() for term in index['forbiddenNames']) and (name, line) not in lines:
                 errors.append('Unapproved old identity: ' + name + ': ' + line)
         if any(term.lower() in name.lower() for term in index['forbiddenNames']):

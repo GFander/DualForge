@@ -346,7 +346,7 @@ def main():
                  "event-fixture", "event-driver", "event-rejected", "client-input"):
         parser.add_argument("--" + name, type=Path)
     parser.add_argument("--probe", type=Path, default=Path("/workspace/dualforge-cloud/inputs/forgeprobe.jar"))
-    parser.add_argument("--server-input", type=Path, default=Path("/workspace/dualforge-cloud/server-base"))
+    parser.add_argument("--server-input", type=Path, default=REPO / "runtime/neoforge-server")
     parser.add_argument("--jdk-home", type=Path, default=Path(os.environ.get("JAVA_HOME", "/workspace/dualforge-cloud/tools/msjdk/usr/lib/jvm/msopenjdk-21-amd64")))
     parser.add_argument("--allow-server-start", action="store_true")
     parser.add_argument("--public-key-relay", action="store_true")

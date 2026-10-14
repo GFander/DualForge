@@ -150,3 +150,7 @@ Manifest/SPI/模块/属性检查、官方 Module Layer 实际观测及串行兼�
 独立本轮矩阵覆盖不同字段/ID/方法名和实际局部寄存器别名。
 重复ID、捕获、未知Bootstrap/额外ForgeAPI/错误Registry/Bus和部分失败均明确拒绝且原ClassNode不污染。
 原005和所有历史回归保持原严格断言；Beta资源更新版006A-C由用户macOS arm64人工验收受控PASS，见 [客户端报告](../Dev%20Manuals/Convergence-006A-C%20macOS%20客户端人工验收报告.md)。Codex取得的是用户控制台摘录/审查报告，独立新版服务端C/T和Intel Mac仍NOT RUN。
+
+## 当前运行输入与历史定位
+
+默认服务端输入为 `runtime/neoforge-server/`，显式 `--server-input` 仍可指定外部物理安装。新运行目录不修改源世界。早期 Spike 已按原字节归档，见 [结构](../STRUCTURE.md) 和 [功能导航](../docs/README.md)。历史报告中的旧路径不改写，精确文件映射及SHA见 [迁移映射](project_identity/structure_relocation.json)。

@@ -119,7 +119,7 @@ def main():
     parser.add_argument("--forge-dependencies", type=Path)
     parser.add_argument("--fixture", type=Path)
     parser.add_argument("--jar", type=Path)
-    parser.add_argument("--server-input", type=Path, default=Path("/workspace/dualforge-cloud/server-base"))
+    parser.add_argument("--server-input", type=Path, default=REPO / "runtime/neoforge-server")
     parser.add_argument("--jdk-home", type=Path, default=Path(os.environ.get("JAVA_HOME", "/workspace/dualforge-cloud/tools/msjdk/usr/lib/jvm/msopenjdk-21-amd64")))
     parser.add_argument("--java-network-args", type=Path)
     parser.add_argument("--public-key-relay", action="store_true")

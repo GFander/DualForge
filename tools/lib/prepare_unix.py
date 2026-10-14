@@ -8,7 +8,7 @@ import ssl
 import urllib.error
 import urllib.request
 
-from unix_workflow import LIBRARIES, no_links
+from unix_workflow import LIBRARIES, REPO, no_links
 
 PINS = {
     "loader-4.0.45.jar": "8390398e67df23e72d85ed809685be2752c8ec545b7cbb6ad4b70fdc81e4dcd4",
@@ -18,7 +18,7 @@ PINS = {
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--server-input", type=Path, default=Path("/workspace/dualforge-cloud/server-base"))
+    parser.add_argument("--server-input", type=Path, default=REPO / "runtime/neoforge-server")
     args = parser.parse_args()
     no_links(args.server_input.absolute())
     context = ssl.create_default_context(cafile=os.environ.get("SSL_CERT_FILE"))

@@ -19,14 +19,14 @@ HTTPS proxy and CA, with authoritative artifact checksum verification retained.
 From the checkout root:
 
 ```zsh
-zsh tools/entry/prepare-unix.zsh --server-input /workspace/dualforge-cloud/server-base
+zsh tools/entry/prepare-unix.zsh --server-input runtime/neoforge-server
 zsh tools/entry/dualforge.zsh --mode build \
   --jdk-home /workspace/dualforge-cloud/tools/msjdk/usr/lib/jvm/msopenjdk-21-amd64 \
-  --server-input /workspace/dualforge-cloud/server-base
+  --server-input runtime/neoforge-server
 
 # Supply the actual newly built JAR; do not rename it.
 zsh tools/entry/test-forge-dependencies.zsh --stage after --boundary-only \
-  --server-input /workspace/dualforge-cloud/server-base \
+  --server-input runtime/neoforge-server \
   --probe /workspace/dualforge-cloud/inputs/forgeprobe.jar \
   --compat-jar out/unix/build/<actual-run>/dualforge.jar
 ```
@@ -65,14 +65,14 @@ After a new build, explicitly authorized runs use:
 
 ```zsh
 zsh tools/entry/dualforge.zsh --mode smoke \
-  --server-input /workspace/dualforge-cloud/server-base \
+  --server-input runtime/neoforge-server \
   --probe /workspace/dualforge-cloud/inputs/forgeprobe.jar \
   --jar out/unix/build/<actual-run>/dualforge.jar \
   --allow-server-start \
   --java-network-args /workspace/dualforge-cloud/java-network.args \
   --public-key-relay
 zsh tools/entry/test-forge-dependencies.zsh --stage after \
-  --server-input /workspace/dualforge-cloud/server-base \
+  --server-input runtime/neoforge-server \
   --probe /workspace/dualforge-cloud/inputs/forgeprobe.jar \
   --compat-jar out/unix/build/<actual-run>/dualforge.jar \
   --allow-server-start \
@@ -94,3 +94,7 @@ original JVM feature switches. Its isolated server properties bind to
 127.0.0.1 instead of all interfaces; that is an explicit cloud harness difference.
 Source inputs are never used as dump output or as the writable running server
 directory.
+
+## Runtime relocation
+
+The default input is checkout `runtime/neoforge-server/`; explicit `--server-input` still accepts external installations. Only three original config files are tracked. Do not rename `spike000world` or change `level-name`. Local libraries/worlds/defaultconfigs are copied and fingerprinted, never deleted or added to Git. See [local migration steps](../docs/runtime.md). Old report commands describe their original execution paths.

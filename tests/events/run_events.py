@@ -284,7 +284,7 @@ def main():
     for name in ("forge-dependencies", "fixture", "driver", "rejected-fixture", "jar", "identity-fixture", "java-network-args"):
         p.add_argument("--" + name, type=Path)
     p.add_argument("--probe", type=Path, default=Path("/workspace/dualforge-cloud/inputs/forgeprobe.jar"))
-    p.add_argument("--server-input", type=Path, default=Path("/workspace/dualforge-cloud/server-base"))
+    p.add_argument("--server-input", type=Path, default=REPO / "runtime/neoforge-server")
     p.add_argument("--jdk-home", type=Path, default=Path(os.environ.get("JAVA_HOME", "/workspace/dualforge-cloud/tools/msjdk/usr/lib/jvm/msopenjdk-21-amd64")))
     p.add_argument("--allow-server-start", action="store_true")
     p.add_argument("--public-key-relay", action="store_true")
