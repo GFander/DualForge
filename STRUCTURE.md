@@ -15,6 +15,7 @@ DualForge/
 │   ├── registry/                   活跃：005 Item / assets
 │   │   ├── mac/                    当前命名工具
 │   │   └── mac-legacy/             Legacy固定旧cohort，原字节
+│   ├── dropin_items/           活跃：007B无业务开关Forge输入、范围/模块拒绝、零参数Mac包
 │   ├── bootstrap/              活跃：007A标准启动、默认配置与原生共存
 │   ├── block_registry/             活跃：006B Block/BlockItem ABI、Contract、C/T
 │   │   ├── client_resources/       活跃：006B-C方块模型/用户贴图，实机验收独立

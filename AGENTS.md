@@ -106,3 +106,5 @@
 - 最新客户端对象统一输入在tests/client_objects/：实际ID ice_ether/raw_ice_ether/ice_ether_block与Java声明/资源同名；原005/006A/006B输入保留作冻结回归，不覆盖旧结果。两角色分开安装，当前仅Block组获用户人工PASS，新版items-test仍NOT RUN；不能以旧名称/语言覆盖或历史006A-C替代新组实机结论。截图豁免仅限本轮，Mac日志原件/实际compat SHA独立核验和原始证据持久化限制分别记录。
 
 - 007A的tests/bootstrap使用原版启动文件，不允许隐式注入生产/业务JVM参数、Agent或额外模块参数。四生产开关默认true、诊断默认关闭；历史C/T显式条件和全部严格拒绝断言保留。旧首次预检快照不得重置来制造保全PASS，修改后采用固定提交的新验证worktree。
+
+- 007B的tests/dropin_items保存无业务开关的原生Forge Item输入和独立查询观察器；原Forge JAR不预转换或修改。经真实失败取证，只对准入Forge automatic module名与FML metadata名不匹配使用官方ModJarMetadata；匹配旧descriptor保持委托，显式JPMS名不匹配拒绝。Reader识别guard、Parser及依赖语义不改；不新建Layer。普通profile单IEventBus ABI、API调用点/字段/数据依赖、拒绝原子性严格限定，真实第三方与Mac门槛分别交付。
