@@ -42,8 +42,10 @@ public class ForgeModReader implements IModFileReader {
         }
 
         System.out.println("[DUALFORGE] ForgeModReader: found " + MODS_TOML + " -> building SecureJar + IModFile");
-        SecureJar secureJar = SecureJar.from(jar, new ForgeJarMetadata(jar));
+        ForgeJarMetadata metadata = new ForgeJarMetadata(jar);
+        SecureJar secureJar = SecureJar.from(jar, metadata);
         IModFile modFile = IModFile.create(secureJar, new ForgeModFileInfoParser());
+        metadata.bind(modFile);
         System.out.println("[DUALFORGE] ForgeModReader: returning IModFile " + modFile);
         return modFile;
     }
