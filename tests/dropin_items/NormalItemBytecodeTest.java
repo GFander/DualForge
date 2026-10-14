@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.jar.JarFile;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 import net.neoforged.fml.loading.LoadingModList;
 import net.neoforged.fml.loading.moddiscovery.ModFile;
 import net.neoforged.fml.loading.moddiscovery.readers.JarModsDotTomlModFileReader;
@@ -93,6 +96,7 @@ public final class NormalItemBytecodeTest {
         check(creates == 1 && declarations == 2 && attachments == 1 && getters == 2 && indy == 2, "exact verified site counts");
         check(Arrays.equals(original, bytes(restored)), "every other byte unchanged after reversing exact mapped sites");
         reject(transformer, source, "duplicate-id", n -> literals(n).get(2).cst = "ice_ether");
+        reject(transformer, source, "invalid-id", n -> literals(n).get(2).cst = "Invalid:Name");
         reject(transformer, source, "wrong-registry", n -> {
             for (var i : method(n, "<clinit>").instructions) if (i instanceof FieldInsnNode f && f.owner.equals(FORGE + "ForgeRegistries")) f.name = "BLOCKS";
         });
@@ -109,6 +113,8 @@ public final class NormalItemBytecodeTest {
             extra.add(new MethodInsnNode(Opcodes.INVOKESTATIC, "java/lang/System", "nanoTime", "()J", false));
             extra.add(new InsnNode(Opcodes.POP2)); code.insert(extra);
         });
+        reject(transformer, source, "extra-forge-api", n -> method(n, "createRaw").instructions.insert(
+                new MethodInsnNode(Opcodes.INVOKESTATIC, "net/minecraftforge/common/MinecraftForge", "unknown", "()V", false)));
         reject(transformer, source, "extra-attachment", n -> {
             var ctor = method(n, "<init>"); var extra = new InsnList();
             extra.add(new FieldInsnNode(Opcodes.GETSTATIC, ENTRY, "ITEMS", "L" + FORGE + "DeferredRegister;"));
@@ -123,9 +129,33 @@ public final class NormalItemBytecodeTest {
         System.setProperty("dualforge.dump.profileDir", blocker.toString());
         reject(transformer, source, "dump-io-after-mapping", n -> {});
         System.clearProperty("dualforge.dump.profileDir");
+        ClassNode renamed = read(original);
+        String renamedEntry = "different/namespace/OrdinaryCatalog";
+        renamed.name = renamedEntry;
+        renamed.visibleAnnotations.getFirst().values.set(1, "otherprobe");
+        for (MethodNode m : renamed.methods) for (var insn : m.instructions) {
+            if (insn instanceof FieldInsnNode f && ENTRY.equals(f.owner)) f.owner = renamedEntry;
+            if (insn instanceof InvokeDynamicInsnNode d && d.bsmArgs[1] instanceof Handle h)
+                d.bsmArgs[1] = new Handle(h.getTag(), renamedEntry, h.getName(), h.getDesc(), h.isInterface());
+            if (insn instanceof LdcInsnNode ldc && "dropinprobe".equals(ldc.cst)) ldc.cst = "otherprobe";
+        }
+        Path matrix = output.resolve("renamed-forge-control.jar");
+        try (var originalJar = new JarFile(args[0]); var zip = new ZipOutputStream(Files.newOutputStream(matrix))) {
+            zip.putNextEntry(new ZipEntry(renamedEntry + ".class")); zip.write(bytes(renamed)); zip.closeEntry();
+            zip.putNextEntry(new ZipEntry("META-INF/mods.toml"));
+            zip.write(new String(originalJar.getInputStream(originalJar.getJarEntry("META-INF/mods.toml")).readAllBytes(),
+                    java.nio.charset.StandardCharsets.UTF_8).replace("dropinprobe", "otherprobe").getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            zip.closeEntry();
+        }
+        scan(matrix, false);
+        var otherTransformer = new DualForgeEntryTransformer();
+        check(otherTransformer.targets().equals(Set.of(ITransformer.Target.targetClass(renamedEntry.replace('/', '.')))), "different actual scan identity selected");
+        ClassNode otherChanged = otherTransformer.transform(renamed, null);
+        check(method(otherChanged, "<init>").desc.equals("(Lnet/neoforged/bus/api/IEventBus;)V"), "different modId/package/entry mapped without whitelist");
         ClassNode ordinary = read(original); ordinary.name = "ordinary/SameShape";
         check(Arrays.equals(bytes(ordinary), bytes(transformer.transform(ordinary, null))), "same shape unclaimed class unchanged");
         System.setProperty("dualforge.2a.rewrite", "false");
+        scan(Path.of(args[0]), false);
         var disabled = new DualForgeEntryTransformer(); disabled.targets();
         check(Arrays.equals(original, bytes(disabled.transform(source, null))), "explicit rewrite false preserved");
         System.clearProperty("dualforge.2a.rewrite");
@@ -133,7 +163,7 @@ public final class NormalItemBytecodeTest {
         var nativeTransformer = new DualForgeEntryTransformer();
         check(nativeTransformer.targets().isEmpty(), "native metadata never claimed");
         check(Arrays.equals(original, bytes(nativeTransformer.transform(source, null))), "unowned Forge-shaped class unchanged");
-        System.out.println("NORMAL ITEM CONTRACT PASS negatives=11 supplierLogicUnchanged=true");
+        System.out.println("NORMAL ITEM CONTRACT PASS negatives=13 supplierLogicUnchanged=true");
     }
 
     private static ModFile scan(Path jar, boolean nativeMetadata) throws Exception {
