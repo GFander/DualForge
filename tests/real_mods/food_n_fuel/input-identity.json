@@ -1,0 +1,1591 @@
+{
+  "target": "Food N' Fuel Forge 1.3 / Minecraft 1.21.x",
+  "originalForgeJar": "FROZEN",
+  "downloadURL": "https://mediafilez.forgecdn.net/files/5842/396/fnf-forge-1.3-1.21.x.jar",
+  "officialPage": "https://www.curseforge.com/minecraft/mc-mods/food-n-fuel/files/5842396",
+  "officialPageAccess": "HTTP 403; actual artifact downloaded from official CDN",
+  "filename": "fnf-forge-1.3-1.21.x.jar",
+  "bytes": 128098,
+  "sha256": "bd415b04529c4ffc31e14757488f71dab6917e4560c61e236c3c4d0de6557958",
+  "metadata": {
+    "modLoader": "javafml",
+    "loaderVersion": "[0,)",
+    "license": "MIT",
+    "mods": [
+      {
+        "modId": "fnf",
+        "version": "1.3-1.21.x",
+        "displayName": "Food N' Fuel",
+        "authors": "NateVG",
+        "description": "Adding new varieties of food and fuel obtainable from vanilla resources."
+      }
+    ],
+    "dependencies": {
+      "fnf": [
+        {
+          "modId": "forge",
+          "mandatory": true,
+          "versionRange": "[0,)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        },
+        {
+          "modId": "minecraft",
+          "mandatory": true,
+          "versionRange": "[1.21,1.22)",
+          "ordering": "NONE",
+          "side": "BOTH"
+        }
+      ]
+    }
+  },
+  "tomlSHA256": "a9aa167a155760c176c2097cb9f1bc1eaaafc847e3965be989f9ea63f6a85256",
+  "manifestSHA256": "89f239c872f0594c800a0eab89fde246134a321c619e2c3f8da4adb4e9608ff0",
+  "module": {
+    "explicitDescriptor": false,
+    "automaticModuleNameManifest": false,
+    "jdkDerivedName": "fnf.forge",
+    "nativeForgeModuleName": "fnf",
+    "nativeObservation": {
+      "path": "/workspace/DualForge-007C/out/convergence-007c/runtime/F1-observed-final/server/fnf-observation.json",
+      "sha256": "71a610a6fbea68568e5a8f79f9db051747f0179e0e48c47fa5050f7b9ffa641f"
+    }
+  },
+  "sourceReference": {
+    "repository": "https://github.com/Nat3VG/forge-fnf",
+    "branch": "1.21.x",
+    "commit": "2d5c6435dceceb8dea3269e9054edb7338ba05c8",
+    "committerDate": "2024-11-01T10:13:02Z",
+    "tags": [],
+    "exactReleaseSource": "UNPROVEN",
+    "releaseClassZipTimestamp": "2024-10-25 00:47:02; ZIP timestamp is not a release-date proof",
+    "files": [
+      {
+        "path": "src/main/java/net/natevg/fnf/FoodNFuel.java",
+        "sha256": "0fcfb0e6d9e7ecec0394cc8bcf5c37f18c6f7bd62744c66b97bcc129bd489094"
+      },
+      {
+        "path": "src/main/java/net/natevg/fnf/item/FnFCreativeModeTabs.java",
+        "sha256": "a4d3acfdc8c2f63b2945d97ac9540343fc8888297bc2853ee7603ec7635ff8de"
+      },
+      {
+        "path": "src/main/java/net/natevg/fnf/item/FnFFoodProperties.java",
+        "sha256": "0aa3561190d137532bb39fd383516255466798c655f98497fdbb0ce9e674c363"
+      },
+      {
+        "path": "src/main/java/net/natevg/fnf/item/ItemRegistries.java",
+        "sha256": "12b49d7d3b4f725af9aedd9167738940f9b637d1f6e2582c1e281d7db93a7275"
+      },
+      {
+        "path": "src/main/java/net/natevg/fnf/item/custom/FuelItem.java",
+        "sha256": "889a6e1691ea4c74146537f1a9299d01cf834972692e2fe16250067c54aedbcf"
+      }
+    ]
+  },
+  "jarMembers": [
+    {
+      "entry": "META-INF/MANIFEST.MF",
+      "bytes": 214,
+      "sha256": "89f239c872f0594c800a0eab89fde246134a321c619e2c3f8da4adb4e9608ff0"
+    },
+    {
+      "entry": "META-INF/mods.toml",
+      "bytes": 5035,
+      "sha256": "a9aa167a155760c176c2097cb9f1bc1eaaafc847e3965be989f9ea63f6a85256"
+    },
+    {
+      "entry": "assets/fnf/lang/en_us.json",
+      "bytes": 3978,
+      "sha256": "9da46b1220086aec06bbf7df87599a2527d54a940e6636c13da1018524410da5"
+    },
+    {
+      "entry": "assets/fnf/models/item/bio_fuel.json",
+      "bytes": 104,
+      "sha256": "895c207e47a3eca3ccf4ac9d025b02ac6ddbf5f6e2f7e34e5800326b42a0b89a"
+    },
+    {
+      "entry": "assets/fnf/models/item/blazerod_bundle.json",
+      "bytes": 111,
+      "sha256": "cbb83625318039e5be44e06be96ca5bd024efc9d90dad51403a698d9692cec1e"
+    },
+    {
+      "entry": "assets/fnf/models/item/blazing_coal.json",
+      "bytes": 108,
+      "sha256": "b97cc88d86d7920134444ffc79944f73ff65e74f2115d7a96875402b1a35bb0e"
+    },
+    {
+      "entry": "assets/fnf/models/item/carrot_bread.json",
+      "bytes": 108,
+      "sha256": "fa46f7569085683e78439c61da59fac98f59045587f6610eb5792a8737c05b0b"
+    },
+    {
+      "entry": "assets/fnf/models/item/cooked_beef_skewer.json",
+      "bytes": 114,
+      "sha256": "4b584a664b0c115ee6515c740b36dda69a8f4a235e58ddb09afb493d7a76617a"
+    },
+    {
+      "entry": "assets/fnf/models/item/cooked_carrot.json",
+      "bytes": 109,
+      "sha256": "fe3eb91ba1b7fba573a32dae3a9fa06e8194b5f14c0b2cc558a48f2730a7ee18"
+    },
+    {
+      "entry": "assets/fnf/models/item/cooked_chicken_skewer.json",
+      "bytes": 117,
+      "sha256": "64206f31caae17f7b2502f7e805695b73d25583b8e5606f86c7aae13eb33dd5a"
+    },
+    {
+      "entry": "assets/fnf/models/item/cooked_glowing_beef_skewer.json",
+      "bytes": 122,
+      "sha256": "728e27df4b42c6648e4ce16835fb05ecc0eb020663256ff35dc6c364866022af"
+    },
+    {
+      "entry": "assets/fnf/models/item/cooked_glowing_chicken_skewer.json",
+      "bytes": 125,
+      "sha256": "f3a97102094aa5a51ef3c88528589f757c85adf426aef64691844e30172bda1b"
+    },
+    {
+      "entry": "assets/fnf/models/item/cooked_glowing_mutton_skewer.json",
+      "bytes": 124,
+      "sha256": "17ea087432a83c1c0e519d150fe7bc2f2b78b450acf9a5eba15497ead0f19cce"
+    },
+    {
+      "entry": "assets/fnf/models/item/cooked_glowing_pork_skewer.json",
+      "bytes": 122,
+      "sha256": "c6e82d945b6a4dfb60c7cbb5639724f6bc3c05f6452aefa7e1a7b74d0547cb3a"
+    },
+    {
+      "entry": "assets/fnf/models/item/cooked_glowing_rabbit_skewer.json",
+      "bytes": 124,
+      "sha256": "8d3cb8bc115b64e04d15ba28a0e13b3a3ce170dc7bba32b394ce0abfb2b35c13"
+    },
+    {
+      "entry": "assets/fnf/models/item/cooked_mutton_skewer.json",
+      "bytes": 116,
+      "sha256": "687157e08ac466ce156dc1f0387cb75467fff07d3343846f0eea75d736b39867"
+    },
+    {
+      "entry": "assets/fnf/models/item/cooked_pork_skewer.json",
+      "bytes": 114,
+      "sha256": "e773f9c755a770255e5fe5de3140849a142ed36252c39b6923119a987864c973"
+    },
+    {
+      "entry": "assets/fnf/models/item/cooked_rabbit_skewer.json",
+      "bytes": 116,
+      "sha256": "1994d86a1022cffaa78dc1b79a56407035d9c46e6a95be68012eac4165d05450"
+    },
+    {
+      "entry": "assets/fnf/models/item/cooked_tropical_fish.json",
+      "bytes": 116,
+      "sha256": "45a41ce5a4589cf88e394f597e538595cb0adab8442c5b87d9db44aeba4fb187"
+    },
+    {
+      "entry": "assets/fnf/models/item/dried_kelp_wrapped_cod.json",
+      "bytes": 118,
+      "sha256": "b9d0aeddd037d22ac49128cd669c427b14ba2be8af50da0eba212d81c4b19751"
+    },
+    {
+      "entry": "assets/fnf/models/item/dried_kelp_wrapped_salmon.json",
+      "bytes": 121,
+      "sha256": "b13735cb858c4eaaf418999dfa7940ed090bb3ac15628bb386bad28329731c6e"
+    },
+    {
+      "entry": "assets/fnf/models/item/dried_kelp_wrapped_tropical_fish.json",
+      "bytes": 128,
+      "sha256": "25f73507e2086e408857352bfe78715a957ca2bc295f40d0789cfce5efe9fba5"
+    },
+    {
+      "entry": "assets/fnf/models/item/dried_kelp_wrapped_veggie_sticks.json",
+      "bytes": 128,
+      "sha256": "a4f2ef215cf8c60250f64da4f2e8fb7b1a025f702fee30106cbb808664a073da"
+    },
+    {
+      "entry": "assets/fnf/models/item/energized_fire_core.json",
+      "bytes": 115,
+      "sha256": "be9be118f9289658047f084aae8710893d6199017a26c40653e6c162de2c56b7"
+    },
+    {
+      "entry": "assets/fnf/models/item/energized_soul_fire_core.json",
+      "bytes": 120,
+      "sha256": "e437b6be1fadbdc5cef90e502dce9a5724e75e811bb497364bfe7d10dbe132a7"
+    },
+    {
+      "entry": "assets/fnf/models/item/explorers_fancy_cooking.json",
+      "bytes": 119,
+      "sha256": "3063d69fcc599d5a1baad56ebcd7ed7b9824437818f80db0f1f3c5399d6a8218"
+    },
+    {
+      "entry": "assets/fnf/models/item/farmers_grace.json",
+      "bytes": 109,
+      "sha256": "02db1969a7bc66024455bdebb3e3f0ea17df5a70bd59cd0ddcfcda46f6c90ab4"
+    },
+    {
+      "entry": "assets/fnf/models/item/fire_core.json",
+      "bytes": 105,
+      "sha256": "8d8bd4d8cbd427cd765ae522e1f37ce90fbea2200fe0d1ec33381b8334b0c629"
+    },
+    {
+      "entry": "assets/fnf/models/item/fishermans_secret_broth.json",
+      "bytes": 119,
+      "sha256": "fddea369d5c4a4f3f78a950a028c91455c684b2e36a3572ee137043c8d47e21c"
+    },
+    {
+      "entry": "assets/fnf/models/item/highlanders_meal.json",
+      "bytes": 112,
+      "sha256": "fbe16a981eca66e70530c2895f72264cb46fc22407804ff29ac756c96d54895d"
+    },
+    {
+      "entry": "assets/fnf/models/item/honey_popped_chorus_fruit.json",
+      "bytes": 121,
+      "sha256": "e19f35860c77a5246b57ddbc280a16626438f6e1e21ef97a6da8c1a6dab5322f"
+    },
+    {
+      "entry": "assets/fnf/models/item/honeyed_bread.json",
+      "bytes": 109,
+      "sha256": "ad18aa471ec56ef3877dfcd64cd695a7100fd474c4b59689f9170f6fcfb7f2e1"
+    },
+    {
+      "entry": "assets/fnf/models/item/honeyed_chicken.json",
+      "bytes": 111,
+      "sha256": "2e272aa6f0b6dcbcd25ae21b0a9872f2fd715cfdccf74e125c2e238022fa39c1"
+    },
+    {
+      "entry": "assets/fnf/models/item/honeyed_cookie.json",
+      "bytes": 110,
+      "sha256": "6d02cc6666990d0538fef50065a031b790922b54c18b50e88c66bc6df44647f6"
+    },
+    {
+      "entry": "assets/fnf/models/item/honeyed_mutton.json",
+      "bytes": 110,
+      "sha256": "3d4083f6dfcd4255da18e8071f0b41352d595bbee71edbb2faf7bd100ad1b08a"
+    },
+    {
+      "entry": "assets/fnf/models/item/honeyed_porkchop.json",
+      "bytes": 112,
+      "sha256": "78e70f47e418855c38c4a2e364d54c595bc0bfe9780f00d39a5462e8fc36b728"
+    },
+    {
+      "entry": "assets/fnf/models/item/honeyed_potato.json",
+      "bytes": 110,
+      "sha256": "0719939bda366d86ee718cb767f7c9b8ed0bfbfbe5574bb460cf2a4b6ba3c550"
+    },
+    {
+      "entry": "assets/fnf/models/item/honeyed_rabbit.json",
+      "bytes": 110,
+      "sha256": "65ce593307bc30d7add1181a461b42fc63c6f915eeb88f089511f7ed92d96fd1"
+    },
+    {
+      "entry": "assets/fnf/models/item/honeyed_steak.json",
+      "bytes": 109,
+      "sha256": "11602acf5578e79e047147e71b13c57210583f9778364fb15db0571ae92996a7"
+    },
+    {
+      "entry": "assets/fnf/models/item/kelp_wrapped_cod.json",
+      "bytes": 112,
+      "sha256": "c48e7be729dbe199e3e8684b2818e18dbf427c137ad58bba9969262b0111e9c5"
+    },
+    {
+      "entry": "assets/fnf/models/item/kelp_wrapped_salmon.json",
+      "bytes": 115,
+      "sha256": "3de358668ada6e451f2cbe7e8bb300476d682da9a2c55cc7cc7e0f72e8260eae"
+    },
+    {
+      "entry": "assets/fnf/models/item/kelp_wrapped_tropical_fish.json",
+      "bytes": 122,
+      "sha256": "04a33540c6f5e4bc07c5805f4c05b717d0c39681a1e095d5e32554fa5a5ff340"
+    },
+    {
+      "entry": "assets/fnf/models/item/kelp_wrapped_veggie_sticks.json",
+      "bytes": 122,
+      "sha256": "6dadd32001e64dd3d5e48b9ab86b70d56d42be04dd7c8704f6271b4946105643"
+    },
+    {
+      "entry": "assets/fnf/models/item/logo.json",
+      "bytes": 100,
+      "sha256": "f0dce004f7259065d320e853ffa87cd956d262d0662ba73ba362f84f376c1847"
+    },
+    {
+      "entry": "assets/fnf/models/item/lucky_star.json",
+      "bytes": 106,
+      "sha256": "8149472f1c365fa6b555ed4287a68c8a8e1d7a520cd3d46d364636ffe6bc7873"
+    },
+    {
+      "entry": "assets/fnf/models/item/miners_delight.json",
+      "bytes": 110,
+      "sha256": "31828913cbc4ba66cbea4a2f0592d9b5312e4f3011a80742d0c9318bd2acb194"
+    },
+    {
+      "entry": "assets/fnf/models/item/mushroom_beef_stew.json",
+      "bytes": 114,
+      "sha256": "87c3665aa6dd753c475745bd8ee65aa7175ddf864fb85a6a5a54d162f6f50794"
+    },
+    {
+      "entry": "assets/fnf/models/item/mushroom_chicken_stew.json",
+      "bytes": 117,
+      "sha256": "e92dcc6d2a757dfc1692c6f54339f17c62ad357da278d3ebaf6a13c368399379"
+    },
+    {
+      "entry": "assets/fnf/models/item/mushroom_mutton_stew.json",
+      "bytes": 116,
+      "sha256": "d00a7d76ab390da7808df34d4c3addbbc0d7db42e589109dec6a19f3045dde3c"
+    },
+    {
+      "entry": "assets/fnf/models/item/mushroom_pork_stew.json",
+      "bytes": 114,
+      "sha256": "37581d5d488083b37ea18ee830a2a06717d392516a5426a9213dd0a9e210ee1d"
+    },
+    {
+      "entry": "assets/fnf/models/item/nether_dwellers_subsistence.json",
+      "bytes": 123,
+      "sha256": "0303e2c2c4ebc43f4ad7db81cb9d6dc82d03de8ab074fda833c55f7bed6d1b7a"
+    },
+    {
+      "entry": "assets/fnf/models/item/paper_stack.json",
+      "bytes": 107,
+      "sha256": "67f5c0e9cd1a3f8d9da109b71a15f03c61daa892c723dae374cb44531199ec28"
+    },
+    {
+      "entry": "assets/fnf/models/item/piping_hot_beetroot_soup.json",
+      "bytes": 120,
+      "sha256": "828f0020bc88e657361ca1e61601c45fb214bb31160fdeaee7881a16e3fa9b85"
+    },
+    {
+      "entry": "assets/fnf/models/item/piping_hot_mushroom_stew.json",
+      "bytes": 120,
+      "sha256": "12c566654259b8fff2fb9cc85c881399e8476cf3c914c12352d0b026e6970bd7"
+    },
+    {
+      "entry": "assets/fnf/models/item/piping_hot_rabbit_stew.json",
+      "bytes": 118,
+      "sha256": "bb3962c73bb209966ad7d4f615e0583a12ecfffe440cdfb0dae3329aafd48bbf"
+    },
+    {
+      "entry": "assets/fnf/models/item/piping_hot_veggie_soup.json",
+      "bytes": 118,
+      "sha256": "630c64b4cb55791cb1d387669098ec7598c7fd2cad6834d1cf8f3c83a1385c9f"
+    },
+    {
+      "entry": "assets/fnf/models/item/raw_beef_skewer.json",
+      "bytes": 111,
+      "sha256": "576109eb2d10e4dd585027785a6372a82e21c1a75b6b92cd546bd0fc31b2eb62"
+    },
+    {
+      "entry": "assets/fnf/models/item/raw_chicken_skewer.json",
+      "bytes": 114,
+      "sha256": "0a630660de0f0277f6d2759965f55aa3bac096d41456ea40f2563a13d83630a2"
+    },
+    {
+      "entry": "assets/fnf/models/item/raw_glowing_beef_skewer.json",
+      "bytes": 119,
+      "sha256": "5be8be85562d5c6070cb1f529932d8ad53fcdf998678f6f07804ea21843401a1"
+    },
+    {
+      "entry": "assets/fnf/models/item/raw_glowing_chicken_skewer.json",
+      "bytes": 122,
+      "sha256": "3dccea3aa02cadbd81e8b774112ec0c160dd12f0d0c7e4116cdc31271ca126a1"
+    },
+    {
+      "entry": "assets/fnf/models/item/raw_glowing_mutton_skewer.json",
+      "bytes": 121,
+      "sha256": "f949078b33c3f21b55ad6f0a3437e4deca4cfdf9083f17be6e56d2c9b83438f6"
+    },
+    {
+      "entry": "assets/fnf/models/item/raw_glowing_pork_skewer.json",
+      "bytes": 119,
+      "sha256": "736e3c5098161dc8c395c138d9775480cf30f991e4277c1f92af35246f953fac"
+    },
+    {
+      "entry": "assets/fnf/models/item/raw_glowing_rabbit_skewer.json",
+      "bytes": 121,
+      "sha256": "bad12f483132a96b03ddc14c1065d5f28aeba09f0fbd709dc449e2c4a6cd7ce4"
+    },
+    {
+      "entry": "assets/fnf/models/item/raw_mutton_skewer.json",
+      "bytes": 113,
+      "sha256": "a849cb0b95f31cacdf2efb5c569256e8ab0ce16cee50b0c318cb1cadd9f4e9ea"
+    },
+    {
+      "entry": "assets/fnf/models/item/raw_pork_skewer.json",
+      "bytes": 111,
+      "sha256": "dc18f942c905fb5c18ddf0db626e54312950a7bae6e5b351264dfe5ef9463b65"
+    },
+    {
+      "entry": "assets/fnf/models/item/raw_rabbit_skewer.json",
+      "bytes": 113,
+      "sha256": "f920d2de745dea94d90576f53a4ad107b56edce32ea8d48467b402f1b5e6d976"
+    },
+    {
+      "entry": "assets/fnf/models/item/roasted_beetroot.json",
+      "bytes": 112,
+      "sha256": "f233d1075f37d84251ff3ab4ea3c55a425a0a6bba2753fa0db75ba6a539ae429"
+    },
+    {
+      "entry": "assets/fnf/models/item/soul_fire_core.json",
+      "bytes": 110,
+      "sha256": "7acb3b783ad1872421063458f7e91a0b00b86e3d4f1a2e9ec5910358e3078a58"
+    },
+    {
+      "entry": "assets/fnf/models/item/sweet_melon_smoothie.json",
+      "bytes": 116,
+      "sha256": "5c29efa49c93de3fce1f8b44ea4e1a35ffc54113677b217207c3215f95d33b1f"
+    },
+    {
+      "entry": "assets/fnf/models/item/veggie_soup.json",
+      "bytes": 107,
+      "sha256": "256a9b54e8e8feee8a28a6e663e1eea9636322a45e493d14993cf4c4b892dea3"
+    },
+    {
+      "entry": "assets/fnf/textures/item/bio_fuel.png",
+      "bytes": 327,
+      "sha256": "8995700d98c09e7b857a4ecbeb7559b1745641d684deac896ae11bc13794e396"
+    },
+    {
+      "entry": "assets/fnf/textures/item/blazerod_bundle.png",
+      "bytes": 546,
+      "sha256": "019968b409cce34ff6cf33b2254f41594ff86cff8fe4dbd330b1bf0c9839adb7"
+    },
+    {
+      "entry": "assets/fnf/textures/item/blazing_coal.png",
+      "bytes": 537,
+      "sha256": "037619d3fef9a78dde70692c7b2ecaa990f42fde5663a3496ec0bd6bdffd5b05"
+    },
+    {
+      "entry": "assets/fnf/textures/item/carrot_bread.png",
+      "bytes": 378,
+      "sha256": "557f8b324879dad8bfa19211d39c31c7193e4f9c2f8039788954b979204b2e32"
+    },
+    {
+      "entry": "assets/fnf/textures/item/cooked_beef_skewer.png",
+      "bytes": 369,
+      "sha256": "cf58eb7708fe1158cafb1b5d7e1301578100837d6911ba677b01a54638563378"
+    },
+    {
+      "entry": "assets/fnf/textures/item/cooked_carrot.png",
+      "bytes": 375,
+      "sha256": "9b54336d4a4f1d68dbb7fe7cea9bd8b1f88da0d164b43656160bb953af1adaa8"
+    },
+    {
+      "entry": "assets/fnf/textures/item/cooked_chicken_skewer.png",
+      "bytes": 390,
+      "sha256": "3913680502f510809a06354199a9f02033cf44770168371ef518ea6bba539f40"
+    },
+    {
+      "entry": "assets/fnf/textures/item/cooked_glowing_beef_skewer.png",
+      "bytes": 531,
+      "sha256": "4bbe5f96356eb366f67ddbbe56e8f2483e6c582c5f5dec8dfab393fe9428bf59"
+    },
+    {
+      "entry": "assets/fnf/textures/item/cooked_glowing_beef_skewer.png.mcmeta",
+      "bytes": 130,
+      "sha256": "159e6be3239ccc7ab26fc0e6073000ba88c354167d2cca034cb66bcd79b353d7"
+    },
+    {
+      "entry": "assets/fnf/textures/item/cooked_glowing_chicken_skewer.png",
+      "bytes": 576,
+      "sha256": "af2d6a252943f096b4e7ab941a4208357a1aa83992ee25bb503b2885bfae7400"
+    },
+    {
+      "entry": "assets/fnf/textures/item/cooked_glowing_chicken_skewer.png.mcmeta",
+      "bytes": 130,
+      "sha256": "159e6be3239ccc7ab26fc0e6073000ba88c354167d2cca034cb66bcd79b353d7"
+    },
+    {
+      "entry": "assets/fnf/textures/item/cooked_glowing_mutton_skewer.png",
+      "bytes": 555,
+      "sha256": "72b99dd2bf2f5d56b1cf774049beb14e452b55207e90c4df457e0d4f1a606eba"
+    },
+    {
+      "entry": "assets/fnf/textures/item/cooked_glowing_mutton_skewer.png.mcmeta",
+      "bytes": 130,
+      "sha256": "159e6be3239ccc7ab26fc0e6073000ba88c354167d2cca034cb66bcd79b353d7"
+    },
+    {
+      "entry": "assets/fnf/textures/item/cooked_glowing_pork_skewer.png",
+      "bytes": 540,
+      "sha256": "b70c553e4f76baa9c6e652baaa4b5eaf436f06717f9f93f67a98e3d82eb32f44"
+    },
+    {
+      "entry": "assets/fnf/textures/item/cooked_glowing_pork_skewer.png.mcmeta",
+      "bytes": 130,
+      "sha256": "159e6be3239ccc7ab26fc0e6073000ba88c354167d2cca034cb66bcd79b353d7"
+    },
+    {
+      "entry": "assets/fnf/textures/item/cooked_glowing_rabbit_skewer.png",
+      "bytes": 573,
+      "sha256": "ddcd0d97cfec7e8590d415b8a7b03a6d1d3abd975afb4ac013760f34284219b3"
+    },
+    {
+      "entry": "assets/fnf/textures/item/cooked_glowing_rabbit_skewer.png.mcmeta",
+      "bytes": 130,
+      "sha256": "159e6be3239ccc7ab26fc0e6073000ba88c354167d2cca034cb66bcd79b353d7"
+    },
+    {
+      "entry": "assets/fnf/textures/item/cooked_mutton_skewer.png",
+      "bytes": 384,
+      "sha256": "239411eeacdd71c59cd73051f880406dc74b5609042e77f0872656a4b4862f2b"
+    },
+    {
+      "entry": "assets/fnf/textures/item/cooked_pork_skewer.png",
+      "bytes": 372,
+      "sha256": "949fb2644235169da045319d97cf26b8ea6b9bdd69a44cb40e5de1aabc5a668f"
+    },
+    {
+      "entry": "assets/fnf/textures/item/cooked_rabbit_skewer.png",
+      "bytes": 390,
+      "sha256": "b832f1c3bfe74409fb2701e116c99111a52d3ef8c313b72734e0c531e4d9bba8"
+    },
+    {
+      "entry": "assets/fnf/textures/item/cooked_tropical_fish.png",
+      "bytes": 363,
+      "sha256": "2bb6cbbf46c23fa260d0f65ef92493a88a989c70371f9b713e4e870a4dcb89f6"
+    },
+    {
+      "entry": "assets/fnf/textures/item/dried_kelp_wrapped_cod.png",
+      "bytes": 453,
+      "sha256": "6addaa97efb03a3fd0ad62f8e7b7f9b1cafb81ed4e324e92006e5337539502c4"
+    },
+    {
+      "entry": "assets/fnf/textures/item/dried_kelp_wrapped_salmon.png",
+      "bytes": 453,
+      "sha256": "2e434dabf5d7d941f3baba5736ab91758a448b874078656c864ee829f1034f83"
+    },
+    {
+      "entry": "assets/fnf/textures/item/dried_kelp_wrapped_tropical_fish.png",
+      "bytes": 438,
+      "sha256": "f55f7dc99dda6fc696e253d5f7783e5707adc714d3bc81b1a1dacb2da46ff039"
+    },
+    {
+      "entry": "assets/fnf/textures/item/dried_kelp_wrapped_veggie_sticks.png",
+      "bytes": 369,
+      "sha256": "dbee380f2e63c24fdee0329d6debdb26643da22a1de131747f89e13cde2b218e"
+    },
+    {
+      "entry": "assets/fnf/textures/item/energized_fire_core.png",
+      "bytes": 1263,
+      "sha256": "4e3b6c370573c8aa67f5a98d0df439346113dfaa37de84176434767884e4904a"
+    },
+    {
+      "entry": "assets/fnf/textures/item/energized_fire_core.png.mcmeta",
+      "bytes": 169,
+      "sha256": "c4abca1f2fcbe8d535d807e0ee48182cfd7d3bc3f94c12b80b4982fd178504f4"
+    },
+    {
+      "entry": "assets/fnf/textures/item/energized_soul_fire_core.png",
+      "bytes": 1236,
+      "sha256": "11f01804283e6560baffbcecbacd2bf193eb3767f1c37c7f56a143d29268d360"
+    },
+    {
+      "entry": "assets/fnf/textures/item/energized_soul_fire_core.png.mcmeta",
+      "bytes": 169,
+      "sha256": "c4abca1f2fcbe8d535d807e0ee48182cfd7d3bc3f94c12b80b4982fd178504f4"
+    },
+    {
+      "entry": "assets/fnf/textures/item/explorers_fancy_cooking.png",
+      "bytes": 606,
+      "sha256": "fdebeb09e8ad4cc01f552f5dca7356715a6992eb56474137c1e991375c9d2af0"
+    },
+    {
+      "entry": "assets/fnf/textures/item/explorers_fancy_cooking.png.mcmeta",
+      "bytes": 169,
+      "sha256": "c4abca1f2fcbe8d535d807e0ee48182cfd7d3bc3f94c12b80b4982fd178504f4"
+    },
+    {
+      "entry": "assets/fnf/textures/item/farmers_grace.png",
+      "bytes": 675,
+      "sha256": "6255e1af67a728da7f53a02f27e2e679dfd7a12f6a07cfc18194c9b88bd9dda4"
+    },
+    {
+      "entry": "assets/fnf/textures/item/farmers_grace.png.mcmeta",
+      "bytes": 169,
+      "sha256": "c4abca1f2fcbe8d535d807e0ee48182cfd7d3bc3f94c12b80b4982fd178504f4"
+    },
+    {
+      "entry": "assets/fnf/textures/item/fire_core.png",
+      "bytes": 564,
+      "sha256": "17f24fadcdf387f2de78866825f36bf39750c98d5598173185c803756fab20d6"
+    },
+    {
+      "entry": "assets/fnf/textures/item/fishermans_secret_broth.png",
+      "bytes": 924,
+      "sha256": "c5ee73f2dd419ff0712eb422aa8174fbdb43683bcaf2c30f3bf0d0f5951a3d16"
+    },
+    {
+      "entry": "assets/fnf/textures/item/fishermans_secret_broth.png.mcmeta",
+      "bytes": 169,
+      "sha256": "c4abca1f2fcbe8d535d807e0ee48182cfd7d3bc3f94c12b80b4982fd178504f4"
+    },
+    {
+      "entry": "assets/fnf/textures/item/highlanders_meal.png",
+      "bytes": 783,
+      "sha256": "f0c7cee2ddc306babf5e105d9a9c51ee7643977afe69e73c97f4d029dd02ef8d"
+    },
+    {
+      "entry": "assets/fnf/textures/item/highlanders_meal.png.mcmeta",
+      "bytes": 169,
+      "sha256": "c4abca1f2fcbe8d535d807e0ee48182cfd7d3bc3f94c12b80b4982fd178504f4"
+    },
+    {
+      "entry": "assets/fnf/textures/item/honey_popped_chorus_fruit.png",
+      "bytes": 507,
+      "sha256": "244fc11a90e172406076df323f2a49a5ccd3e19fe7f9983e4acb71b066c91409"
+    },
+    {
+      "entry": "assets/fnf/textures/item/honeyed_bread.png",
+      "bytes": 648,
+      "sha256": "7c70912b33c19a9513b413862ad097b0c1266fe06402d1bdae6c9bb821ab1a2e"
+    },
+    {
+      "entry": "assets/fnf/textures/item/honeyed_chicken.png",
+      "bytes": 630,
+      "sha256": "0344b813d11bd80f73f442f06c147590359de30cd223ec4ebd9a4843d1c7851f"
+    },
+    {
+      "entry": "assets/fnf/textures/item/honeyed_cookie.png",
+      "bytes": 621,
+      "sha256": "8091dfd12c790d5256eb870003524c2702392cf833845fc5e53a5df2c7fa0e47"
+    },
+    {
+      "entry": "assets/fnf/textures/item/honeyed_mutton.png",
+      "bytes": 474,
+      "sha256": "3053186f334a5f066998f4caf9a60cc2fb5553f28f593596ad392efc8d77d2ca"
+    },
+    {
+      "entry": "assets/fnf/textures/item/honeyed_porkchop.png",
+      "bytes": 585,
+      "sha256": "67ad2fcb15588385f625e7ac21a07c701983cb9354a2ce555dbd41a53f0b15d5"
+    },
+    {
+      "entry": "assets/fnf/textures/item/honeyed_potato.png",
+      "bytes": 537,
+      "sha256": "af4eb5e939944dffe324c01512a6e0e8df1b8ebe081953dcade782b24df4486c"
+    },
+    {
+      "entry": "assets/fnf/textures/item/honeyed_rabbit.png",
+      "bytes": 522,
+      "sha256": "304ada51ec937ae182808e7e4ce89470d31c98985967fce2216befbe5a88da99"
+    },
+    {
+      "entry": "assets/fnf/textures/item/honeyed_steak.png",
+      "bytes": 555,
+      "sha256": "90ac08b3d6668b564ea876101117a988c3759b91c7a7911e797ebf5a3e6b7930"
+    },
+    {
+      "entry": "assets/fnf/textures/item/kelp_wrapped_cod.png",
+      "bytes": 405,
+      "sha256": "18247034013868ee9b09a3be9da1fc9564a844ee47b391457620c7b407476784"
+    },
+    {
+      "entry": "assets/fnf/textures/item/kelp_wrapped_salmon.png",
+      "bytes": 423,
+      "sha256": "0ab271e3559f806a63ca1563069d499ad40a1de2fed380047b78ddd1b0e3eabc"
+    },
+    {
+      "entry": "assets/fnf/textures/item/kelp_wrapped_tropical_fish.png",
+      "bytes": 420,
+      "sha256": "2fdde8b8b08c1973a6b774835b522e2fca1667ea07279cd723c7850fc81482ac"
+    },
+    {
+      "entry": "assets/fnf/textures/item/kelp_wrapped_veggie_sticks.png",
+      "bytes": 333,
+      "sha256": "992f72bc16f9ae7fbf9a7bda070b99cd67e185d47b5fb69be3e599d86d42bf3f"
+    },
+    {
+      "entry": "assets/fnf/textures/item/logo.png",
+      "bytes": 564,
+      "sha256": "e694091c75a75318746e3e3988de14ba7d4a3aa19f6ca9d3d963289bac5d0cf1"
+    },
+    {
+      "entry": "assets/fnf/textures/item/lucky_star.png",
+      "bytes": 1251,
+      "sha256": "74a54233f1327da9c6eceaf6cd96436aca44a699bf95582c8538a83e03dd3845"
+    },
+    {
+      "entry": "assets/fnf/textures/item/lucky_star.png.mcmeta",
+      "bytes": 169,
+      "sha256": "c4abca1f2fcbe8d535d807e0ee48182cfd7d3bc3f94c12b80b4982fd178504f4"
+    },
+    {
+      "entry": "assets/fnf/textures/item/miners_delight.png",
+      "bytes": 603,
+      "sha256": "004b38290cc2da91909379c34a9ba425966c2bb1a90c63c8ea5649cb33fa6884"
+    },
+    {
+      "entry": "assets/fnf/textures/item/miners_delight.png.mcmeta",
+      "bytes": 169,
+      "sha256": "c4abca1f2fcbe8d535d807e0ee48182cfd7d3bc3f94c12b80b4982fd178504f4"
+    },
+    {
+      "entry": "assets/fnf/textures/item/mushroom_beef_stew.png",
+      "bytes": 639,
+      "sha256": "9b82c646e74a0026eb514498f31fbc8a7fe676892a74344dad0ecf6476968f1a"
+    },
+    {
+      "entry": "assets/fnf/textures/item/mushroom_beef_stew.png.mcmeta",
+      "bytes": 169,
+      "sha256": "c4abca1f2fcbe8d535d807e0ee48182cfd7d3bc3f94c12b80b4982fd178504f4"
+    },
+    {
+      "entry": "assets/fnf/textures/item/mushroom_chicken_stew.png",
+      "bytes": 588,
+      "sha256": "eab2f4b9c04d3f3e5f950031ce786abc9a73e33351b94f584dcbb0e4f7cc96c5"
+    },
+    {
+      "entry": "assets/fnf/textures/item/mushroom_chicken_stew.png.mcmeta",
+      "bytes": 169,
+      "sha256": "c4abca1f2fcbe8d535d807e0ee48182cfd7d3bc3f94c12b80b4982fd178504f4"
+    },
+    {
+      "entry": "assets/fnf/textures/item/mushroom_mutton_stew.png",
+      "bytes": 654,
+      "sha256": "96380125bec798833ed07927164703a905269044d66f991826b70f3975a1db10"
+    },
+    {
+      "entry": "assets/fnf/textures/item/mushroom_mutton_stew.png.mcmeta",
+      "bytes": 169,
+      "sha256": "c4abca1f2fcbe8d535d807e0ee48182cfd7d3bc3f94c12b80b4982fd178504f4"
+    },
+    {
+      "entry": "assets/fnf/textures/item/mushroom_pork_stew.png",
+      "bytes": 654,
+      "sha256": "45f30393d7bbd6607d7cab5af3235568810d6a3a6a79eed002f49818d0498cf2"
+    },
+    {
+      "entry": "assets/fnf/textures/item/mushroom_pork_stew.png.mcmeta",
+      "bytes": 169,
+      "sha256": "c4abca1f2fcbe8d535d807e0ee48182cfd7d3bc3f94c12b80b4982fd178504f4"
+    },
+    {
+      "entry": "assets/fnf/textures/item/nether_dwellers_subsistence.png",
+      "bytes": 735,
+      "sha256": "fb0348ad091eecb17b66ef1c43bc8b861c145c8693120325b317f698b96a9824"
+    },
+    {
+      "entry": "assets/fnf/textures/item/nether_dwellers_subsistence.png.mcmeta",
+      "bytes": 169,
+      "sha256": "c4abca1f2fcbe8d535d807e0ee48182cfd7d3bc3f94c12b80b4982fd178504f4"
+    },
+    {
+      "entry": "assets/fnf/textures/item/paper_stack.png",
+      "bytes": 324,
+      "sha256": "314f5a098d488791cefaf576be31c4a42022279c99c756048f300fd39fd50e1c"
+    },
+    {
+      "entry": "assets/fnf/textures/item/piping_hot_beetroot_soup.png",
+      "bytes": 546,
+      "sha256": "369db090d8b35e779871db4245aa3aed067ac8b55c53519a4ac5fe9d379c30fb"
+    },
+    {
+      "entry": "assets/fnf/textures/item/piping_hot_beetroot_soup.png.mcmeta",
+      "bytes": 159,
+      "sha256": "a3a3bc272bf0d820173e5982ed4157fdec2ab48696601cc36cf614a5d8867f85"
+    },
+    {
+      "entry": "assets/fnf/textures/item/piping_hot_mushroom_stew.png",
+      "bytes": 531,
+      "sha256": "e766543b4c2145356a9db2b08fcb227d68592ba816d2b7722458fb1e6ed2bc6f"
+    },
+    {
+      "entry": "assets/fnf/textures/item/piping_hot_mushroom_stew.png.mcmeta",
+      "bytes": 159,
+      "sha256": "a3a3bc272bf0d820173e5982ed4157fdec2ab48696601cc36cf614a5d8867f85"
+    },
+    {
+      "entry": "assets/fnf/textures/item/piping_hot_rabbit_stew.png",
+      "bytes": 582,
+      "sha256": "7efb076d780d974bb2308a2e0148dc4118919a51d38719feae691a282d158890"
+    },
+    {
+      "entry": "assets/fnf/textures/item/piping_hot_rabbit_stew.png.mcmeta",
+      "bytes": 159,
+      "sha256": "a3a3bc272bf0d820173e5982ed4157fdec2ab48696601cc36cf614a5d8867f85"
+    },
+    {
+      "entry": "assets/fnf/textures/item/piping_hot_veggie_soup.png",
+      "bytes": 549,
+      "sha256": "0339faf3af16ebdeabd52f665b9be14c21edc159fa67dacde14b329153d96d76"
+    },
+    {
+      "entry": "assets/fnf/textures/item/piping_hot_veggie_soup.png.mcmeta",
+      "bytes": 159,
+      "sha256": "a3a3bc272bf0d820173e5982ed4157fdec2ab48696601cc36cf614a5d8867f85"
+    },
+    {
+      "entry": "assets/fnf/textures/item/raw_beef_skewer.png",
+      "bytes": 363,
+      "sha256": "e3a46fd593a284f07fb296c030634c5a015db805852dabc404d89211b548c3c4"
+    },
+    {
+      "entry": "assets/fnf/textures/item/raw_chicken_skewer.png",
+      "bytes": 396,
+      "sha256": "66b337e65f0c972ccf971f4fe2682320066f40d06dce545bc680e484a61b7517"
+    },
+    {
+      "entry": "assets/fnf/textures/item/raw_glowing_beef_skewer.png",
+      "bytes": 348,
+      "sha256": "e70d71f6bc97bf080cd2ffc6c886740c3b92bf83fa682db34ccea740fc105377"
+    },
+    {
+      "entry": "assets/fnf/textures/item/raw_glowing_chicken_skewer.png",
+      "bytes": 384,
+      "sha256": "b4e4492774dc8ba76c049e583a1d70eb947f109e4ea6109f5321405e2cbe92ea"
+    },
+    {
+      "entry": "assets/fnf/textures/item/raw_glowing_mutton_skewer.png",
+      "bytes": 387,
+      "sha256": "f68b04e7788202d1486bc8c9ae8a0e51370ab9cb2c658c6b9f604e19603d04fb"
+    },
+    {
+      "entry": "assets/fnf/textures/item/raw_glowing_pork_skewer.png",
+      "bytes": 360,
+      "sha256": "0da7dfd1a11cfa2328e51c913d5ec6441f80215077b77861a4e98003c36d0d2f"
+    },
+    {
+      "entry": "assets/fnf/textures/item/raw_glowing_rabbit_skewer.png",
+      "bytes": 387,
+      "sha256": "c843c01c45e08915a637eb523a29cfc6d189c9edd243df444d764f028fbb8401"
+    },
+    {
+      "entry": "assets/fnf/textures/item/raw_mutton_skewer.png",
+      "bytes": 396,
+      "sha256": "c879bd21d6e94fd40dda95fef692fa6f09dfeb83df2019d95862745c10da488e"
+    },
+    {
+      "entry": "assets/fnf/textures/item/raw_pork_skewer.png",
+      "bytes": 372,
+      "sha256": "fa7b9bbb0d2001f9d6d60796d6d543bec9d218336f7f9ff62e39b3f312fb9dfd"
+    },
+    {
+      "entry": "assets/fnf/textures/item/raw_rabbit_skewer.png",
+      "bytes": 390,
+      "sha256": "d0e27455796ce2d23990688ab89a3f67aec6af7b778f3c50616fd5ddd4dedb33"
+    },
+    {
+      "entry": "assets/fnf/textures/item/roasted_beetroot.png",
+      "bytes": 300,
+      "sha256": "b78065ccca6af4c383fa7de1edc48015bf2e16e8ecf3fef81665deafecf49cbe"
+    },
+    {
+      "entry": "assets/fnf/textures/item/soul_fire_core.png",
+      "bytes": 540,
+      "sha256": "dccb8a0714ab2310c166b8b3025c7823007277037d67dc47685f3a6b28f63ae9"
+    },
+    {
+      "entry": "assets/fnf/textures/item/sweet_melon_smoothie.png",
+      "bytes": 390,
+      "sha256": "16948a23debd8235de370220c64600ee402f7d79a0a90d8bea05ca57fc97c76c"
+    },
+    {
+      "entry": "assets/fnf/textures/item/veggie_soup.png",
+      "bytes": 351,
+      "sha256": "5c43c61074073c2e16a3aaaab7f9f850d6c6f126f8172e1768b224fe7ccc7f47"
+    },
+    {
+      "entry": "data/fnf/recipe/bio_fuel.json",
+      "bytes": 343,
+      "sha256": "e751b18d4f956e937a55fec17b8c2938db92907cfae0c4d76eebdb52f6d513ce"
+    },
+    {
+      "entry": "data/fnf/recipe/blazerod_bundle.json",
+      "bytes": 349,
+      "sha256": "5837793f3769789a9faf915d0f93b0c250fb8365dff179c4b606caa39042f555"
+    },
+    {
+      "entry": "data/fnf/recipe/blazing_coal.json",
+      "bytes": 295,
+      "sha256": "747cf078654ac10a5ca6cfb40f4378175924763baa34eca09fd4f9f96695b1c8"
+    },
+    {
+      "entry": "data/fnf/recipe/book_from_paper_stack.json",
+      "bytes": 234,
+      "sha256": "a96c0bc98868eeb1a1e1f9904b3aca242ce7859ad60d98cdb1e34eab62f99cae"
+    },
+    {
+      "entry": "data/fnf/recipe/carrot_bread.json",
+      "bytes": 267,
+      "sha256": "242b8e535d246516d8a24c914eabd7d43eec2c6601c95f1cd8b73a5d4f52694f"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_beef_skewer_from_campfire_cooking.json",
+      "bytes": 207,
+      "sha256": "713398fa2d47fead78d497135716fe493b52e6a1350cf5d52d1c919c0a00efdc"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_beef_skewer_from_smelting.json",
+      "bytes": 199,
+      "sha256": "ada6ac80ea9a1f46d245fa42592eadfcd52c73316ca835a1511645b8138bf944"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_beef_skewer_from_smoking.json",
+      "bytes": 198,
+      "sha256": "09882f1fbf7b104baecf6e68c3fb73f0201f38a95b1930b4ceca6ff5bca70800"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_carrot_from_campfire_cooking.json",
+      "bytes": 199,
+      "sha256": "6649c539e81c7a46b5cfe123a3ea07f2c66ff3dabf6644560c4300c1b86324a2"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_carrot_from_smelting.json",
+      "bytes": 191,
+      "sha256": "15736e0c0afa027a8ed42eedf06051f0379f887f5c372880528b90bbab614b9e"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_carrot_from_smoking.json",
+      "bytes": 190,
+      "sha256": "db1f526a6fda2338736789134ad6ef44210510e3f5bad4984f6af4945aa26cb9"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_chicken_skewer_from_campfire_cooking.json",
+      "bytes": 213,
+      "sha256": "b012ab2154a76dcfd5cd8e57a81063e96ca866192490869334485211963c1c82"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_chicken_skewer_from_smelting.json",
+      "bytes": 205,
+      "sha256": "e83540de3ea123f17e7f0ca8be6f621d4bb318b7d1c967b6eaaeb894dec5d666"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_chicken_skewer_from_smoking.json",
+      "bytes": 204,
+      "sha256": "12ce9dc6b00585b8fbe8cfd21c6b200ebfe4ce2ec998643aedcf808dbbbc0c99"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_glowing_beef_skewer_from_campfire_cooking.json",
+      "bytes": 223,
+      "sha256": "83baab0fddb89feba34dd7c7a188625f1c00ddb07cef608fba8b29bbc984b8e6"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_glowing_beef_skewer_from_smelting.json",
+      "bytes": 215,
+      "sha256": "b854b78887a54d17ab2f6ba55c2f7f8795fb0fecc3976c02206a366ca466daa0"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_glowing_beef_skewer_from_smoking.json",
+      "bytes": 214,
+      "sha256": "0eaae08fd27481118640a4bb027f406a2663de48401830b6b32b320e3fcf5ba0"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_glowing_chicken_skewer_from_campfire_cooking.json",
+      "bytes": 229,
+      "sha256": "704a853bf412cca739f5477ecdab79d29f9d847f933a7d6117fc85671e348d60"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_glowing_chicken_skewer_from_smelting.json",
+      "bytes": 221,
+      "sha256": "fa3644f211a36d88a2e557ec9adbe1d98f950da760e9dd93afd54395c339cb7f"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_glowing_chicken_skewer_from_smoking.json",
+      "bytes": 220,
+      "sha256": "4bfde9ddb0cd043854fe5568396cd4bffd8912d83821807693e33faa2dfa370f"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_glowing_mutton_skewer_from_campfire_cooking.json",
+      "bytes": 227,
+      "sha256": "6af0f7b93bcc932e3daa96fc6f6cc828db60728a0ce9f3cc4483be232d8fd654"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_glowing_mutton_skewer_from_smelting.json",
+      "bytes": 219,
+      "sha256": "27d91d73dfef894431c960af50609d3ec40299b4b134ed7d192e3522796d4f0e"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_glowing_mutton_skewer_from_smoking.json",
+      "bytes": 218,
+      "sha256": "8b9d2a08ce069071d61d64e0dcf679c6b4aa87e356a224a1d1d2655e005d733b"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_glowing_pork_skewer_from_campfire_cooking.json",
+      "bytes": 223,
+      "sha256": "46a1f647c2033d716f86770938d4debd60209d658d047d2a6d6a6ff5372aaa98"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_glowing_pork_skewer_from_smelting.json",
+      "bytes": 215,
+      "sha256": "357bda8c494dfe9bf7b05b6d6fe0a677b42d8b115d19c36e79d97ea0d31fe291"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_glowing_pork_skewer_from_smoking.json",
+      "bytes": 214,
+      "sha256": "22a682bcfe2f42c6998cc3265aae6b4b7190c4b61b9ad27b85a83df4754ffdce"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_glowing_rabbit_skewer_from_campfire_cooking.json",
+      "bytes": 227,
+      "sha256": "15b8cb733f357ea7c574b0f46ef53ef7f4cb7fd7ec0598e883da8c6addae5e6b"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_glowing_rabbit_skewer_from_smelting.json",
+      "bytes": 219,
+      "sha256": "7fafc4b9dfcfd9fa85515f99cc8c85d8c5f41ac1b4d019b7754384bf6310018a"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_glowing_rabbit_skewer_from_smoking.json",
+      "bytes": 218,
+      "sha256": "1345240f47af281a01bffa13376f850277e94d405a50efafbfc6d3612775d9b3"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_mutton_skewer_from_campfire_cooking.json",
+      "bytes": 211,
+      "sha256": "69918e61d55dd39ebeea76c29202aff1a800c78d9642c4ea04423ed06f66d2c8"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_mutton_skewer_from_smelting.json",
+      "bytes": 203,
+      "sha256": "1edc59be4eed2690f452cab2ce30316603473b2076c28196a39fba7a988b919b"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_mutton_skewer_from_smoking.json",
+      "bytes": 202,
+      "sha256": "fe4fbb11cbc3ca6fdc1b5235c705e0ba454e7aaf5aa55610216a981b478afd27"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_pork_skewer_from_campfire_cooking.json",
+      "bytes": 207,
+      "sha256": "5c2c114bd0080db187b50dc13814120ad15d485a01ceee83969afe21b9b233d3"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_pork_skewer_from_smelting.json",
+      "bytes": 199,
+      "sha256": "7276a182143eb6927a3265ada805d10ad0722e181e5f11ad2298c84e52cfa0af"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_pork_skewer_from_smoking.json",
+      "bytes": 198,
+      "sha256": "235c19e9c81a76254b08fe5e5a9a03245148f5e975144a22666f8c0e87916563"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_rabbit_skewer_from_campfire_cooking.json",
+      "bytes": 211,
+      "sha256": "a39c023731fd6f00142d5bbf8f065b8ae25802f36eb06a0a5b0be59492b1e7aa"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_rabbit_skewer_from_smelting.json",
+      "bytes": 203,
+      "sha256": "e8cc6d5b45633d0dc80d5d8e4ece1e20a328fbae1a9c8e1bef0fee4b2c2afdbe"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_rabbit_skewer_from_smoking.json",
+      "bytes": 202,
+      "sha256": "f5d5c71ca4fd1c268bec6026b5901f72b4566b875fd24b10bd1d109a346e837b"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_tropical_fish_from_campfire_cooking.json",
+      "bytes": 213,
+      "sha256": "9f9375ebe377bb4d0b1aa7f64df2a6aa8cac543bef8b2884ebc465398b4e972e"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_tropical_fish_from_smelting.json",
+      "bytes": 205,
+      "sha256": "0e401ec2a36ac8f911917022ca18c25b07c2a20e8aff91ea1a6cba2394264425"
+    },
+    {
+      "entry": "data/fnf/recipe/cooked_tropical_fish_from_smoking.json",
+      "bytes": 204,
+      "sha256": "190ba964254355e0dabdbacda670545817b050f13df764b4a10594792d412f3e"
+    },
+    {
+      "entry": "data/fnf/recipe/dried_kelp_wrapped_cod.json",
+      "bytes": 254,
+      "sha256": "7d1db5774f8be996dd40d8dbc3f0b6d80416ce0f58c1cc459a474be9935c8c3b"
+    },
+    {
+      "entry": "data/fnf/recipe/dried_kelp_wrapped_cod_from_campfire_cooking.json",
+      "bytes": 212,
+      "sha256": "b299930e058325383b257612ffb790b04d3ed2da65318216c4f377da7111a974"
+    },
+    {
+      "entry": "data/fnf/recipe/dried_kelp_wrapped_cod_from_smelting.json",
+      "bytes": 204,
+      "sha256": "5e3740507d8352b65824dbeccc2c9d43a1e47d35011cd120afa23645720de963"
+    },
+    {
+      "entry": "data/fnf/recipe/dried_kelp_wrapped_cod_from_smoking.json",
+      "bytes": 203,
+      "sha256": "74ff2230e3bf54040dcd5debdf3257f8ab24943670d75aaf9678691ca833dd64"
+    },
+    {
+      "entry": "data/fnf/recipe/dried_kelp_wrapped_salmon.json",
+      "bytes": 260,
+      "sha256": "83dc3818e77d645840b4ac4c34e838f33d3ec08f1602cf6ff23a738152c5d8fc"
+    },
+    {
+      "entry": "data/fnf/recipe/dried_kelp_wrapped_salmon_from_campfire_cooking.json",
+      "bytes": 218,
+      "sha256": "214aa2fc6ccd59e11e67c3159c6ece89c6186cb4a13d9643f25cfe2f37e86910"
+    },
+    {
+      "entry": "data/fnf/recipe/dried_kelp_wrapped_salmon_from_smelting.json",
+      "bytes": 210,
+      "sha256": "d2e0f38ca1223392b9e1f9799b9dfbc7bb9fe009371f01a5afee699a040e5260"
+    },
+    {
+      "entry": "data/fnf/recipe/dried_kelp_wrapped_salmon_from_smoking.json",
+      "bytes": 209,
+      "sha256": "a8b372564d43392c98d6f47f523a65a57fe2405e7d7a0d868bc307251c7ceb69"
+    },
+    {
+      "entry": "data/fnf/recipe/dried_kelp_wrapped_tropical_fish.json",
+      "bytes": 268,
+      "sha256": "03492c4e740a4ec6d22f67d437f126a7edb110bf447a67338e4386b5f34298ad"
+    },
+    {
+      "entry": "data/fnf/recipe/dried_kelp_wrapped_tropical_fish_from_campfire_cooking.json",
+      "bytes": 232,
+      "sha256": "96e27f9ad7b84841dad500653b99beb0740dbf33845d0794cf173460ce84a700"
+    },
+    {
+      "entry": "data/fnf/recipe/dried_kelp_wrapped_tropical_fish_from_smelting.json",
+      "bytes": 224,
+      "sha256": "f95b05d6c3ed38e0269dee84d62feed22e4dcc82df73db8e77cd117c21541bc8"
+    },
+    {
+      "entry": "data/fnf/recipe/dried_kelp_wrapped_tropical_fish_from_smoking.json",
+      "bytes": 223,
+      "sha256": "7a8e3293d40a80a3b0d4bd3dc348a1fec5a2f6e886a58ae112680b795e672f98"
+    },
+    {
+      "entry": "data/fnf/recipe/dried_kelp_wrapped_veggie_sticks.json",
+      "bytes": 316,
+      "sha256": "3196220a186a03c93d7fbf836d67505331397a598314084fa7f1f35ba287b136"
+    },
+    {
+      "entry": "data/fnf/recipe/dried_kelp_wrapped_veggie_sticks_from_campfire_cooking.json",
+      "bytes": 232,
+      "sha256": "36579e708794dcf7b88473d05745ed934000d566c03c5a9950136e5d8444ca30"
+    },
+    {
+      "entry": "data/fnf/recipe/dried_kelp_wrapped_veggie_sticks_from_smelting.json",
+      "bytes": 224,
+      "sha256": "78623e06ae05bd2fbd03e2bc9260fdae3039f4157c7b52b17e91dea93b88ecda"
+    },
+    {
+      "entry": "data/fnf/recipe/dried_kelp_wrapped_veggie_sticks_from_smoking.json",
+      "bytes": 223,
+      "sha256": "4ad1fd260330090e2e522bebd1e8325cc74e597dcb5a8ddaa56609cc9c2880f0"
+    },
+    {
+      "entry": "data/fnf/recipe/energized_fire_core_from_blasting.json",
+      "bytes": 194,
+      "sha256": "4850237bc2ed84d23c56b02c8e08d2c037621e955b1d9b68c5322ad1b72886a5"
+    },
+    {
+      "entry": "data/fnf/recipe/energized_soul_fire_core_from_blasting.json",
+      "bytes": 204,
+      "sha256": "7280bc27a2568ba82847f364be1ff0e0b6d55e26fbc853722f4924291aa45db4"
+    },
+    {
+      "entry": "data/fnf/recipe/explorers_fancy_cooking.json",
+      "bytes": 259,
+      "sha256": "0799efe2292c33b23975b7a9979130a077f9be7b3374292598db5ffeebe5d5a8"
+    },
+    {
+      "entry": "data/fnf/recipe/farmers_grace.json",
+      "bytes": 293,
+      "sha256": "9f1cf0da2c115b2024cc065d5a175419e42a19a9eaf11badf9d0c49a6abd9053"
+    },
+    {
+      "entry": "data/fnf/recipe/fire_core.json",
+      "bytes": 359,
+      "sha256": "0affb0e65539d1f02f355f82efe1b9202291ed6faec01f16380aa50f9a81f070"
+    },
+    {
+      "entry": "data/fnf/recipe/fishermans_secret_broth.json",
+      "bytes": 311,
+      "sha256": "ccdc447170f193f2088a8d65f79259391e353f1d0cfe88de1d577ab27eeaeed2"
+    },
+    {
+      "entry": "data/fnf/recipe/highlanders_meal.json",
+      "bytes": 309,
+      "sha256": "7f9a0be7a3dad5f177ac4a9b2bcede5ee656f0e9327a2425a76aedd957e79736"
+    },
+    {
+      "entry": "data/fnf/recipe/honey_popped_chorus_fruit.json",
+      "bytes": 268,
+      "sha256": "f0c4318b61bd43faf2beffc5e363e147ae43ca80ce243ed7cbc17f8b3c6f5f8c"
+    },
+    {
+      "entry": "data/fnf/recipe/honeyed_bread.json",
+      "bytes": 242,
+      "sha256": "37b55bc2089b09c49bbf4beefcaa328fbaa988193cd8d6dba0221de3b0db023a"
+    },
+    {
+      "entry": "data/fnf/recipe/honeyed_chicken.json",
+      "bytes": 253,
+      "sha256": "9935d2e2b68d4a88617cf945f5ca9bdee2f7e22f9546e65d758b4c27a23ab45b"
+    },
+    {
+      "entry": "data/fnf/recipe/honeyed_cookie.json",
+      "bytes": 300,
+      "sha256": "a161b154e2267075afaceccdda710f67cb62c21cada8a3a4e5967151557df53e"
+    },
+    {
+      "entry": "data/fnf/recipe/honeyed_mutton.json",
+      "bytes": 283,
+      "sha256": "a97927abdaadb281e9bb19e131c2541532be169bbe44708dad6b708c5985ee35"
+    },
+    {
+      "entry": "data/fnf/recipe/honeyed_porkchop.json",
+      "bytes": 255,
+      "sha256": "0059f6b5c1b5cec4837ddbdadd752bd09407d003193a0c5046180af4afa3dec1"
+    },
+    {
+      "entry": "data/fnf/recipe/honeyed_potato.json",
+      "bytes": 250,
+      "sha256": "a4b7082f19d715789de3415d59eb40f8f253851de81aa41328e48dfe3775c48d"
+    },
+    {
+      "entry": "data/fnf/recipe/honeyed_rabbit.json",
+      "bytes": 251,
+      "sha256": "178b91f0c551a9592e8e1b454b06cb1c3deb6d65f65b2ceed80a076d8e7486ba"
+    },
+    {
+      "entry": "data/fnf/recipe/honeyed_steak.json",
+      "bytes": 248,
+      "sha256": "631127fb7a7057795ba4966d6385da7ac6d0f6e82187a2d0b54b51b8626e81c7"
+    },
+    {
+      "entry": "data/fnf/recipe/kelp_wrapped_cod.json",
+      "bytes": 235,
+      "sha256": "93cab924a704c9786f2a6080cb7eed66ea92cc56fe3244ab88c9786feda42ee9"
+    },
+    {
+      "entry": "data/fnf/recipe/kelp_wrapped_salmon.json",
+      "bytes": 241,
+      "sha256": "4c46890fcb4c0f14172a909c7527718efd31af2d4edd539b341e409c7fe3d4b5"
+    },
+    {
+      "entry": "data/fnf/recipe/kelp_wrapped_tropical_fish.json",
+      "bytes": 255,
+      "sha256": "46cd2cfa7634422fb9199405d622c445b53885d4639ae15b007e5a140ed13b0f"
+    },
+    {
+      "entry": "data/fnf/recipe/kelp_wrapped_veggie_sticks.json",
+      "bytes": 297,
+      "sha256": "530916eb867b67f0c92b27626fd8587e2fbf8ee32647e7791a607d8bc07559d2"
+    },
+    {
+      "entry": "data/fnf/recipe/lucky_star.json",
+      "bytes": 319,
+      "sha256": "03a0983050f394f4c813e09fb2a235328947e831e5b42bd69d2ebc853c8965ab"
+    },
+    {
+      "entry": "data/fnf/recipe/miners_delight.json",
+      "bytes": 369,
+      "sha256": "cd57c558dd5ddb3ba4c94ef9aa5f98e86c9e00ec70f43d7f7980dc89743ca2cc"
+    },
+    {
+      "entry": "data/fnf/recipe/mushroom_beef_stew.json",
+      "bytes": 364,
+      "sha256": "5e6d8a5ebd8051ad64eed8158478416e7264c6445cadd59f92780aad9ccb6719"
+    },
+    {
+      "entry": "data/fnf/recipe/mushroom_chicken_stew.json",
+      "bytes": 370,
+      "sha256": "059f869d033883d6558fcc8fb9dfc6ba1a67d89dfdc577305482cc4d731dcca7"
+    },
+    {
+      "entry": "data/fnf/recipe/mushroom_mutton_stew.json",
+      "bytes": 368,
+      "sha256": "d52d00ca2386b201b6104f9704d8e99103801249fe03a184d79583619d4a6f1c"
+    },
+    {
+      "entry": "data/fnf/recipe/mushroom_pork_stew.json",
+      "bytes": 368,
+      "sha256": "a7ada8c3f5904a6c45badfd0bb6f75ae4637ff25928e65ce523ddca0d8e5ad4b"
+    },
+    {
+      "entry": "data/fnf/recipe/nether_dwellers_subsistence.json",
+      "bytes": 368,
+      "sha256": "89633e85095a47a15db97b06fa6c858c74cbc118f116b148b557a7ca6525110b"
+    },
+    {
+      "entry": "data/fnf/recipe/paper_from_paper_stack.json",
+      "bytes": 185,
+      "sha256": "7deb5f39796dec3c203158d5cf34e1486b19aff525300fff1a9cdbd61312df0c"
+    },
+    {
+      "entry": "data/fnf/recipe/paper_stack.json",
+      "bytes": 281,
+      "sha256": "8181da3a17c896a5486abe2badccd0e5e647f02c0c5314fc2686f1d1e72c2856"
+    },
+    {
+      "entry": "data/fnf/recipe/piping_hot_beetroot_soup.json",
+      "bytes": 261,
+      "sha256": "1c88eb4012ad3a096afd48aa6387c24dd45221ad3caecf38d02b4fe5fe85609f"
+    },
+    {
+      "entry": "data/fnf/recipe/piping_hot_beetroot_soup_from_campfire_cooking.json",
+      "bytes": 217,
+      "sha256": "4829fe152f87e4e30076a8a1bfe33bc2b498dea65871d865fe60de054327be44"
+    },
+    {
+      "entry": "data/fnf/recipe/piping_hot_beetroot_soup_from_smelting.json",
+      "bytes": 209,
+      "sha256": "58ad2f3898e9458b50b1f49b95fc189b4d183c7a0bf96b2297e86c35efdbd490"
+    },
+    {
+      "entry": "data/fnf/recipe/piping_hot_beetroot_soup_from_smoking.json",
+      "bytes": 208,
+      "sha256": "0b1679cd0c53289667e1d39a22aaffa243ea4c14eb61bfef9cda3c1fc7c7117e"
+    },
+    {
+      "entry": "data/fnf/recipe/piping_hot_mushroom_stew.json",
+      "bytes": 261,
+      "sha256": "da5fe2ab5dd6c3ffc2fc984fb11ed26861aa4b16e46b87e23617db87c067dfe9"
+    },
+    {
+      "entry": "data/fnf/recipe/piping_hot_mushroom_stew_from_campfire_cooking.json",
+      "bytes": 217,
+      "sha256": "5a9f5759d06b6361a57cbd894943f12e59594cbf28b371b8ccde4a80bc02345d"
+    },
+    {
+      "entry": "data/fnf/recipe/piping_hot_mushroom_stew_from_smelting.json",
+      "bytes": 209,
+      "sha256": "6a2dc7c177b643460d92ebc6c97f3a98fc2c1fe40cb955f7fe86523cc78a972d"
+    },
+    {
+      "entry": "data/fnf/recipe/piping_hot_mushroom_stew_from_smoking.json",
+      "bytes": 208,
+      "sha256": "7b660ea3e869f1b13666ff8e74c14698663a162b638ec8e00a2cea358826b82b"
+    },
+    {
+      "entry": "data/fnf/recipe/piping_hot_rabbit_stew.json",
+      "bytes": 257,
+      "sha256": "bae59b2cd8719563b47de695156dff7b6ff27ec6e3368854dda031d2295ca015"
+    },
+    {
+      "entry": "data/fnf/recipe/piping_hot_rabbit_stew_from_campfire_cooking.json",
+      "bytes": 213,
+      "sha256": "0ea1cfd0b524cbb05db651cc0437696b0bad5254262e5ed7b5da71c7cd9e5563"
+    },
+    {
+      "entry": "data/fnf/recipe/piping_hot_rabbit_stew_from_smelting.json",
+      "bytes": 205,
+      "sha256": "7abb8fc15410f446b3ac62509737dc70181f9369315e37608687cab2b61bc0b7"
+    },
+    {
+      "entry": "data/fnf/recipe/piping_hot_rabbit_stew_from_smoking.json",
+      "bytes": 204,
+      "sha256": "3d4359d4d4451fed9ab8aed1686f34e5dc38d0b543ac8535c20ade38130e4b95"
+    },
+    {
+      "entry": "data/fnf/recipe/piping_hot_veggie_soup.json",
+      "bytes": 251,
+      "sha256": "6f8dc0d7183ad468a21a27de7206beae1f5796c1cca8fd2dc1121a4d373e80e0"
+    },
+    {
+      "entry": "data/fnf/recipe/piping_hot_veggie_soup_from_campfire_cooking.json",
+      "bytes": 207,
+      "sha256": "188aeb7b72f040eae57855d8a9a19ec4455cad3173632f0728a27d640ff69ce7"
+    },
+    {
+      "entry": "data/fnf/recipe/piping_hot_veggie_soup_from_smelting.json",
+      "bytes": 199,
+      "sha256": "739259b8e3fd027d5bf0befe0baffe4b97a808004de36aa3859a44542e436843"
+    },
+    {
+      "entry": "data/fnf/recipe/piping_hot_veggie_soup_from_smoking.json",
+      "bytes": 198,
+      "sha256": "84c22d7a0ef6c05f949e9b3204fb8593ac18053aa05a31da6840d0d25a922dd2"
+    },
+    {
+      "entry": "data/fnf/recipe/raw_beef_skewer.json",
+      "bytes": 353,
+      "sha256": "9eaf388a70d56a8aafd59b6e795e5147627ee2ea87a0c821476605e4164c1fac"
+    },
+    {
+      "entry": "data/fnf/recipe/raw_chicken_skewer.json",
+      "bytes": 359,
+      "sha256": "8f30796fd0ee636e27abe51bf869299bd390cd1cf0da53247318c9953f6cb522"
+    },
+    {
+      "entry": "data/fnf/recipe/raw_glowing_beef_skewer.json",
+      "bytes": 360,
+      "sha256": "90b15b1ba3fc68636c2af2aec776a731162c2ee4f4d9ecdfecd5c6373908b0d8"
+    },
+    {
+      "entry": "data/fnf/recipe/raw_glowing_chicken_skewer.json",
+      "bytes": 366,
+      "sha256": "6aaf8af4c826c302889f79c79fa40b76e3d69f6f496679fb8be81e93bb8449d6"
+    },
+    {
+      "entry": "data/fnf/recipe/raw_glowing_mutton_skewer.json",
+      "bytes": 364,
+      "sha256": "053748e36cf16b0974b0d2302c0303e030bb260b809a67f5483bead792504ea5"
+    },
+    {
+      "entry": "data/fnf/recipe/raw_glowing_pork_skewer.json",
+      "bytes": 364,
+      "sha256": "53aa827d5b8ca0ad765fdfa15be3af8659e765b6c03455d8f8c37127b4ed3e19"
+    },
+    {
+      "entry": "data/fnf/recipe/raw_glowing_rabbit_skewer.json",
+      "bytes": 364,
+      "sha256": "6bcfd255ea31bf1baf6669e6744d62e9ef0ee5aefb35756c877b7683b25c9910"
+    },
+    {
+      "entry": "data/fnf/recipe/raw_mutton_skewer.json",
+      "bytes": 357,
+      "sha256": "f3fb50771503a85d6d8a8a8edbde8ecabaf2d838af94fb2b71940a2b09992723"
+    },
+    {
+      "entry": "data/fnf/recipe/raw_pork_skewer.json",
+      "bytes": 357,
+      "sha256": "ddc7889569a668f4a3408b56eb224f47cb1f9e01566bcd5e77bd89eb0e769e37"
+    },
+    {
+      "entry": "data/fnf/recipe/raw_rabbit_skewer.json",
+      "bytes": 357,
+      "sha256": "34b3c3938e30ecf16ccd5b69ae1d0ce76cc298f73d4315a57146180bb8afd47f"
+    },
+    {
+      "entry": "data/fnf/recipe/roasted_beetroot_from_campfire_cooking.json",
+      "bytes": 204,
+      "sha256": "b8c1078932df1f5d13aad18e776b979f638b7f802d1373b0439d9fec9d93d115"
+    },
+    {
+      "entry": "data/fnf/recipe/roasted_beetroot_from_smelting.json",
+      "bytes": 196,
+      "sha256": "83fb5a48d71d1336b44601c374698849f02e5c7729b76fb73394ce165308788c"
+    },
+    {
+      "entry": "data/fnf/recipe/roasted_beetroot_from_smoking.json",
+      "bytes": 195,
+      "sha256": "3bd7b30ceddac2daf29b123d26b10d2a36f7a30590460964721b14a3c7219572"
+    },
+    {
+      "entry": "data/fnf/recipe/soul_fire_core.json",
+      "bytes": 362,
+      "sha256": "5ec1d4d5d1b71db37bf4e9020eb04652407fffe6ba4a846d76418945032345f1"
+    },
+    {
+      "entry": "data/fnf/recipe/sweet_melon_smoothie.json",
+      "bytes": 368,
+      "sha256": "f0710a6e977b01479ccd3dd96025a033aa1a81ef3982e43e05ccf4fa62bab2dc"
+    },
+    {
+      "entry": "data/fnf/recipe/veggie_soup.json",
+      "bytes": 291,
+      "sha256": "021d904b1fc71cfeaac294ef8634adee8f141f9c3884db75b6c4be3646780048"
+    },
+    {
+      "entry": "net/natevg/fnf/FoodNFuel.class",
+      "bytes": 1269,
+      "sha256": "4355a5f1dac68487ddf33ec94ddb2f31b8a8b7d59b04227dcceda3bacdc4ee8c"
+    },
+    {
+      "entry": "net/natevg/fnf/item/FnFCreativeModeTabs.class",
+      "bytes": 7375,
+      "sha256": "01aa8f51e87c6f37718ce420138679fc0b0ffee0a81a86c6bebb911d20265213"
+    },
+    {
+      "entry": "net/natevg/fnf/item/FnFFoodProperties.class",
+      "bytes": 8496,
+      "sha256": "db65875d8481a7e480a96a1c8af145c51577d6df1febcf6e7ecb360f2f0b7035"
+    },
+    {
+      "entry": "net/natevg/fnf/item/ItemRegistries.class",
+      "bytes": 16434,
+      "sha256": "dc10a1ed58cbb94bbd0ebf4a390e2ae8f0dc4b6b6ce77340073b4618407915a8"
+    },
+    {
+      "entry": "net/natevg/fnf/item/custom/FuelItem.class",
+      "bytes": 1276,
+      "sha256": "f798b642ea8e437583df8458488625008c1afd65aa66d9e0e7769dff56c4ae9b"
+    },
+    {
+      "entry": "pack.mcmeta",
+      "bytes": 77,
+      "sha256": "9163e7a57dfe4455f2d3dee1735c0c497f2da7098d67132c32d80df735c43cdf"
+    }
+  ],
+  "declaredDependencies": {
+    "fnf": [
+      {
+        "modId": "forge",
+        "mandatory": true,
+        "versionRange": "[0,)",
+        "ordering": "NONE",
+        "side": "BOTH"
+      },
+      {
+        "modId": "minecraft",
+        "mandatory": true,
+        "versionRange": "[1.21,1.22)",
+        "ordering": "NONE",
+        "side": "BOTH"
+      }
+    ]
+  },
+  "embeddedDependencies": [],
+  "translatedItemIds": [
+    "logo",
+    "carrot_bread",
+    "cooked_carrot",
+    "cooked_tropical_fish",
+    "roasted_beetroot",
+    "sweet_melon_smoothie",
+    "honeyed_bread",
+    "honeyed_chicken",
+    "honeyed_rabbit",
+    "honeyed_potato",
+    "honeyed_mutton",
+    "honeyed_porkchop",
+    "honeyed_steak",
+    "honeyed_cookie",
+    "honey_popped_chorus_fruit",
+    "kelp_wrapped_cod",
+    "kelp_wrapped_salmon",
+    "kelp_wrapped_tropical_fish",
+    "kelp_wrapped_veggie_sticks",
+    "dried_kelp_wrapped_cod",
+    "dried_kelp_wrapped_salmon",
+    "dried_kelp_wrapped_tropical_fish",
+    "dried_kelp_wrapped_veggie_sticks",
+    "veggie_soup",
+    "piping_hot_beetroot_soup",
+    "piping_hot_veggie_soup",
+    "piping_hot_mushroom_stew",
+    "piping_hot_rabbit_stew",
+    "mushroom_chicken_stew",
+    "mushroom_mutton_stew",
+    "mushroom_beef_stew",
+    "mushroom_pork_stew",
+    "miners_delight",
+    "farmers_grace",
+    "highlanders_meal",
+    "explorers_fancy_cooking",
+    "nether_dwellers_subsistence",
+    "lucky_star",
+    "fishermans_secret_broth",
+    "raw_beef_skewer",
+    "raw_chicken_skewer",
+    "raw_mutton_skewer",
+    "raw_pork_skewer",
+    "raw_rabbit_skewer",
+    "cooked_beef_skewer",
+    "cooked_chicken_skewer",
+    "cooked_mutton_skewer",
+    "cooked_pork_skewer",
+    "cooked_rabbit_skewer",
+    "raw_glowing_beef_skewer",
+    "raw_glowing_chicken_skewer",
+    "raw_glowing_mutton_skewer",
+    "raw_glowing_pork_skewer",
+    "raw_glowing_rabbit_skewer",
+    "cooked_glowing_beef_skewer",
+    "cooked_glowing_chicken_skewer",
+    "cooked_glowing_mutton_skewer",
+    "cooked_glowing_pork_skewer",
+    "cooked_glowing_rabbit_skewer",
+    "paper_stack",
+    "bio_fuel",
+    "blazing_coal",
+    "blazerod_bundle",
+    "fire_core",
+    "energized_fire_core",
+    "soul_fire_core",
+    "energized_soul_fire_core"
+  ],
+  "translatedIdsAreRuntimeProof": false
+}

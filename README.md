@@ -6,6 +6,8 @@ DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。main 已
 
 ## 用户安装
 
+007C新增正式Food N' Fuel的原生Forge对照和首次失败证据，生产功能未改；当前该模组在NeoForge上被跳过，整体PARTIAL。见 [真实兼容范围](docs/COMPATIBILITY.md) 和 [本轮报告](<Dev Manuals/Convergence-007C 真实物品兼容交付报告.md>)。
+
 正常安装 NeoForge 后，将 `DualForge.jar` 和当前受支持的原生 Forge JAR 放入 `mods/`，照常启动；不需要 DualForge JVM 参数或开发工具。支持边界与诊断见 [安装指南](docs/INSTALL.md)。默认启动成功不代表任意 Forge 模组兼容；本轮 Mac 图形验收 NOT RUN。
 
 ## 仓库结构

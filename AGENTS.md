@@ -108,3 +108,5 @@
 - 007A的tests/bootstrap使用原版启动文件，不允许隐式注入生产/业务JVM参数、Agent或额外模块参数。四生产开关默认true、诊断默认关闭；历史C/T显式条件和全部严格拒绝断言保留。旧首次预检快照不得重置来制造保全PASS，修改后采用固定提交的新验证worktree。
 
 - 007B的tests/dropin_items保存无业务开关的原生Forge Item输入和独立查询观察器；原Forge JAR不预转换或修改。经真实失败取证，只对准入Forge automatic module名与FML metadata名不匹配使用官方ModJarMetadata；匹配旧descriptor保持委托，显式JPMS名不匹配拒绝。Reader识别guard、Parser及依赖语义不改；不新建Layer。普通profile单IEventBus ABI、API调用点/字段/数据依赖、拒绝原子性严格限定，真实第三方与Mac门槛分别交付。
+
+- 007C的tests/real_mods/food_n_fuel使用正式未改字节Forge发行制品；先做纯Forge基线，再记录NeoForge实际首失败。run_stock的生命周期PASS不代表模组功能；原生查询、实际玩家行为和客户端渲染分别验收。当前原生基线PARTIAL、目标发现FAIL，生产零修改；不得把未来TOML/上下文/跨类支持或旧客户端PASS说成已完成，详见docs/COMPATIBILITY.md及007C报告。
