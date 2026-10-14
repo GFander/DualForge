@@ -24,3 +24,5 @@
 最新客户端已进一步统一实际Registry路径、Java声明与资源：见[client_objects](../tests/client_objects/README.md)和[实际对象交付](<../Dev Manuals/Ice Ether 实际对象命名统一交付.md>)。旧资源版及alpha/beta/sample身份保留为历史cohort。
 
 用户正常安装见 [INSTALL](INSTALL.md)，007标准入口与配置验证见 [bootstrap](../tests/bootstrap/README.md)。默认安装方式与API兼容范围分别验收。
+
+007B普通Forge注册、模块身份取证和Mac零参数包见 [dropin_items](../tests/dropin_items/README.md) 与 [本轮报告](<../Dev Manuals/Convergence-007B Drop-in Runtime 交付报告.md>)。第三方兼容FAIL与整体PARTIAL明确分开。

@@ -44,6 +44,7 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
     private final Map<String, String> entryEvents = new HashMap<>();
     private final Set<String> eventClasses = new HashSet<>();
     private final Map<String, String> registryEntries = new HashMap<>();
+    private final Set<String> normalRegistryEntries = new HashSet<>();
     private final Map<String, String> blockEntries = new HashMap<>();
 
     public DualForgeEntryTransformer() {
@@ -88,7 +89,9 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
             if (registryEntries.containsKey(input.name)) {
                 if (!rewriteEnabled) return input;
                 if (!apiRewriteEnabled) throw new IllegalStateException("005 requires apiRewrite=true");
-                var stats = ControlledForgeItemProfile.rewrite(input, registryEntries.get(input.name));
+                var stats = normalRegistryEntries.contains(input.name)
+                        ? ControlledForgeItemProfile.rewriteNormal(input, registryEntries.get(input.name))
+                        : ControlledForgeItemProfile.rewrite(input, registryEntries.get(input.name));
                 log("REGISTRY_PROFILE entry=" + input.name + " modId=" + registryEntries.get(input.name)
                         + " createHits=1 supplierHits=" + stats.declarations()
                         + " modBusAttachHits=1 holderGetHits=" + stats.accessors()
@@ -317,6 +320,7 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
         entryEvents.clear();
         eventClasses.clear();
         registryEntries.clear();
+        normalRegistryEntries.clear();
         blockEntries.clear();
         Set<ITransformer.Target<ClassNode>> targets = new HashSet<>();
         // ModLauncher registers targets after FML completeScan, before the GAME layer.
@@ -366,11 +370,15 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
                                     + " file=" + file.getFile().getFilePath());
                             continue;
                         }
-                        var stats = ControlledForgeItemProfile.validate(candidate, info.getModId());
+                        boolean normal = ControlledForgeItemProfile.isNormalCandidate(candidate);
+                        var stats = normal ? ControlledForgeItemProfile.validateNormal(candidate, info.getModId())
+                                : ControlledForgeItemProfile.validate(candidate, info.getModId());
+                        if (normal) normalRegistryEntries.add(internal);
                         registryEntries.put(internal, info.getModId());
                         targets.add(ITransformer.Target.targetClass(entry));
                         log("TARGET modId=" + info.getModId() + " entry=" + entry
-                                + " profile=" + (stats.declarations() == 1 ? "single-item" : "controlled-items")
+                                + " profile=" + (normal ? "normal-items"
+                                        : stats.declarations() == 1 ? "single-item" : "controlled-items")
                                 + " file=" + file.getFile().getFilePath());
                         continue;
                     }
