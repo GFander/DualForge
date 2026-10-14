@@ -59,6 +59,8 @@ public final class NativeRegistryObserver {
             Object tabHolder = Class.forName("net.natevg.fnf.item.FnFCreativeModeTabs").getField("FNF_ITEM_TAB").get(null);
             Object tab = tabHolder.getClass().getMethod("get").invoke(tabHolder);
             Map<String, Object> result = new LinkedHashMap<>();
+            result.put("entryClass", "net.natevg.fnf.FoodNFuel");
+            result.put("runtimeModuleName", Class.forName("net.natevg.fnf.FoodNFuel").getModule().getName());
             result.put("items", items);
             result.put("registryCount", items.size());
             result.put("holderCount", holders.size());
