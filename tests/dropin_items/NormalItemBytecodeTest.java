@@ -152,7 +152,7 @@ public final class NormalItemBytecodeTest {
         check(otherTransformer.targets().equals(Set.of(ITransformer.Target.targetClass(renamedEntry.replace('/', '.')))), "different actual scan identity selected");
         ClassNode otherChanged = otherTransformer.transform(renamed, null);
         check(method(otherChanged, "<init>").desc.equals("(Lnet/neoforged/bus/api/IEventBus;)V"), "different modId/package/entry mapped without whitelist");
-        ClassNode ordinary = read(original); ordinary.name = "ordinary/SameShape";
+        ClassNode ordinary = read(original); ordinary.name = "ordinary/SameShape"; ordinary.visibleAnnotations = null;
         check(Arrays.equals(bytes(ordinary), bytes(transformer.transform(ordinary, null))), "same shape unclaimed class unchanged");
         System.setProperty("dualforge.2a.rewrite", "false");
         scan(Path.of(args[0]), false);
