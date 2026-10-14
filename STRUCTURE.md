@@ -8,7 +8,8 @@ DualForge/
 │   ├── java/                       活跃：唯一生产Java
 │   └── resources/                  活跃：Manifest与SPI
 ├── tests/
-│   ├── real_mods/food_n_fuel/       活跃：007C正式Forge制品身份、原生对照、只读ABI/边界与标准运行
+│   ├── real_mods/food_n_fuel/       活跃：007C冻结发行身份/原生对照与标准运行
+│   │   └── metadata/               活跃：007C-1标准TOML、注解归属/准入负例及诊断SPI
 │   ├── dependencies/               活跃：002 metadata / CDEF
 │   ├── discovery/                  活跃：003a 发现与边界
 │   ├── identity/                   活跃：003b 入口与范围
