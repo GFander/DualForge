@@ -56,5 +56,16 @@ raw命令/退出/logs/环境/dump指纹在新out/convergence-006b；旧回归在
 
 ## 客户端和归档
 
-006B-C NOT RUN。未准备或实测BlockState、Block Model、Item Model、Texture、语言资源、世界放置、背包/手持显示；不能继承006A-C。
+006B-C NOT RUN。客户端资源已准备于client_resources/，使用用户原始ice_ether_block.png；BlockState、Block/Item Model及中英文名称已配套。世界放置、背包/手持及语言显示仍需实机验收，不能继承006A-C。
 只按服务端受控Registry事实交付。长期证据仅发布脱敏副本，各原SHA/副本SHA分别记录；本地ZIP不是远端持久化。没有上传接口/授权会话时明确NOT PERSISTED。
+
+客户端包以冻结服务端fixture为输入，保留所有原JAR成员字节，只添加六份资源，不重编译Java；compat使用原服务端同SHA。资源版fixture使用独立新SHA，原服务端PASS不冒充新包客户端PASS。
+
+```zsh
+zsh tests/block_registry/build-mac-kit.zsh \
+  --compat "$DF006B_JAR" --fixture "$DF006B_FIXTURE/block-registry-probe.jar" \
+  --validation out/convergence-006b/summary.json \
+  --output-dir out/convergence-006b/mac-client-kit/本轮新目录
+```
+
+安装与实机检查见 [MAC-SETUP](MAC-SETUP.md) 和 [CHECKLIST](CHECKLIST.md)。ID仍为blockregistryprobe:sample_block，不改变Java注册声明。

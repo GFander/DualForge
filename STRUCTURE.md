@@ -16,6 +16,7 @@ DualForge/
 │   │   ├── mac/                    当前命名工具
 │   │   └── mac-legacy/             Legacy固定旧cohort，原字节
 │   ├── block_registry/             活跃：006B Block/BlockItem ABI、Contract、C/T
+│   │   └── client_resources/       活跃：006B-C方块模型/用户贴图，实机验收独立
 │   ├── multi_registry/             活跃：006A多Item与ABI/原子性
 │   └── project_identity/           活跃：身份及精确历史迁移保护
 ├── tools/
