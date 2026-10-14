@@ -18,3 +18,5 @@
 006A-S原冻结fixture和006A-C Beta资源fixture身份分别保存；用户人工PASS不代表所有平台，也不代表Codex获得原始视觉附件。
 
 运行环境本地复制见 [runtime迁移步骤](runtime.md)。
+
+006B受控Block+BlockItem见 [profile](../dualforge/src/main/java/io/github/gfander/dualforge/ControlledForgeBlockProfile.java)、[block_registry](../tests/block_registry/README.md)、[Gate0](<../Dev Manuals/Convergence-006B Gate0 ABI与可行性报告.md>)及 [交付](<../Dev Manuals/Convergence-006B 交付报告.md>)。客户端资源/视觉独立NOT RUN，旧历史能力不升级。

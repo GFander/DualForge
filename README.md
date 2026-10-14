@@ -1,6 +1,6 @@
 # DualForge
 
-DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。main 已合并 Convergence-006A；本分支只整理仓库目录与路径，不修改兼容功能。唯一生产源码位于 [dualforge/src/main](dualforge/src/main)，当前构建从源码与资源全量编译并生成 `dualforge.jar`。本轮新制品验证见 [006A 报告](<Dev Manuals/Convergence-006A 交付报告.md>)；[命名迁移报告](<Dev Manuals/DualForge 命名统一迁移报告.md>) 保存历史基线。
+DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。main 已合并 Convergence-006A；本分支实现006B受控Block与关联BlockItem注册。唯一生产源码位于 [dualforge/src/main](dualforge/src/main)，当前构建从源码与资源全量编译并生成 `dualforge.jar`。本轮新制品验证见 [006B 报告](<Dev Manuals/Convergence-006B 交付报告.md>)；[006A 报告](<Dev Manuals/Convergence-006A 交付报告.md>) 保存前阶段事实；[命名迁移报告](<Dev Manuals/DualForge 命名统一迁移报告.md>) 保存历史基线。
 
 仓库只维护 **zsh 脚本入口**。Python 3 标准库负责内部的构建编排、JSON、JAR 指纹、进程及日志捕获；运行不需要 Windows 或 PowerShell。当前仍使用原单参数构造器 ABI；004 的监听器支持范围如下。
 
@@ -133,3 +133,5 @@ ModLauncher 服务为 `dualforge-transform`。LanguageLoader 保留 `javafml` / 
 dump 属性为 `dualforge.dump.path` / `dualforge.dump.profileDir`。
 新工具不接受历史制品或旧参数混用；当前身份检查入口见
 [project_identity](tests/project_identity/README.md)。所有历史 API/ABI 支持范围保持原样。
+
+006B新增独立Block/BlockItem受控profile，保留006A Item规则和原构造器ABI；支持范围与实际证据见 [006B报告](<Dev Manuals/Convergence-006B 交付报告.md>)、[测试入口](tests/block_registry/README.md)。006B-C NOT RUN，不继承旧客户端cohort。
