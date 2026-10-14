@@ -20,3 +20,5 @@
 运行环境本地复制见 [runtime迁移步骤](runtime.md)。
 
 006B受控Block+BlockItem见 [profile](../dualforge/src/main/java/io/github/gfander/dualforge/ControlledForgeBlockProfile.java)、[block_registry](../tests/block_registry/README.md)、[Gate0](<../Dev Manuals/Convergence-006B Gate0 ABI与可行性报告.md>)及 [交付](<../Dev Manuals/Convergence-006B 交付报告.md>)。用户方块贴图的[客户端包](<../Dev Manuals/Convergence-006B-C 客户端测试包部署说明.md>)已准备，视觉验收独立NOT RUN，旧历史能力不升级。
+
+最新客户端已进一步统一实际Registry路径、Java声明与资源：见[client_objects](../tests/client_objects/README.md)和[实际对象交付](<../Dev Manuals/Ice Ether 实际对象命名统一交付.md>)。旧资源版及alpha/beta/sample身份保留为历史cohort。

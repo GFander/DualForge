@@ -135,3 +135,5 @@ dump 属性为 `dualforge.dump.path` / `dualforge.dump.profileDir`。
 [project_identity](tests/project_identity/README.md)。所有历史 API/ABI 支持范围保持原样。
 
 006B新增独立Block/BlockItem受控profile，保留006A Item规则和原构造器ABI；支持范围与实际证据见 [006B报告](<Dev Manuals/Convergence-006B 交付报告.md>)、[测试入口](tests/block_registry/README.md)。006B-C NOT RUN，不继承旧客户端cohort。
+
+最新客户端输入已将实际对象统一为ice_ether、raw_ice_ether、ice_ether_block，Java声明、Registry路径、资源同名，原冻结合约回归保留；见[client_objects](tests/client_objects/README.md)及[交付](<Dev Manuals/Ice Ether 实际对象命名统一交付.md>)。两组新服务端Contract/C/T通过，Mac渲染仍待人工验收。

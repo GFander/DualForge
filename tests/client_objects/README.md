@@ -48,3 +48,5 @@ python3 -B tests/client_objects/build_mac_kit.py --compat "$DF_COMPAT_JAR" \
 
 包内分items-test与block-test，各含同compat和已测Forge JAR、对应JVM参数；分别独立Prism实例验收，不混装两组。详见[MAC-SETUP](MAC-SETUP.md)与[CHECKLIST](CHECKLIST.md)。
 状态保持CLIENT NOT RUN，实际give/背包/手持/放置/中英文显示及保存重进后再填写。原世界、冻结输入及旧命名证据不改写；不实施旧世界ID迁移。
+
+本轮实际结果及正式包SHA见[交付](<../../Dev Manuals/Ice Ether 实际对象命名统一交付.md>)与[证据索引](<../../Dev Manuals/Ice Ether 实际对象命名统一证据索引.json>)。
