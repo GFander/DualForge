@@ -45,3 +45,18 @@ python3 -B tests/real_mods/food_n_fuel/build_observer.py \
 All JVMs run serially. Native player functionality is a prerequisite to production
 expansion. A registry-only native baseline is PARTIAL; unavailable interactions
 and graphics are NOT RUN. No third-party compatibility PASS follows from Done.
+
+`ReleaseBoundaryTest.java` uses the existing host NightConfig parser on the actual
+release, then checks the current guard/Reader decline, unsupported constructor
+profile and original ClassNode/JAR preservation. A passing boundary test does not
+mean discovery was repaired. Contract JVM module options are diagnostic only.
+
+The runner exits nonzero on failed lifecycle assertions even when the host JVM
+returns zero. The final runner was exercised with a real FML missing-required-mod
+negative. Its verified `zeroDualForgeParameters` field supports the existing stock
+bootstrap baseline reader; older raw results keep their original schema.
+
+Actual Food N' Fuel on NeoForge remains L0 / PARTIAL; current production is unchanged.
+See the [delivery](<../../../Dev Manuals/Convergence-007C 真实物品兼容交付报告.md>),
+[index](<../../../Dev Manuals/Convergence-007C 证据索引.json>) and
+[native client checklist](NATIVE-CLIENT-CHECKLIST.md).
