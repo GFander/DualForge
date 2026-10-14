@@ -77,6 +77,8 @@ def main():
     try:
         frozen=json.loads((ROOT/'fixture.json').read_text())['jars']
         for key,name in [('fixture','block-registry-probe'),('driver','block-registry-driver')]:assert w.digest(getattr(args,key))==frozen[name]['SHA256']
+        if args.stage!='baseline':
+            for key,name in [('native_control','native-control'),('matrix','block-matrix')]:assert w.digest(getattr(args,key))==frozen[name]['SHA256']
         binary=w.tools(args,run);result.update(baseline(args,run,binary) if args.stage=='baseline' else contract(args,run,binary) if args.stage=='contract' else dynamic(args,run,binary))
     except Exception as error:
         result.update(error=str(error));(run/'failure.txt').write_text(traceback.format_exc());raise
