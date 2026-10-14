@@ -162,3 +162,7 @@ Manifest/SPI/模块/属性检查、官方 Module Layer 实际观测及串行兼�
 ## client_objects：最新实际注册对象身份
 
 [统一输入与运行](client_objects/README.md)将Registry路径、Java字段/工厂/getter和资源统一为ice_ether/raw_ice_ether/ice_ether_block。从原生Forge重新编译，受影响Contract和独立C/T使用同兼容层，原回归输入保留；Mac图形验收另行NOT RUN。
+
+## bootstrap：007A标准入口与默认配置
+
+[入口与契约](bootstrap/README.md)记录无参数标准NeoForge运行、可选dump、显式布尔覆盖、原生共存和严格错误基线比较。旧回归与新零参数证据分别保存，不把历史harness称为用户启动方式。
