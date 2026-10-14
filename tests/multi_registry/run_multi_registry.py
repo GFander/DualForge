@@ -46,7 +46,7 @@ def dynamic(args,run,binary):
         'stderrEmptyNoCrash':(logs/(label+'.stderr.log')).stat().st_size==0 and not any(p.is_file() for p in (logs/'crash-reports').rglob('*')),
         'twoDeclarationsActuallyValidated':'createHits=1 supplierHits=2 modBusAttachHits=1 holderGetHits=2' in stdout,
         'queryOnce':stdout.count('[DF006] QUERY PASS')==1,'distinctItemsAndHolders':stdout.count('[DF006] DISTINCT items=true holders=true')==int(enabled)}
-    for name,marker in [('alpha_item','ALPHA'),('beta_item','BETA')]:
+    for name,marker in getattr(args,'registry_entries',[('alpha_item','ALPHA'),('beta_item','BETA')]):
         checks[name+' actual registry query']=stdout.count('[DF006] QUERY phase=ServerStartedEvent id=multiregistryprobe:'+name+' contains='+value+' optional='+value+' suppliers='+str(int(enabled)))==1
         checks[name+' supplier once or zero']=stdout.count('[DF006] '+marker+' SUPPLIER REACHED')==int(enabled)
         checks[name+' actual holder object and key']=stdout.count('[DF006] VERIFIED Item key=multiregistryprobe:'+name+' holder=net.neoforged.neoforge.registries.DeferredHolder sameObject=true air=false')==int(enabled)

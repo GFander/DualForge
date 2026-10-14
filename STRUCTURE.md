@@ -15,7 +15,11 @@ DualForge/
 │   ├── registry/                   活跃：005 Item / assets
 │   │   ├── mac/                    当前命名工具
 │   │   └── mac-legacy/             Legacy固定旧cohort，原字节
+│   ├── block_registry/             活跃：006B Block/BlockItem ABI、Contract、C/T
+│   │   ├── client_resources/       活跃：006B-C方块模型/用户贴图，实机验收独立
+│   │   └── client_translations/    活跃：冰之以太三组名称覆盖，不修改冻结模组
 │   ├── multi_registry/             活跃：006A多Item与ABI/原子性
+│   ├── client_objects/             活跃：最新实际ID统一的Forge输入与独立客户端包
 │   └── project_identity/           活跃：身份及精确历史迁移保护
 ├── tools/
 │   ├── entry/                      活跃zsh构建/依赖入口

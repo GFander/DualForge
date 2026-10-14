@@ -154,3 +154,11 @@ Manifest/SPI/模块/属性检查、官方 Module Layer 实际观测及串行兼�
 ## 当前运行输入与历史定位
 
 默认服务端输入为 `runtime/neoforge-server/`，显式 `--server-input` 仍可指定外部物理安装。新运行目录不修改源世界。早期 Spike 已按原字节归档，见 [结构](../STRUCTURE.md) 和 [功能导航](../docs/README.md)。历史报告中的旧路径不改写，精确文件映射及SHA见 [迁移映射](project_identity/structure_relocation.json)。
+
+## block_registry：006B受控双Registry
+
+[入口与范围](block_registry/README.md)包含原生Forge Block+BlockItem、观察型NeoForge Driver、Gate0/改名布局、Contract拒绝/原子性和真实C/T。跨Registry同ID不算重复；BlockItem必须引用已验证BlockHolder。现有历史回归不放宽，006B-C NOT RUN。
+
+## client_objects：最新实际注册对象身份
+
+[统一输入与运行](client_objects/README.md)将Registry路径、Java字段/工厂/getter和资源统一为ice_ether/raw_ice_ether/ice_ether_block。从原生Forge重新编译，受影响Contract和独立C/T使用同兼容层，原回归输入保留；Mac图形验收另行NOT RUN。

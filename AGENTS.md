@@ -84,7 +84,7 @@
 - 开始修改前阅读根目录 STRUCTURE.md 和 tests/README.md，确认目录状态及实际入口。
 - 唯一生产源码为 dualforge/src/main/java 和 src/main/resources；不得把历史副本当作生产版本。
 - tools/entry/ 存放 zsh 入口，tools/lib/ 存放 Python 内部实现，tools/harness/run-server.zsh 是活跃独立 harness。
-- tests/dependencies、tests/discovery、tests/identity、tests/events、tests/registry、tests/project_identity、tests/multi_registry 是当前测试；测试文件的位置保持不变。Registry 阶段和受控范围见 tests/registry/README.md，资源静态检查不代表真实客户端渲染。
+- tests/dependencies、tests/discovery、tests/identity、tests/events、tests/registry、tests/project_identity、tests/multi_registry、tests/block_registry 是当前测试；测试文件的位置保持不变。Registry 阶段和受控范围见 tests/registry/README.md，资源静态检查不代表真实客户端渲染。
 - history/ 是历史迭代、冻结源码、夹具及记录的归档，不作为生产构建输入。原 Probe 是历史冻结回归输入，只使用指纹匹配的原制品，不重建替代。
 - history/early-spikes/ 保存三个早期 Spike 的原字节，不是活跃实现。旧 Gradle/DEPRECATED 命令仅为历史记录，当前 zsh 入口不使用它们。
 - 移动文件使用 git mv，冻结记录保持原字节；历史命名迁移的允许差异限于身份；后续功能按用户明确任务范围实现和验证；同步更新活跃脚本、文档和忽略规则。
@@ -101,3 +101,6 @@
 
 - 默认服务端输入为 runtime/neoforge-server/；只跟踪三个原配置。运行库、mods、defaultconfigs 和 spike000world 外置或忽略；复制迁移时保留原数据并核对 SHA，禁止覆盖已有不同字节文件。
 - docs/README.md 是按功能导航；Dev Manuals 中冻结事实及旧命令不改写。历史路径迁移由 tests/project_identity/structure_relocation.json 精确记录，旧命名索引不改；保护全部374项，禁止目录级豁免。
+
+- 006B通过独立Block+BlockItem profile验证两个typed Registry及精确Holder依赖，原006A Item规则不放宽。原fixture/JAR/报告不变；006B-C当前为用户Mac实机人工PASS，本轮截图WAIVED，详见Dev Manuals/Convergence-006B-C macOS 客户端人工验收报告.md；历史NOT RUN不改写，回归绑定同一已测JAR。
+- 最新客户端对象统一输入在tests/client_objects/：实际ID ice_ether/raw_ice_ether/ice_ether_block与Java声明/资源同名；原005/006A/006B输入保留作冻结回归，不覆盖旧结果。两角色分开安装，当前仅Block组获用户人工PASS，新版items-test仍NOT RUN；不能以旧名称/语言覆盖或历史006A-C替代新组实机结论。截图豁免仅限本轮，Mac日志原件/实际compat SHA独立核验和原始证据持久化限制分别记录。

@@ -1,0 +1,163 @@
+{
+  "task": "Convergence-006B-C macOS manual acceptance",
+  "recordedDate": "2026-10-14 Asia/Shanghai",
+  "status": "PASS (USER-ATTESTED MANUAL ACCEPTANCE; SCREENSHOTS WAIVED)",
+  "scope": "current controlled Block + BlockItem only",
+  "report": "Dev Manuals/Convergence-006B-C macOS 客户端人工验收报告.md",
+  "startingHead": "7ca3478d6a36f45969599293764b9019658c142f",
+  "PR": "https://github.com/GFander/DualForge/pull/13",
+  "environment": {
+    "source": "user-provided client environment",
+    "macOS": "27.0",
+    "CPU": "Apple M4 / arm64",
+    "Prism": "11.1.1",
+    "minecraft": "1.21.1",
+    "neoforge": "21.1.256",
+    "java": "Microsoft OpenJDK 21.0.7",
+    "ModLauncher": "11.0.5"
+  },
+  "attestation": {
+    "source": "explicit current user task and supplied real-client log excerpts",
+    "uploadFileID": "file_000000004c0881f997bce05e6669550e",
+    "bytes": 9261,
+    "statementSHA256": "123b5c07242ca50f885768b44762f8aae0899fd399713ba75d98fa58fca24927",
+    "statementSHAIsOriginalLogSHA": false
+  },
+  "rawMacLog": {
+    "independentlyObtained": false,
+    "path": null,
+    "SHA256": null,
+    "availableEvidence": "user-provided excerpts and explicit log facts only"
+  },
+  "macArtifacts": {
+    "block-registry-probe.jar": {
+      "userReportedMacSHA256": "3768e817c101172d829aea1feeb05ff1e7600ba4c31da1ec4bac195ea0e50f0e",
+      "localDeliveryHashMatches": true,
+      "macFileIndependentlyObtainedOrHashed": false
+    },
+    "dualforge.jar": {
+      "expectedServerAndKitSHA256": "159514dd5c88cc445117d6a4778db5e85cf0a496da2651f4faefbdbcacb3905b",
+      "localDeliveryHashMatches": true,
+      "actualMacSHA256": null,
+      "macFileIndependentlyObtainedOrHashed": false
+    }
+  },
+  "runtimeID": "blockregistryprobe:ice_ether_block",
+  "checks": [
+    {
+      "item": "Forge发现/扫描/加载",
+      "status": "PASS",
+      "evidence": [
+        "E-LOG"
+      ]
+    },
+    {
+      "item": "Block Profile ASM转换",
+      "status": "PASS",
+      "evidence": [
+        "E-LOG"
+      ]
+    },
+    {
+      "item": "双DeferredRegister MOD bus挂接",
+      "status": "PASS",
+      "evidence": [
+        "E-LOG"
+      ]
+    },
+    {
+      "item": "Block/BlockItem Supplier执行",
+      "status": "PASS",
+      "evidence": [
+        "E-LOG"
+      ]
+    },
+    {
+      "item": "give获取冰之以太块",
+      "status": "PASS",
+      "evidence": [
+        "E-LOG",
+        "E-MANUAL"
+      ]
+    },
+    {
+      "item": "方块实际放置",
+      "status": "PASS",
+      "evidence": [
+        "E-MANUAL"
+      ]
+    },
+    {
+      "item": "六面原始方块纹理",
+      "status": "PASS",
+      "evidence": [
+        "E-MANUAL"
+      ]
+    },
+    {
+      "item": "BlockItem手持显示",
+      "status": "PASS",
+      "evidence": [
+        "E-MANUAL"
+      ]
+    },
+    {
+      "item": "中文名称冰之以太块",
+      "status": "PASS",
+      "evidence": [
+        "E-MANUAL"
+      ]
+    },
+    {
+      "item": "英文名称Ice Ether Block",
+      "status": "PASS",
+      "evidence": [
+        "E-MANUAL"
+      ]
+    },
+    {
+      "item": "重进游戏后方块仍存在",
+      "status": "PASS",
+      "evidence": [
+        "E-MANUAL"
+      ]
+    },
+    {
+      "item": "重进游戏后物品仍存在",
+      "status": "PASS",
+      "evidence": [
+        "E-MANUAL"
+      ]
+    },
+    {
+      "item": "世界保存/集成服务器正常退出/exit0",
+      "status": "PASS",
+      "evidence": [
+        "E-LOG"
+      ]
+    }
+  ],
+  "screenshots": {
+    "status": "WAIVED",
+    "authority": "explicit user decision for this 006B-C manual acceptance only",
+    "filesProvided": false,
+    "pendingRequest": false,
+    "appliesToFutureTasks": false
+  },
+  "otherTests": {
+    "multipleForgeModsInstalled": "NOT RUN",
+    "arbitraryThirdPartyForgeBlocks": "NOT RUN",
+    "newNamedItemsTestMacGraphics": "NOT RUN"
+  },
+  "historicalRecordsPreserved": true,
+  "linuxValidation": "reference to previously executed same-JAR results; not rerun",
+  "newJVMOrClientRunByCodex": false,
+  "newJarBuild": false,
+  "historicalEvidenceArchive": {
+    "status": "ARCHIVE_READY / NOT PERSISTED",
+    "remoteUpload": "NOT RUN",
+    "remoteDownloadVerification": "NOT RUN",
+    "remoteUrl": null
+  },
+  "prDisposition": "keep Draft; no automatic merge, release or 006C"
+}

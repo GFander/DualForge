@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "blockregistryprobe:block/sample_block" }
+  }
+}
