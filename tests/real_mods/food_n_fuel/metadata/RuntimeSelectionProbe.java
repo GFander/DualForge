@@ -7,17 +7,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import net.neoforged.fml.loading.FMLLoader;
+import net.neoforged.fml.loading.moddiscovery.ModFile;
 import net.neoforged.neoforgespi.locating.*;
 import org.objectweb.asm.tree.ClassNode;
 
 /** Test-only observer. Delegates file creation to production and records FML's assigned loader. */
 public final class RuntimeSelectionProbe implements IModFileReader, ITransformationService {
-    private static final List<IModFile> files = new ArrayList<>();
+    private static final List<ModFile> files = new ArrayList<>();
     @Override public int getPriority() { return 200; }
     @Override public IModFile read(JarContents contents, ModFileDiscoveryAttributes attributes) {
         if (contents.findFile("META-INF/mods.toml").isEmpty()) return null;
         IModFile file = new ForgeModReader().read(contents, attributes);
-        if (file != null) files.add(file);
+        if (file != null) files.add((ModFile) file);
         return file;
     }
     @Override public String name() { return "metadata-selection-observer"; }
@@ -31,7 +32,7 @@ public final class RuntimeSelectionProbe implements IModFileReader, ITransformat
             @Override public Set<Target<ClassNode>> targets() {
                 FMLLoader.getLanguageLoadingProvider().forEach(provider -> System.out.println(
                         "[DF007C1-PROVIDER] enumerated=" + provider.getClass().getName() + " version=" + provider.version()));
-                for (IModFile file : files) {
+                for (ModFile file : files) {
                     for (var loader : file.getLoaders()) System.out.println("[DF007C1-PROVIDER] assigned file="
                             + file.getFileName() + " ids=" + file.getModInfos().stream().map(i -> i.getModId()).toList()
                             + " ranges=" + file.getModFileInfo().requiredLanguageLoaders()
