@@ -143,6 +143,7 @@ def run(args):
              'matchedInstalledHashes': True, 'retained': ['world', 'logs', 'mods', 'results', 'commands']})
         shutil.rmtree(server / 'libraries')
     print(json.dumps(json.loads((output / 'result.json').read_text()), indent=2), flush=True)
+    return 0 if all(checks.values()) else 1
 
 
 if __name__ == '__main__':
@@ -154,4 +155,4 @@ if __name__ == '__main__':
     parser.add_argument('--console', action='append', default=[])
     parser.add_argument('--timeout', type=int, default=240)
     parser.add_argument('--keep-runtime', action='store_true')
-    run(parser.parse_args())
+    raise SystemExit(run(parser.parse_args()))
