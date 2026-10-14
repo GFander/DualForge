@@ -19,4 +19,4 @@
 
 运行环境本地复制见 [runtime迁移步骤](runtime.md)。
 
-006B受控Block+BlockItem见 [profile](../dualforge/src/main/java/io/github/gfander/dualforge/ControlledForgeBlockProfile.java)、[block_registry](../tests/block_registry/README.md)、[Gate0](<../Dev Manuals/Convergence-006B Gate0 ABI与可行性报告.md>)及 [交付](<../Dev Manuals/Convergence-006B 交付报告.md>)。客户端资源/视觉独立NOT RUN，旧历史能力不升级。
+006B受控Block+BlockItem见 [profile](../dualforge/src/main/java/io/github/gfander/dualforge/ControlledForgeBlockProfile.java)、[block_registry](../tests/block_registry/README.md)、[Gate0](<../Dev Manuals/Convergence-006B Gate0 ABI与可行性报告.md>)及 [交付](<../Dev Manuals/Convergence-006B 交付报告.md>)。用户方块贴图的[客户端包](<../Dev Manuals/Convergence-006B-C 客户端测试包部署说明.md>)已准备，视觉验收独立NOT RUN，旧历史能力不升级。

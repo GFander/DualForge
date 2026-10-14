@@ -69,3 +69,4 @@ zsh tests/block_registry/build-mac-kit.zsh \
 ```
 
 安装与实机检查见 [MAC-SETUP](MAC-SETUP.md) 和 [CHECKLIST](CHECKLIST.md)。ID仍为blockregistryprobe:sample_block，不改变Java注册声明。
+本次正式包指纹与部署记录见 [006B-C部署说明](<../../Dev Manuals/Convergence-006B-C 客户端测试包部署说明.md>)；此前006B交付报告保留原时点事实。

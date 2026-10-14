@@ -1,0 +1,148 @@
+{
+  "task": "Convergence-006B-C resource preparation",
+  "date": "2026-10-14 Asia/Shanghai",
+  "startingHead": "7273e60334d9912d8b7ac6cbba1d45b0fe0caaad",
+  "sourceCommit": "cf900030a51781795d1edb50e1e4402e9f2ba18d",
+  "PR": "https://github.com/GFander/DualForge/pull/13",
+  "registryID": "blockregistryprobe:sample_block",
+  "resourceStatus": "PASS",
+  "clientStatus": "NOT RUN",
+  "newServerRun": false,
+  "compatSourceOrBytesChanged": false,
+  "uploadedTextureZipSHA256": "e11b1e333f2f6e1d593be8204c93e51b6302a2941fb545115655d43480ae3e40",
+  "png": {
+    "sourceMember": "ice_ether_block.png",
+    "bytes": 863,
+    "dimensions": [
+      16,
+      16
+    ],
+    "mode": "RGBA",
+    "alphaRange": [
+      139,
+      255
+    ],
+    "sha256": "cae07e312af545d8a98b5347032d51353583b22edc9fa39cea5353c689e56596"
+  },
+  "result": {
+    "status": "PASS",
+    "scope": "assets, original-member preservation and packaging only; no client or server execution",
+    "sourceCommit": "cf900030a51781795d1edb50e1e4402e9f2ba18d",
+    "zip": "/workspace/DualForge-006B/out/convergence-006b/mac-client-kit/20261014-ice-ether-final/dualforge-006b-mac-test-kit.zip",
+    "SHA256": "8449815ee324cd24c73e07b77a82da79067ee7f6fe3549d4ef658ab22590ac52",
+    "bytes": 71549,
+    "contents": 7,
+    "clientFixtureSHA256": "9b19986bf3ee0a210b3449d0e7191d8887820294fc17a492ab11d2f813e19320",
+    "compatSHA256": "159514dd5c88cc445117d6a4778db5e85cf0a496da2651f4faefbdbcacb3905b",
+    "textureSHA256": "cae07e312af545d8a98b5347032d51353583b22edc9fa39cea5353c689e56596",
+    "clientStatus": "NOT RUN",
+    "uploaded": false
+  },
+  "verification": {
+    "status": "PASS",
+    "sourceCommit": "cf900030a51781795d1edb50e1e4402e9f2ba18d",
+    "sameProductionJavaAndFixtureSources": true,
+    "originalRawEvidenceFilesUnchanged": 2958,
+    "clientClassCount": 2,
+    "allOriginalJarMembersUnchanged": true,
+    "assetCount": 6,
+    "userTextureExactBytes": true,
+    "zipCRCAndSafePaths": true,
+    "freshExtractionSHA": true,
+    "sourceInputsMatchCommittedTree": true,
+    "serverRerun": false,
+    "graphicalClientRun": "NOT RUN"
+  },
+  "manifest": {
+    "task": "Convergence-006B-C preparation",
+    "clientStatus": "NOT RUN",
+    "serverStatus": "PASS for original server cohort",
+    "minecraft": "1.21.1",
+    "neoforge": "21.1.256",
+    "javaMajor": 21,
+    "sourceCommit": "cf900030a51781795d1edb50e1e4402e9f2ba18d",
+    "compat": {
+      "Path": "/workspace/DualForge-006B/out/convergence-006b/implementation-build/20261014-011858-d9bc1250/dualforge.jar",
+      "SHA256": "159514dd5c88cc445117d6a4778db5e85cf0a496da2651f4faefbdbcacb3905b",
+      "Bytes": 66626
+    },
+    "originalServerFixture": {
+      "Path": "/workspace/DualForge-006B/out/convergence-006b/fixture/20261014-012113-e9fd2761/block-registry-probe.jar",
+      "SHA256": "c65cf9736db71b61f4547e386c01dbe688195df106a63a240a6b30f24de63e71",
+      "Bytes": 4274
+    },
+    "clientFixture": {
+      "SHA256": "9b19986bf3ee0a210b3449d0e7191d8887820294fc17a492ab11d2f813e19320",
+      "Bytes": 6486
+    },
+    "registryID": "blockregistryprobe:sample_block",
+    "textureSHA256": "cae07e312af545d8a98b5347032d51353583b22edc9fa39cea5353c689e56596",
+    "originalMembersUnchanged": true,
+    "unchangedClassSHA256": {
+      "com/example/blockregistrycheck/BlockRegistryProbe.class": "f0f7dee8cf9cf50a25518d2f8003fc6307e2b2f8c2628f20ed17bfafef43adb9",
+      "com/example/blockregistrycheck/SupplierForms.class": "4acc45f1d8bcc596eb5f43edb76a62ac7cec759b0c863c240dc81b1cedff777a"
+    },
+    "assets": {
+      "assets/blockregistryprobe/blockstates/sample_block.json": "791d523113e7c514ca575098d40809113addfed646502d593f14b00e2748c942",
+      "assets/blockregistryprobe/lang/en_us.json": "419c392daac148993ea55cd5d6e8efe638f582932f7a9c9c0121f8756c895eef",
+      "assets/blockregistryprobe/lang/zh_cn.json": "a3150247a491109c1fec29a6b90ab580b7a8254ecd58d19d1e7fe436f47e5257",
+      "assets/blockregistryprobe/models/block/sample_block.json": "2e9a71ad397a38c22e32a4a751e75fcf33bc308ab2185ceaf5600b45d89e92d6",
+      "assets/blockregistryprobe/models/item/sample_block.json": "36e14880d0153d906d4bac0fc9845882976090de47023bd4df13a3be4defa66d",
+      "assets/blockregistryprobe/textures/block/ice_ether_block.png": "cae07e312af545d8a98b5347032d51353583b22edc9fa39cea5353c689e56596"
+    },
+    "testDriverIncluded": false,
+    "compiledJava": false,
+    "productionJavaChanged": false,
+    "uploadUrl": null,
+    "files": {
+      "CHECKLIST.md": "6ca24982de811fe299b239bf1c6f38b94a7812ea797654166ce2714be4e2f70a",
+      "JVM-ARGS.txt": "75d7a377de7e1123d789d9d79e8de86f0ecd094b959c8ae57cc64cd0fefd0629",
+      "MAC-SETUP.md": "73cb211515ce8f5c8b16d89bce5dc12e1b6307f5d3aae14d83bce28f34434137",
+      "mods/block-registry-probe.jar": "9b19986bf3ee0a210b3449d0e7191d8887820294fc17a492ab11d2f813e19320",
+      "mods/dualforge.jar": "159514dd5c88cc445117d6a4778db5e85cf0a496da2651f4faefbdbcacb3905b"
+    },
+    "buildInputs": {
+      "tests/block_registry/client_resources/assets/blockregistryprobe/blockstates/sample_block.json": "791d523113e7c514ca575098d40809113addfed646502d593f14b00e2748c942",
+      "tests/block_registry/client_resources/assets/blockregistryprobe/lang/en_us.json": "419c392daac148993ea55cd5d6e8efe638f582932f7a9c9c0121f8756c895eef",
+      "tests/block_registry/client_resources/assets/blockregistryprobe/lang/zh_cn.json": "a3150247a491109c1fec29a6b90ab580b7a8254ecd58d19d1e7fe436f47e5257",
+      "tests/block_registry/client_resources/assets/blockregistryprobe/models/block/sample_block.json": "2e9a71ad397a38c22e32a4a751e75fcf33bc308ab2185ceaf5600b45d89e92d6",
+      "tests/block_registry/client_resources/assets/blockregistryprobe/models/item/sample_block.json": "36e14880d0153d906d4bac0fc9845882976090de47023bd4df13a3be4defa66d",
+      "tests/block_registry/client_resources/assets/blockregistryprobe/textures/block/ice_ether_block.png": "cae07e312af545d8a98b5347032d51353583b22edc9fa39cea5353c689e56596",
+      "tests/block_registry/build_mac_kit.py": "c277ce55b75ea594a74f41f7b0348cbcee48da9461ad48d1d4137505d63201a5",
+      "tests/block_registry/build-mac-kit.zsh": "ac536c55eb92c56d99f2776c87aa51844879f417f0675b571fe91ba357efc470",
+      "tests/block_registry/MAC-SETUP.md": "73cb211515ce8f5c8b16d89bce5dc12e1b6307f5d3aae14d83bce28f34434137",
+      "tests/block_registry/JVM-ARGS.txt": "75d7a377de7e1123d789d9d79e8de86f0ecd094b959c8ae57cc64cd0fefd0629",
+      "tests/block_registry/CHECKLIST.md": "6ca24982de811fe299b239bf1c6f38b94a7812ea797654166ce2714be4e2f70a"
+    }
+  },
+  "rawEvidence": [
+    {
+      "path": "/workspace/DualForge-006B/out/convergence-006b/mac-client-kit/20261014-ice-ether-final/command.txt",
+      "bytes": 421,
+      "sha256": "c4315add0dac8e2cf009a68c3e1b4fa8ae7d5a34d3b14ff0641ec13847319c66"
+    },
+    {
+      "path": "/workspace/DualForge-006B/out/convergence-006b/mac-client-kit/20261014-ice-ether-final/result.json",
+      "bytes": 748,
+      "sha256": "b4bd0590a42b218ade443f2d930afb402c10b713a8fbf273e76ba47d47beced8"
+    },
+    {
+      "path": "/workspace/DualForge-006B/out/convergence-006b/mac-client-kit/20261014-ice-ether-final/verification.json",
+      "bytes": 457,
+      "sha256": "e056631ed588d6777bb27a617f1d49f447392182e735cbdc77ace3976bbd58e3"
+    },
+    {
+      "path": "/workspace/DualForge-006B/out/convergence-006b/mac-client-kit/20261014-ice-ether-final/dualforge-006b-mac-test-kit/manifest.json",
+      "bytes": 4288,
+      "sha256": "9934ae7165762142af9beec722a9598b2c8acee37d75306a982b6b68758f10b4"
+    },
+    {
+      "path": "/workspace/DualForge-006B/out/convergence-006b/mac-client-kit/20261014-ice-ether-final/dualforge-006b-mac-test-kit/SHA256SUMS",
+      "bytes": 498,
+      "sha256": "c013f5ac6d2b63c43123abb04bd021b024a01bbfc0042f55110fe9eb82994366"
+    }
+  ],
+  "remoteUpload": "NOT RUN",
+  "remoteUrl": null,
+  "originalServerEvidenceUnchanged": true
+}
