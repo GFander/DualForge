@@ -29,9 +29,13 @@ def main():
         w.save(run / "inputs.json", inputs)
         classes = run / "classes"
         classes.mkdir()
+        # A foreign native annotation is an unclaimed class, not contradictory ownership.
+        control = run / "forge-control/NativeControl.java"
+        control.parent.mkdir()
+        control.write_text((source / "controls/NativeControl.java").read_text().replace('"identityprobe"', '"nativecontrol"'))
         w.native(run, "javac-controls", [binary / "javac", "--release", "21", "-encoding", "UTF-8",
                  "-classpath", os.pathsep.join(map(str, [*forge, *libs])), "-d", classes,
-                 *sorted(source.glob("controls/*.java"))], cwd=run)
+                 *[p for p in sorted(source.glob("controls/*.java")) if p.name != "NativeControl.java"], control], cwd=run)
         root = run / "jar-root"
         shutil.copytree(classes, root)
         with zipfile.ZipFile(args.fixture.resolve()) as archive:
@@ -39,7 +43,10 @@ def main():
         controlled = run / "scope-forge.jar"
         w.native(run, "jar-forge", [binary / "jar", "--create", "--file", controlled,
                  "--manifest", root / "META-INF/MANIFEST.MF", "-C", root, "."], cwd=run)
-        # Same classes and matching modId, but native metadata is authoritative.
+        # Restore the original native control into the native-only test cohort.
+        w.native(run, "javac-native-control", [binary / "javac", "--release", "21", "-classpath",
+                 os.pathsep.join(map(str, [*forge, *libs])), "-d", root, source / "controls/NativeControl.java"], cwd=run)
+        # The Forge entry bytes remain identical; native metadata remains authoritative.
         toml = (root / "META-INF/mods.toml").read_text().replace('[52,)', '[3,)')
         (root / "META-INF/neoforge.mods.toml").write_text(toml)
         native = run / "scope-native-dual.jar"
