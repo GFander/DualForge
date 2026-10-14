@@ -1,0 +1,13 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+[[mods]]
+modId="blockregistrydriver"
+version="1.0.0"
+displayName="Block Registry Driver"
+[[dependencies.blockregistrydriver]]
+modId="blockregistryprobe"
+type="required"
+versionRange="[1.0.0]"
+ordering="AFTER"
+side="SERVER"
