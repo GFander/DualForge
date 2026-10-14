@@ -1,146 +1,166 @@
 package io.github.gfander.dualforge;
 
+import com.electronwill.nightconfig.core.UnmodifiableConfig;
+import com.electronwill.nightconfig.toml.TomlParser;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
+import java.nio.charset.CodingErrorAction;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Set;
 import net.neoforged.fml.loading.moddiscovery.ModFile;
 import net.neoforged.fml.loading.moddiscovery.ModFileInfo;
 import net.neoforged.neoforgespi.language.IModFileInfo;
+import net.neoforged.neoforgespi.language.IModInfo;
+import org.apache.maven.artifact.versioning.VersionRange;
+import org.apache.maven.artifact.versioning.InvalidVersionSpecificationException;
 import net.neoforged.neoforgespi.locating.IModFile;
 import net.neoforged.neoforgespi.locating.InvalidModFileException;
 import net.neoforged.neoforgespi.locating.ModFileInfoParser;
 
-/**
- * Spike-001a 最小实现范围（Spike_001a.md §2.2）：
- *   ForgeModFileInfoParser：解析 mods.toml，返回 IModFileInfo。
- *   不实现：features 声明。
- *
- * 本阶段用的是**最小字段扫描器**（不是完整 TOML 解析器），只提取
- * modLoader / loaderVersion / license / [[mods]] 首项字段 / [[dependencies.*]] 表。
- * 完整 mods.toml 解析属于 001a-1 之后的决策范围。
- */
+/** Standard TOML syntax, validated Forge metadata, then lossless FML config adaptation. */
 public class ForgeModFileInfoParser implements ModFileInfoParser {
-
-    static {
-        System.out.println("[DUALFORGE] <clinit> ForgeModFileInfoParser");
-    }
-
-    public ForgeModFileInfoParser() {
-        System.out.println("[DUALFORGE] INSTANTIATED ForgeModFileInfoParser");
-    }
+    static final int MAX_METADATA_BYTES = 1024 * 1024;
+    private static final Set<String> DEPENDENCY_KEYS = Set.of("modId", "mandatory", "versionRange",
+            "ordering", "side", "referralUrl", "referralURL", "reason", "customNote");
 
     @Override
     public IModFileInfo build(IModFile file) throws InvalidModFileException {
         System.out.println("[DUALFORGE] CALLED ForgeModFileInfoParser.build for " + file.getFilePath());
-
-        Path toml;
-        try {
-            toml = file.findResource("META-INF", "mods.toml");
-        } catch (RuntimeException e) {
-            throw new InvalidModFileException("META-INF/mods.toml not found in " + file.getFilePath(), null);
+        try (var stream = Files.newInputStream(file.findResource("META-INF", "mods.toml"))) {
+            Map<String, Object> parsed = parseForgeModsToml(readMetadata(stream));
+            System.out.println("[DUALFORGE] ForgeModFileInfoParser: parsed keys=" + parsed.keySet());
+            return new ModFileInfo((ModFile) file, ForgeModFileInfo.configOf(parsed), info -> { });
+        } catch (IOException | IllegalArgumentException e) {
+            throw new InvalidModFileException("Invalid Forge metadata in " + file.getFilePath() + ": " + e.getMessage(), null);
         }
-
-        String text;
-        try {
-            text = Files.readString(toml);
-        } catch (IOException e) {
-            throw new InvalidModFileException("Unable to read META-INF/mods.toml: " + e, null);
-        }
-
-        Map<String, Object> parsed = parseForgeModsToml(text);
-        String license = String.valueOf(parsed.getOrDefault("license", ""));
-        System.out.println("[DUALFORGE] ForgeModFileInfoParser: parsed keys=" + parsed.keySet());
-        ModFile modFile = (ModFile) file;
-        return new ModFileInfo(modFile, ForgeModFileInfo.configOf(parsed), info -> { });
     }
 
-    /**
-     * Minimal line scanner for the Forge mods.toml subset used by the Spike-001a probe.
-     * Handles: top-level scalars, [[mods]], [[dependencies.<ownerModId>]].
-     */
+    static String readMetadata(InputStream stream) throws IOException {
+        byte[] bytes = stream.readNBytes(MAX_METADATA_BYTES + 1);
+        if (bytes.length > MAX_METADATA_BYTES) throw invalid("metadata", "exceeds 1 MiB size limit");
+        return StandardCharsets.UTF_8.newDecoder().onMalformedInput(CodingErrorAction.REPORT)
+                .onUnmappableCharacter(CodingErrorAction.REPORT).decode(ByteBuffer.wrap(bytes)).toString();
+    }
+
     static Map<String, Object> parseForgeModsToml(String text) {
-        Map<String, Object> root = new LinkedHashMap<>();
-        List<Map<String, Object>> mods = new ArrayList<>();
-        Map<String, List<Map<String, Object>>> dependencies = new LinkedHashMap<>();
-        Map<String, Object> currentMod = null;
-        Map<String, Object> currentDependency = null;
-        String section = "";
-
-        for (String rawLine : text.split("\\R")) {
-            String line = rawLine.trim();
-            if (line.isEmpty() || line.startsWith("#")) {
-                continue;
-            }
-            if (line.startsWith("[[") && line.endsWith("]]")) {
-                String name = line.substring(2, line.length() - 2).trim();
-                if (name.equals("mods")) {
-                    currentMod = new LinkedHashMap<>();
-                    mods.add(currentMod);
-                    section = "mods";
-                } else if (name.startsWith("dependencies.")) {
-                    currentDependency = new LinkedHashMap<>();
-                    String owner = name.substring("dependencies.".length());
-                    dependencies.computeIfAbsent(owner, key -> new ArrayList<>()).add(currentDependency);
-                    section = "dependencies";
-                } else {
-                    section = name;
+        if (text.getBytes(StandardCharsets.UTF_8).length > MAX_METADATA_BYTES)
+            throw invalid("metadata", "exceeds 1 MiB size limit");
+        final Map<String, Object> root;
+        try {
+            root = table(copy(new TomlParser().parse(text)), "metadata");
+        } catch (RuntimeException e) {
+            throw new IllegalArgumentException("Invalid Forge TOML syntax: " + e.getMessage(), e);
+        }
+        string(root, "modLoader", true);
+        range(string(root, "loaderVersion", true), "loaderVersion");
+        string(root, "license", true);
+        for (String key : List.of("issueTrackerURL", "logoFile")) string(root, key, false);
+        for (String key : List.of("showAsResourcePack", "showAsDataPack", "logoBlur")) typed(root, key, Boolean.class);
+        if (root.containsKey("services")) {
+            for (Object value : list(root.get("services"), "services"))
+                if (!(value instanceof String)) throw invalid("services", "must contain strings");
+        }
+        for (String key : List.of("properties", "modproperties", "features"))
+            if (root.containsKey(key)) table(root.get(key), key);
+        Set<String> ids = new HashSet<>();
+        List<?> mods = list(root.get("mods"), "mods");
+        if (mods.isEmpty()) throw invalid("mods", "must not be empty");
+        for (Object value : mods) {
+            Map<String, Object> mod = table(value, "mods entry");
+            String id = modId(string(mod, "modId", true));
+            if (!ids.add(id)) throw invalid("modId", "duplicate " + id);
+            for (String key : List.of("version", "namespace", "displayName", "description", "logoFile",
+                    "updateJSONURL", "modUrl")) string(mod, key, false);
+            typed(mod, "logoBlur", Boolean.class);
+        }
+        for (String key : List.of("modproperties", "features")) {
+            if (!root.containsKey(key)) continue;
+            for (var group : table(root.get(key), key).entrySet()) {
+                Map<String, Object> values = table(group.getValue(), key + "." + group.getKey());
+                if (key.equals("features")) {
+                    for (Object value : values.values())
+                        if (!(value instanceof String)) throw invalid(key, "bounds must be strings");
                 }
-                continue;
-            }
-            int eq = line.indexOf('=');
-            if (eq <= 0) {
-                continue;
-            }
-            String key = line.substring(0, eq).trim();
-            String rawValue = line.substring(eq + 1).trim();
-            String value = unquote(rawValue);
-            switch (section) {
-                case "mods" -> currentMod.put(key, value);
-                case "dependencies" -> {
-                    if (key.equals("mandatory")) {
-                        if (!rawValue.equals("true") && !rawValue.equals("false")) {
-                            throw new IllegalArgumentException("Forge dependency mandatory must be a boolean");
-                        }
-                        currentDependency.put(key, Boolean.parseBoolean(rawValue));
-                    } else {
-                        currentDependency.put(key, value);
-                    }
-                }
-                default -> root.put(key, value);
             }
         }
-
-        if (!mods.isEmpty()) {
-            root.put("mods", mods);
-        }
-        if (!dependencies.isEmpty()) {
-            // Forge's boolean presence requirement maps to FML's REQUIRED/OPTIONAL.
-            // Keep versionRange, ordering, side and all other input fields unchanged.
-            for (List<Map<String, Object>> entries : dependencies.values()) {
-                for (Map<String, Object> entry : entries) {
-                    if (!(entry.get("mandatory") instanceof Boolean mandatory)) {
-                        throw new IllegalArgumentException("Missing Forge dependency mandatory boolean");
+        if (root.containsKey("dependencies")) {
+            Map<String, Object> owners = table(root.get("dependencies"), "dependencies");
+            for (var group : owners.entrySet()) {
+                if (!ids.contains(group.getKey())) throw invalid("dependencies", "unknown owner " + group.getKey());
+                for (Object value : list(group.getValue(), "dependencies." + group.getKey())) {
+                    Map<String, Object> dep = table(value, "dependency");
+                    if (dep.containsKey("type")) throw invalid("dependency.type", "conflicts with Forge mandatory");
+                    for (String key : dep.keySet()) {
+                        if (!DEPENDENCY_KEYS.contains(key)) throw invalid("dependency." + key, "unsupported constraint");
                     }
-                    if (entry.containsKey("type")) {
-                        throw new IllegalArgumentException("NeoForge dependency type is not a Forge mandatory field");
-                    }
-                    entry.put("type", mandatory ? "required" : "optional");
+                    modId(string(dep, "modId", true));
+                    if (!(dep.get("mandatory") instanceof Boolean mandatory))
+                        throw invalid("dependency.mandatory", "must be a boolean");
+                    for (String key : List.of("versionRange", "ordering", "side", "referralUrl", "referralURL", "reason"))
+                        string(dep, key, false);
+                    if (dep.containsKey("versionRange")) range((String) dep.get("versionRange"), "dependency.versionRange");
+                    if (dep.containsKey("ordering")) enumValue(IModInfo.Ordering.class, dep.get("ordering"), "ordering");
+                    if (dep.containsKey("side")) enumValue(IModInfo.DependencySide.class, dep.get("side"), "side");
+                    // Keep mandatory and every original value. No id or range substitution.
+                    dep.put("type", mandatory ? "required" : "optional");
                 }
             }
-            root.put("dependencies", dependencies);
         }
         return root;
     }
 
-    private static String unquote(String value) {
-        if (value.length() >= 2 && value.startsWith("\"") && value.endsWith("\"")) {
-            return value.substring(1, value.length() - 1);
+    private static Object copy(Object value) {
+        if (value instanceof UnmodifiableConfig config) {
+            Map<String, Object> result = new LinkedHashMap<>();
+            config.valueMap().forEach((key, item) -> result.put(key, copy(item)));
+            return result;
+        }
+        if (value instanceof List<?> list) {
+            List<Object> result = new ArrayList<>();
+            list.forEach(item -> result.add(copy(item)));
+            return result;
         }
         return value;
+    }
+
+    @SuppressWarnings("unchecked")
+    private static Map<String, Object> table(Object value, String name) {
+        if (!(value instanceof Map<?, ?>)) throw invalid(name, "must be a table");
+        return (Map<String, Object>) value;
+    }
+    private static List<?> list(Object value, String name) {
+        if (!(value instanceof List<?> values)) throw invalid(name, "must be an array of tables");
+        return values;
+    }
+    private static String string(Map<String, Object> map, String key, boolean required) {
+        Object value = map.get(key);
+        if (!required && value == null) return null;
+        if (!(value instanceof String text) || (required && text.isBlank())) throw invalid(key, "must be " + (required ? "a nonblank string" : "a string"));
+        return text;
+    }
+    private static void typed(Map<String, Object> map, String key, Class<?> type) {
+        if (map.containsKey(key) && !type.isInstance(map.get(key))) throw invalid(key, "must be " + type.getSimpleName());
+    }
+    private static String modId(String id) {
+        if (!id.matches("[a-z][a-z0-9_]{1,63}")) throw invalid("modId", "invalid " + id);
+        return id;
+    }
+    private static void range(String range, String name) {
+        try { VersionRange.createFromVersionSpec(range); }
+        catch (InvalidVersionSpecificationException e) { throw invalid(name, "invalid version range " + range); }
+    }
+    private static <E extends Enum<E>> void enumValue(Class<E> type, Object value, String name) {
+        try { Enum.valueOf(type, (String) value); }
+        catch (IllegalArgumentException e) { throw invalid(name, "unsupported " + value); }
+    }
+    private static IllegalArgumentException invalid(String field, String reason) {
+        return new IllegalArgumentException("Forge metadata " + field + ": " + reason);
     }
 }
