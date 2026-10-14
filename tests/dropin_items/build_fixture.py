@@ -1,6 +1,7 @@
 """Compile the original Forge drop-in fixture and a separate query-only NeoForge observer."""
 import argparse
 import importlib.util
+import json
 import os
 from pathlib import Path
 import shutil
@@ -35,6 +36,16 @@ def build(args):
     jars = {}
     for name, folder, cp in [('dropin-items', source / 'src', forgecp),
                              ('dropin-observer', source / 'driver', libraries)]:
+        if name == 'dropin-items' and args.existing_forge_jar:
+            original = args.existing_forge_jar.resolve()
+            frozen = json.loads((original.parent / 'result.json').read_text())
+            assert frozen['jars'][name]['SHA256'] == w.digest(original)
+            for record in frozen['source']:
+                path = Path(record['Path'])
+                if path.is_relative_to(source / 'src'):
+                    assert w.digest(path) == record['SHA256'], 'Frozen Forge source/resource changed'
+            jars[name] = r.fingerprint(original)
+            continue
         classes = run / (name + '-classes')
         classes.mkdir()
         w.native(run, name + '-javac', [binary / 'javac', '--release', '21', '-encoding', 'UTF-8',
@@ -47,13 +58,14 @@ def build(args):
                  root / 'META-INF/MANIFEST.MF', '-C', root, '.'])
         jars[name] = r.fingerprint(jar)
         w.save(run / (name + '-contents.json'), w.jar_contents(jar))
-    with zipfile.ZipFile(run / 'dropin-items.jar') as jar:
+    forgejar = Path(jars['dropin-items']['Path'])
+    with zipfile.ZipFile(forgejar) as jar:
         for name in jar.namelist():
             if name.endswith('.class'):
                 data = jar.read(name)
                 assert b'net/neoforged/' not in data and b'io/github/gfander/dualforge/' not in data
                 assert not any(key in data for key in (b'DF005_REGISTER', b'DF006_REGISTER', b'DF006B_REGISTER', b'getBoolean'))
-    for name, jar, cls in [('entry', run / 'dropin-items.jar', 'com.example.dropin.DropInItems'),
+    for name, jar, cls in [('entry', forgejar, 'com.example.dropin.DropInItems'),
                            ('driver', run / 'dropin-observer.jar', 'com.example.dropindriver.DropInDriver')]:
         w.native(run, 'javap-' + name, [binary / 'javap', '-v', '-p', '-c', '-classpath', jar, cls])
     driver = (run / 'javap-driver.stdout.log').read_text()
@@ -64,7 +76,7 @@ def build(args):
     w.native(run, 'asm-javac', [binary / 'javac', '--release', '21', '-cp', cp, '-d', classes,
              REPO / 'tests/multi_registry/contract/AsmEvidence.java'])
     w.native(run, 'asm-nodes', [binary / 'java', '-cp', str(classes) + os.pathsep + cp,
-             'io.github.gfander.dualforge.test.AsmEvidence', run / 'dropin-items.jar', 'com/example/dropin/DropInItems.class'])
+             'io.github.gfander.dualforge.test.AsmEvidence', forgejar, 'com/example/dropin/DropInItems.class'])
     w.unchanged(inputs)
     result = {'status': 'PASS', 'jars': jars, 'nativeForgeOnly': True, 'businessSwitches': [],
               'source': w.fingerprints([p for p in source.rglob('*') if p.is_file()])}
@@ -77,4 +89,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     for key in ('server-input', 'forge-dependencies', 'jdk-home'):
         parser.add_argument('--' + key, type=Path, required=True)
+    parser.add_argument('--existing-forge-jar', type=Path,
+                        help='Preserve the frozen original Forge JAR while rebuilding only the query observer')
     build(parser.parse_args())

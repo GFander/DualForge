@@ -22,7 +22,7 @@ public final class DropInDriver {
         var owner = (FMLModContainer) ModList.get().getModContainerById("dropinprobe").orElseThrow();
         if (owner.getEventBus() == NeoForge.EVENT_BUS) throw new IllegalStateException("Wrong MOD bus");
         Class<?> entry = Class.forName("com.example.dropin.DropInItems", false,
-                FMLLoader.getGameLayer().findLoader("dropinprobe"));
+                FMLLoader.getGameLayer().findLoader(owner.getModInfo().getOwningFile().moduleName()));
         Item[] items = new Item[2];
         String[] ids = {"ice_ether", "raw_ice_ether"};
         String[] fields = {"ICE_ETHER", "RAW_ICE_ETHER"};
