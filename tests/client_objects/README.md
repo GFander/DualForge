@@ -47,6 +47,7 @@ python3 -B tests/client_objects/build_mac_kit.py --compat "$DF_COMPAT_JAR" \
 ```
 
 包内分items-test与block-test，各含同compat和已测Forge JAR、对应JVM参数；分别独立Prism实例验收，不混装两组。详见[MAC-SETUP](MAC-SETUP.md)与[CHECKLIST](CHECKLIST.md)。
-状态保持CLIENT NOT RUN，实际give/背包/手持/放置/中英文显示及保存重进后再填写。原世界、冻结输入及旧命名证据不改写；不实施旧世界ID迁移。
+当前 **block-test / 006B-C PASS（用户macOS Apple Silicon人工验收，本轮截图WAIVED）**；实际give、放置、六面、手持、中英文及重进后方块/物品持久化均获用户确认。证据分级、Mac日志摘录/原件限制及制品核验范围见[最新人工报告](<../../Dev Manuals/Convergence-006B-C macOS 客户端人工验收报告.md>)与[当前状态](client-acceptance.json)。新版items-test双Item图形验收仍NOT RUN，不继承Block组或原006A-C旧cohort结论。
+原CHECKLIST是打包时的通用计划快照，不改写为自动运行结果；本轮Block截图要求以最新报告的用户豁免为准。原世界、冻结输入及旧命名证据不改写，不实施旧世界ID迁移。
 
 本轮实际结果及正式包SHA见[交付](<../../Dev Manuals/Ice Ether 实际对象命名统一交付.md>)与[证据索引](<../../Dev Manuals/Ice Ether 实际对象命名统一证据索引.json>)。

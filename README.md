@@ -134,6 +134,6 @@ dump 属性为 `dualforge.dump.path` / `dualforge.dump.profileDir`。
 新工具不接受历史制品或旧参数混用；当前身份检查入口见
 [project_identity](tests/project_identity/README.md)。所有历史 API/ABI 支持范围保持原样。
 
-006B新增独立Block/BlockItem受控profile，保留006A Item规则和原构造器ABI；支持范围与实际证据见 [006B报告](<Dev Manuals/Convergence-006B 交付报告.md>)、[测试入口](tests/block_registry/README.md)。006B-C NOT RUN，不继承旧客户端cohort。
+006B新增独立Block/BlockItem受控profile，保留006A Item规则和原构造器ABI；支持范围与实际证据见 [006B报告](<Dev Manuals/Convergence-006B 交付报告.md>)、[测试入口](tests/block_registry/README.md)。006B-C当前为 **PASS（用户macOS Apple Silicon实机人工验收，本轮截图WAIVED）**，见[人工验收报告](<Dev Manuals/Convergence-006B-C macOS 客户端人工验收报告.md>)；不继承旧客户端cohort。
 
-最新客户端输入已将实际对象统一为ice_ether、raw_ice_ether、ice_ether_block，Java声明、Registry路径、资源同名，原冻结合约回归保留；见[client_objects](tests/client_objects/README.md)及[交付](<Dev Manuals/Ice Ether 实际对象命名统一交付.md>)。两组新服务端Contract/C/T通过，Mac渲染仍待人工验收。
+最新客户端输入已将实际对象统一为ice_ether、raw_ice_ether、ice_ether_block，Java声明、Registry路径、资源同名，原冻结合约回归保留；见[client_objects](tests/client_objects/README.md)及[交付](<Dev Manuals/Ice Ether 实际对象命名统一交付.md>)。两组服务端Contract/C/T为此前实际PASS；Block组Mac人工验收现已PASS，新版双Item组Mac验收仍NOT RUN。原始服务端证据归档仍未远端持久化。
