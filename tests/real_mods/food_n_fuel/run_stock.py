@@ -111,6 +111,9 @@ def run(args):
                     state = 'EXITED_BEFORE_DONE'
                     break
                 time.sleep(.5)
+        except (BrokenPipeError, subprocess.TimeoutExpired, ValueError) as failure:
+            state = 'RUN_INTERRUPTED'
+            save(output / 'harness-failure.json', {'type': type(failure).__name__, 'message': str(failure)})
         finally:
             if process.poll() is None:
                 os.killpg(process.pid, signal.SIGTERM)

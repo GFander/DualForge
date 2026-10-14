@@ -47,9 +47,18 @@ public final class NativeRegistryObserver {
                 facts.put("holderIdentical", holders.get(key.toString()) == item);
                 Class<?> stackClass = Class.forName("net.minecraft.world.item.ItemStack");
                 Object stack = stackClass.getConstructor(Class.forName("net.minecraft.world.level.ItemLike")).newInstance(item);
-                Class<?> living = Class.forName("net.minecraft.world.entity.LivingEntity");
-                Object food = item.getClass().getMethod("getFoodProperties", stackClass, living).invoke(item, stack, null);
-                facts.put("foodProperties", food == null ? null : food.toString());
+                Object foodType = Class.forName("net.minecraft.core.component.DataComponents").getField("FOOD").get(null);
+                Object food = Class.forName("net.minecraft.core.component.DataComponentHolder")
+                        .getMethod("get", Class.forName("net.minecraft.core.component.DataComponentType"))
+                        .invoke(stack, foodType);
+                Map<String, Object> foodFacts = null;
+                if (food != null) {
+                    foodFacts = new LinkedHashMap<>();
+                    for (String accessor : List.of("nutrition", "saturation", "canAlwaysEat", "eatSeconds"))
+                        foodFacts.put(accessor, food.getClass().getMethod(accessor).invoke(food));
+                    foodFacts.put("effects", food.getClass().getMethod("effects").invoke(food).toString());
+                }
+                facts.put("foodProperties", foodFacts);
                 if (item.getClass().getName().equals("net.natevg.fnf.item.custom.FuelItem")) {
                     facts.put("burnTimeApiResult", item.getClass().getMethod("getBurnTime", stackClass,
                          Class.forName("net.minecraft.world.item.crafting.RecipeType")).invoke(item, stack, null));
