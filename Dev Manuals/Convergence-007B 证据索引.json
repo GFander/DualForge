@@ -12924,14 +12924,16 @@
   "localMinimalArchive": {
     "status": "ARCHIVE_READY / NOT PERSISTED",
     "path": "/workspace/DualForge-007B/out/convergence-007b/evidence-export/dualforge-007-minimal-evidence.zip",
-    "SHA256": "0eb656f0b37df21df406825d7d47b2fedf62c52396efa506af5c79850cee8e20",
-    "bytes": 159921,
+    "SHA256": "dd0c6e7f862887e056b865ad6b7bb2c2dc41e84b3e129d1bf4afcb769f06dfcd",
+    "bytes": 160046,
     "payloadFiles": 84,
     "zipFiles": 87,
     "textSecretScan": "PASS",
     "zipCRC": "PASS",
     "sourceUnchanged": "PASS",
-    "manifestSHA256": "459f86c203b6a3b15da3c5af4f35135a254d3ec2caed164b5287f3fa1ac06b1c"
+    "manifestSHA256": "79bc5b063430aecfc6f0b4c23d86dd03a03fc5804967ef3643aca60877a851aa",
+    "originalRecordedFiles": 83,
+    "derivedSummaryFiles": 1
   },
   "localChecks": {
     "status": "PASS",

@@ -84,4 +84,4 @@ ZIP CRC/清单逐文件SHA通过，只含最终DualForge与原Forge两JAR、身�
 006B既有附件已独立远端VERIFIED，后续客户端不在旧ZIP内，详见007A Gate0。新007证据不冒充旧归档内容。
 用户安装见[指南](../docs/INSTALL.md)，重跑与Mac步骤见[dropin_items](../tests/dropin_items/README.md)。PR正文记录最终HEAD/CI及007A依赖；不合并、不创建Release、不继续其他阶段。
 
-最小原始归档当前 **ARCHIVE_READY / NOT PERSISTED**：`out/convergence-007b/evidence-export/dualforge-007-minimal-evidence.zip`，159,921字节，87个ZIP文件（84个原始payload），SHA `0eb656f0b37df21df406825d7d47b2fedf62c52396efa506af5c79850cee8e20`。CRC、逐Manifest/SHA、原文件未变和文本凭据模式扫描通过。覆盖最终标准normal/query/mixed/Clumps、纯基线、Contract before/after及构建；完整历史raw、世界、官方依赖与JAR二进制不收录。当前工具没有GitHub文件附件上传接口，本ZIP尚未远端上传/复核，不能称永久下载；可由用户在本PR评论拖入ZIP后再独立核验。
+最小原始归档当前 **ARCHIVE_READY / NOT PERSISTED**：`out/convergence-007b/evidence-export/dualforge-007-minimal-evidence.zip`，160,046字节，87个ZIP文件（83个原始记录payload＋1个明确标记的派生历史指针汇总），SHA `dd0c6e7f862887e056b865ad6b7bb2c2dc41e84b3e129d1bf4afcb769f06dfcd`。CRC、逐Manifest/SHA、原文件未变和文本凭据模式扫描通过。覆盖最终标准normal/query/mixed/Clumps、纯基线、Contract before/after及构建；完整历史raw、世界、官方依赖与JAR二进制不收录。当前工具没有GitHub文件附件上传接口，本ZIP尚未远端上传/复核，不能称永久下载；可由用户在本PR评论拖入ZIP后再独立核验。
