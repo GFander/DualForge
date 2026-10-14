@@ -48,6 +48,7 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
     private final Map<String, String> entryEvents = new HashMap<>();
     private final Set<String> eventClasses = new HashSet<>();
     private final Map<String, String> registryEntries = new HashMap<>();
+    private final Map<String, String> blockEntries = new HashMap<>();
 
     public DualForgeEntryTransformer() {
         String value = System.getProperty("dualforge.2a.rewrite");
@@ -84,6 +85,17 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
         original.accept(input);
         try {
             log("offered: " + input.name);
+            if (blockEntries.containsKey(input.name)) {
+                if (!rewriteEnabled) return input;
+                if (!apiRewriteEnabled) throw new IllegalStateException("006B requires apiRewrite=true");
+                var stats = ControlledForgeBlockProfile.rewrite(input, blockEntries.get(input.name));
+                log("BLOCK_REGISTRY_PROFILE entry=" + input.name + " modId=" + blockEntries.get(input.name)
+                        + " createHits=" + stats.creates() + " supplierHits=" + stats.declarations()
+                        + " modBusAttachHits=" + stats.attachments() + " holderGetHits=" + stats.getters()
+                        + " supplierImplementationHits=" + stats.suppliers());
+                dumpProfile(input);
+                return input;
+            }
             if (registryEntries.containsKey(input.name)) {
                 if (!rewriteEnabled) return input;
                 if (!apiRewriteEnabled) throw new IllegalStateException("005 requires apiRewrite=true");
@@ -316,6 +328,7 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
         entryEvents.clear();
         eventClasses.clear();
         registryEntries.clear();
+        blockEntries.clear();
         Set<ITransformer.Target<ClassNode>> targets = new HashSet<>();
         // ModLauncher registers targets after FML completeScan, before the GAME layer.
         // getScanResult waits for the host's background scan; no classes are loaded here.
@@ -350,6 +363,19 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
                             new ClassReader(Files.readAllBytes(file.getFile().findResource(internal + ".class"))).accept(candidate, 0);
                         } catch (java.io.IOException e) {
                             throw new IllegalStateException("005 cannot inspect owned entry " + entry, e);
+                        }
+                        if (ControlledForgeBlockProfile.isCandidate(candidate)) {
+                            long entries = scan.getAnnotations().stream().filter(a -> a.targetType() == ElementType.TYPE
+                                    && a.annotationType().getClassName().equals("net.minecraftforge.fml.common.Mod")).count();
+                            if (entries != 1 || file.getMods().size() != 1) {
+                                throw new IllegalStateException("006B requires one same-file Forge @Mod entry and metadata owner");
+                            }
+                            ControlledForgeBlockProfile.validate(candidate, info.getModId());
+                            blockEntries.put(internal, info.getModId());
+                            targets.add(ITransformer.Target.targetClass(entry));
+                            log("TARGET modId=" + info.getModId() + " entry=" + entry + " profile=block-item-pair"
+                                    + " file=" + file.getFile().getFilePath());
+                            continue;
                         }
                         var stats = ControlledForgeItemProfile.validate(candidate, info.getModId());
                         registryEntries.put(internal, info.getModId());
