@@ -5,7 +5,7 @@
 
 [E] 原生Forge52.1.0与纯vanilla MC1.21.1干净编译成功；Forgeclasspath无NeoForge/DualForge，vanilla class全量无patch owner。
 保留javac/jar/javap/ASM；精确输入清单见fixture/result.json。两次构建：首轮driver纯度断言把查询cast误认成创建Block，原日志保留；修正仅检查实际NEW后重新干净编译并冻结。
-最终fixture在 out/convergence-006b/fixture/20261014-011319-c33ae78f，源与各JAR/class/资源SHA见原result/contents/inputs。
+baseline工作checkpoint在011319-c33ae78f，最终fixture冻结在 out/convergence-006b/fixture/20261014-012113-e9fd2761，源与各JAR/class/资源SHA见原result/contents/inputs。
 
 |实际位置|Forge实际类型/调用|允许的Neo输出|
 |---|---|---|
@@ -34,3 +34,5 @@ Forge52 sources原MavenHTTP403、Neo镜像HTTP404；未假称取得该源码。F
 [D] Gate0具备可限定的转换范围，继续实现独立Block+BlockItem profile；不放宽006A Item规则，不改Loader/Reader/构造ABI/EventAPI。
 仅支持一个普通Block和一个精确关联BlockItem，两typed DR、唯一holder、同modId namespace、标准零捕获bootstrap、已验证supplier体、两个local1挂接和get-only accessor。未知registry/API/捕获/跨类/额外入口严格拒绝。
 Gate0不是006B-S动态PASS；BlockItem关联、两Registry顺序、整体ClassNode原子性将在Contract和真实C/T验证。
+
+[E] 三份新fixture源Manifest去掉Git不接受的多余EOF空白后，再次干净编译：原baseline与最终四JAR的每个成员字节完全一致（class、metadata、Manifest都一致），只有打包时间/SHA不同。旧源快照/JAR/日志保留不覆盖；fixture-checkpoints.json记录完整对照。
