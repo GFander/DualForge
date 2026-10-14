@@ -1,6 +1,7 @@
 package io.github.gfander.dualforge;
 
 import cpw.mods.jarhandling.JarContents;
+import cpw.mods.jarhandling.JarMetadata;
 import cpw.mods.modlauncher.api.ITransformer;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -35,6 +36,13 @@ public final class NormalItemBytecodeTest {
         for (String key : List.of("2a.rewrite", "0g.apiRewrite", "0j.emptyRegistration", "0l.subscriberRewrite",
                                   "dump.path", "dump.profileDir")) System.clearProperty("dualforge." + key);
         ModFile forge = scan(Path.of(args[0]), false);
+        var declared = JarMetadata.from(JarContents.of(Path.of(args[0])));
+        check(!declared.name().equals(forge.getModFileInfo().moduleName()), "actual default-JAR/module-metadata mismatch exercised");
+        check(forge.getSecureJar().name().equals(forge.getModFileInfo().moduleName())
+                && forge.getSecureJar().moduleDataProvider().descriptor().name().equals(forge.getModFileInfo().moduleName()),
+                "runtime module identity agrees with real FML owner");
+        Files.writeString(output.resolve("module.before.txt"), declared.descriptor().toString());
+        Files.writeString(output.resolve("module.after.txt"), forge.getSecureJar().moduleDataProvider().descriptor().toString());
         ClassNode source = read(Files.readAllBytes(forge.findResource(ENTRY + ".class")));
         byte[] original = bytes(source);
         DualForgeEntryTransformer transformer = new DualForgeEntryTransformer();
@@ -163,6 +171,9 @@ public final class NormalItemBytecodeTest {
         var nativeTransformer = new DualForgeEntryTransformer();
         check(nativeTransformer.targets().isEmpty(), "native metadata never claimed");
         check(Arrays.equals(original, bytes(nativeTransformer.transform(source, null))), "unowned Forge-shaped class unchanged");
+        ModFile matching = scan(Path.of(args[3]), false);
+        check(matching.getSecureJar().moduleDataProvider().descriptor().equals(
+                JarMetadata.from(JarContents.of(Path.of(args[3]))).descriptor()), "matching historical module descriptor unchanged");
         System.out.println("NORMAL ITEM CONTRACT PASS negatives=13 supplierLogicUnchanged=true");
     }
 
