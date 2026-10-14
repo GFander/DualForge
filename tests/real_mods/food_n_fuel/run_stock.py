@@ -134,6 +134,7 @@ def run(args):
               'inputsUnchanged': all(sha(server / v['path']) == v['sha256'] for v in records)}
     save(output / 'result.json', {'lifecycle': 'PASS' if all(checks.values()) else 'FAIL',
          'modFunctionality': 'NOT ASSERTED', 'state': state, 'exitCode': process.returncode,
+         'zeroDualForgeParameters': seen_java,
          'seconds': round(time.monotonic() - started, 2), 'assertions': checks,
          'severityRecords': bootstrap.severity_records(stdout + '\n' + runtime),
          'installedMods': [v for v in records if v['path'].startswith('mods/')]})
