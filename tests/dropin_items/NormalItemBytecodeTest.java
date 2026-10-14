@@ -174,7 +174,27 @@ public final class NormalItemBytecodeTest {
         ModFile matching = scan(Path.of(args[3]), false);
         check(matching.getSecureJar().moduleDataProvider().descriptor().equals(
                 JarMetadata.from(JarContents.of(Path.of(args[3]))).descriptor()), "matching historical module descriptor unchanged");
-        System.out.println("NORMAL ITEM CONTRACT PASS negatives=13 supplierLogicUnchanged=true");
+        ClassNode moduleInfo = new ClassNode();
+        moduleInfo.version = Opcodes.V21;
+        moduleInfo.access = Opcodes.ACC_MODULE;
+        moduleInfo.name = "module-info";
+        moduleInfo.module = new ModuleNode("mismatched.module", 0, null);
+        moduleInfo.module.requires = List.of(new ModuleRequireNode("java.base", Opcodes.ACC_MANDATED, null));
+        Path explicit = output.resolve("explicit-module-refusal.jar");
+        try (var originalJar = new JarFile(args[0]); var zip = new ZipOutputStream(Files.newOutputStream(explicit))) {
+            for (String name : List.of("META-INF/mods.toml", ENTRY + ".class")) {
+                zip.putNextEntry(new ZipEntry(name));
+                zip.write(originalJar.getInputStream(originalJar.getJarEntry(name)).readAllBytes()); zip.closeEntry();
+            }
+            zip.putNextEntry(new ZipEntry("module-info.class")); zip.write(bytes(moduleInfo)); zip.closeEntry();
+        }
+        byte[] explicitBefore = Files.readAllBytes(explicit);
+        try { scan(explicit, false); throw new AssertionError("Explicit module identity silently remapped"); }
+        catch (IllegalStateException expected) {
+            check(expected.getMessage().contains("unsupported explicit Forge module identity"), "explicit module mismatch clearly rejected");
+        }
+        check(Arrays.equals(explicitBefore, Files.readAllBytes(explicit)), "explicit module refusal preserves original JAR bytes");
+        System.out.println("NORMAL ITEM CONTRACT PASS negatives=13 moduleRefusals=1 supplierLogicUnchanged=true");
     }
 
     private static ModFile scan(Path jar, boolean nativeMetadata) throws Exception {

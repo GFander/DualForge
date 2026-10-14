@@ -36,6 +36,10 @@ public final class ForgeJarMetadata implements JarMetadata {
     void bind(IModFile file) {
         String requiredModule = file.getModFileInfo().moduleName();
         if (!delegate.name().equals(requiredModule)) {
+            if (!delegate.descriptor().isAutomatic()) {
+                throw new IllegalStateException("007B unsupported explicit Forge module identity: declared="
+                        + delegate.name() + " metadata=" + requiredModule);
+            }
             // FMLModContainer resolves this exact metadata-owned module. Use the official
             // implementation rather than changing the input JAR or constructing a custom layer.
             ModJarMetadata hostMetadata = new ModJarMetadata(contents);

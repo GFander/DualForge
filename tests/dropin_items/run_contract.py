@@ -31,7 +31,7 @@ if __name__ == '__main__':
                  'io.github.gfander.dualforge.NormalItemBytecodeTest', args.fixture, args.native_control, run / 'bytes', args.matching_fixture])
         assert 'NORMAL ITEM CONTRACT PASS' in (run / 'bytecode.stdout.log').read_text()
         w.unchanged(records)
-        result.update(status='PASS', negativeCases=13, fixtureSHA256=w.digest(args.fixture))
+        result.update(status='PASS', negativeCases=13, moduleRefusals=1, fixtureSHA256=w.digest(args.fixture))
     finally:
         w.save(run / 'result.json', result)
     print('RESULT', result['status'], run)
