@@ -1,7 +1,7 @@
 # 006B-C：冰以太方块 macOS 人工验收
 
 本包使用用户提供的原始16×16冰以太方块贴图，方块六面共用它；对应BlockItem继承同一立方体模型。
-注册ID保持 `blockregistryprobe:sample_block`；英文名 **Ice Ether Block**，中文名 **冰以太方块**。
+注册ID保持 `blockregistryprobe:sample_block`；英文名 **Ice Ether Block**，中文名 **冰之以太块**。
 PNG的RGBA及半透明像素保持原字节；本轮沿用普通Block渲染路径，请记录实机的实际视觉效果。
 状态是 **CLIENT_READY / CLIENT NOT RUN**，静态资源及打包PASS不代表已经实际渲染。
 
@@ -12,10 +12,19 @@ PNG的RGBA及半透明像素保持原字节；本轮沿用普通Block渲染路�
 3. 打开实例文件夹，将本包 `mods/` 中两个JAR复制到该新实例 `.minecraft/mods/`。使用本次两个文件，避免混装旧006A/005夹具或其他兼容层。
 4. Prism实例 Settings → Java → 启用实例JVM参数覆盖；将 `JVM-ARGS.txt` 的七行作为以空格分隔的JVM参数粘贴。不要填入Minecraft命令参数，也无需修改全局设置。
 5. 启动前在实例mods中执行 `shasum -a 256 dualforge.jar block-registry-probe.jar`，将两项SHA与本包manifest及CHECKLIST一并保存。
+6. 本包另附 `resourcepacks/dualforge-ice-ether-names.zip`。复制到实例 `.minecraft/resourcepacks/`，在游戏 Options → Resource Packs 中启用，作为已有受控物品的中英文名称覆盖；方块JAR自身也带正确名称。此语言包只含名称，不添加注册对象，原005/006A模组无需修改。
 
 此包包含原兼容层和新增资源版原生Forge输入，所有旧JAR成员（含class、Manifest、TOML）原字节保留。
 资源版fixture具有新的JAR SHA；服务端PASS属于原冻结fixture，不把它冒充本包客户端PASS。
 不包含查询Driver、Minecraft/NeoForge/Java依赖、账号、世界或旧日志；不使用旧005安装脚本，因为其fixture校验不同。
+
+名称映射如下；已有注册ID不改。语言包也可单独用于原005或006A独立实例，不需要为核对名称把多个Forge fixture同时安装。
+
+|已有对象|中文|英文|
+|---|---|---|
+|005 registryprobe:ice_ether；006A multiregistryprobe:alpha_item|冰之以太|Ice Ether|
+|006A multiregistryprobe:beta_item（粗矿贴图）|冰之以太粗矿|Raw Ice Ether|
+|006B blockregistryprobe:sample_block|冰之以太块|Ice Ether Block|
 
 ## 实机验收
 
