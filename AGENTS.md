@@ -104,3 +104,5 @@
 
 - 006B通过独立Block+BlockItem profile验证两个typed Registry及精确Holder依赖，原006A Item规则不放宽。原fixture/JAR/报告不变；006B-C当前为用户Mac实机人工PASS，本轮截图WAIVED，详见Dev Manuals/Convergence-006B-C macOS 客户端人工验收报告.md；历史NOT RUN不改写，回归绑定同一已测JAR。
 - 最新客户端对象统一输入在tests/client_objects/：实际ID ice_ether/raw_ice_ether/ice_ether_block与Java声明/资源同名；原005/006A/006B输入保留作冻结回归，不覆盖旧结果。两角色分开安装，当前仅Block组获用户人工PASS，新版items-test仍NOT RUN；不能以旧名称/语言覆盖或历史006A-C替代新组实机结论。截图豁免仅限本轮，Mac日志原件/实际compat SHA独立核验和原始证据持久化限制分别记录。
+
+- 007A的tests/bootstrap使用原版启动文件，不允许隐式注入生产/业务JVM参数、Agent或额外模块参数。四生产开关默认true、诊断默认关闭；历史C/T显式条件和全部严格拒绝断言保留。旧首次预检快照不得重置来制造保全PASS，修改后采用固定提交的新验证worktree。

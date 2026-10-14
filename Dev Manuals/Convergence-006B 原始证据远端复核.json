@@ -1,0 +1,17 @@
+{
+  "status": "PERSISTED / VERIFIED",
+  "remoteURL": "https://github.com/user-attachments/files/33419811/dualforge-006b-runtime-evidence.zip",
+  "SHA256": "8829de2cbbad04701aec42aeb5483fc6b5bd42e19a110e3229174a4e02432a11",
+  "bytes": 4961881,
+  "files": 2965,
+  "manifestIndexedOriginalsComparedToGit": 2958,
+  "httpReadSucceeded": true,
+  "zipCRC": "PASS",
+  "safePaths": "PASS",
+  "manifestMembershipAndHashes": "PASS",
+  "freshExtraction": "PASS",
+  "manifestSHA256": "6f0d07ea871ccd3d6fcc18aa94c7706d542e2d73812ba044e9e3393702f32324",
+  "readbackDate": "2026-10-14 Asia/Shanghai",
+  "archiveIsSubset": "original 006B server and historical regression selected evidence; excludes later canonical client fixtures/manual acceptance",
+  "originalArchiveGenerationStatusPreserved": true
+}
