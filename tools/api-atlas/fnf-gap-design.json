@@ -1,0 +1,233 @@
+{
+  "compatibility-frontier": {
+    "status": "STATIC_ANALYSIS_ONLY",
+    "boundaries": [
+      {
+        "id": "profile-global-bus",
+        "stage": "NORMAL_PROFILE_SELECTION",
+        "result": "HELPER_NOT_CANDIDATE; original CONTEXT retained",
+        "evidence": [
+          "dualforge/src/main/java/io/github/gfander/dualforge/ForgeRegistryTransformationPlan.java#isCandidate",
+          "class-inventory.json#FoodNFuel.<init>",
+          "actual-FML-contract/fnf-admission.stdout.log"
+        ],
+        "reason": "Any MinecraftForge field owner excludes 4B helper candidacy; this is not the forced planning failure",
+        "next": "global-event-semantics"
+      },
+      {
+        "id": "forced-supplier",
+        "stage": "FORCED_READ_ONLY_PLAN",
+        "result": "REJECTED",
+        "exactMessage": "Registry helper rejected: SUPPLIER_BUSINESS_UNSUPPORTED",
+        "evidence": [
+          "dualforge/src/main/java/io/github/gfander/dualforge/ForgeRegistryTransformationPlan.java#supplier",
+          "supplier-classification.json",
+          "actual-FML-contract/fnf-admission.stdout.log"
+        ],
+        "next": "supplier-boundary"
+      },
+      {
+        "id": "item-closure",
+        "stage": "STATIC_DEPENDENCY_CLOSURE",
+        "result": "LOCAL_PRIMITIVES_ONLY; no FnF plan output",
+        "evidence": [
+          "api-usage-matrix.json",
+          "reference-closure.json"
+        ],
+        "reason": "4B Item typed create/register/holder/internal owning Bus bridge exist only in validated group; one matching supplier does not admit full group",
+        "next": "supplier-boundary"
+      },
+      {
+        "id": "tab-closure",
+        "stage": "STATIC_DEPENDENCY_CLOSURE",
+        "result": "NEW_ASM_RULE_REQUIRED",
+        "evidence": [
+          "supplier-classification.json#TAB_REGISTRATION_SUPPLIER",
+          "class-inventory.json#FnFCreativeModeTabs"
+        ],
+        "reason": "ResourceKey registry, typed Tab holder, builder callback and icon are outside Item-only helper validator",
+        "next": "typed-tab-closure"
+      },
+      {
+        "id": "global-bus",
+        "stage": "CONSTRUCTOR_AND_EVENT_LIFECYCLE",
+        "result": "RUNTIME_BRIDGE_REQUIRED",
+        "evidence": [
+          "api-usage-matrix.json#MinecraftForge.EVENT_BUS",
+          "class-inventory.json#FoodNFuel.<init>"
+        ],
+        "reason": "Mod Bus view/Registry attachment is not global register(Object) support; scanned instance has no subscribed handlers, but call cannot be deleted or called generally compatible",
+        "next": "global-event-semantics"
+      },
+      {
+        "id": "food-fuel",
+        "stage": "GAME_BEHAVIOR",
+        "result": "NOT RUN",
+        "evidence": [
+          "class-inventory.json#FnFFoodProperties",
+          "class-inventory.json#FuelItem.getBurnTime"
+        ],
+        "reason": "Native ABI resolves; Food effects, item components and furnace dispatch still need native-vs-host behavioral controls",
+        "next": "native-behavior"
+      },
+      {
+        "id": "nullable",
+        "stage": "ANNOTATION_STATIC_RESOLUTION",
+        "result": "UNRESOLVED",
+        "usePoints": 2,
+        "evidence": [
+          "api-usage-matrix.json#org/jetbrains/annotations/Nullable"
+        ],
+        "reason": "Compile-only annotation absent from selected server atlas; retain both sites, not proof of runtime failure"
+      },
+      {
+        "id": "historical-runtime",
+        "stage": "INHERITED_C3_RUNTIME",
+        "result": "FAIL inherited; NOT RERUN",
+        "reason": "ItemRegistries.<clinit> NoClassDefFoundError net/minecraftforge/registries/ForgeRegistries; no claimed progress beyond this actual runtime point"
+      }
+    ],
+    "fnfRuntime": "NOT RUN",
+    "c4a": "PARTIAL",
+    "client": "NOT RUN",
+    "newProductionCapability": false
+  },
+  "next-task-dependencies": {
+    "recommendedUniqueNextObjective": "supplier-boundary",
+    "tasks": [
+      {
+        "id": "supplier-boundary",
+        "phase": "4C-1 recommended sole objective",
+        "dependsOn": [],
+        "scope": "Independent controlled Item supplier API/type/dataflow boundary validation, preserving supplier instruction bytes; no FnF identity rules",
+        "productionCandidates": [
+          "ForgeRegistryTransformationPlan.supplier",
+          "RegistryBytecodeVerifier"
+        ],
+        "api": [
+          "Item(Properties)",
+          "Item.Properties.food/stacksTo",
+          "owned Item subclass constructors"
+        ],
+        "positiveFixtures": [
+          "renamed mod/entry/helper with ordinary Item",
+          "native Forge FoodProperties static data + Item supplier",
+          "independent custom Item(Properties,int) constructor and native override"
+        ],
+        "negativeFixtures": [
+          "unknown Forge API or bootstrap",
+          "captured or foreign/unowned handle",
+          "wrong return/stack/field alias",
+          "reflection or unknown side effect",
+          "partial closure failure leaves all original nodes unchanged",
+          "old 4B/007B/Context negative contracts unchanged"
+        ],
+        "acceptance": [
+          "native Forge baseline first, identical original JAR on NeoForge",
+          "independent controlled Item registration C/T, official RegisterEvent and owner Bus/holder identity",
+          "supplier code byte-equal except separately approved exact API edges",
+          "unknowns fail closed; FnF Tab/global bus remain rejected"
+        ],
+        "outOfScope": [
+          "enable whole FnF closure",
+          "global event APIs",
+          "Tab",
+          "client behavior"
+        ]
+      },
+      {
+        "id": "typed-tab-closure",
+        "phase": "later independent task",
+        "dependsOn": [
+          "supplier-boundary"
+        ],
+        "scope": "Typed ResourceKey<CreativeModeTab> create/register and full icon/display Holder closure",
+        "api": [
+          "DeferredRegister.create(ResourceKey,String)",
+          "DeferredHolder<CreativeModeTab,CreativeModeTab>",
+          "DisplayItemsGenerator.accept(parameters,output)"
+        ],
+        "positiveFixtures": [
+          "one Tab, one icon and a display callback referencing both Item holder classes"
+        ],
+        "negativeFixtures": [
+          "wrong registry generic",
+          "early Holder.get",
+          "foreign/captured callback",
+          "missing consumer",
+          "conflicting rewritten descriptors"
+        ],
+        "acceptance": [
+          "native Forge then NeoForge identical fixture",
+          "real Tab registration and registry identity",
+          "UI display verification separate client gate"
+        ]
+      },
+      {
+        "id": "global-event-semantics",
+        "phase": "separate bridge task",
+        "dependsOn": [],
+        "scope": "Explicit global register(Object) contract, ownership/timing and event type mapping; no no-op registration",
+        "api": [
+          "MinecraftForge.EVENT_BUS",
+          "IEventBus.register(Object)",
+          "NeoForge.EVENT_BUS"
+        ],
+        "positiveFixtures": [
+          "handler-free instance registration, verify official target registration path",
+          "actual supported annotated instance listener dispatched exactly once on controlled event"
+        ],
+        "negativeFixtures": [
+          "Mod Bus mistaken as global",
+          "unverified event class",
+          "static/instance and inherited listener mismatch",
+          "wrong phase or duplicate registration",
+          "unsupported priority/cancellation/post"
+        ],
+        "acceptance": [
+          "native Forge event oracle and NeoForge same lifecycle comparison",
+          "unsupported listener semantics reject before publish",
+          "do not equate Registry bridge with general event bus adapter"
+        ]
+      },
+      {
+        "id": "native-behavior",
+        "phase": "later gameplay gate",
+        "dependsOn": [
+          "supplier-boundary",
+          "typed-tab-closure",
+          "global-event-semantics"
+        ],
+        "scope": "Native-versus-host food components/effects and real furnace FuelItem override dispatch; no generic food shim absent evidence",
+        "positiveFixtures": [
+          "same food component properties",
+          "non-fuel vs custom fuel, differing RecipeType and burn ticks"
+        ],
+        "negativeFixtures": [
+          "getBurnTime method present but not dispatched",
+          "wrong RecipeType overload or item identity"
+        ],
+        "acceptance": [
+          "actual furnace consumption/ticks and effects, not just method presence",
+          "client rendering/UI/eating/persistence separately verified"
+        ]
+      },
+      {
+        "id": "original-fnf-run",
+        "phase": "only after complete closure approval",
+        "dependsOn": [
+          "supplier-boundary",
+          "typed-tab-closure",
+          "global-event-semantics"
+        ],
+        "scope": "Original pinned JAR standard two-JAR server run; preserve all calls and record first actual failure",
+        "acceptance": [
+          "no diagnostic injection/business properties",
+          "input SHA identical",
+          "67 real items plus one Tab registration and official bus proofs",
+          "separate food/fuel/client/persistence gates"
+        ]
+      }
+    ]
+  }
+}

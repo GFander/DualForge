@@ -86,6 +86,38 @@ public final class Atlas {
     static Object parameterAnnotations(List<AnnotationNode>[] a) {
         return a==null?null:Arrays.stream(a).map(x->annotations(x,null)).toList();
     }
+    /** Lossless instruction operands/label indices for offline closure and control-flow review. */
+    static List<Object> code(ClassNode c) {
+        List<Object> methods=new ArrayList<>();
+        for(MethodNode m:c.methods) {
+            List<Object> instructions=new ArrayList<>();
+            for(AbstractInsnNode n:m.instructions) {
+                Map<String,Object> row=obj("index",m.instructions.indexOf(n),"opcode",n.getOpcode(),"nodeType",n.getType());
+                if(n instanceof MethodInsnNode x)row.putAll(obj("owner",x.owner,"name",x.name,"descriptor",x.desc,"interface",x.itf));
+                else if(n instanceof FieldInsnNode x)row.putAll(obj("owner",x.owner,"name",x.name,"descriptor",x.desc));
+                else if(n instanceof TypeInsnNode x)row.put("type",x.desc);
+                else if(n instanceof VarInsnNode x)row.put("local",x.var);
+                else if(n instanceof IntInsnNode x)row.put("operand",x.operand);
+                else if(n instanceof IincInsnNode x)row.putAll(obj("local",x.var,"increment",x.incr));
+                else if(n instanceof LdcInsnNode x)row.put("constant",constant(x.cst));
+                else if(n instanceof InvokeDynamicInsnNode x)row.putAll(obj("name",x.name,"descriptor",x.desc,"bootstrap",constant(x.bsm),"arguments",Arrays.stream(x.bsmArgs).map(Atlas::constant).toList()));
+                else if(n instanceof JumpInsnNode x)row.put("target",m.instructions.indexOf(x.label));
+                else if(n instanceof TableSwitchInsnNode x)row.putAll(obj("min",x.min,"max",x.max,"default",m.instructions.indexOf(x.dflt),"targets",x.labels.stream().map(m.instructions::indexOf).toList()));
+                else if(n instanceof LookupSwitchInsnNode x)row.putAll(obj("keys",x.keys,"default",m.instructions.indexOf(x.dflt),"targets",x.labels.stream().map(m.instructions::indexOf).toList()));
+                else if(n instanceof MultiANewArrayInsnNode x)row.putAll(obj("descriptor",x.desc,"dimensions",x.dims));
+                else if(n instanceof LineNumberNode x)row.putAll(obj("line",x.line,"start",m.instructions.indexOf(x.start)));
+                else if(n instanceof FrameNode x)row.putAll(obj("frameType",x.type,"locals",frame(x.local,m),"stack",frame(x.stack,m)));
+                instructions.add(row);
+            }
+            methods.add(obj("name",m.name,"descriptor",m.desc,"maxStack",m.maxStack,"maxLocals",m.maxLocals,"instructions",instructions,
+                "exceptionTable",m.tryCatchBlocks.stream().map(t->obj("start",m.instructions.indexOf(t.start),"end",m.instructions.indexOf(t.end),"handler",m.instructions.indexOf(t.handler),"type",t.type)).toList(),
+                "locals",m.localVariables==null?List.of():m.localVariables.stream().map(v->obj("name",v.name,"descriptor",v.desc,"signature",v.signature,"index",v.index,"start",m.instructions.indexOf(v.start),"end",m.instructions.indexOf(v.end))).toList()));
+        }
+        return methods;
+    }
+    static Object frame(List<Object> values,MethodNode m) {
+        return values==null?null:values.stream().map(v->v instanceof LabelNode l?obj("uninitializedAt",m.instructions.indexOf(l)):v).toList();
+    }
     static final class Usage {
         final List<Object> refs=new ArrayList<>();
         final ClassNode c; final String artifact;
@@ -177,7 +209,7 @@ public final class Atlas {
                         ClassNode c=new ClassNode();new ClassReader(bytes).accept(c,usage?0:ClassReader.SKIP_CODE);
                         var record=abi(c,artifact,name);record.put("multiRelease",mr);record.put("release",release);record.put("java21Eligible",release==0||(mr&&release<=21));
                         record.put("classSHA256",HexFormat.of().formatHex(java.security.MessageDigest.getInstance("SHA-256").digest(bytes)));
-                        if(usage){Usage u=new Usage(c,artifact);u.scan();record.put("references",u.refs);}
+                        if(usage){Usage u=new Usage(c,artifact);u.scan();record.put("references",u.refs);record.put("code",code(c));}
                         output.println(JSON.toJson(record));
                     }
                 }
