@@ -1,5 +1,7 @@
 # 测试入口
 
+007C-4A新增[api_atlas](api_atlas/README.md)：固定官方ABI扫描、候选/冲突、FnF静态使用及离线ASM/JVM验证。该组不启动游戏、不修改生产；历史动态结果只继承，客户端补丁输入缺失单独标记PARTIAL。
+
 tests 下现有文件位置保持不变。生产源码和工具布局见
 [STRUCTURE.md](../STRUCTURE.md)，环境及隔离运行参数见
 [tools/UNIX.md](../tools/UNIX.md)。从仓库根目录执行以下命令，所有

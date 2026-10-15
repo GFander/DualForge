@@ -1,5 +1,7 @@
 # DualForge
 
+007C-4A新增[独立API图谱与离线ASM研究工具](tools/api-atlas/README.md)，生产目录不变；缺少完整客户端补丁输入，整体PARTIAL。原FnF运行FAIL仅继承，未重跑。见[研究交付](<Dev Manuals/Convergence-007C-4A 交付报告.md>)；候选映射不代表生产支持。
+
 DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。本分支007C-3增加明确的入口Profile分类和严格构造期Context桥接，007C-2的平台依赖契约继续保留。唯一生产源码位于 [dualforge/src/main](dualforge/src/main)，构建生成 `dualforge.jar`，交付副本命名为 `DualForge.jar`。当前结果与边界见 [007C-3报告](<Dev Manuals/Convergence-007C-3 交付报告.md>)；历史结果见 [007C-2报告](<Dev Manuals/Convergence-007C-2 交付报告.md>)、[007B报告](<Dev Manuals/Convergence-007B Drop-in Runtime 交付报告.md>)、[007A报告](<Dev Manuals/Convergence-007 Drop-in Runtime 交付报告.md>)及[006B报告](<Dev Manuals/Convergence-006B 交付报告.md>)。
 
 仓库只维护 **zsh 脚本入口**。Python 3 标准库负责内部的构建编排、JSON、JAR 指纹、进程及日志捕获；运行不需要 Windows 或 PowerShell。旧Profile保留原单参数构造器ABI；新Context Profile仅支持下述严格无参入口。

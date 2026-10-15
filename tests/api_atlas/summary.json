@@ -1,0 +1,272 @@
+{
+  "testedSourceCommit": "25571c40671d6d80ca10a4dcec77db84440ff555",
+  "baseCommit": "29893683ea584b26208eb205b819c3f3376147be",
+  "pr": 22,
+  "officialInputs": 184,
+  "officialChecksumChecks": 250,
+  "atlas": {
+    "allScannedClassFileRecords": 105708,
+    "analysisLimits": [
+      "client patched input missing",
+      "compiler-emitted declaration API only; runtime mixin/access-transformer additions not applied",
+      "interface resolution with several declarations remains conservative/ambiguous",
+      "unresolved does not prove API absence"
+    ],
+    "candidateSymbolsByKind": {
+      "CLASS": {
+        "CLASS_RENAME_CANDIDATE": 892,
+        "RUNTIME_SHIM_REQUIRED": 55,
+        "UNRESOLVED": 656
+      },
+      "FIELD": {
+        "DESCRIPTOR_REWRITE_CANDIDATE": 433,
+        "FIELD_REWRITE_CANDIDATE": 1980,
+        "RUNTIME_SHIM_REQUIRED": 123,
+        "UNRESOLVED": 1852
+      },
+      "METHOD": {
+        "DESCRIPTOR_REWRITE_CANDIDATE": 1417,
+        "METHOD_REWRITE_CANDIDATE": 3778,
+        "RUNTIME_SHIM_REQUIRED": 351,
+        "UNRESOLVED": 5898
+      }
+    },
+    "duplicates": {
+      "forge": {
+        "MULTI_RELEASE_JAVA21": 12,
+        "PER_MODULE_DESCRIPTOR": 2
+      },
+      "neoforge": {
+        "MULTI_RELEASE_JAVA21": 12,
+        "PER_MODULE_DESCRIPTOR": 2,
+        "SERVER_PATCH_OVERLAY": 1171
+      }
+    },
+    "inventory": {
+      "forge": {
+        "dependencies": {
+          "classes": 31850,
+          "fields": 104506,
+          "methods": 356158,
+          "publicProtectedClasses": 14631,
+          "publicProtectedFields": 36383,
+          "publicProtectedMethods": 181581
+        },
+        "minecraft": {
+          "classes": 6482,
+          "fields": 31012,
+          "methods": 62571,
+          "publicProtectedClasses": 4970,
+          "publicProtectedFields": 15417,
+          "publicProtectedMethods": 38630
+        },
+        "platform": {
+          "classes": 1603,
+          "fields": 4388,
+          "methods": 11444,
+          "publicProtectedClasses": 1322,
+          "publicProtectedFields": 1377,
+          "publicProtectedMethods": 7384
+        }
+      },
+      "neoforge": {
+        "dependencies": {
+          "classes": 33250,
+          "fields": 105993,
+          "methods": 362585,
+          "publicProtectedClasses": 15546,
+          "publicProtectedFields": 36744,
+          "publicProtectedMethods": 185506
+        },
+        "minecraft": {
+          "classes": 6528,
+          "fields": 31196,
+          "methods": 63135,
+          "publicProtectedClasses": 5011,
+          "publicProtectedFields": 15561,
+          "publicProtectedMethods": 39040
+        },
+        "platform": {
+          "classes": 1925,
+          "fields": 4874,
+          "methods": 13155,
+          "publicProtectedClasses": 1568,
+          "publicProtectedFields": 1647,
+          "publicProtectedMethods": 8780
+        }
+      }
+    },
+    "minecraftNamespaces": "both supplied server views use Mojang names; FnF SRG aliases are a separate naming layer",
+    "minecraftServerABIChangedClasses": 629,
+    "productionEnabledCandidates": 0,
+    "runtimeVerifiedCandidates": 0,
+    "schemaVersion": 1,
+    "scope": "complete available fixed server-installation ClassFiles; client patched ABI INPUT_MISSING",
+    "statusByKind": {
+      "CLASS": {
+        "SEMANTIC_REVIEW_REQUIRED": 902,
+        "UNRESOLVED": 701
+      },
+      "FIELD": {
+        "AMBIGUOUS_MAPPING": 186,
+        "SEMANTIC_REVIEW_REQUIRED": 2427,
+        "UNRESOLVED": 1775
+      },
+      "METHOD": {
+        "AMBIGUOUS_MAPPING": 204,
+        "SEMANTIC_REVIEW_REQUIRED": 5236,
+        "UNRESOLVED": 6004
+      }
+    }
+  },
+  "fnf": {
+    "alreadySupportedUsePoints": 2,
+    "classes": 5,
+    "dynamicSites": 70,
+    "externalOverrideContracts": 1,
+    "inputClasses": [
+      "net/natevg/fnf/FoodNFuel",
+      "net/natevg/fnf/item/FnFCreativeModeTabs",
+      "net/natevg/fnf/item/FnFFoodProperties",
+      "net/natevg/fnf/item/ItemRegistries",
+      "net/natevg/fnf/item/custom/FuelItem"
+    ],
+    "minecraftPatchReferenceKinds": {
+      "PLATFORM_ADDED_OR_INHERITED_MEMBER": 2,
+      "VANILLA_CLASS": 1740,
+      "VANILLA_MEMBER": 787
+    },
+    "newRuntimeVerifiedMappings": 0,
+    "reflectionLikeCalls": [],
+    "srgNamedMemberUsePoints": 0,
+    "staticAnalysisBlindSpots": [
+      "reflection computed names, service loading, JNI, runtime generation/mixins",
+      "same symbol presence proves no lifecycle or semantic equivalence",
+      "absence from server view does not prove absence on client",
+      "SRG aliases are naming candidates, not production remapping"
+    ],
+    "staticVerifiedRewriteRules": 0,
+    "totalStaticExternalUsePoints": 4030,
+    "uniqueExternalSymbols": 92,
+    "uniqueSymbolsByClassification": {
+      "ALREADY_COMPATIBLE": 75,
+      "ALREADY_SUPPORTED_BY_DUALFORGE": 2,
+      "MAPPING_CANDIDATE": 7,
+      "SHIM_REQUIRED": 7,
+      "UNRESOLVED": 1
+    },
+    "uniqueSymbolsByKind": {
+      "CLASS": 33,
+      "FIELD": 24,
+      "METHOD": 35
+    },
+    "usePointsByClassification": {
+      "ALREADY_COMPATIBLE": 3452,
+      "ALREADY_SUPPORTED_BY_DUALFORGE": 2,
+      "MAPPING_CANDIDATE": 555,
+      "SHIM_REQUIRED": 19,
+      "UNRESOLVED": 2
+    },
+    "usePointsByDomain": {
+      "CREATIVE_TAB": 101,
+      "EVENT_BUS": 13,
+      "FML_CONTEXT": 4,
+      "ITEM_FOOD_FUEL": 1524,
+      "JAVA_STANDARD": 919,
+      "MINECRAFT": 903,
+      "OTHER": 6,
+      "REGISTRY": 560
+    },
+    "usePointsByKind": {
+      "CLASS": 3022,
+      "FIELD": 132,
+      "METHOD": 876
+    },
+    "usePointsByOrigin": {
+      "COMPILE_ONLY_ANNOTATION_OR_MISSING_INPUT": 2,
+      "FORGE_PLATFORM": 576,
+      "JAVA_STANDARD": 919,
+      "MINECRAFT": 2529,
+      "SHARED_THIRD_PARTY_OR_UNKNOWN": 4
+    }
+  },
+  "offline": {
+    "contract": "PROTOTYPE_CONTRACT_PASS assertions=38 negatives=15",
+    "deterministicScannerSHA256": "0b8dfdc45fefaaf6527c4f05ea12152e484a9ffc40d60cb74f2a3c588beecdde",
+    "fixture": {
+      "sha256": "6722f1f681231beaeaa3834d0b1a153fffbb291db7cfaaf7b5a601a02d6f1adb",
+      "size": 5551
+    },
+    "fnfOffline": {
+      "inputSHA256": "bd415b04529c4ffc31e14757488f71dab6917e4560c61e236c3c4d0de6557958",
+      "inputUnchanged": true,
+      "originalClassNodesUnchanged": true,
+      "productionEnabled": false,
+      "reason": "IllegalArgumentException: RUNTIME_SHIM_REQUIRED: net/minecraftforge/fml/javafmlmod/FMLJavaModLoadingContext",
+      "runtimeCompatibility": "NOT VERIFIED",
+      "status": "REJECTED"
+    },
+    "fnfRuntime": "FAIL inherited, not rerun",
+    "productionEnabled": false,
+    "prototype": {
+      "classSHA256": {
+        "research/fixture/AtlasProbe": "ee81f0b6dd4993ba1b302d16bc1240877e8c3f4ad8ec1fb75ce051b2c1dd1f94",
+        "research/fixture/Peer": "f742cc4082381fc20aa803c416656f487164aeebcfa30307507fa7fdaa0290ab",
+        "research/fixture/Untouched": "4b794510e7726abe56b8381447e6c19ee7e7a2974c1d0bc372818c2b6103a980",
+        "research/fixture/VerifyFixture": "ac87f23b34546304494178196ac5c92056e70ee155785f9ee1c548f358d9bfbc"
+      },
+      "inputSHA256": "6722f1f681231beaeaa3834d0b1a153fffbb291db7cfaaf7b5a601a02d6f1adb",
+      "inputUnchanged": true,
+      "originalClassNodesUnchanged": true,
+      "productionEnabled": false,
+      "runtimeCompatibility": "NOT VERIFIED",
+      "status": "OFFLINE_TRANSFORMATION_PASS",
+      "usedRules": [
+        "registry.create.from.item.registry",
+        "registry.holder.get",
+        "registry.items.field"
+      ]
+    },
+    "registryChain": "PARTIAL; Context/ModBus runtime bridge and full FnF Supplier/CreativeTab closure unimplemented",
+    "scannerContract": "SCANNER_CONTRACT_PASS assertions=9; metadata only, dynamic constants NOT EXECUTED",
+    "standaloneJVMVerification": "PASS; fixture class loading/null receipt only, no game/registry lifecycle",
+    "status": "PASS"
+  },
+  "existingRules": 16,
+  "pythonTests": 63,
+  "pythonAST": 58,
+  "zshScripts": 25,
+  "frozenProtectedFiles": 374,
+  "productionFilesUnchanged": 21,
+  "overall": "PARTIAL",
+  "reason": "complete patched client binaries unavailable",
+  "productionMappingsEnabled": 0,
+  "historicalRuntime": "INHERITED",
+  "fnfRuntime": "FAIL inherited, not rerun",
+  "statuses": {
+    "OFFICIAL_INPUTS": "PARTIAL",
+    "FORGE_ABI_INVENTORY": "PASS (available official platform artifacts)",
+    "NEOFORGE_ABI_INVENTORY": "PASS (available official platform artifacts)",
+    "MINECRAFT_PATCH_ABI": "PARTIAL",
+    "API_DIFF_DATABASE": "PARTIAL",
+    "MAPPING_CANDIDATES": "PASS (discovery only)",
+    "AMBIGUITY_REPORT": "PASS",
+    "FNF_STATIC_REFERENCE_INVENTORY": "PASS",
+    "FNF_COVERAGE_REPORT": "PASS",
+    "EXISTING_DUALFORGE_RULES": "PASS",
+    "OFFLINE_ASM_PROTOTYPE": "PARTIAL (controlled fixture output PASS; full Registry chain incomplete)",
+    "BYTECODE_VERIFICATION": "PASS (ASM + standalone fixture JVM)",
+    "PRODUCTION_CODE_UNCHANGED": "PASS",
+    "ORIGINAL_FNF_UNCHANGED": "PASS",
+    "HISTORICAL_RUNTIME_REGRESSION": "INHERITED",
+    "FNF_RUNTIME": "FAIL (inherited, not rerun)",
+    "OVERALL": "PARTIAL"
+  },
+  "archive": {
+    "size": 63082456,
+    "sha256": "3f985750fa0aa6cad5e72284330ee5c69a12255040dac3395f0441f22dd1faf1",
+    "payloadFiles": 328,
+    "archiveFiles": 331,
+    "persistence": "ARCHIVE_READY / NOT PERSISTED"
+  }
+}
