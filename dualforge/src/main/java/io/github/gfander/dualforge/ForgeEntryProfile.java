@@ -11,9 +11,9 @@ final class ForgeEntryProfile {
     static Kind select(ClassNode node, boolean ownedEvent) {
         List<Kind> candidates = new ArrayList<>();
         boolean block = ControlledForgeBlockProfile.isCandidate(node);
-        boolean normal = !block && ControlledForgeItemProfile.isNormalCandidate(node);
         boolean itemFields = node.fields.stream().anyMatch(f -> f.desc.equals("Lnet/minecraftforge/registries/DeferredRegister;")
                 || f.desc.equals("Lnet/minecraftforge/registries/RegistryObject;"));
+        boolean normal = !block && itemFields && ControlledForgeItemProfile.isNormalCandidate(node);
         if (block) candidates.add(Kind.BLOCK);
         else if (normal) candidates.add(Kind.NORMAL_ITEM);
         else if (itemFields) candidates.add(Kind.LEGACY_ITEM);

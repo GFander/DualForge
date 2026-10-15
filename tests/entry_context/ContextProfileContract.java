@@ -76,6 +76,12 @@ public final class ContextProfileContract {
         System.setProperty("dualforge.2a.rewrite","false");var disabled=new DualForgeEntryTransformer();disabled.targets();check(Arrays.equals(before,bytes(disabled.transform(source,null))),"explicit rewrite false preserves source");System.clearProperty("dualforge.2a.rewrite");
         ClassNode ordinary=read(before);ordinary.name="unclaimed/Ordinary";ordinary.visibleAnnotations=null;
         check(Arrays.equals(bytes(ordinary),bytes(transformer.transform(ordinary,null))),"unclaimed same-shape class unchanged");
+        // The frozen 004 rejected listener has a six-op global-bus constructor, not an Item register.
+        ClassNode shortEvent=read(before);shortEvent.fields.clear();ctor(shortEvent).desc="(Lnet/minecraftforge/eventbus/api/IEventBus;)V";ctor(shortEvent).instructions.clear();
+        ctor(shortEvent).instructions.add(new VarInsnNode(Opcodes.ALOAD,0));ctor(shortEvent).instructions.add(new MethodInsnNode(Opcodes.INVOKESPECIAL,"java/lang/Object","<init>","()V",false));
+        ctor(shortEvent).instructions.add(new FieldInsnNode(Opcodes.GETSTATIC,"net/minecraftforge/common/MinecraftForge","EVENT_BUS",ControlledForgeContextProfile.BUS));
+        ctor(shortEvent).instructions.add(new VarInsnNode(Opcodes.ALOAD,0));ctor(shortEvent).instructions.add(new MethodInsnNode(Opcodes.INVOKEINTERFACE,"net/minecraftforge/eventbus/api/IEventBus","register","(Ljava/lang/Object;)V",true));ctor(shortEvent).instructions.add(new InsnNode(Opcodes.RETURN));
+        check(ControlledForgeItemProfile.isNormalCandidate(shortEvent) && ForgeEntryProfile.select(shortEvent,true)==ForgeEntryProfile.Kind.EVENT,"six-op Event constructor is not an Item candidate without Registry evidence");
         ClassNode ambiguous=read(before);ambiguous.fields.add(new FieldNode(Opcodes.ACC_PUBLIC|Opcodes.ACC_STATIC,"unverified","Lnet/minecraftforge/registries/DeferredRegister;",null,null));
         selectionReject(ambiguous,"AMBIGUOUS_ENTRY");
         ClassNode unknown=read(before);ctor(unknown).instructions.clear();ctor(unknown).instructions.add(new VarInsnNode(Opcodes.ALOAD,0));ctor(unknown).instructions.add(new MethodInsnNode(Opcodes.INVOKESPECIAL,"java/lang/Object","<init>","()V",false));ctor(unknown).instructions.add(new InsnNode(Opcodes.RETURN));
