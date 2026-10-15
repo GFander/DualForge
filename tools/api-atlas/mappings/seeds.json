@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "scope": "GENERAL_CANDIDATE",
+  "productionEnabled": false,
+  "runtimeVerified": false,
+  "rules": [
+    {
+      "id": "registry.items.field",
+      "kind": "FIELD",
+      "source": {
+        "owner": "net/minecraftforge/registries/ForgeRegistries",
+        "name": "ITEMS",
+        "descriptor": "Lnet/minecraftforge/registries/IForgeRegistry;",
+        "opcode": 178,
+        "platform": "forge",
+        "version": "52.1.0"
+      },
+      "target": {
+        "owner": "net/minecraft/core/registries/BuiltInRegistries",
+        "name": "ITEM",
+        "descriptor": "Lnet/minecraft/core/DefaultedRegistry;",
+        "opcode": 178,
+        "platform": "neoforge",
+        "version": "21.1.256"
+      },
+      "strategy": "FIELD_REWRITE_CANDIDATE",
+      "status": "SEMANTIC_REVIEW_REQUIRED",
+      "reason": "Existing controlled Item profile relationship; helper lifecycle and registry identity require independent runtime proof."
+    },
+    {
+      "id": "registry.interface.type",
+      "kind": "CLASS",
+      "source": {
+        "owner": "net/minecraftforge/registries/IForgeRegistry",
+        "name": null,
+        "descriptor": null,
+        "platform": "forge",
+        "version": "52.1.0"
+      },
+      "target": {
+        "owner": "net/minecraft/core/Registry",
+        "name": null,
+        "descriptor": null,
+        "platform": "neoforge",
+        "version": "21.1.256"
+      },
+      "strategy": "CLASS_RENAME_CANDIDATE",
+      "status": "SEMANTIC_REVIEW_REQUIRED",
+      "reason": "Types are not interchangeable APIs; candidate only for the verified Item create argument dataflow."
+    },
+    {
+      "id": "registry.create.from.item.registry",
+      "kind": "METHOD",
+      "source": {
+        "owner": "net/minecraftforge/registries/DeferredRegister",
+        "name": "create",
+        "descriptor": "(Lnet/minecraftforge/registries/IForgeRegistry;Ljava/lang/String;)Lnet/minecraftforge/registries/DeferredRegister;",
+        "opcode": 184,
+        "platform": "forge",
+        "version": "52.1.0"
+      },
+      "target": {
+        "owner": "net/neoforged/neoforge/registries/DeferredRegister",
+        "name": "create",
+        "descriptor": "(Lnet/minecraft/core/Registry;Ljava/lang/String;)Lnet/neoforged/neoforge/registries/DeferredRegister;",
+        "opcode": 184,
+        "platform": "neoforge",
+        "version": "21.1.256"
+      },
+      "strategy": "DESCRIPTOR_REWRITE_CANDIDATE",
+      "status": "SEMANTIC_REVIEW_REQUIRED",
+      "reason": "Actual registry field producer must be assignable to the target parameter; does not establish deferred lifecycle equivalence."
+    },
+    {
+      "id": "registry.register.supplier",
+      "kind": "METHOD",
+      "source": {
+        "owner": "net/minecraftforge/registries/DeferredRegister",
+        "name": "register",
+        "descriptor": "(Ljava/lang/String;Ljava/util/function/Supplier;)Lnet/minecraftforge/registries/RegistryObject;",
+        "opcode": 182,
+        "platform": "forge",
+        "version": "52.1.0"
+      },
+      "target": {
+        "owner": "net/neoforged/neoforge/registries/DeferredRegister",
+        "name": "register",
+        "descriptor": "(Ljava/lang/String;Ljava/util/function/Supplier;)Lnet/neoforged/neoforge/registries/DeferredHolder;",
+        "opcode": 182,
+        "platform": "neoforge",
+        "version": "21.1.256"
+      },
+      "strategy": "DESCRIPTOR_REWRITE_CANDIDATE",
+      "status": "SEMANTIC_REVIEW_REQUIRED",
+      "reason": "Holder generic arity, all declarations/callers and bootstraps must close together."
+    },
+    {
+      "id": "registry.holder.get",
+      "kind": "METHOD",
+      "source": {
+        "owner": "net/minecraftforge/registries/RegistryObject",
+        "name": "get",
+        "descriptor": "()Ljava/lang/Object;",
+        "opcode": 182,
+        "platform": "forge",
+        "version": "52.1.0"
+      },
+      "target": {
+        "owner": "net/neoforged/neoforge/registries/DeferredHolder",
+        "name": "get",
+        "descriptor": "()Ljava/lang/Object;",
+        "opcode": 182,
+        "platform": "neoforge",
+        "version": "21.1.256"
+      },
+      "strategy": "METHOD_REWRITE_CANDIDATE",
+      "status": "SEMANTIC_REVIEW_REQUIRED",
+      "reason": "Static get ABI exists; availability/binding and pre-registration behavior still require runtime review."
+    },
+    {
+      "id": "registry.attach.mod.bus",
+      "kind": "METHOD",
+      "source": {
+        "owner": "net/minecraftforge/registries/DeferredRegister",
+        "name": "register",
+        "descriptor": "(Lnet/minecraftforge/eventbus/api/IEventBus;)V",
+        "opcode": 182,
+        "platform": "forge",
+        "version": "52.1.0"
+      },
+      "target": {
+        "owner": "net/neoforged/neoforge/registries/DeferredRegister",
+        "name": "register",
+        "descriptor": "(Lnet/neoforged/bus/api/IEventBus;)V",
+        "opcode": 182,
+        "platform": "neoforge",
+        "version": "21.1.256"
+      },
+      "strategy": "RUNTIME_SHIM_REQUIRED",
+      "status": "SEMANTIC_REVIEW_REQUIRED",
+      "reason": "007C-3 BusView is not a native bus; no production unwrap API exists. Offline prototype MUST refuse this rule."
+    }
+  ]
+}
