@@ -31,6 +31,7 @@ LIBRARIES = (
     "org/apache/maven/maven-artifact/3.8.5/maven-artifact-3.8.5.jar",
     "org/ow2/asm/asm/9.10.1/asm-9.10.1.jar",
     "org/ow2/asm/asm-tree/9.10.1/asm-tree-9.10.1.jar",
+    "org/ow2/asm/asm-analysis/9.10.1/asm-analysis-9.10.1.jar",
     "net/neoforged/bus/8.0.5/bus-8.0.5.jar",
 )
 FLAGS = tuple("-Ddualforge." + name + "=true" for name in (

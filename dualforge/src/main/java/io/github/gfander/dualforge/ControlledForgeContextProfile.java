@@ -27,7 +27,14 @@ final class ControlledForgeContextProfile {
     static Stats validate(ClassNode node, Scope scope) { return plan(node, scope).stats; }
     static Stats rewrite(ClassNode node, Scope scope) { Plan plan = plan(node, scope); plan.apply(); return plan.stats; }
 
-    private static Plan plan(ClassNode node, Scope scope) {
+    static Stats validateRegistry(ClassNode node, Scope scope, Set<String> verifiedHelpers) {
+        return plan(node, scope, verifiedHelpers).stats;
+    }
+    static Stats rewriteRegistry(ClassNode node, Scope scope, Set<String> verifiedHelpers) {
+        Plan plan = plan(node, scope, verifiedHelpers); plan.apply(); return plan.stats;
+    }
+    private static Plan plan(ClassNode node, Scope scope) { return plan(node, scope, Set.of()); }
+    private static Plan plan(ClassNode node, Scope scope, Set<String> verifiedHelpers) {
         require(node.version == Opcodes.V21 && (node.access == (Opcodes.ACC_PUBLIC | Opcodes.ACC_SUPER)
                 || node.access == (Opcodes.ACC_PUBLIC | Opcodes.ACC_FINAL | Opcodes.ACC_SUPER))
                 && "java/lang/Object".equals(node.superName) && node.interfaces.isEmpty() && node.signature == null, "class structure");
@@ -93,7 +100,8 @@ final class ControlledForgeContextProfile {
             } else if (local(instruction, Opcodes.ALOAD, busLocal) && i+1 < code.size() && code.get(i+1) instanceof MethodInsnNode helper
                     && helper.getOpcode() == Opcodes.INVOKESTATIC && !helper.itf && ("(" + BUS + ")V").equals(helper.desc)) {
                 require(!helper.owner.equals(node.name) && helpers.add(helper.owner + "." + helper.name), "duplicate/self helper");
-                validateHelper(helper, scope); i += 2;
+                if (!verifiedHelpers.contains(helper.owner + "." + helper.name + helper.desc)) validateHelper(helper, scope);
+                i += 2;
             } else if (field(instruction, Opcodes.GETSTATIC, "net/minecraftforge/common/MinecraftForge", "EVENT_BUS", BUS) && i+2 < code.size()
                     && local(code.get(i+1), Opcodes.ALOAD, 0)
                     && call(code.get(i+2), Opcodes.INVOKEINTERFACE, "net/minecraftforge/eventbus/api/IEventBus", "register", "(Ljava/lang/Object;)V", true)) {
