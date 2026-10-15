@@ -54,7 +54,7 @@ DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。main 已
 - 原固定 Probe：`forgeprobe.jar`，SHA-256 为 `a774d2f737b17f089046014ab55a53767dbad008cd44dcce52c727b87e559ae8`。原回归入口拒绝重建或替代输入。
 - 同一服务端输入下的 `config/`、`defaultconfigs/` 和 `spike000world/`。空的 defaultconfigs 也须保留目录；世界与第三方运行库不入 Git。
 
-`tools/entry/prepare-unix.zsh` 只取得并校验十个固定编译 JAR，不安装完整服务端、不重建 Probe、不启动 JVM 服务端。旧兼容层 Gradle 记录已归档为 `history/compat-build.gradle.deprecated`，当前入口不使用 Gradle。
+`tools/entry/prepare-unix.zsh` 只取得并校验十一个固定编译 JAR，不安装完整服务端、不重建 Probe、不启动 JVM 服务端。旧兼容层 Gradle 记录已归档为 `history/compat-build.gradle.deprecated`，当前入口不使用 Gradle。
 
 ## 构建与回归
 
@@ -102,7 +102,7 @@ zsh tests/discovery/run-discovery.zsh \
 
 | 入口 | 用途 |
 |---|---|
-| `tools/entry/prepare-unix.zsh` | 准备十个固定编译输入 |
+| `tools/entry/prepare-unix.zsh` | 准备十一个固定编译输入 |
 | `tools/entry/dualforge.zsh` | build／smoke／regress |
 | `tools/entry/test-forge-dependencies.zsh` | metadata 与动态依赖回归 |
 | `tools/harness/run-server.zsh` | 独立隔离服务端 harness |

@@ -24,7 +24,7 @@ import net.neoforged.neoforgespi.locating.IModFile;
 import net.neoforged.neoforgespi.locating.InvalidModFileException;
 import net.neoforged.neoforgespi.locating.ModFileInfoParser;
 
-/** Standard TOML syntax, validated Forge metadata, then lossless FML config adaptation. */
+/** Standard TOML and Forge validation, followed by audited platform projection for FML. */
 public class ForgeModFileInfoParser implements ModFileInfoParser {
     static final int MAX_METADATA_BYTES = 1024 * 1024;
     private static final Set<String> DEPENDENCY_KEYS = Set.of("modId", "mandatory", "versionRange",
@@ -36,7 +36,8 @@ public class ForgeModFileInfoParser implements ModFileInfoParser {
         try (var stream = Files.newInputStream(file.findResource("META-INF", "mods.toml"))) {
             Map<String, Object> parsed = parseForgeModsToml(readMetadata(stream));
             System.out.println("[DUALFORGE] ForgeModFileInfoParser: parsed keys=" + parsed.keySet());
-            return new ModFileInfo((ModFile) file, ForgeModFileInfo.configOf(parsed), info -> { });
+            Map<String, Object> projected = ForgePlatformDependencyResolver.forFile(file.getFilePath(), parsed);
+            return new ModFileInfo((ModFile) file, ForgeModFileInfo.configOf(projected), info -> { });
         } catch (IOException | IllegalArgumentException e) {
             throw new InvalidModFileException("Invalid Forge metadata in " + file.getFilePath() + ": " + e.getMessage(), null);
         }
