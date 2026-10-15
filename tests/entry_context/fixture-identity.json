@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "task": "Convergence-007C-3",
+  "nativeForgeGate": "PASS",
+  "originalNativeResult": "/workspace/DualForge-007C3/out/convergence-007c3/native-context-v2/result.json",
+  "artifacts": {
+    "contextprobe": {
+      "Path": "/workspace/DualForge-007C3/out/convergence-007c3/fixture/20261015-035640-845dc651/contextprobe.jar",
+      "SHA256": "e025987e92e6b818bdb1933020eeab05734b971a7aaab0a01cc5772e85f08251",
+      "Bytes": 1140
+    },
+    "contextpeer": {
+      "Path": "/workspace/DualForge-007C3/out/convergence-007c3/fixture/20261015-035640-845dc651/contextpeer.jar",
+      "SHA256": "9bc306ca74efc4c99acd5ee922c8f81c5b862023c2826ccf29645a784a1350b2",
+      "Bytes": 1145
+    },
+    "forge-observer": {
+      "Path": "/workspace/DualForge-007C3/out/convergence-007c3/fixture/20261015-035640-845dc651/forge-context-observer.jar",
+      "SHA256": "4376907ac20be6d4c550a5bb6178b4711bff42249465f966cc416e72d7edef7d",
+      "Bytes": 2083
+    },
+    "neo-observer": {
+      "Path": "/workspace/DualForge-007C3/out/convergence-007c3/fixture/20261015-035640-845dc651/neo-context-observer.jar",
+      "SHA256": "0471547b95dac3b8296c27040ad37a39ed6e70c130636acb3db02b6d44ce6680",
+      "Bytes": 3052
+    }
+  },
+  "source": [
+    {
+      "Path": "/workspace/DualForge-007C3/tests/entry_context/fixture/com/example/context/ContextProbe.java",
+      "SHA256": "ca9e22103e6e946258a714a7d58f9855feb868c11caf0244f0dddb35e1438613",
+      "Bytes": 488
+    },
+    {
+      "Path": "/workspace/DualForge-007C3/tests/entry_context/fixture/com/example/contextpeer/ContextPeer.java",
+      "SHA256": "4a3f2473856b4b9f5669b6a0f2b7470682642789f5ec227e040bcadbcad8eeb8",
+      "Bytes": 488
+    }
+  ],
+  "classes": [
+    {
+      "Path": "/workspace/DualForge-007C3/out/convergence-007c3/fixture/20261015-035640-845dc651/classes/com/example/context/ContextProbe.class",
+      "SHA256": "4288093760feccfb9b537231bd73199dc43939a2dfa02534bbdee768e9d07f3a",
+      "Bytes": 956
+    },
+    {
+      "Path": "/workspace/DualForge-007C3/out/convergence-007c3/fixture/20261015-035640-845dc651/classes/com/example/contextpeer/ContextPeer.class",
+      "SHA256": "b7b849b02abdeb4280e9367bd3276e966102b044830118371746270e17e56079",
+      "Bytes": 959
+    }
+  ],
+  "compilePurity": "Forge fixtures and native Forge observer use official Forge52.1.0 installation only; Neo observer separately uses official NeoForge installation, no compat compile input",
+  "firstPackagingAttempt": "Preserved failure: split package in two fresh fixture JARs. Fixed by separate source packages before freezing; host policies unchanged."
+}

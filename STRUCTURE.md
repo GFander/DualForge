@@ -8,6 +8,7 @@ DualForge/
 │   ├── java/                       活跃：唯一生产Java
 │   └── resources/                  活跃：Manifest与SPI
 ├── tests/
+│   ├── api_atlas/                   活跃研究：007C-4A离线ABI、映射与ASM/JVM验证，不启动游戏
 │   ├── real_mods/food_n_fuel/       活跃：007C冻结发行身份/原生对照与标准运行
 │   │   ├── metadata/               活跃：007C-1标准TOML、注解归属/准入负例及诊断SPI
 │   │   └── dependency/             活跃：007C-2平台契约、独立Forge夹具、串行零参数依赖矩阵
@@ -20,6 +21,7 @@ DualForge/
 │   │   └── mac-legacy/             Legacy固定旧cohort，原字节
 │   ├── dropin_items/           活跃：007B无业务开关Forge输入、范围/模块拒绝、零参数Mac包
 │   ├── bootstrap/              活跃：007A标准启动、默认配置与原生共存
+│   ├── entry_context/              活跃：007C-3入口分类、原生Forge Context夹具、归属/Bus身份与原子性
 │   ├── block_registry/             活跃：006B Block/BlockItem ABI、Contract、C/T
 │   │   ├── client_resources/       活跃：006B-C方块模型/用户贴图，实机验收独立
 │   │   └── client_translations/    活跃：冰之以太三组名称覆盖，不修改冻结模组
@@ -27,6 +29,7 @@ DualForge/
 │   ├── client_objects/             活跃：最新实际ID统一的Forge输入与独立客户端包
 │   └── project_identity/           活跃：身份及精确历史迁移保护
 ├── tools/
+│   ├── api-atlas/                  活跃研究工具：固定发行扫描/候选/调用图/离线原型，非生产转换器
 │   ├── entry/                      活跃zsh构建/依赖入口
 │   ├── lib/                        Python内部实现
 │   └── harness/run-server.zsh      活跃独立物理复制harness

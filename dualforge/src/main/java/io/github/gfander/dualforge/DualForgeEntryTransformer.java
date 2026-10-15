@@ -46,6 +46,7 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
     private final Map<String, String> registryEntries = new HashMap<>();
     private final Set<String> normalRegistryEntries = new HashSet<>();
     private final Map<String, String> blockEntries = new HashMap<>();
+    private final Map<String, ControlledForgeContextProfile.Scope> contextEntries = new HashMap<>();
 
     public DualForgeEntryTransformer() {
         this.rewriteEnabled = enabled("dualforge.2a.rewrite");
@@ -75,6 +76,15 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
         original.accept(input);
         try {
             log("offered: " + input.name);
+            if (contextEntries.containsKey(input.name)) {
+                if (!rewriteEnabled) return input;
+                if (!apiRewriteEnabled) throw new IllegalStateException("007C-3 requires apiRewrite=true");
+                var stats = ControlledForgeContextProfile.rewrite(input, contextEntries.get(input.name));
+                log("CONTEXT_PROFILE entry=" + input.name + " contextCalls=2 helpersUnchanged=" + stats.helpers()
+                        + " busReceipts=" + stats.receipts() + " pendingGlobalCalls=" + stats.pendingGlobalCalls());
+                dumpProfile(input);
+                return input;
+            }
             if (blockEntries.containsKey(input.name)) {
                 if (!rewriteEnabled) return input;
                 if (!apiRewriteEnabled) throw new IllegalStateException("006B requires apiRewrite=true");
@@ -322,6 +332,7 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
         registryEntries.clear();
         normalRegistryEntries.clear();
         blockEntries.clear();
+        contextEntries.clear();
         Set<ITransformer.Target<ClassNode>> targets = new HashSet<>();
         // ModLauncher registers targets after FML completeScan, before the GAME layer.
         // getScanResult waits for the host's background scan; no classes are loaded here.
@@ -349,15 +360,34 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
                             events.add(args[0].getInternalName());
                         }
                     }
-                    if (events.isEmpty()) {
-                        // Read only this @Mod-owned entry from the same scanned file; never load it here.
-                        ClassNode candidate = new ClassNode();
-                        try {
-                            new ClassReader(Files.readAllBytes(file.getFile().findResource(internal + ".class"))).accept(candidate, 0);
-                        } catch (java.io.IOException e) {
-                            throw new IllegalStateException("005 cannot inspect owned entry " + entry, e);
-                        }
-                        if (ControlledForgeBlockProfile.isCandidate(candidate)) {
+                    // Candidate routing is separate from validation; no Item fallback for unknown entries.
+                    ClassNode candidate = new ClassNode();
+                    try {
+                        new ClassReader(Files.readAllBytes(file.getFile().findResource(internal + ".class"))).accept(candidate, 0);
+                    } catch (java.io.IOException e) {
+                        throw new IllegalStateException("Cannot inspect owned Forge entry " + entry, e);
+                    }
+                    var kind = ForgeEntryProfile.select(candidate, !events.isEmpty());
+                    log("ENTRY_PROFILE modId=" + info.getModId() + " entry=" + entry + " selected=" + kind);
+                    if (kind == ForgeEntryProfile.Kind.CONTEXT) {
+                        long entries = scan.getAnnotations().stream().filter(a -> a.targetType() == ElementType.TYPE
+                                && a.annotationType().getClassName().equals("net.minecraftforge.fml.common.Mod")).count();
+                        if (entries != 1 || file.getMods().size() != 1)
+                            throw new IllegalStateException("Context entry requires one same-file Forge entry and metadata owner");
+                        var names = scan.getClasses().stream().map(c -> c.clazz().getInternalName()).collect(java.util.stream.Collectors.toUnmodifiableSet());
+                        var scope = new ControlledForgeContextProfile.Scope(info.getModId(), names, owner -> {
+                            try { return Files.readAllBytes(file.getFile().findResource(owner + ".class")); }
+                            catch (java.io.IOException e) { throw new IllegalStateException("Cannot read owned Context helper " + owner, e); }
+                        });
+                        var stats = ControlledForgeContextProfile.validate(candidate, scope);
+                        contextEntries.put(internal, scope);
+                        targets.add(ITransformer.Target.targetClass(entry));
+                        log("TARGET modId=" + info.getModId() + " entry=" + entry + " profile=forge-context"
+                                + " helpersUnchanged=" + stats.helpers() + " file=" + file.getFile().getFilePath());
+                        continue;
+                    }
+                    if (kind != ForgeEntryProfile.Kind.EVENT) {
+                        if (kind == ForgeEntryProfile.Kind.BLOCK) {
                             long entries = scan.getAnnotations().stream().filter(a -> a.targetType() == ElementType.TYPE
                                     && a.annotationType().getClassName().equals("net.minecraftforge.fml.common.Mod")).count();
                             if (entries != 1 || file.getMods().size() != 1) {
@@ -370,7 +400,7 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
                                     + " file=" + file.getFile().getFilePath());
                             continue;
                         }
-                        boolean normal = ControlledForgeItemProfile.isNormalCandidate(candidate);
+                        boolean normal = kind == ForgeEntryProfile.Kind.NORMAL_ITEM;
                         var stats = normal ? ControlledForgeItemProfile.validateNormal(candidate, info.getModId())
                                 : ControlledForgeItemProfile.validate(candidate, info.getModId());
                         if (normal) normalRegistryEntries.add(internal);

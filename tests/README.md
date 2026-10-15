@@ -1,5 +1,7 @@
 # 测试入口
 
+007C-4A新增[api_atlas](api_atlas/README.md)：固定官方ABI扫描、候选/冲突、FnF静态使用及离线ASM/JVM验证。该组不启动游戏、不修改生产；历史动态结果只继承，客户端补丁输入缺失单独标记PARTIAL。
+
 tests 下现有文件位置保持不变。生产源码和工具布局见
 [STRUCTURE.md](../STRUCTURE.md)，环境及隔离运行参数见
 [tools/UNIX.md](../tools/UNIX.md)。从仓库根目录执行以下命令，所有
@@ -9,7 +11,7 @@ JVM 编译、metadata 测试和服务端运行均严格串行。
 
 [输入、原生运行和人工补充](real_mods/food_n_fuel/README.md)使用未改字节的官方发行JAR。
 独立Forge/NeoForge标准运行只声明生命周期；原生Registry/燃料子项不等于DualForge兼容。
-007C冻结事实为原生基线PARTIAL、NeoForge发现FAIL、生产未改；007C-1记录必需forge依赖拒绝；007C-2经过校验的内部投影已推进到ASM targets的既有Item profile结构拒绝。新的metadata/admission和dependency入口见下方章节，实际食用和Mac仍NOT RUN。
+007C冻结事实为原生基线PARTIAL、NeoForge发现FAIL、生产未改；007C-1记录必需forge依赖拒绝，007C-2记录ASM targets拒绝；007C-3推进到构造期Context之后的ItemRegistries初始化缺类。各冻结报告保持原样，完整FnF仍不兼容，实际食用和Mac仍NOT RUN。
 
 先通过新入口干净构建兼容层，再使用 result.json 中实际的新 JAR：
 
@@ -185,4 +187,10 @@ Manifest/SPI/模块/属性检查、官方 Module Layer 实际观测及串行兼�
 
 [入口、原生夹具和范围](real_mods/food_n_fuel/dependency/README.md)包括真实FML sorter的离线Contract、独立Forge A/B依赖夹具和19组串行标准启动。`run_contract.py`验证平台范围/宿主/side/ordering/原子性及普通依赖语义；`build_fixture.py`只使用固定Forge编译输入；`run_matrix.py`绑定同一新JAR并保留每次原始生命周期结果及独立门禁断言。原FnF N2仅安装compat与未改发行JAR，不带测试SPI或DualForge参数。
 
-007C-1 Contract将原声明断言保留在真实未投影ModFileInfo上，另加实际Reader投影模型断言；迁移理由见dependency README。平台版本条件PASS不表示API兼容，负例拒绝PASS也不表示模组启动成功。FnF下一结构拒绝不在本轮修复。
+007C-1 Contract将原声明断言保留在真实未投影ModFileInfo上，另加实际Reader投影模型断言；迁移理由见dependency README。平台版本条件PASS不表示API兼容，负例拒绝PASS也不表示模组启动成功。007C-2当轮没有修复FnF结构拒绝，007C-3的新范围另见下节。
+
+## entry_context：007C-3 Profile与构造期Context
+
+[入口与契约](entry_context/README.md)保存官方Forge52.1.0编译的两个无参非final入口、独立原生观察器、Profile拒绝/原子性Contract与标准生命周期。新Context独立选型，旧Profile不放宽；两个helper仅核对所属文件与Bus边界，不转换Registry。
+
+007C-2矩阵保留历史默认`--fnf-next-stage item-profile`；本轮显式使用`registry-helper`，严格断言新Context选型/改写/真实绑定及FnF构造栈中的ForgeRegistries缺类。平台、其他依赖和原生隔离断言不变。所有当前Contract/运行/回归绑定同一个最终新JAR。
