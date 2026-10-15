@@ -1,12 +1,12 @@
 # DualForge
 
-DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。本分支007C-2增加经过版本、宿主、side和ordering校验的Forge平台依赖内部投影；平台条件通过不代表Forge API兼容。唯一生产源码位于 [dualforge/src/main](dualforge/src/main)，构建生成 `dualforge.jar`，交付副本命名为 `DualForge.jar`。当前结果与边界见 [007C-2报告](<Dev Manuals/Convergence-007C-2 交付报告.md>)；007B记录见 [007B报告](<Dev Manuals/Convergence-007B Drop-in Runtime 交付报告.md>)，独立前置结果保留在 [007A报告](<Dev Manuals/Convergence-007 Drop-in Runtime 交付报告.md>)，历史事实保留在 [006B报告](<Dev Manuals/Convergence-006B 交付报告.md>)。
+DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。本分支007C-3增加明确的入口Profile分类和严格构造期Context桥接，007C-2的平台依赖契约继续保留。唯一生产源码位于 [dualforge/src/main](dualforge/src/main)，构建生成 `dualforge.jar`，交付副本命名为 `DualForge.jar`。当前结果与边界见 [007C-3报告](<Dev Manuals/Convergence-007C-3 交付报告.md>)；历史结果见 [007C-2报告](<Dev Manuals/Convergence-007C-2 交付报告.md>)、[007B报告](<Dev Manuals/Convergence-007B Drop-in Runtime 交付报告.md>)、[007A报告](<Dev Manuals/Convergence-007 Drop-in Runtime 交付报告.md>)及[006B报告](<Dev Manuals/Convergence-006B 交付报告.md>)。
 
-仓库只维护 **zsh 脚本入口**。Python 3 标准库负责内部的构建编排、JSON、JAR 指纹、进程及日志捕获；运行不需要 Windows 或 PowerShell。当前仍使用原单参数构造器 ABI；004 的监听器支持范围如下。
+仓库只维护 **zsh 脚本入口**。Python 3 标准库负责内部的构建编排、JSON、JAR 指纹、进程及日志捕获；运行不需要 Windows 或 PowerShell。旧Profile保留原单参数构造器ABI；新Context Profile仅支持下述严格无参入口。
 
 ## 用户安装
 
-原始Food N' Fuel仍不能正常使用。007C-2让其越过缺失`forge`依赖检查后，下一真实失败是ASM targets阶段的既有Item profile结构拒绝，尚未进入构造器。见 [真实兼容范围](docs/COMPATIBILITY.md) 和 [本轮报告](<Dev Manuals/Convergence-007C-2 交付报告.md>)；[007C-1报告](<Dev Manuals/Convergence-007C-1 交付报告.md>)及[007C原始取证](<Dev Manuals/Convergence-007C 真实物品兼容交付报告.md>)保持原样。
+原始Food N' Fuel仍不能正常使用。007C-3让其越过targets及构造期Context获取，随后在ItemRegistries初始化时缺少ForgeRegistries；完整构造器和Registry没有通过。见 [真实兼容范围](docs/COMPATIBILITY.md) 和 [本轮报告](<Dev Manuals/Convergence-007C-3 交付报告.md>)；[007C-2](<Dev Manuals/Convergence-007C-2 交付报告.md>)及更早冻结报告保持原样。
 
 正常安装 NeoForge 后，将 `DualForge.jar` 和当前受支持的原生 Forge JAR 放入 `mods/`，照常启动；不需要 DualForge JVM 参数或开发工具。支持边界与诊断见 [安装指南](docs/INSTALL.md)。默认启动成功不代表任意 Forge 模组兼容；本轮 Mac 图形验收 NOT RUN。
 
@@ -24,11 +24,12 @@ DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。本分�
 - 支持原单参数 Forge IEventBus 构造器、空 listener，以及严格四条打印指令的 marker-only listener；Event profile 和构造器 ABI 保持不变。
 - metadata 使用宿主NightConfig标准TOML，先校验类型和语义再交给真实FML；保留依赖 owner 分组及 mandatory 到 FML REQUIRED/OPTIONAL 的适配。
 - 007C-2：只对已确认的同JAR Forge来源、当前精确宿主，按参考来源ABI Forge 52.1.0校验平台范围。active required/optional且ordering NONE的`forge`项通过后从FML实际依赖列表投影移出，原依赖及决策另行保存。其他依赖仍交官方FML；原生NeoForge不投影，没有伪造forge模组或新JVM参数。详见[契约](<Dev Manuals/Convergence-007C-2 Forge依赖契约与验证.md>)及[测试入口](tests/real_mods/food_n_fuel/dependency/README.md)。
+- 007C-3：BLOCK/NORMAL_ITEM/LEGACY_ITEM/EVENT/CONTEXT独立选型；无匹配或冲突明确拒绝，旧验证器不放宽。Context仅支持已确认归属的public无参入口、唯一直接get/getModEventBus链和严格副作用集合。独立命名空间shim返回来源ABI关联视图，delegate为当前容器真实Mod Bus；不创建新Bus，不实现新的Forge总线操作，也不改变helper或Registry字节。见[契约](<Dev Manuals/Convergence-007C-3 Profile与Context契约.md>)和[测试入口](tests/entry_context/README.md)。
 - 005：一个扫描归属明确、严格结构匹配的 Forge DeferredRegister<Item> 入口；转换创建、单 Supplier、MOD bus 挂接、holder 字段及 get 引用。原构造器 ABI 不变，真实注册 C/T 与旧回归通过。物品 `registryprobe:ice_ether` 已打包用户原始 16×16 RGBA PNG，字节与来源 SHA 严格一致；原 005-S 与资源静态验收 PASS，原 005-C 在用户 macOS arm64 受控人工验收中 PASS；该客户端结论只属于历史 cohort，新制品 Mac 验收为 NOT RUN。详见 [005 报告](<Dev Manuals/Convergence-005 交付报告.md>)。
 
 006A 在保持原构造器 ABI、Mod Event Bus 和 Supplier 业务字节不变的前提下，将整类固定计数改为逐 API 调用点与数据依赖验证。一个原生 Forge 模组通过同一个 DeferredRegister<Item> 声明 lambda Alpha 与静态 method reference Beta，006A-S 原冻结 fixture 动态 PASS；Beta 资源更新版 006A-C 在用户 macOS arm64 人工验收中受控 PASS，见 [客户端报告](<Dev Manuals/Convergence-006A-C macOS 客户端人工验收报告.md>)。Codex仅取得用户控制台摘录/审查报告，未独立取得原始日志或截图。详见 [006A 报告](<Dev Manuals/Convergence-006A 交付报告.md>) 和 [新测试入口](tests/multi_registry/README.md)。
 
-这是受控原型，不代表任意 Forge 模组兼容。一般 Forge post API、取消／优先级／自动／静态订阅、多 Forge 同时完整启动、一般 RegistryObject API、一般Block／自定义 Registry、Capability 和 Fabric 尚未验证或实现。受控真实投递不代表一般 Forge Event 系统兼容。历史 PASS 见交付报告；每轮运行以新生成的 `result.json` 和原始日志为准。
+这是受控原型，不代表任意 Forge 模组兼容。一般 Forge post API、取消／优先级／自动／静态订阅、任意多 Forge 模组混合业务、一般 RegistryObject API、一般Block／自定义 Registry、Capability 和 Fabric 尚未验证或实现。受控真实投递和双Context夹具不代表一般Forge Event或多模组业务兼容。历史 PASS 见交付报告；每轮运行以新生成的 `result.json` 和原始日志为准。
 
 006A 双 Item 的独立人工输入包说明见 [006A Mac门槛](tests/multi_registry/MAC-SETUP.md)，Beta 资源更新版客户端受控人工验收 PASS；原服务端 fixture 与新客户端 fixture 分别记录。
 原005 fixture 的命名迁移 cohort 部署工具见 [Mac kit](tests/registry/mac/README.md)：

@@ -6,7 +6,7 @@
 |---|---|
 | 002–006B 冻结受控输入 | 构造、事件、Item、双 Item、Block/BlockItem 等各自限定的契约和回归；不代表一般 Forge API |
 | 007B 普通原生 Forge 双 Item | 单 IEventBus 构造器、同入口零捕获纯 Item 工厂、typed 字段/get-only；服务端受控 PASS |
-| Food N' Fuel Forge 1.3 | **尚不兼容**。007C-2越过平台依赖检查后，真实首失败为`DualForgeEntryTransformer.targets()`中的`005 unsupported Item profile: class structure`，尚未进入构造器；未修复该后续失败 |
+| Food N' Fuel Forge 1.3 | **尚不兼容**。007C-3已越过平台/targets并在无参构造器取得Context，随后`ItemRegistries.<clinit>`报`NoClassDefFoundError: net/minecraftforge/registries/ForgeRegistries`；完整构造器未返回，Registry未适配 |
 | Clumps Forge 19.0.0.1 | 007历史发现失败保留；007C-1仅重新验证完整TOML静态解析，未运行/适配Clumps功能 |
 
 Food N' Fuel 的原生基线为 PARTIAL：普通对象/Holder、食物 component 和代表燃料的真实熔炉行为已经验证；食用后变化、创造 UI、手持及重进未执行。
@@ -22,3 +22,9 @@ Food N' Fuel 的原生基线为 PARTIAL：普通对象/Holder、食物 component
 inactive side保留原项交FML，不能声称版本已通过；active BEFORE/AFTER拒绝。非平台required/optional、Minecraft、side和sorting仍由官方FML验证。原生NeoForge不投影，native required forge仍缺失；没有伪造forge身份、覆盖用户配置或新JVM参数。`SOURCE_PLATFORM_DEPENDENCY=VERIFIED`仅代表平台条件；FnF运行状态仍FAIL，原生Forge基线仍PARTIAL，Mac验收NOT RUN。
 
 精确调用链、A/B/C比较、最终同JAR回归和实际首失败见 [007C-2交付](<../Dev Manuals/Convergence-007C-2 交付报告.md>)、[契约](<../Dev Manuals/Convergence-007C-2 Forge依赖契约与验证.md>)和[测试](../tests/real_mods/food_n_fuel/dependency/README.md)。
+
+007C-3将Profile候选检测与严格验证分开；未知/歧义入口明确拒绝，不再兜底送入旧Item Profile。新增Context只支持public Object子类、唯一public无参构造器、同JAR单一Forge owner、唯一直接Context调用链及已验证副作用。旧Normal/Legacy Item、Block和Event规则不变。
+
+选择隔离shim而不是把NeoForge Bus直接传给仍声明Forge Bus的helper。入口仅映射两个Context调用，保留无参描述符、原Forge IEventBus和所有helper调用；shim按真实构造caller及active container绑定其官方Mod Bus。返回的是来源ABI只读关联视图，**视图对象不是原生Bus对象**；实际delegate/owner身份分别核验。不提供register/post/listener等新Forge总线操作，不创建新Bus或Module Layer。两个Registry helper、Supplier、Tab和全局总线调用保持原字节；不能称FnF完整构造ABI已兼容。
+
+受控Context Fixture先在原Forge52.1.0运行，再用同一JAR在NeoForge验证。原生路径不接管；本轮受控子目标与真实FnF失败分开，客户端/食物/Fuel/Tab/持久化NOT RUN。见 [007C-3交付](<../Dev Manuals/Convergence-007C-3 交付报告.md>)、[ABI/方案](<../Dev Manuals/Convergence-007C-3 方案比较.md>)与[测试](../tests/entry_context/README.md)。

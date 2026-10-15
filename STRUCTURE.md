@@ -20,6 +20,7 @@ DualForge/
 │   │   └── mac-legacy/             Legacy固定旧cohort，原字节
 │   ├── dropin_items/           活跃：007B无业务开关Forge输入、范围/模块拒绝、零参数Mac包
 │   ├── bootstrap/              活跃：007A标准启动、默认配置与原生共存
+│   ├── entry_context/              活跃：007C-3入口分类、原生Forge Context夹具、归属/Bus身份与原子性
 │   ├── block_registry/             活跃：006B Block/BlockItem ABI、Contract、C/T
 │   │   ├── client_resources/       活跃：006B-C方块模型/用户贴图，实机验收独立
 │   │   └── client_translations/    活跃：冰之以太三组名称覆盖，不修改冻结模组
