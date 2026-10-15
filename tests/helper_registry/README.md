@@ -64,3 +64,7 @@ commands live in `out/convergence-007c4b/`; logs/worlds/libraries stay out of Gi
 Gate 8 FnF admission is read-only and currently REJECTED. The platform matrix's
 explicit `--skip-fnf-runtime` excludes N2 under that gate; the other 18 cases
 keep every original assertion. The default historical matrix is unchanged.
+
+## FnF 精确拒绝门禁（审计补强）
+
+只读准入必须抛出完整原因 `Registry helper rejected: SUPPLIER_BUSINESS_UNSUPPORTED`；其他异常或意外接受失败。`run_contract.py --fnf <original.jar>` 同时检查唯一精确收据，保留 `FNF_RUNTIME=NOT RUN`。`run_ci_contract.py` 自动运行不依赖游戏的 Java 正/负例，`python3 -B -m unittest discover -s tests/helper_registry -p 'test_*.py' -v` 检查错误和冲突收据。归档远端位置与实际验证见 [审计收尾报告](../../Dev%20Manuals/Convergence-007C-4B%20审计收尾报告.md)；冻结原报告不改写。
