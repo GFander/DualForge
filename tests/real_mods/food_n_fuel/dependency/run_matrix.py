@@ -14,6 +14,8 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     for key in ('jar','fixture-index','fnf','dropin','observer','native','install','jdk-home'):
         p.add_argument('--'+key,type=Path,required=True)
+    p.add_argument('--fnf-next-stage',choices=('item-profile','registry-helper'),default='item-profile',
+                   help='Explicit expected next boundary; the 007C-2 historical default remains strict')
     a=p.parse_args()
     assert a.jar.name=='DualForge.jar'
     fixture=json.loads(a.fixture_index.read_text());assert fixture['status']=='PASS'
@@ -48,7 +50,7 @@ def main():
         ('native-required-forge',[a.jar,jars['native-required-forge']], 'native-required',['forge','[MISSING]']),
         ('native-optional-forge',[a.jar,jars['native-optional-forge']], 'healthy',['[DF007-NATIVE] SERVER_STARTED']),
     ]
-    result={'status':'FAIL','compat':compat,'testedCommit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=REPO,text=True).strip(),'cases':{},'nativeForgeBaseline':'PARTIAL inherited, not rerun','clientRuntime':'NOT RUN'}
+    result={'status':'FAIL','compat':compat,'fnfExpectedStage':a.fnf_next_stage,'testedCommit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=REPO,text=True).strip(),'cases':{},'nativeForgeBaseline':'PARTIAL inherited, not rerun','clientRuntime':'NOT RUN'}
     try:
         baseline=None
         for name,mods,kind,markers in cases:
@@ -76,11 +78,21 @@ def main():
                 checks.update(projectionAudited='sourcePlatformDependency=VERIFIED' in stdout,
                               noMissingForge="Mod ID: 'forge', Requested by: 'fnf'" not in text,
                               exactOriginalFnf=any(v['sha256']==identity['sha256'] and v['bytes']==identity['bytes'] for v in raw['installedMods']),
-                              actualNewException='005 unsupported Item profile: class structure' in stderr,
-                              actualTargetsStack='DualForgeEntryTransformer.targets' in stderr,
-                              actualOwnedProfileStack='ControlledForgeItemProfile.validate' in stderr,
-                              noFnfConstructor='loadMod called for fnf' not in stdout,
                               lifecycleFailurePreserved=raw['lifecycle']=='FAIL')
+                if a.fnf_next_stage=='item-profile':
+                    checks.update(actualNewException='005 unsupported Item profile: class structure' in stderr,
+                                  actualTargetsStack='DualForgeEntryTransformer.targets' in stderr,
+                                  actualOwnedProfileStack='ControlledForgeItemProfile.validate' in stderr,
+                                  noFnfConstructor='loadMod called for fnf' not in stdout)
+                else:
+                    checks.update(contextClassified='ENTRY_PROFILE modId=fnf entry=net.natevg.fnf.FoodNFuel selected=CONTEXT' in stdout,
+                                  contextMapped='CONTEXT_PROFILE entry=net/natevg/fnf/FoodNFuel contextCalls=2 helpersUnchanged=2' in stdout,
+                                  actualContextBound='[DUALFORGE-CONTEXT] BOUND modId=fnf' in stdout,
+                                  actualNextRegistryFailure='java.lang.NoClassDefFoundError: net/minecraftforge/registries/ForgeRegistries' in text,
+                                  actualHelperInitializer='ItemRegistries.<clinit>' in text,
+                                  actualFnfConstructor='FoodNFuel.<init>' in text and 'FMLModContainer.constructMod' in text,
+                                  noOldProfileRefusal='unsupported Item profile: class structure' not in text,
+                                  noSwallowedContextError='Forge constructor context rejected' not in text)
             elif kind=='platform-reject':
                 checks['explicitPlatformRefusal']='Forge platform dependency rejected:' in text
                 checks['refusedEntryNotConstructed']=('[DF007C2] B CONSTRUCTOR' if name=='multi-a-b' else '[DF007C2] A CONSTRUCTOR') not in stdout
