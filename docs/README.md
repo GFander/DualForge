@@ -38,3 +38,5 @@
 ## 离线API研究
 
 [007C-4A交付与4B建议](<../Dev Manuals/Convergence-007C-4A 交付报告.md>)、[工具](../tools/api-atlas/README.md)、[测试](../tests/api_atlas/README.md)。生产和运行时兼容范围不变，完整客户端补丁输入缺失。
+
+007C-4B前置[Git基线收敛](<../Dev Manuals/Convergence-007C-4B Git基线收敛报告.md>)记录独立集成PR；main尚未收敛时Registry Bridge生产开发保持BLOCKED。
