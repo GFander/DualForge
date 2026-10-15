@@ -19,7 +19,7 @@ python3 -B tests/helper_registry/build_fixture.py \
 python3 -B tests/helper_registry/run_contract.py \
   --jar "$COMPAT" --fixture "$FIXTURE" --server-input "$NEO_INSTALL" \
   --jdk-home "$JDK" --fnf "$ORIGINAL_FNF" \
-  --fnf-contract-version supplier-v1 --host-oracle "$PINNED_HOST_ORACLE_TSV"
+  --fnf-contract-version typed-v1 --host-oracle "$PINNED_HOST_ORACLE_TSV"
 python3 -B tests/helper_registry/run_runtime.py \
   --host forge --stage treatment --fixture-index "$FIXTURE_INDEX" \
   --install "$FORGE_INSTALL" --jdk-home "$JDK" \
@@ -68,4 +68,6 @@ keep every original assertion. The default historical matrix is unchanged.
 
 ## FnF 精确拒绝门禁（审计补强）
 
-历史 4B 的 `legacy-4b` 版本精确拒绝原因为 `Registry helper rejected: SUPPLIER_BUSINESS_UNSUPPORTED`，冻结记录保持不变。4C-1 当前生产代码使用 `--fnf-contract-version supplier-v1 --host-oracle <fixed.tsv>`，精确预期下一道实际拒绝 `Registry helper rejected: ITEM_FIELD_DESCRIPTOR`；必须同时出现对应版本收据。其他异常、跨版本原因或意外接受失败。以上带版本及oracle参数的 `run_contract.py` 命令同时检查唯一精确收据，保留 `FNF_RUNTIME=NOT RUN`。`run_ci_contract.py` 自动运行不依赖游戏的 Java 正/负例，`python3 -B -m unittest discover -s tests/helper_registry -p 'test_*.py' -v` 检查错误和冲突收据。归档远端位置与实际验证见 [审计收尾报告](../../Dev%20Manuals/Convergence-007C-4B%20审计收尾报告.md)；冻结原报告不改写。
+历史 4B 的 `legacy-4b` 版本精确拒绝原因为 `Registry helper rejected: SUPPLIER_BUSINESS_UNSUPPORTED`，冻结记录保持不变。历史4C-1代码使用 `--fnf-contract-version supplier-v1 --host-oracle <fixed.tsv>`，精确预期下一道实际拒绝 `Registry helper rejected: ITEM_FIELD_DESCRIPTOR`；必须同时出现对应版本收据。其他异常、跨版本原因或意外接受失败。以上带版本及oracle参数的 `run_contract.py` 命令同时检查唯一精确收据，保留 `FNF_RUNTIME=NOT RUN`。`run_ci_contract.py` 自动运行不依赖游戏的 Java 正/负例，`python3 -B -m unittest discover -s tests/helper_registry -p 'test_*.py' -v` 检查错误和冲突收据。归档远端位置与实际验证见 [审计收尾报告](../../Dev%20Manuals/Convergence-007C-4B%20审计收尾报告.md)；冻结原报告不改写。
+
+当前4C-2代码显式使用 `--fnf-contract-version typed-v1 --host-oracle <fixed.tsv>`，完整计划精确拒绝 `Registry helper rejected: GLOBAL_EVENT_BUS_UNSUPPORTED`；旧版本收据保持原预期，不与新JAR混用。详见[typed Registry测试](../typed_registry/README.md)。客户端及FnF运行仍NOT RUN。

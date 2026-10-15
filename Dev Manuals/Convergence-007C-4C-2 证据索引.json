@@ -1,0 +1,3836 @@
+{
+  "task": "Convergence-007C-4C-2",
+  "functionalStatus": "PASS (controlled server scope)",
+  "branch": "codex/convergence-007c4c2-typed-registry",
+  "baseCommit": "854d378a1caf44ae297dfffe4defc5eb65181b9f",
+  "prerequisitePR26": {
+    "state": "MERGED",
+    "mergedAtUTC": "2026-10-15T17:01:08Z",
+    "finalHeadAncestor": "035049e09b239294bd48e70a6bce035fb92b8d1a",
+    "productionAncestor": "d850b1c7bf3b16609ed17a58b3fe2eec0c11b751"
+  },
+  "productionCommit": "b552f2e42407c7da9a113919f8a20a4070f78b0f",
+  "testCommit": "bfdeba180a05b708791a9a5dc2be54ff10ebd06e",
+  "compat": {
+    "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/delivery-verified/DualForge.jar",
+    "bytes": 141341,
+    "sha256": "1afc82338206901c7057951aa2202c8dadd75cdd95d47fd112bb166d8faa6038"
+  },
+  "source": {
+    "status": "PASS",
+    "productionCommit": "b552f2e42407c7da9a113919f8a20a4070f78b0f",
+    "sourceFingerprint": "a804747849c551f1523bcdf164379e71df2a028035c4aa7a64fb371a22f56702",
+    "source": [
+      {
+        "path": "dualforge/src/main/java/io/github/gfander/dualforge/ControlledCreativeTab.java",
+        "bytes": 8870,
+        "sha256": "0ea5c3069d1b7bd0369a43148de42a65e280085ffce9c368ddd38021c261536d"
+      },
+      {
+        "path": "dualforge/src/main/java/io/github/gfander/dualforge/ControlledForgeBlockProfile.java",
+        "bytes": 21264,
+        "sha256": "c854839525ec3b9a836b6664a50879e453d3979820face2a32870876d153a015"
+      },
+      {
+        "path": "dualforge/src/main/java/io/github/gfander/dualforge/ControlledForgeContextProfile.java",
+        "bytes": 12277,
+        "sha256": "db7af68fc4e4ea4e8bfe50b9c4b0523da9205a09ec9c67568b3e4f817723207f"
+      },
+      {
+        "path": "dualforge/src/main/java/io/github/gfander/dualforge/ControlledForgeItemProfile.java",
+        "bytes": 21812,
+        "sha256": "8ff193102991a89b6b07f67c2fcabcf9890b3c1a03af43591544014c58b87b2a"
+      },
+      {
+        "path": "dualforge/src/main/java/io/github/gfander/dualforge/ControlledItemSupplier.java",
+        "bytes": 15604,
+        "sha256": "33728a124f0756363e7bde02c57e4e293ce05517f3a35388a01d314bbfdf7fe5"
+      },
+      {
+        "path": "dualforge/src/main/java/io/github/gfander/dualforge/DualForgeEntryTransformer.java",
+        "bytes": 27635,
+        "sha256": "a1ef737190b565909eb346494515a7ae0ecea7b7cef379f5c51f23b1f0f26c55"
+      },
+      {
+        "path": "dualforge/src/main/java/io/github/gfander/dualforge/DualForgeLanguageLoader.java",
+        "bytes": 3206,
+        "sha256": "2d1e03a84ee3a16606f9193c6ece3641437f0e956cbae033978d04b6dbeb6744"
+      },
+      {
+        "path": "dualforge/src/main/java/io/github/gfander/dualforge/DualForgeTransformationService.java",
+        "bytes": 1182,
+        "sha256": "e3f51932ae348b52b2a38374bf4a1a170e552f5f1edbcef5b35bb12e2ffde2e1"
+      },
+      {
+        "path": "dualforge/src/main/java/io/github/gfander/dualforge/ForgeConstructorContext.java",
+        "bytes": 4567,
+        "sha256": "d96b4bccf4d071ae75bd1f876ef4777b17053ea6fbe62ef7d56d464d6ab4cf7c"
+      },
+      {
+        "path": "dualforge/src/main/java/io/github/gfander/dualforge/ForgeEmptyRegistration.java",
+        "bytes": 1322,
+        "sha256": "8ae3b9dc74c815507d24dec175f1d5c08ce2a40ccc392efad67f2bcbae157831"
+      },
+      {
+        "path": "dualforge/src/main/java/io/github/gfander/dualforge/ForgeEntryProfile.java",
+        "bytes": 1439,
+        "sha256": "7550c2250095d20dbee888ab77663b46de353d878c25a712f0f04d0c665fdb17"
+      },
+      {
+        "path": "dualforge/src/main/java/io/github/gfander/dualforge/ForgeJarMetadata.java",
+        "bytes": 2849,
+        "sha256": "edf9c42b31cca79eb0585308d4d50a9ad77f3aa371fe499f20ee6b8fece160d1"
+      },
+      {
+        "path": "dualforge/src/main/java/io/github/gfander/dualforge/ForgeModFileInfo.java",
+        "bytes": 10199,
+        "sha256": "d344bf7a9dc1ace45791cadd2839b1f7bd32a5951fe060918423576316105b3d"
+      },
+      {
+        "path": "dualforge/src/main/java/io/github/gfander/dualforge/ForgeModFileInfoParser.java",
+        "bytes": 9306,
+        "sha256": "11fa49ba068e560cfa2782057be37ea38221e8e339eac7fc6be024d956871663"
+      },
+      {
+        "path": "dualforge/src/main/java/io/github/gfander/dualforge/ForgeModLocator.java",
+        "bytes": 9642,
+        "sha256": "c46ca05d2cedf07180c5cb7d9b14ca965db340cd9aebdc5cb58c3bfa2cbaf2a0"
+      },
+      {
+        "path": "dualforge/src/main/java/io/github/gfander/dualforge/ForgeModReader.java",
+        "bytes": 2333,
+        "sha256": "f990387f48bd96eed4062d11cc1a6cf0e47aaeb6f273fb5b84c4dc9a237432ac"
+      },
+      {
+        "path": "dualforge/src/main/java/io/github/gfander/dualforge/ForgePlatformDependencyResolver.java",
+        "bytes": 7844,
+        "sha256": "0b7699524b890e0488ea673da1ecce042ae21f81aad0fc96f94b781134823eb4"
+      },
+      {
+        "path": "dualforge/src/main/java/io/github/gfander/dualforge/ForgeRegistryBridge.java",
+        "bytes": 4524,
+        "sha256": "9c73830b005ebc09547548aa338411264fcddb1bb43f6616aa1e0c84d6c5b5e5"
+      },
+      {
+        "path": "dualforge/src/main/java/io/github/gfander/dualforge/ForgeRegistryTransformationPlan.java",
+        "bytes": 26650,
+        "sha256": "53e15bff4202f1f14e5224a2db3ce58f73dec66f7ee0d57a24258ffaddb8f1ca"
+      },
+      {
+        "path": "dualforge/src/main/java/io/github/gfander/dualforge/RegistryBytecodeVerifier.java",
+        "bytes": 934,
+        "sha256": "c712e770a63ab4c9c4e334d9d7162ba57e66392f158829268d3a73bed1db2b4f"
+      },
+      {
+        "path": "dualforge/src/main/java/net/minecraftforge/eventbus/api/IEventBus.java",
+        "bytes": 234,
+        "sha256": "5ac37276f9b441c3b2a18c5f8d394c39571a6a500e03f78c60d34661e39e5982"
+      },
+      {
+        "path": "dualforge/src/main/resources/META-INF/MANIFEST.MF",
+        "bytes": 76,
+        "sha256": "04dabe8c00e57f972bea92731cb1a88599ded3071d9db88282dd6f547bc5936e"
+      },
+      {
+        "path": "dualforge/src/main/resources/META-INF/services/cpw.mods.modlauncher.api.ITransformationService",
+        "bytes": 59,
+        "sha256": "cfbbfc8132875a4be6331ecd5c8d28e3008946f91c9a855076d1547368791215"
+      },
+      {
+        "path": "dualforge/src/main/resources/META-INF/services/net.neoforged.neoforgespi.language.IModLanguageLoader",
+        "bytes": 52,
+        "sha256": "f8996ac327338d98429fec36749a584d88c5b8a45a0057883f7581a2f263d6f1"
+      },
+      {
+        "path": "dualforge/src/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileCandidateLocator",
+        "bytes": 44,
+        "sha256": "f74463f8c6a550c553b0b16cf870810d973901004dc76df41b5ee673d42ff1c3"
+      },
+      {
+        "path": "dualforge/src/main/resources/META-INF/services/net.neoforged.neoforgespi.locating.IModFileReader",
+        "bytes": 43,
+        "sha256": "14c63d8f149645274513654bad3f00363dc85bc93c8b35ea902e22de62a1a6da"
+      }
+    ]
+  },
+  "fixture": {
+    "status": "PASS",
+    "artifacts": {
+      "fixture": {
+        "Path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/fixture/20261015-171633-5a41068e/tab-boundary.jar",
+        "SHA256": "e440da9d73a04c0ec76798c723fee074be83bc176f1b51834b022b640722cd84",
+        "Bytes": 4803
+      },
+      "forgeObserver": {
+        "Path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/fixture/20261015-171633-5a41068e/forge/forge-tab-observer.jar",
+        "SHA256": "46e9fda346f274f4bbebfa39f94b07c4b61806f7971d7ae91c8edb6a297e4ee1",
+        "Bytes": 6272
+      },
+      "neoforgeObserver": {
+        "Path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/fixture/20261015-171633-5a41068e/neoforge/neoforge-tab-observer.jar",
+        "SHA256": "ae1f169ff41c960ab133dbe9b4ce90be8c7c462f9860d4b671fd9bf74e5c82c3",
+        "Bytes": 6296
+      }
+    },
+    "source": [
+      {
+        "Path": "/workspace/DualForge-007C4C2/tests/typed_registry/fixture/demo/shelves/Consumer.java",
+        "SHA256": "a73965a7a67e8c3cabd71f4b4ae6949b7fa98d73b668b49aef4d9a2b96dd3988",
+        "Bytes": 436
+      },
+      {
+        "Path": "/workspace/DualForge-007C4C2/tests/typed_registry/fixture/demo/shelves/EntryPoint.java",
+        "SHA256": "5e5769a37240a962a1b7fb5d5397bd65486187609a9e8cb17da28cc20cdd279b",
+        "Bytes": 428
+      },
+      {
+        "Path": "/workspace/DualForge-007C4C2/tests/typed_registry/fixture/demo/shelves/Items.java",
+        "SHA256": "0f2ff8cc2c40b1a6a24f9586bb730a35c878226a86f8299068c0d26e87baca5c",
+        "Bytes": 823
+      },
+      {
+        "Path": "/workspace/DualForge-007C4C2/tests/typed_registry/fixture/demo/shelves/Shelves.java",
+        "SHA256": "db7a257b048945de442e7fd3401df006645858e7209d0ca63954fd9203b4deb9",
+        "Bytes": 1231
+      }
+    ],
+    "classes": [
+      {
+        "Path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/fixture/20261015-171633-5a41068e/classes/demo/shelves/Consumer.class",
+        "SHA256": "8be54a2c8613851707c57ac2acbf8799c42a8c704b45ebb271957a94aadd0d9d",
+        "Bytes": 1157
+      },
+      {
+        "Path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/fixture/20261015-171633-5a41068e/classes/demo/shelves/EntryPoint.class",
+        "SHA256": "ddf3932774ab2a8126b1bf6d2f9b36dd1e613afc1f93019b913b3a75a3d6d047",
+        "Bytes": 1058
+      },
+      {
+        "Path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/fixture/20261015-171633-5a41068e/classes/demo/shelves/Items.class",
+        "SHA256": "322efdc57497283af923eb4c07080f02cfbf858af886ff45888467d892b5b725",
+        "Bytes": 2689
+      },
+      {
+        "Path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/fixture/20261015-171633-5a41068e/classes/demo/shelves/Shelves.class",
+        "SHA256": "3fd323a14efd534d6f468bef22370d7b1e1f5d6a6c1e79b74348f47a2521862a",
+        "Bytes": 4425
+      }
+    ],
+    "purity": "Official Forge52.1.0 only; platform observers separate"
+  },
+  "cohort": {
+    "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/cohort-final.json",
+    "bytes": 2055,
+    "sha256": "82f55c9d971d1f3074df0cda56638d3eb9d6547bd5061572ef2b2a80cd3fd627"
+  },
+  "phases": {
+    "typed-static": {
+      "kind": "static full plan",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/contract-complete/result.json",
+        "bytes": 297,
+        "sha256": "15406a0b999386dcde71937961d89a3372b7be45c55b6f2a4604407c2e1d8e2e"
+      },
+      "compatSHA256": "1afc82338206901c7057951aa2202c8dadd75cdd95d47fd112bb166d8faa6038"
+    },
+    "supplier-static": {
+      "kind": "static",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/supplier-verified/result.json",
+        "bytes": 1063,
+        "sha256": "9a98415a9f289f2c1029762faa1703958603e275f1e3c83ce0175d03cd6f5f96"
+      },
+      "compatSHA256": "1afc82338206901c7057951aa2202c8dadd75cdd95d47fd112bb166d8faa6038"
+    },
+    "new-native": {
+      "kind": "native Forge; no compat installed",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/forge-native-invocation/result.json",
+        "bytes": 1041,
+        "sha256": "70b4da7b6ea6c38dd8be751418cf5796331f441a451c805157f47e2377b56f52"
+      },
+      "compatSHA256": null
+    },
+    "new-bridge": {
+      "kind": "separate white-box diagnostic",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/revision-neo-diagnostic-invocation/bridge-result.json",
+        "bytes": 363,
+        "sha256": "d07250f55b4216fb02bb529974423ffdb75a2ba8cb2d27465cc3081e03a08847"
+      },
+      "compatSHA256": "1afc82338206901c7057951aa2202c8dadd75cdd95d47fd112bb166d8faa6038"
+    },
+    "old-bridge": {
+      "kind": "separate diagnostic",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-legacy-bridge-invocation/result.json",
+        "bytes": 697,
+        "sha256": "0fd150c38b31feb963c3cc140baad43c3e846c55cd55ad50bb9f7cd7fd707562"
+      },
+      "compatSHA256": "1afc82338206901c7057951aa2202c8dadd75cdd95d47fd112bb166d8faa6038"
+    },
+    "tooling": {
+      "kind": "static/tooling",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/result.json",
+        "bytes": 347,
+        "sha256": "de12aa99ab0d2e97280c3efa2d9c19187e95a8910742e2f45a5b7cf1fea8651e"
+      },
+      "compatSHA256": "1afc82338206901c7057951aa2202c8dadd75cdd95d47fd112bb166d8faa6038"
+    },
+    "normal-contract": {
+      "kind": "static using final compat",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007b/contract/20261015-180219-2d2d3b5e/result.json",
+        "bytes": 242,
+        "sha256": "8429f2d6a002a1a5ed5d63ee67ca0f4b3af09c3efbdbb740506285cabd3cf67b"
+      },
+      "compatSHA256": "1afc82338206901c7057951aa2202c8dadd75cdd95d47fd112bb166d8faa6038"
+    },
+    "context-contract": {
+      "kind": "static using final compat",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c3/contract/20261015-180222-ee8a7214/result.json",
+        "bytes": 270,
+        "sha256": "f54bfef375105abf54fc44d8f493d3334ce953f6e7a58f033e4b9b2588b0ca4b"
+      },
+      "compatSHA256": "1afc82338206901c7057951aa2202c8dadd75cdd95d47fd112bb166d8faa6038"
+    },
+    "metadata-contract": {
+      "kind": "static using final compat",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c1/metadata-contract/20261015-180224-24a7d123/result.json",
+        "bytes": 8698,
+        "sha256": "c3833122a9cdfdfec3dfc02cf923488877884bc6db3b3bfed79092c486a80150"
+      },
+      "compatSHA256": "1afc82338206901c7057951aa2202c8dadd75cdd95d47fd112bb166d8faa6038"
+    },
+    "platform-contract": {
+      "kind": "static using final compat",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c2/contract/20261015-180227-34509089/result.json",
+        "bytes": 307,
+        "sha256": "a569b1e970568e44b38a641167c61cf2b3f2274eeb8bb0e2f512162bc2345480"
+      },
+      "compatSHA256": "1afc82338206901c7057951aa2202c8dadd75cdd95d47fd112bb166d8faa6038"
+    },
+    "helper-contract": {
+      "kind": "static using final compat",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c4b/contract/20261015-180231-7f99da52/result.json",
+        "bytes": 481,
+        "sha256": "f1d1b5ae0591bebf406f569a07d40dfd36324bacc86928bb3918981acdf12a01"
+      },
+      "compatSHA256": "1afc82338206901c7057951aa2202c8dadd75cdd95d47fd112bb166d8faa6038"
+    },
+    "event": {
+      "kind": "static using final compat",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/result.json",
+        "bytes": 357,
+        "sha256": "4a9cd3bb878ca06884dc192d13d86792093b0d90bd37660fe9f3d92aa5538784"
+      },
+      "compatSHA256": "1afc82338206901c7057951aa2202c8dadd75cdd95d47fd112bb166d8faa6038"
+    },
+    "registry": {
+      "kind": "static using final compat",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/registry/result.json",
+        "bytes": 495,
+        "sha256": "17c67b3464d33b6efbf9a10bdfd771a2267dea4de25c7a348a75418d0136551c"
+      },
+      "compatSHA256": "1afc82338206901c7057951aa2202c8dadd75cdd95d47fd112bb166d8faa6038"
+    },
+    "multi": {
+      "kind": "static using final compat",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/result.json",
+        "bytes": 870,
+        "sha256": "9ad4e3f4c73db1a1a31fce25c46c30067dd01a9dc97adcbac988e301af49c78f"
+      },
+      "compatSHA256": "1afc82338206901c7057951aa2202c8dadd75cdd95d47fd112bb166d8faa6038"
+    },
+    "block": {
+      "kind": "static using final compat",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/result.json",
+        "bytes": 867,
+        "sha256": "9081fe368d3fe71e0f63f0e2727b0ec98f7c16687835a657da45b4f340533cc7"
+      },
+      "compatSHA256": "1afc82338206901c7057951aa2202c8dadd75cdd95d47fd112bb166d8faa6038"
+    },
+    "typed-control": {
+      "kind": "NeoForge dynamic",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/revision-neo-control-invocation/result.json",
+        "bytes": 1610,
+        "sha256": "9c8826610c9f05e00e39cffea2defa07f8f4c188428b572923fb2c33b9d39e48"
+      },
+      "compatSHA256": "1afc82338206901c7057951aa2202c8dadd75cdd95d47fd112bb166d8faa6038"
+    },
+    "typed-treatment": {
+      "kind": "NeoForge dynamic",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/revision-neo-treatment-invocation/result.json",
+        "bytes": 1611,
+        "sha256": "5891f8c84547eca822ba0a60dbd84a2e8f605e14bdb6740076d06e6e668579f6"
+      },
+      "compatSHA256": "1afc82338206901c7057951aa2202c8dadd75cdd95d47fd112bb166d8faa6038"
+    },
+    "ordinary-native": {
+      "kind": "native Forge; no compat installed",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/regression-ordinary-forge-treatment-invocation/result.json",
+        "bytes": 1104,
+        "sha256": "af356466448276451cbedcb57f03dfd53dc3100a995eca5687985164daf6f418"
+      },
+      "compatSHA256": null
+    },
+    "ordinary-control": {
+      "kind": "NeoForge dynamic",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-ordinary-neoforge-control-invocation/result.json",
+        "bytes": 1774,
+        "sha256": "549bc1cf31796d463334208cc577eab88766231622f0fcaf9a6498bfeb65af2e"
+      },
+      "compatSHA256": "1afc82338206901c7057951aa2202c8dadd75cdd95d47fd112bb166d8faa6038"
+    },
+    "ordinary-treatment": {
+      "kind": "NeoForge dynamic",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-ordinary-neoforge-treatment-invocation/result.json",
+        "bytes": 1777,
+        "sha256": "c826af11acfbf876288fc82902869f82fa4a16c85714365f47354d6128bdbc95"
+      },
+      "compatSHA256": "1afc82338206901c7057951aa2202c8dadd75cdd95d47fd112bb166d8faa6038"
+    },
+    "data-native": {
+      "kind": "native Forge; no compat installed",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/regression-data-forge-treatment-invocation/result.json",
+        "bytes": 1137,
+        "sha256": "08bd5c401f55faf76ef1070b3b14c2c9b66221eb8f1a9a1a15dff3a941c7f1a8"
+      },
+      "compatSHA256": null
+    },
+    "data-control": {
+      "kind": "NeoForge dynamic",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-data-neoforge-control-invocation/result.json",
+        "bytes": 1807,
+        "sha256": "fa40fec4b2925e88d1e98da3bb23506bd93d680ebc5f56d8167cf61fc32bfb87"
+      },
+      "compatSHA256": "1afc82338206901c7057951aa2202c8dadd75cdd95d47fd112bb166d8faa6038"
+    },
+    "data-treatment": {
+      "kind": "NeoForge dynamic",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-data-neoforge-treatment-invocation/result.json",
+        "bytes": 1810,
+        "sha256": "970a6f082962948044066a1bb69e6da32abf0913c82292f9c5b995d7f945cce1"
+      },
+      "compatSHA256": "1afc82338206901c7057951aa2202c8dadd75cdd95d47fd112bb166d8faa6038"
+    },
+    "subclass-native": {
+      "kind": "native Forge; no compat installed",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/regression-subclass-forge-treatment-invocation/result.json",
+        "bytes": 1146,
+        "sha256": "dfd4108b6603e7fb0e7e3fecf3448b592b4ffd070a3577827b60193d2f00fd95"
+      },
+      "compatSHA256": null
+    },
+    "subclass-control": {
+      "kind": "NeoForge dynamic",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-subclass-neoforge-control-invocation/result.json",
+        "bytes": 1816,
+        "sha256": "2a370c03b51545875fc92afe4494c78d34e46b2d0b471a5842fa133c1ef90c1d"
+      },
+      "compatSHA256": "1afc82338206901c7057951aa2202c8dadd75cdd95d47fd112bb166d8faa6038"
+    },
+    "subclass-treatment": {
+      "kind": "NeoForge dynamic",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-subclass-neoforge-treatment-invocation/result.json",
+        "bytes": 1819,
+        "sha256": "4167dfc1dec8fba43d2fe1c870975ff360c021407fcd86a142616b6a892fca10"
+      },
+      "compatSHA256": "1afc82338206901c7057951aa2202c8dadd75cdd95d47fd112bb166d8faa6038"
+    },
+    "legacy4b-native": {
+      "kind": "native Forge; no compat installed",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/regression-legacy4b-forge-treatment-invocation/result.json",
+        "bytes": 1078,
+        "sha256": "a293df64aa15b4b04333f823b6f1f00a26f615be6c4c1b6dde7c9476607d6090"
+      },
+      "compatSHA256": null
+    },
+    "legacy4b-control": {
+      "kind": "NeoForge dynamic",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-legacy4b-neoforge-control-invocation/result.json",
+        "bytes": 1683,
+        "sha256": "8082c8101690da0e009c3f46b789c1db6a57c3bef0b721035cc5b515bbb41344"
+      },
+      "compatSHA256": "1afc82338206901c7057951aa2202c8dadd75cdd95d47fd112bb166d8faa6038"
+    },
+    "legacy4b-treatment": {
+      "kind": "NeoForge dynamic",
+      "status": "PASS",
+      "result": {
+        "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-legacy4b-neoforge-treatment-invocation/result.json",
+        "bytes": 1686,
+        "sha256": "5ed40427d326d825e4dcf1e6bed5d14e42a1640f86a8f831a4be3c5614dc30e3"
+      },
+      "compatSHA256": "1afc82338206901c7057951aa2202c8dadd75cdd95d47fd112bb166d8faa6038"
+    }
+  },
+  "counts": {
+    "typedAssertions": 40,
+    "typedNegatives": 25,
+    "typedBridgeNegatives": 6,
+    "helperAssertions": 110,
+    "helperNegatives": 35,
+    "contextAssertions": 80,
+    "contextNegatives": 22,
+    "normalNegatives": 13,
+    "explicitJPMS": 1,
+    "supplierAssertions": 86,
+    "supplierNegatives": 19,
+    "supplierLatePlanFailures": 3,
+    "legacyBridgeNegatives": 8,
+    "fnfExpectationPositives": 3,
+    "fnfExpectationNegatives": 12,
+    "bytecodeVerifierAssertions": 10,
+    "bytecodeVerifierNegatives": 8,
+    "pythonTests": 88,
+    "protectedFiles": 374
+  },
+  "asmSourceVerifier": {
+    "status": "PASS",
+    "kind": "current production source compiled with SHA-pinned ASM, not a game launch or claim that this CI step loaded the compat JAR",
+    "rawDirectory": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/ci-bytecode"
+  },
+  "fnf": {
+    "originalSHA256": "bd415b04529c4ffc31e14757488f71dab6917e4560c61e236c3c4d0de6557958",
+    "bytes": 128098,
+    "version": "typed-v1",
+    "forcedPlan": "REJECTED",
+    "exactReason": "Registry helper rejected: GLOBAL_EVENT_BUS_UNSUPPORTED",
+    "phase": "constructor of full plan after source closure validation, before output clone/publication",
+    "normalCandidate": false,
+    "runtime": "NOT RUN",
+    "supplier67Readonly": "PASS in supplier Contract"
+  },
+  "strictZeroErrors": false,
+  "baselineErrors": "Settings/Yggdrasil same-round errors retained; all healthy runs equal full severity records",
+  "notRun": [
+    "FnF game runtime",
+    "client Creative Tab UI",
+    "food consumption",
+    "furnace burning",
+    "unrelated full historical game matrices"
+  ],
+  "rawEvidence": [
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/contract-complete/contract.stdout.log",
+      "bytes": 51897,
+      "sha256": "a651fbbd9d9e398e40e222e6d70bdd599387c5e8815eb9af408090e9e09dbc11"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/contract-complete/javac.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/contract-complete/result.json",
+      "bytes": 297,
+      "sha256": "15406a0b999386dcde71937961d89a3372b7be45c55b6f2a4604407c2e1d8e2e"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/contract-complete/javac.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/contract-complete/contract.command.json",
+      "bytes": 14956,
+      "sha256": "c5b13fadf8eadbae866ebabb02455dfaa0529ec136bfda6b0973dc200f0f301f"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/contract-complete/contract.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/contract-complete/inputs.json",
+      "bytes": 27180,
+      "sha256": "19ea8d8123be551886fb7f8448a57f3ea484693aabf857ecb1ff816e5e3a868a"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/contract-complete/javac.command.json",
+      "bytes": 14710,
+      "sha256": "875b9aef230cc6e600615213dd7e5098f04e008104c921b313784ed2c71ebcc4"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/contract-complete/contract.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/contract-complete/javac.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/supplier-verified/supplier.stdout.log",
+      "bytes": 1717,
+      "sha256": "91596ea7757b8e91bde709144540cbb98d69f08cb2e8a16f6e60046d4b3af937"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/supplier-verified/javac.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/supplier-verified/supplier.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/supplier-verified/result.json",
+      "bytes": 1063,
+      "sha256": "9a98415a9f289f2c1029762faa1703958603e275f1e3c83ce0175d03cd6f5f96"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/supplier-verified/javac.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/supplier-verified/inputs.json",
+      "bytes": 28755,
+      "sha256": "627522ffba1b12c54adb59633172341068e58ed37b792d4275908cb338e0b6fe"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/supplier-verified/javac.command.json",
+      "bytes": 14786,
+      "sha256": "ea0960657871a9de4f0b587f679e59571bd985fe4d9f93b5d81c7de81f3ea255"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/supplier-verified/supplier.command.json",
+      "bytes": 14846,
+      "sha256": "27b11dd37c4135f8f8a17174c5089361bb4ee476bee750c95bd8b56c64e43a47"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/supplier-verified/supplier.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/supplier-verified/javac.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/forge-native-invocation/result.json",
+      "bytes": 1041,
+      "sha256": "70b4da7b6ea6c38dd8be751418cf5796331f441a451c805157f47e2377b56f52"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/forge-native-invocation/command.json",
+      "bytes": 803,
+      "sha256": "37cdc2db6f963cccb7ef209fbb3b31a372b61202fb78aa162833073eb09bf319"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/forge-native-invocation/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/forge-native-invocation/inputs.json",
+      "bytes": 880,
+      "sha256": "ebf0ac26ed7653d63895291a0baed0f6489e5c568c88b3659a7752fae7c96c62"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/forge-native-invocation/stdout.log",
+      "bytes": 1164,
+      "sha256": "0a46cdcc42de930ab718cd1f5a0ca4ca38d5f204f17c972a4048504d48af5e82"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/revision-neo-diagnostic-invocation/bridge-result.json",
+      "bytes": 363,
+      "sha256": "d07250f55b4216fb02bb529974423ffdb75a2ba8cb2d27465cc3081e03a08847"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/revision-neo-diagnostic-invocation/result.json",
+      "bytes": 1611,
+      "sha256": "81894d1c66c9045fb8ba1d2a9f34dd4605cb6042035198118777e92c00531461"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/revision-neo-diagnostic-invocation/command.json",
+      "bytes": 1049,
+      "sha256": "f8b8ca7cb49db7a7d0785c5d187ad42e7327849dca1ff2248b705bed9919a857"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/revision-neo-diagnostic-invocation/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/revision-neo-diagnostic-invocation/inputs.json",
+      "bytes": 1318,
+      "sha256": "9aa8d73071086b3469a6b3a5fb5fde336781894b7b1a3ebe4d091d99b6c79995"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/revision-neo-diagnostic-invocation/stdout.log",
+      "bytes": 1482,
+      "sha256": "30db7673ae07b614c2f33d4586451d274d44dfdd7385784600719c807b0a02ed"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-legacy-bridge-invocation/result.json",
+      "bytes": 697,
+      "sha256": "0fd150c38b31feb963c3cc140baad43c3e846c55cd55ad50bb9f7cd7fd707562"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-legacy-bridge-invocation/command.json",
+      "bytes": 1209,
+      "sha256": "185af109fba6c95d2067165ffb87b06339876506eec7e8acba3b380c152fcc43"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-legacy-bridge-invocation/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-legacy-bridge-invocation/inputs.json",
+      "bytes": 1303,
+      "sha256": "d8ca1efb28e89f23b993c03d0b7e6983bd8fc51a181343a6c22eca47d3297324"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-legacy-bridge-invocation/stdout.log",
+      "bytes": 1481,
+      "sha256": "b109feafe9c7454abbd9362e4a486e3e9d25404f8e155d34ee32d2db759258cb"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/java-version.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-helper_registry.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-helper_registry.command.json",
+      "bytes": 233,
+      "sha256": "13438e154af7e4676ae43cbeabc2606da9e246d679709a1cf74aaf8c76aacad0"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/syntax.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-block_registry.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-project_identity.command.json",
+      "bytes": 234,
+      "sha256": "6f28e130863ad5c4e9d27e152d344debad41854a97bde91f5e44f1c3d02b0c14"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-api_atlas.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-multi_registry.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/syntax.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-registry.command.json",
+      "bytes": 226,
+      "sha256": "4497ff7353833ff0c80f3092517b85c321ce1e37a09dd3834a506573d0f78b61"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/typed-complete.stdout.log",
+      "bytes": 297,
+      "sha256": "15406a0b999386dcde71937961d89a3372b7be45c55b6f2a4604407c2e1d8e2e"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-registry.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/java-version.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-block_registry.command.json",
+      "bytes": 232,
+      "sha256": "b8b1a62b5edfb623f8460f9d7720f76d5e4b09a45bcce258da98fdd32246fbf6"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-multi_registry.command.json",
+      "bytes": 232,
+      "sha256": "fe89d128c11582fcc9037aaf1920c191f3e1cff2ac6ced2525b07f40bcf289ef"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-typed_registry.stderr.log",
+      "bytes": 454,
+      "sha256": "3c38aaa40fe29664c34b2b44c14a739bd26ecaa8dffba4c57421d71e5c36c395"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-supplier_boundary.stderr.log",
+      "bytes": 294,
+      "sha256": "55884a267b9f922f54cfc5a144c29a299a0f880fec7ae15b33f02e3df7db0a91"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-api_atlas.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-helper_registry.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/typed-complete.command.json",
+      "bytes": 828,
+      "sha256": "b43695236f5cc169441cfdf145bfb5e270018e530b7a5b1f6440e711412053e7"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/syntax.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-typed_registry.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-typed_registry.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-project_identity.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-supplier_boundary.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/diff.command.json",
+      "bytes": 128,
+      "sha256": "b1b55ff5dafd875dc36d5740bb826e526a2dd123f9971261744ba8393d62650c"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/frozen.command.json",
+      "bytes": 163,
+      "sha256": "b826e3af3ce460a6b02a5497762ebd6332f7dd9755d606c334dc2d42af0c932b"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-multi_registry.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/diff.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-helper_registry.stderr.log",
+      "bytes": 1313,
+      "sha256": "283c93880014a6c5f9c51ea77565269af4c1f9ca9dba1164db142a1a5b145936"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/result.json",
+      "bytes": 347,
+      "sha256": "de12aa99ab0d2e97280c3efa2d9c19187e95a8910742e2f45a5b7cf1fea8651e"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-events.command.json",
+      "bytes": 224,
+      "sha256": "a62b861f94c7b4e9063ea892345a7aedd26280ea4618553a945dd56f18c99b32"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-project_identity.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-api_atlas.stderr.log",
+      "bytes": 2846,
+      "sha256": "cbdbca2e434ba6714e14c1ba1619002bd9d9bbea4e8e944c1a0fc6667dd771ad"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-typed_registry.command.json",
+      "bytes": 232,
+      "sha256": "0a37893ed8c5163ac0c15cc8e7d16be4506b71ed5e5c4651397d7acf099e4b46"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-supplier_boundary.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/frozen.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-registry.stderr.log",
+      "bytes": 702,
+      "sha256": "7479c21d3443cad6279982816907b1237119fe6aec321cca75df8125d403b839"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-supplier_boundary.command.json",
+      "bytes": 235,
+      "sha256": "24bfadc7115c41d849a8116ddff11256ef723a28b9fc47f06069778b9c3228af"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-events.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-events.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-multi_registry.stderr.log",
+      "bytes": 946,
+      "sha256": "47c23313d1e3ab7e53adbb1ffc6d93bce4ccd1e7ff9b8101041113b4a55cd0c4"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/java-version.stderr.log",
+      "bytes": 197,
+      "sha256": "8a4ed131ebb050319874da6acc3f28fed82345c6e6f570881be1db889a765b21"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/port-and-counts.json",
+      "bytes": 645,
+      "sha256": "bf518d88c130ff4ac7b009341563fbff7a3adac345e3d28cb8189ae377db61a9"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/typed-complete.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-project_identity.stderr.log",
+      "bytes": 1802,
+      "sha256": "5443e03fb3ea528850afe76bb5cf54f04e75c42d9d9e1861bd25ab1afe6ecd5a"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/javac-version.command.json",
+      "bytes": 193,
+      "sha256": "e5d19c33767878023ff2948a2940de415612b97cd5848799f073b504d00240ea"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-events.stderr.log",
+      "bytes": 987,
+      "sha256": "c786dde7b73733f58b62f059588ef8f0b06e40677056f3e0c5a1ba3019ae41c5"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/frozen.stdout.log",
+      "bytes": 134,
+      "sha256": "492db28cea8d118bc8100d396efc0a730ed0be0b313a5f8a61912943c0393eef"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/javac-version.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/syntax.command.json",
+      "bytes": 191,
+      "sha256": "3f5768bda46a9c386152a41f8645756b1415fdc9f3ff2199269416770007be7e"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/javac-version.stdout.log",
+      "bytes": 14,
+      "sha256": "fc77c1bff71ef3d96ab91ecea5d18c5b326d7215c937176bad04cdc79a4de547"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-registry.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/released.json",
+      "bytes": 46,
+      "sha256": "5ad5a272e9911bf87015d9c4df8f239d5637442dac46c87459596890d1b4b033"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-block_registry.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/diff.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-block_registry.stderr.log",
+      "bytes": 657,
+      "sha256": "511acddf8c1e60157a6a1c5a6c80652bc5268015c7de4b2dbfd0e1be965569de"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/java-version.command.json",
+      "bytes": 192,
+      "sha256": "0b90e22244afcaf5ba0620face4aea3e31e1ec7cb8a3e127f2b0ffc6c6c92eeb"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/diff.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/javac-version.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/typed-complete.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/python-api_atlas.command.json",
+      "bytes": 227,
+      "sha256": "a1f649d96094bf88f6cebd6c4790f994e1999dbb4d61fef23ab71b87912f72a1"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/frozen.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007b/contract/20261015-180219-2d2d3b5e/java-version.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007b/contract/20261015-180219-2d2d3b5e/java-version.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007b/contract/20261015-180219-2d2d3b5e/javac.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007b/contract/20261015-180219-2d2d3b5e/bytecode.stdout.log",
+      "bytes": 17758,
+      "sha256": "80ee66f59692fedfd1451869acaa96578d597c570f7fe65563738cb3967fe230"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007b/contract/20261015-180219-2d2d3b5e/result.json",
+      "bytes": 242,
+      "sha256": "8429f2d6a002a1a5ed5d63ee67ca0f4b3af09c3efbdbb740506285cabd3cf67b"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007b/contract/20261015-180219-2d2d3b5e/javac.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007b/contract/20261015-180219-2d2d3b5e/bytecode.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007b/contract/20261015-180219-2d2d3b5e/bytecode.command.json",
+      "bytes": 15111,
+      "sha256": "3ce200ed3ae51254f3b564b66a935a538c6137918b9f391d9bfee355e8d4d0d6"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007b/contract/20261015-180219-2d2d3b5e/inputs.json",
+      "bytes": 1095,
+      "sha256": "ebe5456432a1b17b308a4f785e29bc3056f760f7aecc5e8a704c2e67a86ce4c4"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007b/contract/20261015-180219-2d2d3b5e/javac.command.json",
+      "bytes": 14622,
+      "sha256": "ff8d841774e5cbe41cfc260473e4c1dd1a22fd7a9e35b99cd9328472e7451606"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007b/contract/20261015-180219-2d2d3b5e/java-version.stderr.log",
+      "bytes": 197,
+      "sha256": "8a4ed131ebb050319874da6acc3f28fed82345c6e6f570881be1db889a765b21"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007b/contract/20261015-180219-2d2d3b5e/bytecode.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007b/contract/20261015-180219-2d2d3b5e/java-version.command.json",
+      "bytes": 192,
+      "sha256": "0b90e22244afcaf5ba0620face4aea3e31e1ec7cb8a3e127f2b0ffc6c6c92eeb"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007b/contract/20261015-180219-2d2d3b5e/javac.stderr.log",
+      "bytes": 622,
+      "sha256": "d89108cb79d2300190482159dfbca53f67309be9bdbd5a92492ffdd4320e9a68"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c3/contract/20261015-180222-ee8a7214/java-version.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c3/contract/20261015-180222-ee8a7214/contract.stdout.log",
+      "bytes": 31463,
+      "sha256": "1e4f225bd2a61f180f48f7a5a62f00fdb2653209e94e6381373af7c9fc859bfa"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c3/contract/20261015-180222-ee8a7214/java-version.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c3/contract/20261015-180222-ee8a7214/javac.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c3/contract/20261015-180222-ee8a7214/result.json",
+      "bytes": 270,
+      "sha256": "f54bfef375105abf54fc44d8f493d3334ce953f6e7a58f033e4b9b2588b0ca4b"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c3/contract/20261015-180222-ee8a7214/javac.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c3/contract/20261015-180222-ee8a7214/contract.command.json",
+      "bytes": 15835,
+      "sha256": "24c6060dd1c589d76056205e17709973b3fcf0aa386d3a151d5bf1406257cff7"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c3/contract/20261015-180222-ee8a7214/contract.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c3/contract/20261015-180222-ee8a7214/invocation.json",
+      "bytes": 1133,
+      "sha256": "f2eb8cbc3f31007260d411f7c665f96b0ffca9bd3a24d433a2895ac0c8f914f8"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c3/contract/20261015-180222-ee8a7214/inputs.json",
+      "bytes": 28270,
+      "sha256": "838cadd5f15ebe6598c3eebd0cae0c68792c3530e903d2dbd051b8a3d86d268e"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c3/contract/20261015-180222-ee8a7214/javac.command.json",
+      "bytes": 14904,
+      "sha256": "ae0df766dddc1ca496a50a472269fd73a35da8d574a3fa49c7b3f359bc41d5aa"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c3/contract/20261015-180222-ee8a7214/java-version.stderr.log",
+      "bytes": 197,
+      "sha256": "8a4ed131ebb050319874da6acc3f28fed82345c6e6f570881be1db889a765b21"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c3/contract/20261015-180222-ee8a7214/contract.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c3/contract/20261015-180222-ee8a7214/java-version.command.json",
+      "bytes": 192,
+      "sha256": "0b90e22244afcaf5ba0620face4aea3e31e1ec7cb8a3e127f2b0ffc6c6c92eeb"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c3/contract/20261015-180222-ee8a7214/javac.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c1/metadata-contract/20261015-180224-24a7d123/java-version.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c1/metadata-contract/20261015-180224-24a7d123/contract.stdout.log",
+      "bytes": 19763,
+      "sha256": "bc3a4f7acee8e58e2e74dc02f9ab84388a7e3cee89bd16327d2c33341c9b30e4"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c1/metadata-contract/20261015-180224-24a7d123/java-version.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c1/metadata-contract/20261015-180224-24a7d123/javac.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c1/metadata-contract/20261015-180224-24a7d123/result.json",
+      "bytes": 8698,
+      "sha256": "c3833122a9cdfdfec3dfc02cf923488877884bc6db3b3bfed79092c486a80150"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c1/metadata-contract/20261015-180224-24a7d123/javac.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c1/metadata-contract/20261015-180224-24a7d123/contract.command.json",
+      "bytes": 15793,
+      "sha256": "5ab149c86a044a2cab16dc991ed073cb129960d4fa1a739e1390a289e71d7f8d"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c1/metadata-contract/20261015-180224-24a7d123/contract.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c1/metadata-contract/20261015-180224-24a7d123/invocation.json",
+      "bytes": 896,
+      "sha256": "0dcebdd05cfa05d80dcc24b4c70367a320431408fe8a0743b9f57355ebb62047"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c1/metadata-contract/20261015-180224-24a7d123/inputs.json",
+      "bytes": 28128,
+      "sha256": "f63da9ae6144e9976ffbb779eafc849acf75e08bb0e3884dbfd7abb83bff94be"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c1/metadata-contract/20261015-180224-24a7d123/javac.command.json",
+      "bytes": 14911,
+      "sha256": "cdc47267d64a66d4fbe62f4e4d2acbc356fb03c700eb08504a2de9542c5f93b0"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c1/metadata-contract/20261015-180224-24a7d123/java-version.stderr.log",
+      "bytes": 197,
+      "sha256": "8a4ed131ebb050319874da6acc3f28fed82345c6e6f570881be1db889a765b21"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c1/metadata-contract/20261015-180224-24a7d123/contract.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c1/metadata-contract/20261015-180224-24a7d123/java-version.command.json",
+      "bytes": 192,
+      "sha256": "0b90e22244afcaf5ba0620face4aea3e31e1ec7cb8a3e127f2b0ffc6c6c92eeb"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c1/metadata-contract/20261015-180224-24a7d123/javac.stderr.log",
+      "bytes": 622,
+      "sha256": "d89108cb79d2300190482159dfbca53f67309be9bdbd5a92492ffdd4320e9a68"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c2/contract/20261015-180227-34509089/java-version.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c2/contract/20261015-180227-34509089/feasibility.stdout.log",
+      "bytes": 2151,
+      "sha256": "526d545467f19fc4184ded9efb46424b337dfcdb2723de9002a360bc792cb949"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c2/contract/20261015-180227-34509089/contract.stdout.log",
+      "bytes": 21114,
+      "sha256": "85a41206823003fc63ce973298dc34ce69ea2f713310c265f6bb8a0d650e4ad9"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c2/contract/20261015-180227-34509089/feasibility.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c2/contract/20261015-180227-34509089/java-version.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c2/contract/20261015-180227-34509089/javac.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c2/contract/20261015-180227-34509089/feasibility.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c2/contract/20261015-180227-34509089/result.json",
+      "bytes": 307,
+      "sha256": "a569b1e970568e44b38a641167c61cf2b3f2274eeb8bb0e2f512162bc2345480"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c2/contract/20261015-180227-34509089/javac.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c2/contract/20261015-180227-34509089/contract.command.json",
+      "bytes": 15210,
+      "sha256": "f9f0d16adcf2abc40eae985ab80e5403be930049165d089b5eae7e6a65d74747"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c2/contract/20261015-180227-34509089/contract.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c2/contract/20261015-180227-34509089/invocation.json",
+      "bytes": 564,
+      "sha256": "ae7b5270990576fb210cc298761e7be5fccf012fc6e433a8c4ccc2a5eae76657"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c2/contract/20261015-180227-34509089/inputs.json",
+      "bytes": 27637,
+      "sha256": "3073ee605117ce4af1b983192493f8a8c14a27b81998d2fc6702b3a93c8a5b88"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c2/contract/20261015-180227-34509089/javac.command.json",
+      "bytes": 15135,
+      "sha256": "320483ff9e783c650483fb6ef0884770b64ee5ce0ad2b752f5205115ca498dd3"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c2/contract/20261015-180227-34509089/java-version.stderr.log",
+      "bytes": 197,
+      "sha256": "8a4ed131ebb050319874da6acc3f28fed82345c6e6f570881be1db889a765b21"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c2/contract/20261015-180227-34509089/contract.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c2/contract/20261015-180227-34509089/feasibility.command.json",
+      "bytes": 15096,
+      "sha256": "3c529393b3a4ad27d14a1b47286f65337f849df42b49a7013c50101686c62c06"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c2/contract/20261015-180227-34509089/java-version.command.json",
+      "bytes": 192,
+      "sha256": "0b90e22244afcaf5ba0620face4aea3e31e1ec7cb8a3e127f2b0ffc6c6c92eeb"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c2/contract/20261015-180227-34509089/javac.stderr.log",
+      "bytes": 194,
+      "sha256": "52a61bbd7b2a44c39b3400cb19be5a2abd789e66de1a13afce71e0aa4caf7aa1"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4b/contract/20261015-180231-7f99da52/java-version.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4b/contract/20261015-180231-7f99da52/contract.stdout.log",
+      "bytes": 133310,
+      "sha256": "8ebf7f494489e595d25a9d177364d7c8a4bcebcdf5368e4439fc90557fe5456a"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4b/contract/20261015-180231-7f99da52/java-version.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4b/contract/20261015-180231-7f99da52/javac.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4b/contract/20261015-180231-7f99da52/fnf-admission.command.json",
+      "bytes": 14881,
+      "sha256": "20c32af5f2cd76b572080a51d64f50b7a78af3865df2ee2d08d7d8beb5c35a80"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4b/contract/20261015-180231-7f99da52/fnf-admission.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4b/contract/20261015-180231-7f99da52/result.json",
+      "bytes": 481,
+      "sha256": "f1d1b5ae0591bebf406f569a07d40dfd36324bacc86928bb3918981acdf12a01"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4b/contract/20261015-180231-7f99da52/javac.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4b/contract/20261015-180231-7f99da52/contract.command.json",
+      "bytes": 14894,
+      "sha256": "6d97ea7ded5dae3d13c7f407a92c223288bc89a9d63ccbe3143e1d58e357fc2d"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4b/contract/20261015-180231-7f99da52/fnf-admission.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4b/contract/20261015-180231-7f99da52/contract.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4b/contract/20261015-180231-7f99da52/fnf-admission.stdout.log",
+      "bytes": 51961,
+      "sha256": "b4e4b0a30e3aea3fd8a43fc59bcbac556dfe715efd17f4bb0cd3229337b4ee97"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4b/contract/20261015-180231-7f99da52/fnf-expectation-contract.command.json",
+      "bytes": 355,
+      "sha256": "1d3ed52aa7186d94148d9b04aa57d4753269fe72c905e150cfea88f52ae5cfea"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4b/contract/20261015-180231-7f99da52/fnf-input.json",
+      "bytes": 211,
+      "sha256": "96cb1e5050b2dad1874d2e4bef2f846e96ec613ff6a35c28738ebe71730026c2"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4b/contract/20261015-180231-7f99da52/inputs.json",
+      "bytes": 27988,
+      "sha256": "3cbdb3ddf0698e16156a1cc39966009b96aea7d79e588bb814cc2f35235a0d9f"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4b/contract/20261015-180231-7f99da52/javac.command.json",
+      "bytes": 14993,
+      "sha256": "eff7356a234ab93626f08a1c8b4347b0075c18c379e6c2e898d9e3f71abbab24"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4b/contract/20261015-180231-7f99da52/java-version.stderr.log",
+      "bytes": 197,
+      "sha256": "8a4ed131ebb050319874da6acc3f28fed82345c6e6f570881be1db889a765b21"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4b/contract/20261015-180231-7f99da52/fnf-expectation-contract.stdout.log",
+      "bytes": 54,
+      "sha256": "6f43060030173ea0db59110eb176522c590eb262e87ad2e86fd6d31f32e4d272"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4b/contract/20261015-180231-7f99da52/contract.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4b/contract/20261015-180231-7f99da52/fnf-expectation-contract.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4b/contract/20261015-180231-7f99da52/java-version.command.json",
+      "bytes": 192,
+      "sha256": "0b90e22244afcaf5ba0620face4aea3e31e1ec7cb8a3e127f2b0ffc6c6c92eeb"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4b/contract/20261015-180231-7f99da52/javac.stderr.log",
+      "bytes": 174,
+      "sha256": "2acee3f94d63c623e7e593603c7e1001788d2bd2a0588ae0df3146c06146ef26"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4b/contract/20261015-180231-7f99da52/fnf-expectation-contract.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/java-version.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-entry.before.command.json",
+      "bytes": 384,
+      "sha256": "10c1f631d36112845d853243a9958050298c91f0d35ce4729a6d436b35beb953"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-event.after.stdout.log",
+      "bytes": 1711,
+      "sha256": "3a84076b59a1aab67d85363d9a1d05dc29b26de70d05afe2166cc4e7e4ac87b3"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-entry.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javac-bytecode.stderr.log",
+      "bytes": 622,
+      "sha256": "d89108cb79d2300190482159dfbca53f67309be9bdbd5a92492ffdd4320e9a68"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-event.after.command.json",
+      "bytes": 383,
+      "sha256": "94018cd9972fa0a90839db4bb15d62a18227e60e146a74f463603205168e6e84"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-event.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-entry.before.stdout.log",
+      "bytes": 12482,
+      "sha256": "77e111041ac4507d216697457328d17fa8087a62ba8f4c52e0e5eba70ad69438"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-event.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/java-version.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-listener.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-event.before.command.json",
+      "bytes": 384,
+      "sha256": "08d9aa75868bf7bd605284ae907b6a95a54dec35d4b7d38340cc61c9f6667270"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/bytecode.stdout.log",
+      "bytes": 7122,
+      "sha256": "495df8e140cc1243db5308443cf6a85df842c17f8e03f6880b6046f7d237f273"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-rejected.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/bytes.json",
+      "bytes": 1893,
+      "sha256": "312727b989853c36e3c517b24764ea480fc19f44a81e211f43a741bf99df7f58"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-rejected.after.command.json",
+      "bytes": 386,
+      "sha256": "998d36016d741340b05f1f9a2d6d151dec73a8fd148fb19636e787f4e333bd1e"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-entry.after.command.json",
+      "bytes": 383,
+      "sha256": "9728da1de534805860d6d94db3c6d4369dc1578560f6198c0e9dc8f405c63f01"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-listener.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-listener.after.command.json",
+      "bytes": 386,
+      "sha256": "d951528bfaa030c5b6c7be67fefac097c93783799eeac725333439bef889c712"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-rejected.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/result.json",
+      "bytes": 357,
+      "sha256": "4a9cd3bb878ca06884dc192d13d86792093b0d90bd37660fe9f3d92aa5538784"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-listener.before.stdout.log",
+      "bytes": 2326,
+      "sha256": "b9d048ac1315329fa4d8ad7a0111b63b82384f190864ad4b2988d8612af801a3"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-listener.after.stdout.log",
+      "bytes": 2325,
+      "sha256": "b4d9aca558f127f2564a31a37174ef8a0a0b0dca828649fe9c7d3315b8cb0cd7"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javac-bytecode.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-event.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/assertions.json",
+      "bytes": 90,
+      "sha256": "5c8c3fd18b80efa55ebcbaea49a3c5704e34900ee7d875d1eb0d8cf26847c2f4"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/invocation.json",
+      "bytes": 1260,
+      "sha256": "22419a83b710f65e9c7d36a099784f9a49b3b6bfb64fe3999183c74686da9c15"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/bytecode.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-rejected.after.stdout.log",
+      "bytes": 5403,
+      "sha256": "c3a210a4238d371b486c447d63aa021a35eea09bae36c561fa122f16e8335d1c"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javac-bytecode.command.json",
+      "bytes": 14714,
+      "sha256": "596ede7dd57b033869815ff2fa00a774c44d1e3fdfdccaec32c9f037ee1e066b"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/bytecode.command.json",
+      "bytes": 15541,
+      "sha256": "5013b952ac27938121c54e60172ba7e64e23a54e0f612fc135a4f283beced72b"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-entry.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/inputs.json",
+      "bytes": 30576,
+      "sha256": "1d9417ba27517a01219e0e1504ca91726f70da8f73c9cd114ad4fc5a71dfe9d8"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-listener.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-listener.before.command.json",
+      "bytes": 387,
+      "sha256": "5aa0e896b221923c07e863b0f39902153ec410b74163516d761c10a334c9a8b2"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/java-version.stderr.log",
+      "bytes": 197,
+      "sha256": "8a4ed131ebb050319874da6acc3f28fed82345c6e6f570881be1db889a765b21"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-rejected.before.stdout.log",
+      "bytes": 5404,
+      "sha256": "62745fdb4d71241a64ae3336bce06c6c58d410dbf67fe90b264a5d012497c748"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-entry.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-rejected.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-entry.after.stdout.log",
+      "bytes": 12699,
+      "sha256": "4cfa8633e5a793511fac3c377e31af6223cf572baa89bcb7f54ddc4abc6d8292"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/bytecode.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javac-bytecode.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-rejected.before.command.json",
+      "bytes": 387,
+      "sha256": "297c1398227ab241508a92949c440c1b18ad866293ebaeb0ebc90fdb739c91bd"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/java-version.command.json",
+      "bytes": 192,
+      "sha256": "0b90e22244afcaf5ba0620face4aea3e31e1ec7cb8a3e127f2b0ffc6c6c92eeb"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-entry.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-rejected.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-event.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-event.before.stdout.log",
+      "bytes": 1772,
+      "sha256": "bf08762a715355a0811e091ba76331a3e08277bcc3591f25a1de55be1a9867e7"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/event/javap-listener.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/registry/java-version.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/registry/java-version.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/registry/bytecode.stdout.log",
+      "bytes": 6737,
+      "sha256": "7deac95d354287a53b9aae2783d3c8417f1e07d1abc7ef55f25b3f56ae4be6d6"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/registry/bytes.json",
+      "bytes": 3933,
+      "sha256": "906fd5bdbaafe44bc2331bc4232a7d506b6c87056b10fa9d87799e3f41242ec6"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/registry/javac-contract.stderr.log",
+      "bytes": 622,
+      "sha256": "d89108cb79d2300190482159dfbca53f67309be9bdbd5a92492ffdd4320e9a68"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/registry/result.json",
+      "bytes": 495,
+      "sha256": "17c67b3464d33b6efbf9a10bdfd771a2267dea4de25c7a348a75418d0136551c"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/registry/javac-contract.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/registry/invocation.json",
+      "bytes": 1468,
+      "sha256": "25ef519a3a1da8df48c418efa762b46517e666ef710cddeab369b7222df056cf"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/registry/bytecode.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/registry/bytecode.command.json",
+      "bytes": 15409,
+      "sha256": "007def78213893d62d033ffcddaed47c5fc845a79addba2cc4b6cf99790a1a4e"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/registry/inputs.json",
+      "bytes": 26826,
+      "sha256": "43561342e270f0271ea6cc9a634ec272c8ac1da6e3f2369918865c3fb056b164"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/registry/java-version.stderr.log",
+      "bytes": 197,
+      "sha256": "8a4ed131ebb050319874da6acc3f28fed82345c6e6f570881be1db889a765b21"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/registry/javac-contract.command.json",
+      "bytes": 14690,
+      "sha256": "5b3853402cd0a4cf736902ae12559938f037b535adb6aa84c8db7239ab941e55"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/registry/javac-contract.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/registry/bytecode.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/registry/java-version.command.json",
+      "bytes": 192,
+      "sha256": "0b90e22244afcaf5ba0620face4aea3e31e1ec7cb8a3e127f2b0ffc6c6c92eeb"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-actual-captured-supplier.after.stdout.log",
+      "bytes": 23399,
+      "sha256": "ec0b4c9c692caf4c6e06681561d2a36fde2b2c48dbc075b7e33064744900f392"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/java-version.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-entry.before.command.json",
+      "bytes": 326,
+      "sha256": "c9005f1d3e2b50214a11e30d93d528e8d8cf80f50c7a11935ff87a176cc133da"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-duplicate-registration-id.before.command.json",
+      "bytes": 346,
+      "sha256": "e1fba95db8fcb4532e6923bee5948eb004b7562e7c65cdd9c6a3501fd7a842e3"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-entry.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-actual-alt-metafactory.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-actual-alt-metafactory.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-duplicate-registration-id.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-late-second-holder-getter-failure.after.stdout.log",
+      "bytes": 23220,
+      "sha256": "2f727ae32b51e63777c107f933efb097610a0f13ec0b695e4be1e63d7e5be9db"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-unclaimed.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-late-second-holder-getter-failure.after.command.json",
+      "bytes": 353,
+      "sha256": "d11d51d454e671ed4e9e87bea9c753005fb7fa13772a48dcb5da09968d592ed4"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-cross-class-supplier-handle.after.stdout.log",
+      "bytes": 22973,
+      "sha256": "0033e1885a6978bc0c4448ab45a1e6d0084e97a8e50cfac121e8762f5479d7fb"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-local-layout.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-wrong-registry-type.after.command.json",
+      "bytes": 339,
+      "sha256": "c1d9b1ee51427a8773cb472bf946ee1d4917a20a0c8b5c904b361cc7b4a3e5ce"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-dump-io-failure.after.stdout.log",
+      "bytes": 22968,
+      "sha256": "ee7c2b1f5b3e35bd49b7276b675bc9c43df9f337a6daa2910b7a3ef8e395ec1e"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-wrong-mod-bus.after.stdout.log",
+      "bytes": 22966,
+      "sha256": "3590006421007db18eec6faf3af1c299dee0d537420cd970a1081ee303ce2000"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-unknown-lambda-bootstrap.before.command.json",
+      "bytes": 345,
+      "sha256": "dc48626867380ea4f2a83484d1c5e6e572deb66f65757f61b3a14344651c1947"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-wrong-mod-bus.before.stdout.log",
+      "bytes": 22967,
+      "sha256": "b85ae73e9675c3607ee74c408175dc0250ebd8cc62f249ace746455e06c82c99"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-native.after.stdout.log",
+      "bytes": 22959,
+      "sha256": "ff53f68a4a93f21b5567c07cf465ec44eb240e5960d691e559a24c9f7442e210"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-wrong-registry-type.after.stdout.log",
+      "bytes": 22976,
+      "sha256": "d2c3ffab477caf818a9984fc4d9a12d6b5cae3c98bcf92a6c405eb79f906de5f"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-duplicate-registration-id.before.stdout.log",
+      "bytes": 22887,
+      "sha256": "6d7f99283454f0d2a5b62503511ecb09d4bd01262e0aa9864c5457f59da4528c"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-native.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-actual-captured-supplier.before.command.json",
+      "bytes": 345,
+      "sha256": "864bb47b79ec400c63c5df0f6bc307d4aaad0f46dc092073d36c5974a2708f65"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-dump-io-failure.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-entry.before.stdout.log",
+      "bytes": 22959,
+      "sha256": "ed639ca9d27346be0d43bf1bc52f7caaec4fb643cb878cb641304b75db85c0ff"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-actual-alt-metafactory.before.command.json",
+      "bytes": 343,
+      "sha256": "764faf3459da19bbd7e0bf0fea63ef3c114b1b0bcd0cb20ef6463dbd3d3f75e6"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-dump-io-failure.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-unknown-lambda-bootstrap.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-cross-class-supplier-handle.after.command.json",
+      "bytes": 347,
+      "sha256": "000143bcead3f18f309815fb9c8dfe498b2fb4549747bfd1088ee4ce01dd8436"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-late-second-holder-getter-failure.before.command.json",
+      "bytes": 354,
+      "sha256": "43c1d10602fde350156e1b22eb5b6d9e331e1e2991036dc187dad54185900fac"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-unclaimed.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/java-version.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-duplicate-registration-id.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-local-layout.before.command.json",
+      "bytes": 333,
+      "sha256": "3d2a5b88d7577fe75da936c840018d5f14315ae610b23a4e12ba3248f4da97ea"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-extra-unvalidated-forge-api.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-actual-alt-metafactory.after.command.json",
+      "bytes": 342,
+      "sha256": "436517093c778a2310c1ba4b21dc87ae231f67222b91f5e27ffedad986ec9c0c"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/bytecode.stdout.log",
+      "bytes": 18978,
+      "sha256": "93fdc8965fa239612300edb92a75c5acef743ac7b7d12ee2fa189f8280c0ec48"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-wrong-mod-bus.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/bytes.json",
+      "bytes": 6979,
+      "sha256": "23b4bf4a802a186e924741a772d902b05b619ef7f4e1a75207ca4ecc4aa4fdd7"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-late-second-holder-getter-failure.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-cross-class-supplier-handle.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-local-layout.after.stdout.log",
+      "bytes": 23036,
+      "sha256": "832e01c0f142a107a8c37c3f1601d2916ef6451d5906f4c9a3f2aae5f2ffb090"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-wrong-registry-type.before.command.json",
+      "bytes": 340,
+      "sha256": "6ced031e194279f3b22616f9649bae66765fde07759f4f1213538442a0055c5e"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-actual-alt-metafactory.after.stdout.log",
+      "bytes": 23553,
+      "sha256": "22a308b9c07f24bc43e88237eec719d51522a0cb634db7dad42646fc7c172cee"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-extra-unvalidated-forge-api.before.stdout.log",
+      "bytes": 23549,
+      "sha256": "e87582e342024bfcb1a89f7bc6f855d41aec67739c88c7200b26f376fd966078"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-entry.after.command.json",
+      "bytes": 325,
+      "sha256": "9c3dfc6ac16ea2a87691df607f6937d77f220b2bd9bdc58591b030314a4bced1"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-extra-unvalidated-forge-api.before.command.json",
+      "bytes": 348,
+      "sha256": "dcf0b26f90a93d365c2631b586ea4bd567cdcdb80ef3e15ab85151bc7cd6efa1"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-wrong-mod-bus.before.command.json",
+      "bytes": 334,
+      "sha256": "37b4173c931c4265db71e057aa5937b20e20245447443219fc62896e5608a581"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-dump-io-failure.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-wrong-mod-bus.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-cross-class-supplier-handle.before.command.json",
+      "bytes": 348,
+      "sha256": "4069563f40cb434bf2d92eda0d067b45903f702c26582147e7fa0aaf961fc8cb"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-actual-alt-metafactory.before.stdout.log",
+      "bytes": 23554,
+      "sha256": "96c81f90c173cdbd00a025a67ba7b3026fde8f6cb11ee11d27d4c76b2724fd69"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-unknown-lambda-bootstrap.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-native.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-unclaimed.before.stdout.log",
+      "bytes": 22702,
+      "sha256": "a51dfe67c186074bdeef75a3a38fddb18cca1f9d8aeca2ea20d2422b1c3b3556"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-unclaimed.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-actual-captured-supplier.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javac-contract.stderr.log",
+      "bytes": 622,
+      "sha256": "d89108cb79d2300190482159dfbca53f67309be9bdbd5a92492ffdd4320e9a68"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-local-layout.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/result.json",
+      "bytes": 870,
+      "sha256": "9ad4e3f4c73db1a1a31fce25c46c30067dd01a9dc97adcbac988e301af49c78f"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-actual-alt-metafactory.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-dump-io-failure.before.command.json",
+      "bytes": 336,
+      "sha256": "200ead01a35ca6f313dbb5269788a25ad276f21b128cc1b9a206ebf5b0760f5e"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-wrong-registry-type.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-actual-captured-supplier.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-native.before.stdout.log",
+      "bytes": 22960,
+      "sha256": "a3b7ff20d2e6e37e71ca54a2021ca2c9e487da05abf70cc63aa25f4d0e5bbba4"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-late-second-holder-getter-failure.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-extra-unvalidated-forge-api.after.command.json",
+      "bytes": 347,
+      "sha256": "d532a8c8e1ae5c4faa3d9dc8e4d318bc589d659b3daf49486f4fb03e2ef396df"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-cross-class-supplier-handle.before.stdout.log",
+      "bytes": 22974,
+      "sha256": "1391ee224dd621129a03665038c897082ec20b1d0429c044d1ac7701eab85785"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-extra-unvalidated-forge-api.after.stdout.log",
+      "bytes": 23548,
+      "sha256": "61e0ab86f78957b7bdfec77b794c576c45b56db0ab51698ced5f1a958607d4d3"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-actual-captured-supplier.before.stdout.log",
+      "bytes": 23400,
+      "sha256": "f047b37706f6bd21e80ef1a8212d3b200450c17b3421bd6fd884b07e64699b96"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-wrong-mod-bus.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-actual-captured-supplier.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-dump-io-failure.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javac-contract.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-dump-io-failure.before.stdout.log",
+      "bytes": 22969,
+      "sha256": "1382a7ddf2e8bb0e6d5ffe798b09ff603c95c18a75e258d637c57b23910f5840"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-native.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-actual-alt-metafactory.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-wrong-mod-bus.after.command.json",
+      "bytes": 333,
+      "sha256": "4b77649a7d4c87e44ed2f800ef3907cbb9694f14df339b334325d7bb5921a0eb"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-cross-class-supplier-handle.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/invocation.json",
+      "bytes": 1433,
+      "sha256": "2282a268ebaa716ce40578bcef07be0d081673bc66ef1b34b695a07628f3f6b3"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-extra-unvalidated-forge-api.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-actual-captured-supplier.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/bytecode.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-dump-io-failure.after.command.json",
+      "bytes": 335,
+      "sha256": "4a92ac0823cb7e4901ff5071765b7965691504476fd3e0baa02d0a742e9d4cb0"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-native.before.command.json",
+      "bytes": 327,
+      "sha256": "608ae979b80e47e0af4adc6c2ce86d2c29dc6eefcd33e24fcdb25c7c435078aa"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-wrong-registry-type.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-duplicate-registration-id.after.command.json",
+      "bytes": 345,
+      "sha256": "5e6c6ca392f1238dbd24e6925f70642c86d3157746e9819c4d85037d3c18aba7"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-local-layout.before.stdout.log",
+      "bytes": 22846,
+      "sha256": "146ac4cab25e2604e658e24a5960e24e330bd874018ef0843a2d571378f27c05"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-native.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-local-layout.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/bytecode.command.json",
+      "bytes": 15423,
+      "sha256": "dc34cff055059ac941e8704445e8315758786a2f8ef7de05e1a8a4ded2ec0e38"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-unknown-lambda-bootstrap.before.stdout.log",
+      "bytes": 23904,
+      "sha256": "068b167c68c55befe2c174f5004dd2904fbb6dde0497a5c1ef39ae8def005a4a"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-late-second-holder-getter-failure.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-entry.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-wrong-registry-type.before.stdout.log",
+      "bytes": 22977,
+      "sha256": "49951029ec473bd8a40d921c03a9cf9a3cee7ab1af5868c37c586f94bcbc117a"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/inputs.json",
+      "bytes": 27034,
+      "sha256": "064ef8e762de69a3599944a872af11fa541d0f000c3042af80b4aeb78e2d602d"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-duplicate-registration-id.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-extra-unvalidated-forge-api.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-wrong-mod-bus.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-unknown-lambda-bootstrap.after.stdout.log",
+      "bytes": 23903,
+      "sha256": "550c8afd0b86ac77c291ef20791a25547c7feb1e07debf042d637d470b78f4f1"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-unclaimed.before.command.json",
+      "bytes": 330,
+      "sha256": "29af7bc30bc7107fc4ae93cc9b15973f0a3bfa752f865ee7edefe3b88d6a5263"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-late-second-holder-getter-failure.before.stdout.log",
+      "bytes": 23221,
+      "sha256": "b98312dd412d2776046126295f7e0dbddaf74b67496e5e358b91a589d65bc293"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/java-version.stderr.log",
+      "bytes": 197,
+      "sha256": "8a4ed131ebb050319874da6acc3f28fed82345c6e6f570881be1db889a765b21"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-native.after.command.json",
+      "bytes": 326,
+      "sha256": "0ccb802ceab8c703f9aece1b78824ef1cb940638e6a1c4fc3aba57f901318d57"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javac-contract.command.json",
+      "bytes": 14637,
+      "sha256": "8474e79271dc2fe33fad37616d0e5a9ae9d75e73f945299e006a078cd41cb235"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-unknown-lambda-bootstrap.after.command.json",
+      "bytes": 344,
+      "sha256": "67f95d9d74b3ed2fd8f5609d25a5406d3f707dda141533f24f161949e55a956a"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-wrong-registry-type.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-local-layout.after.command.json",
+      "bytes": 332,
+      "sha256": "260a536e7360dd576e7a8f09c9a04b3ba265949e1e713a6f7f66a375d10fd9d4"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-extra-unvalidated-forge-api.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-cross-class-supplier-handle.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-actual-captured-supplier.after.command.json",
+      "bytes": 344,
+      "sha256": "a7d16d37939003f4f47af0b5ec65ed3e46bc8d2533db6bcce83b52abd6c68565"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-unknown-lambda-bootstrap.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-unclaimed.after.stdout.log",
+      "bytes": 22701,
+      "sha256": "8208a18292254b48e3d8c5b184a6e056e6afe03342d1516da7d6a066d40b33e3"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-entry.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javac-contract.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-duplicate-registration-id.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-wrong-registry-type.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-unclaimed.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-entry.after.stdout.log",
+      "bytes": 23157,
+      "sha256": "798719cbff2ac38ca9f2da4f5c2bd994fb0a37ecbf1a1dd54fbe54703854af81"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-unknown-lambda-bootstrap.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-late-second-holder-getter-failure.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-unclaimed.after.command.json",
+      "bytes": 329,
+      "sha256": "30c04777471530e9249e4ae2dc09d9aaaf840daa2573e753ddf961e0d14a87d2"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/bytecode.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-cross-class-supplier-handle.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/java-version.command.json",
+      "bytes": 192,
+      "sha256": "0b90e22244afcaf5ba0620face4aea3e31e1ec7cb8a3e127f2b0ffc6c6c92eeb"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-local-layout.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-entry.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/multi/javap-duplicate-registration-id.after.stdout.log",
+      "bytes": 22886,
+      "sha256": "aaf28d1a4f4139dbc69617dccb3d18d101c76b478b435740ff88a06aa860522f"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-extra-forge-api.before.stdout.log",
+      "bytes": 28029,
+      "sha256": "5f43e680996bcff12c96851ade5eb5eb9e91789a6dd8613979dd9e095440f8a9"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/java-version.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-supplier-return.after.stdout.log",
+      "bytes": 27510,
+      "sha256": "c58dff526de76fe629aa58c57d2d45a32aac90467935f7cd0acafcce8e56ee99"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-entry.before.command.json",
+      "bytes": 326,
+      "sha256": "8556d03f496227316e508c064dc766811910dc3a019e7b4e3fc0e764b6ff053c"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-duplicate-block-id.after.stdout.log",
+      "bytes": 27971,
+      "sha256": "7bb25a4363050ce1d50378df26025f078574125a23a1fb3a6242e9a0bea309b1"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-late-getter-failure.after.stdout.log",
+      "bytes": 27700,
+      "sha256": "bd381648746cb7172c7f7a274f59cc7c6eff5268f7c6ab356c4053144b85a3fe"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unknown-bootstrap.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unsupported-registry.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-late-getter-failure.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unsupported-registry.after.stdout.log",
+      "bytes": 27529,
+      "sha256": "c918ec6070e72b94ee9c269be4821dd860ee7b5e154862efade716b78e2568c1"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-entry.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-duplicate-block-id.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-duplicate-block-id.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-alternate-bootstrap.before.command.json",
+      "bytes": 340,
+      "sha256": "781515ef89f242856d9f2c17913b0c7a5ad778c4a359f1d963b597b90277a933"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unclaimed.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-item-registry.before.command.json",
+      "bytes": 340,
+      "sha256": "7f03a987c8bfa22fcc09b2ae4b726fb3862687aa50a73a53273d718ef283e896"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-holder-type.after.stdout.log",
+      "bytes": 27440,
+      "sha256": "e50d94ddd074a1fb5df819606b86cd863bb00d818b12aa19a7a734bd61cf820d"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-alternate-bootstrap.after.stdout.log",
+      "bytes": 28356,
+      "sha256": "644a1c73835e25cda6929a3830a471a56e51be532252cf75d91162249016fb75"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-block-registry.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unsupported-registry.after.command.json",
+      "bytes": 340,
+      "sha256": "498f22be663129290f3ba6aaf5c207b1fd18c8e683cb5088a261d6bcfb3538ad"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-extra-forge-api.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-captured-supplier.before.stdout.log",
+      "bytes": 27836,
+      "sha256": "5db196d7a435406306e573157abe9fafe5e3b7c89f06945e65a8a0c511b4b6a1"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-register-owner.before.command.json",
+      "bytes": 341,
+      "sha256": "dfd851de7201a32048fdd33abc8cf99ad3c60a0cf6b6f46030be56a79d9bc263"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-item-registry.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-dump-io-failure.after.stdout.log",
+      "bytes": 27462,
+      "sha256": "56754a7f05d37d9ef9ba27d3c409972f733e891523aae8efaa56838891540717"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-native.after.stdout.log",
+      "bytes": 27453,
+      "sha256": "282c90dac06d7e57a969fe2bdbc1e088d62e708d075e99f0f945561a04c11529"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-supplier-return.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unknown-bootstrap.after.stdout.log",
+      "bytes": 28353,
+      "sha256": "7a0d33c36184ff6a68e8f7f4c769f5b5c6728ef639c966d107b10dcbac77109d"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unrecognized-entry-owner.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-modbus.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-native.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-renamed.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unknown-block-holder.after.command.json",
+      "bytes": 340,
+      "sha256": "aaa59e202b31170b06d34cc9525f0edac916d0e1710c673a106e5f364eccd0ea"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-dump-io-failure.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unknown-block-holder.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-holder-type.before.stdout.log",
+      "bytes": 27441,
+      "sha256": "70171f75342050ec0554a2c5fea287b1c64f42c36f88b7dfb8d0ee4b191115ed"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-captured-supplier.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-duplicate-block-id.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-entry.before.stdout.log",
+      "bytes": 27453,
+      "sha256": "ccfe5a5a7c3e15ba6b624309643e6d853f48bf06ddbc4d8b0751d2f828ad77dc"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unrecognized-entry-owner.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-dump-io-failure.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-item-registry.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-captured-supplier.before.command.json",
+      "bytes": 338,
+      "sha256": "d7450f63763fad56b74252098ddc9066e71020d39291e562b539075a5c7db395"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-holder-type.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unrecognized-entry-owner.after.stdout.log",
+      "bytes": 27508,
+      "sha256": "0644c42e735485bcd45fee92a9244e84f28a03d1859a56eaf93f360750b79e8b"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unknown-block-holder.after.stdout.log",
+      "bytes": 27772,
+      "sha256": "94f25bae1f4555adce29260ef4acf9be0724d303e50aa8090955f68b0701ebdb"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unknown-block-holder.before.command.json",
+      "bytes": 341,
+      "sha256": "43848444bf444f6c761ed0ea7b038e903564c929edaf7b9d1d811772711f2452"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-item-registry.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unclaimed.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-item-registry.before.stdout.log",
+      "bytes": 27226,
+      "sha256": "37119c2a4bd8d54a82573bf78897af8bd40f2f288e914c71cac01b1d6d8d4e8e"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/java-version.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-register-owner.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-duplicate-item-id.before.stdout.log",
+      "bytes": 27970,
+      "sha256": "5f17a7f96a4b1b8c169ae5013898c300b9605c20c99ef53543e4939d95d2930e"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-holder-type.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-alternate-bootstrap.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-duplicate-item-id.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-alternate-bootstrap.after.command.json",
+      "bytes": 339,
+      "sha256": "354e27623383661df50a0119e043c8356b3a284239052b6cafae769fa075bca3"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unknown-block-holder.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-extra-forge-api.after.command.json",
+      "bytes": 335,
+      "sha256": "3c7ec17534cc588b9214daa483035a9f8af2fb5393c6d8bd50182915da705364"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/bytecode.stdout.log",
+      "bytes": 22072,
+      "sha256": "46ef617f015df5b0b1a93cd9fde3dc331d31a199fda8cbf3dd30b1392a771d9a"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-modbus.before.stdout.log",
+      "bytes": 27460,
+      "sha256": "1bfb87cb8fb0e539ad950b54341869f92534116fba05745df90c66409a53abad"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/bytes.json",
+      "bytes": 10855,
+      "sha256": "2367d0f4347289ee4f2fd27aedbeef56089cc77506889ec8509bd45b53d53894"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-captured-supplier.after.stdout.log",
+      "bytes": 27835,
+      "sha256": "816bee8a204e74c76e140c7502ca6213e768744e990daf99ab60ca93773c32b7"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unknown-bootstrap.after.command.json",
+      "bytes": 337,
+      "sha256": "a06d87631f1eda82965c53efc2c529543bf2c57519c01b24c746498e6fe91b76"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unsupported-registry.before.command.json",
+      "bytes": 341,
+      "sha256": "0227fcf78a0fbea4cfb6c93065311dd9871cd5ad97a7ef0c3488345f17aa6c31"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-renamed.after.command.json",
+      "bytes": 327,
+      "sha256": "e2401fbe1b9b56cb9b2a4d0909de461bf0f0ba5251e7ea917bd8c3b874b98ec7"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-entry.after.command.json",
+      "bytes": 325,
+      "sha256": "29e253d8a1735e73e0bb2d92f1ab46eed65b0a86a170282d67eb1bd11b07a2d4"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-renamed.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-missing-attachment.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-missing-attachment.after.command.json",
+      "bytes": 338,
+      "sha256": "de73881ca42944c2844c44bb682fa8f44a235ed51fa97e683a3197e406eb5381"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-late-getter-failure.before.command.json",
+      "bytes": 340,
+      "sha256": "bf200663a5a54c439be7b5a8f844e5021ae11e839b01c9c39ded16e70b4afaf8"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-dump-io-failure.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-duplicate-block-id.before.command.json",
+      "bytes": 339,
+      "sha256": "24ff074b4efa1a0e67fc0cd9a62d8cb49c019546d7ac9ce8355caf3cbe9bae45"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-native.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-late-getter-failure.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unclaimed.before.stdout.log",
+      "bytes": 28025,
+      "sha256": "5a48407be346b2576d86c377f665af55a28bf9018cf97843d898a47036c810a5"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-late-getter-failure.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unclaimed.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-modbus.before.command.json",
+      "bytes": 333,
+      "sha256": "9bb39e1eb8427464d4ea263b2ad24bb26b0b89d80e2b968670b21306fa6303b6"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javac-contract.stderr.log",
+      "bytes": 622,
+      "sha256": "d89108cb79d2300190482159dfbca53f67309be9bdbd5a92492ffdd4320e9a68"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/result.json",
+      "bytes": 867,
+      "sha256": "9081fe368d3fe71e0f63f0e2727b0ec98f7c16687835a657da45b4f340533cc7"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-holder-type.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-missing-attachment.before.stdout.log",
+      "bytes": 27176,
+      "sha256": "b0816b94d35ec0ee0589fcf55f9fd9ed5bbe2449ea361f93addebc46fae932fc"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-block-registry.after.stdout.log",
+      "bytes": 27222,
+      "sha256": "340d89da84bb3fed9f8467c0cdb4b5c16516e564a7d3d58091a1d9138a2ecdad"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-renamed.before.stdout.log",
+      "bytes": 27358,
+      "sha256": "d3e5edb36c2b84e9e5fef30636bdf65dfcfcda5bb0abfb2f2e0fa1fe919b2352"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-renamed.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-dump-io-failure.before.command.json",
+      "bytes": 336,
+      "sha256": "7c947cf2ad9889eb9bdd16b172e924f71a1b6ae3df2e8ba2c4b4e841447b18f2"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-block-registry.before.stdout.log",
+      "bytes": 27223,
+      "sha256": "e81c3e7bd2a4eba784358e847123d32d9304ee8d71e80310ba4a0b0de26fd5a3"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unknown-bootstrap.before.stdout.log",
+      "bytes": 28354,
+      "sha256": "18278c1c0376af26ae45d744c4af1c3f7a4a61ca37d542fd2bf9613679a5a4b9"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-native.before.stdout.log",
+      "bytes": 27454,
+      "sha256": "9a2ff655f66f9b1f3145f082ec63f5bf5e7c90960b706b27eef7bbb2172e58e3"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-late-getter-failure.before.stdout.log",
+      "bytes": 27701,
+      "sha256": "432d8d74fcb25b39d84364a1a52cea250b37a21f0e11ffc27777f8ede3187923"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-captured-supplier.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unsupported-registry.before.stdout.log",
+      "bytes": 27530,
+      "sha256": "89e04716f2739ea035b1e63cc4e6c509e1a645e99a5e28d5b5e35ad6571dea09"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-duplicate-item-id.before.command.json",
+      "bytes": 338,
+      "sha256": "df22b991e8d8e3b0e3baf95c1dbfe59cd15ec39714aa9c4ec9f0ab40c5eb9b49"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-item-registry.after.command.json",
+      "bytes": 339,
+      "sha256": "b4c8beeff0fb5021874840d3aa5b6dd67ae0927d534fd77c5600a2c416c03f27"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-modbus.after.command.json",
+      "bytes": 332,
+      "sha256": "0ecc86b80cda19ef6ee80bea5467319c80722c5bec08264ed84a8e70e02c9b9e"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-alternate-bootstrap.before.stdout.log",
+      "bytes": 28357,
+      "sha256": "754ab4e25e4e32b877630d3c960b02b264e9d24d223509f6ba679d09aa26a363"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-dump-io-failure.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javac-contract.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-renamed.before.command.json",
+      "bytes": 328,
+      "sha256": "ed6dc36810e87d5c2dda5d320046b5eddecfecd362a660d419789c0d688f1613"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-alternate-bootstrap.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-modbus.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-register-owner.before.stdout.log",
+      "bytes": 27487,
+      "sha256": "fc99e336e5afc24a4afda39f81a22353782ad0ddf097abcb292d1a0a39089cd1"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-dump-io-failure.before.stdout.log",
+      "bytes": 27463,
+      "sha256": "25980886cabfa90aa96dac9f5e599c2722cb4209b900a8ef295ce76db0c63aa3"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-native.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-modbus.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-missing-attachment.before.command.json",
+      "bytes": 339,
+      "sha256": "28898914858db5c9c0e236a08b9d453aa2b74702cf5fd871b370f45e57c0cefe"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-block-registry.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/invocation.json",
+      "bytes": 1389,
+      "sha256": "6f6e0f26a6b542acfe39f0f7f9ec3cc5313765430d3842a5c610d38f103c5aa4"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unrecognized-entry-owner.after.command.json",
+      "bytes": 344,
+      "sha256": "be89077e481501c015c4720901a5ca5659ae9a793b3008cc1afb936a3ac5cbc8"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-extra-forge-api.after.stdout.log",
+      "bytes": 28028,
+      "sha256": "820ec346077b074ab2569220db8021d4fb81004889a86d696ded99d0350379b5"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-supplier-return.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/bytecode.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unsupported-registry.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-dump-io-failure.after.command.json",
+      "bytes": 335,
+      "sha256": "7c1dc67f746735833dc0883c0c12d5d24b1c9e357864d726a858d81752a3e280"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-native.before.command.json",
+      "bytes": 327,
+      "sha256": "ce8245dab83571d36a59b0e0a83f81a2d5207de68db0be349e14ba58f3660d22"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unrecognized-entry-owner.before.command.json",
+      "bytes": 345,
+      "sha256": "85fd5e2b6af792d1919b43cd3a227f0468da26d0c04fabc90d9c3f6cc6be857a"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-renamed.after.stdout.log",
+      "bytes": 27616,
+      "sha256": "718339be093dfa119e987c5456c597e4143551ed3f2da828fe1615eae7b507d0"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-late-getter-failure.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unknown-bootstrap.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-duplicate-item-id.after.stdout.log",
+      "bytes": 27969,
+      "sha256": "cf434e133756bf0835c1288aa7a7ad25174458b6642366f491900fdfd9ff53e7"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unknown-bootstrap.before.command.json",
+      "bytes": 338,
+      "sha256": "3a165eba0cc60b415f737fcc3bdd79248d298d1876b3e2256e196eeb2e524b0f"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-native.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-duplicate-item-id.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/bytecode.command.json",
+      "bytes": 15420,
+      "sha256": "f434581a517b08f1bb76d93ae85274351f53e512c172145c0219f2e754e49850"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-register-owner.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-extra-forge-api.before.command.json",
+      "bytes": 336,
+      "sha256": "0d1a754b7680cb653f9c5d452ae157e06fb596462021750af4f7e4141afcd83b"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-entry.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-extra-forge-api.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/inputs.json",
+      "bytes": 27031,
+      "sha256": "949d66a16a348eb08d9a5102b10fc234e5cccd2199e08167ee8756c519cf268c"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-alternate-bootstrap.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unrecognized-entry-owner.before.stdout.log",
+      "bytes": 27509,
+      "sha256": "d303204f930a457cadf933342b60666c5c8e38e7037bfbd0e21e4704a8bfb52c"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unclaimed.before.command.json",
+      "bytes": 330,
+      "sha256": "25ba44756ed4379f6bdefff52ddbc98183b87dea4776e6f95d7e2da12cacdd80"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-register-owner.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-holder-type.after.command.json",
+      "bytes": 337,
+      "sha256": "d1ceaed08b2ddc1d66f5bf043c8c310140e9687958e40c520ace37e7dadf3391"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-duplicate-item-id.after.command.json",
+      "bytes": 337,
+      "sha256": "b4579f6377abfadadc0e96bfe59f6b3e7e818811072c9e0e92a1fb9a5d6bdcc0"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-missing-attachment.after.stdout.log",
+      "bytes": 27175,
+      "sha256": "4c3c4e14712d4ecb94af83be761d9c5d5101dfa13f816b53c8e99de67d302821"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-duplicate-item-id.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-item-registry.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/java-version.stderr.log",
+      "bytes": 197,
+      "sha256": "8a4ed131ebb050319874da6acc3f28fed82345c6e6f570881be1db889a765b21"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-duplicate-block-id.before.stdout.log",
+      "bytes": 27972,
+      "sha256": "274374962aa317c32ab9b034abf23a2a9deb9440e06a6078f648109132ee8e3a"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-native.after.command.json",
+      "bytes": 326,
+      "sha256": "96001ee3ca7b966b5d9402cd5860ede19bce32d6b5d126f7d485f040d95d9db5"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-alternate-bootstrap.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javac-contract.command.json",
+      "bytes": 14637,
+      "sha256": "815e77c9ce08186655124f2058d5930a5be985db369f6c9c17dc256d45fec304"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-supplier-return.before.stdout.log",
+      "bytes": 27511,
+      "sha256": "8e2bb6ad86a83db696b0c8410b8650897b442e7e520500014cb3acf12eb7977c"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unknown-bootstrap.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-missing-attachment.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-register-owner.after.stdout.log",
+      "bytes": 27486,
+      "sha256": "2057445022032d81aef47ab013d7d1e0438469ed128c8391f38695122e95824d"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-modbus.after.stdout.log",
+      "bytes": 27459,
+      "sha256": "4c812a89a734c59c2fc04362d44dbccaedc0f7c4eb9cd2f8d954a0b77b94d5a0"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-late-getter-failure.after.command.json",
+      "bytes": 339,
+      "sha256": "26360689b9e10dfa3cc1bbf86f2ab11222ab002dafca353c5cb1d2855ce590b6"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-holder-type.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-captured-supplier.after.command.json",
+      "bytes": 337,
+      "sha256": "f17889ac5ab07f6e09ca3b98343431025bd0fdcc743783b29f602ef982982d2b"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-block-registry.after.command.json",
+      "bytes": 340,
+      "sha256": "4407f2e0bdbd5b4616daf975c7f7939c4234a77c24d2450ed6bf3034a8d1e84e"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-duplicate-block-id.after.command.json",
+      "bytes": 338,
+      "sha256": "86eb0e78d9f34861feb52e351c5dfa9ce4619c108edce5386dda49385330642b"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-modbus.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-duplicate-block-id.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-block-registry.before.command.json",
+      "bytes": 341,
+      "sha256": "7a557704c891acc445d61318b62c1a9efec4a2bf2d1f957ff5b6cf33be88e471"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unclaimed.after.stdout.log",
+      "bytes": 28024,
+      "sha256": "85809d2eb52bda9a618c98e9f820e52c9173a9706ad2b1aa0a3511d3b5782288"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-entry.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unsupported-registry.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unknown-bootstrap.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javac-contract.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unsupported-registry.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-item-registry.after.stdout.log",
+      "bytes": 27225,
+      "sha256": "ce75b1a818c1092c4c85bd8611ad6c644772b2723d3bd3c0e173fa0a8822b254"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-captured-supplier.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unclaimed.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-entry.after.stdout.log",
+      "bytes": 27780,
+      "sha256": "ec3c7a63449ba00030e9cde97768b6d2e0f44d87e8891061780531610d6cfde8"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unknown-block-holder.before.stdout.log",
+      "bytes": 27773,
+      "sha256": "cbb6f31343a367e3612b108cbf9594d55816fe665817250905d38fca56eb581b"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unrecognized-entry-owner.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-extra-forge-api.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-extra-forge-api.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-holder-type.before.command.json",
+      "bytes": 338,
+      "sha256": "f0e81abaad1c3574a9c0c0bd12d61793fd75317f2e41f8fb507a1e7a8891844b"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unclaimed.after.command.json",
+      "bytes": 329,
+      "sha256": "bb99df3ba5a0ef14c8525d3c6fb3a91464fe73e11ccea4752d5ca420bc2ca8c4"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-supplier-return.before.command.json",
+      "bytes": 342,
+      "sha256": "77d5dc2d6be86ca9ec6665ce9cc27411c2b1199f7629833ca56a00547e14b2f2"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-duplicate-item-id.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/bytecode.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-register-owner.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unknown-block-holder.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-register-owner.after.command.json",
+      "bytes": 340,
+      "sha256": "6a7ced74eda2e2c04905ebb47c9517f59617fc92f5bfe15c289dbffd21ea12b3"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-supplier-return.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/java-version.command.json",
+      "bytes": 192,
+      "sha256": "0b90e22244afcaf5ba0620face4aea3e31e1ec7cb8a3e127f2b0ffc6c6c92eeb"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-missing-attachment.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-entry.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-supplier-return.before.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unknown-block-holder.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-missing-attachment.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-block-registry.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-supplier-return.after.command.json",
+      "bytes": 341,
+      "sha256": "0a084b85b75d7d3cab2c92982c54c65603d4e04e83c71552dcd1cc1430fe58f6"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-unrecognized-entry-owner.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-wrong-block-registry.before.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-renamed.after.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/affected-contracts-verified/block/javap-captured-supplier.after.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/revision-neo-control-invocation/result.json",
+      "bytes": 1610,
+      "sha256": "9c8826610c9f05e00e39cffea2defa07f8f4c188428b572923fb2c33b9d39e48"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/revision-neo-control-invocation/command.json",
+      "bytes": 1069,
+      "sha256": "1814873d55bd0dfdf5a532865598c71757eb7ea0f59bdf382c8ec5d670245bdd"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/revision-neo-control-invocation/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/revision-neo-control-invocation/inputs.json",
+      "bytes": 1346,
+      "sha256": "66a593ed7e8418f6f2e14037af035a668f40951e1154aa0b91c4480e9cf10fdf"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/revision-neo-control-invocation/stdout.log",
+      "bytes": 1482,
+      "sha256": "764acabcb7e7705e561966202bdf9f1f4b2cc5f2fbf9548b109737161a998b28"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/revision-neo-treatment-invocation/result.json",
+      "bytes": 1611,
+      "sha256": "5891f8c84547eca822ba0a60dbd84a2e8f605e14bdb6740076d06e6e668579f6"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/revision-neo-treatment-invocation/command.json",
+      "bytes": 1070,
+      "sha256": "fbf1fe04c89178e1ae0ad01b436cbcc2dfaa00016dbb5a7022510dd54c506449"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/revision-neo-treatment-invocation/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/revision-neo-treatment-invocation/inputs.json",
+      "bytes": 1346,
+      "sha256": "66a593ed7e8418f6f2e14037af035a668f40951e1154aa0b91c4480e9cf10fdf"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/revision-neo-treatment-invocation/stdout.log",
+      "bytes": 1482,
+      "sha256": "ae7ab0acc8c10bbb9614f2625e07f2059feaee8e1b2479f0aed544dfbd0a8d2f"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/regression-ordinary-forge-treatment-invocation/result.json",
+      "bytes": 1104,
+      "sha256": "af356466448276451cbedcb57f03dfd53dc3100a995eca5687985164daf6f418"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/regression-ordinary-forge-treatment-invocation/command.json",
+      "bytes": 841,
+      "sha256": "7d501fcad70f7c6e8b477cd22638a06d7e2714594892ab5a0c9aac8d68e5fc30"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/regression-ordinary-forge-treatment-invocation/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/regression-ordinary-forge-treatment-invocation/inputs.json",
+      "bytes": 908,
+      "sha256": "d1639bb65d9d3bbec5e56d82318e5fe7c9a2b37aef0fa829c4a68404e04ef8c9"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/regression-ordinary-forge-treatment-invocation/stdout.log",
+      "bytes": 1162,
+      "sha256": "c36ca34d3fb8d341851556214caf39f885f41a5b285a6383651e2157715f2636"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-ordinary-neoforge-control-invocation/result.json",
+      "bytes": 1774,
+      "sha256": "549bc1cf31796d463334208cc577eab88766231622f0fcaf9a6498bfeb65af2e"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-ordinary-neoforge-control-invocation/command.json",
+      "bytes": 1109,
+      "sha256": "972214d0f32977569f1eaa61e83a860a0f296d3249aaced1018f85e147075303"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-ordinary-neoforge-control-invocation/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-ordinary-neoforge-control-invocation/inputs.json",
+      "bytes": 1374,
+      "sha256": "dcf0c325c84a6a60b0e3af828ad616246f78907314d3c9cf869a2bafe168a2bc"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-ordinary-neoforge-control-invocation/stdout.log",
+      "bytes": 1480,
+      "sha256": "3668fd3bd60b25070c369200a6765c6b3e99192c19b3752d88bd1ea8a27cbec1"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-ordinary-neoforge-treatment-invocation/result.json",
+      "bytes": 1777,
+      "sha256": "c826af11acfbf876288fc82902869f82fa4a16c85714365f47354d6128bdbc95"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-ordinary-neoforge-treatment-invocation/command.json",
+      "bytes": 1110,
+      "sha256": "c493641bec1b2dab2bfb74cad05225dcbf1b4e17f81ffffbafed5b44a0e9f4b8"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-ordinary-neoforge-treatment-invocation/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-ordinary-neoforge-treatment-invocation/inputs.json",
+      "bytes": 1374,
+      "sha256": "dcf0c325c84a6a60b0e3af828ad616246f78907314d3c9cf869a2bafe168a2bc"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-ordinary-neoforge-treatment-invocation/stdout.log",
+      "bytes": 1479,
+      "sha256": "50403bacf53d60a82bfae06eb546aac4c4df5b5f51c5bf73c567c29c8b2ac787"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/regression-data-forge-treatment-invocation/result.json",
+      "bytes": 1137,
+      "sha256": "08bd5c401f55faf76ef1070b3b14c2c9b66221eb8f1a9a1a15dff3a941c7f1a8"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/regression-data-forge-treatment-invocation/command.json",
+      "bytes": 828,
+      "sha256": "afb4c23f59f05ab37f21c69b477a5558bd15cfbf680c5964940b68bc41cb4ec6"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/regression-data-forge-treatment-invocation/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/regression-data-forge-treatment-invocation/inputs.json",
+      "bytes": 895,
+      "sha256": "2cfba69a35e5861f69fb9d44a286b30fd47a91c06adf90f98879539663f3b100"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/regression-data-forge-treatment-invocation/stdout.log",
+      "bytes": 1161,
+      "sha256": "bb58861423b76a1a362a3fb3b7b744514ad8af526c52f6fb8c2fa2ef9ff9c01c"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-data-neoforge-control-invocation/result.json",
+      "bytes": 1807,
+      "sha256": "fa40fec4b2925e88d1e98da3bb23506bd93d680ebc5f56d8167cf61fc32bfb87"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-data-neoforge-control-invocation/command.json",
+      "bytes": 1096,
+      "sha256": "62e3a600d9ae737689648a25bbf76df6fe5046a3e82d14ee9ee5d6045faccf9a"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-data-neoforge-control-invocation/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-data-neoforge-control-invocation/inputs.json",
+      "bytes": 1361,
+      "sha256": "6c68fe90932b9800c16da8782bac661db96d040c80ad4fb2d54958ad06bca044"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-data-neoforge-control-invocation/stdout.log",
+      "bytes": 1479,
+      "sha256": "c0bcdfcd1550b31a7a95607ef990b11973356c2d9694f1efe530617774dba860"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-data-neoforge-treatment-invocation/result.json",
+      "bytes": 1810,
+      "sha256": "970a6f082962948044066a1bb69e6da32abf0913c82292f9c5b995d7f945cce1"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-data-neoforge-treatment-invocation/command.json",
+      "bytes": 1097,
+      "sha256": "992095d724a588b60b48f7594ee1752617821034702d7cd61ed202fadc18dab2"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-data-neoforge-treatment-invocation/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-data-neoforge-treatment-invocation/inputs.json",
+      "bytes": 1361,
+      "sha256": "6c68fe90932b9800c16da8782bac661db96d040c80ad4fb2d54958ad06bca044"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-data-neoforge-treatment-invocation/stdout.log",
+      "bytes": 1479,
+      "sha256": "7216135f2e39a648a1ffe22d710a207b73c19c7671dba0dfa4878b79b19e77a3"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/regression-subclass-forge-treatment-invocation/result.json",
+      "bytes": 1146,
+      "sha256": "dfd4108b6603e7fb0e7e3fecf3448b592b4ffd070a3577827b60193d2f00fd95"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/regression-subclass-forge-treatment-invocation/command.json",
+      "bytes": 845,
+      "sha256": "659c6cf7655751d925714905f9de594504d73c51d82e9e90fd2c1b9005129022"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/regression-subclass-forge-treatment-invocation/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/regression-subclass-forge-treatment-invocation/inputs.json",
+      "bytes": 912,
+      "sha256": "f24c02b4121566673ad03010bbbadf9a1327d0304eecb4a1a97cb8794e756731"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/regression-subclass-forge-treatment-invocation/stdout.log",
+      "bytes": 1165,
+      "sha256": "3cd3d68e981966421dbdf164542d362956f23dd67318e4dcfbc02f3444ffc507"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-subclass-neoforge-control-invocation/result.json",
+      "bytes": 1816,
+      "sha256": "2a370c03b51545875fc92afe4494c78d34e46b2d0b471a5842fa133c1ef90c1d"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-subclass-neoforge-control-invocation/command.json",
+      "bytes": 1113,
+      "sha256": "9f8416d05ca620940577f1a5e147aebb53c21e6032fe51127343fc8dc6a645e5"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-subclass-neoforge-control-invocation/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-subclass-neoforge-control-invocation/inputs.json",
+      "bytes": 1378,
+      "sha256": "316fe7d71f56d668ab8ca6f258a18c96c782e3712ad6b367217ed5ae0b89cb00"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-subclass-neoforge-control-invocation/stdout.log",
+      "bytes": 1484,
+      "sha256": "4eaa6cca0e8750a6ca153db0ded93c3dfddb619038b33794f08d628ff66a2406"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-subclass-neoforge-treatment-invocation/result.json",
+      "bytes": 1819,
+      "sha256": "4167dfc1dec8fba43d2fe1c870975ff360c021407fcd86a142616b6a892fca10"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-subclass-neoforge-treatment-invocation/command.json",
+      "bytes": 1114,
+      "sha256": "0702ede9203404120367cdd12609f6aa62764ebf271ab05a9406dd2341dd46db"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-subclass-neoforge-treatment-invocation/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-subclass-neoforge-treatment-invocation/inputs.json",
+      "bytes": 1378,
+      "sha256": "316fe7d71f56d668ab8ca6f258a18c96c782e3712ad6b367217ed5ae0b89cb00"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-subclass-neoforge-treatment-invocation/stdout.log",
+      "bytes": 1484,
+      "sha256": "fbad13d91cc4e7d9fa18510be98f548239ee2e23e81a99a5af30c1683d36d587"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/regression-legacy4b-forge-treatment-invocation/result.json",
+      "bytes": 1078,
+      "sha256": "a293df64aa15b4b04333f823b6f1f00a26f615be6c4c1b6dde7c9476607d6090"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/regression-legacy4b-forge-treatment-invocation/command.json",
+      "bytes": 824,
+      "sha256": "83bf9d32a68ef0aa1854bb487c5d8d4dc161851cbd01acfe3132f77a8f41d8fd"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/regression-legacy4b-forge-treatment-invocation/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/regression-legacy4b-forge-treatment-invocation/inputs.json",
+      "bytes": 856,
+      "sha256": "1be9e1822d3aaa35cc2f368889f6c484f56364115441e892defccb387d6d71d6"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/regression-legacy4b-forge-treatment-invocation/stdout.log",
+      "bytes": 1168,
+      "sha256": "279dd3e29899f12c6aa931070763a826fc85d5e1f127a2c02d10f02267b1a8dc"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-legacy4b-neoforge-control-invocation/result.json",
+      "bytes": 1683,
+      "sha256": "8082c8101690da0e009c3f46b789c1db6a57c3bef0b721035cc5b515bbb41344"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-legacy4b-neoforge-control-invocation/command.json",
+      "bytes": 1092,
+      "sha256": "86921f6374c2141b0fc1552ea380d6c1ee6aea7fdca0650646a84ac2e156b9d6"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-legacy4b-neoforge-control-invocation/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-legacy4b-neoforge-control-invocation/inputs.json",
+      "bytes": 1322,
+      "sha256": "34257ccf1cd88faeb7ed0fff9dba96a8d8dfa4b2a6596c2bea4b1e632f626747"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-legacy4b-neoforge-control-invocation/stdout.log",
+      "bytes": 1486,
+      "sha256": "a17c249be277a3b9ed497d5666b1bcbc08a876b5a4a05b007831cbf26567d225"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-legacy4b-neoforge-treatment-invocation/result.json",
+      "bytes": 1686,
+      "sha256": "5ed40427d326d825e4dcf1e6bed5d14e42a1640f86a8f831a4be3c5614dc30e3"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-legacy4b-neoforge-treatment-invocation/command.json",
+      "bytes": 1093,
+      "sha256": "01ec94a68f1f3090271ff9a190c27c4c6ecb3024630b08360c10810c1079718b"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-legacy4b-neoforge-treatment-invocation/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-legacy4b-neoforge-treatment-invocation/inputs.json",
+      "bytes": 1322,
+      "sha256": "34257ccf1cd88faeb7ed0fff9dba96a8d8dfa4b2a6596c2bea4b1e632f626747"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/runtime/verified-regression-legacy4b-neoforge-treatment-invocation/stdout.log",
+      "bytes": 1485,
+      "sha256": "cfd86bd430e2626996ea3ddd21a44f59cb2cb92242f448f5167da94181025ddf"
+    },
+    {
+      "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/remote-independent/result.json",
+      "bytes": 1087,
+      "sha256": "a8fbcc263782c88e571c6cbeefb58cc88f03ce312f99880e4bba86c73ed7715d",
+      "role": "Independent remote download verification; created after ZIP, embedded above and not inside unchanged ZIP."
+    }
+  ],
+  "archive": {
+    "status": "PERSISTED / VERIFIED",
+    "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/evidence-export/DualForge-007C4C2-Evidence.zip",
+    "bytes": 4130026,
+    "sha256": "f7c909d47d14a73e9f46af07bfce1f4e2684f44c7041f316420afe0e56ab3b06",
+    "manifestSHA256": "22ac884a1f13d505a6c2fcac15bb483223696954fc04e7845b4fee4132e36924",
+    "fileCount": 2282,
+    "payloadBytes": 25557167,
+    "redactedCopies": 6,
+    "originalsUnchanged": true,
+    "safety": "Credential-pattern scan PASS; world/dependency/config exclusion; redacted publication copies only.",
+    "persistence": "PERSISTED / VERIFIED",
+    "remoteUpload": "PASS",
+    "remoteDownload": "PASS",
+    "authorization": "User explicitly approved this exact ZIP and public evidence/convergence-007c4c2 branch.",
+    "remoteURL": "https://raw.githubusercontent.com/GFander/DualForge/56d92181c2ebefdcf34330347ada5a969f67c1a7/DualForge-007C4C2-Evidence.zip",
+    "evidenceCommit": "56d92181c2ebefdcf34330347ada5a969f67c1a7",
+    "independentVerification": {
+      "status": "PASS",
+      "zipSHA256": "f7c909d47d14a73e9f46af07bfce1f4e2684f44c7041f316420afe0e56ab3b06",
+      "files": 2282,
+      "bytes": 25557167,
+      "verifiedUTC": "2026-10-15T18:21:09.082760+00:00",
+      "remoteURL": "https://raw.githubusercontent.com/GFander/DualForge/56d92181c2ebefdcf34330347ada5a969f67c1a7/DualForge-007C4C2-Evidence.zip",
+      "evidenceCommit": "56d92181c2ebefdcf34330347ada5a969f67c1a7",
+      "zipBytes": 4130026,
+      "manifestSHA256": "22ac884a1f13d505a6c2fcac15bb483223696954fc04e7845b4fee4132e36924",
+      "httpRead": "PASS",
+      "safeExtraction": "PASS",
+      "extractedFileSHAs": "PASS",
+      "allOriginalSHAsUnchanged": "PASS",
+      "originalFilesChecked": 2281,
+      "generatedPublicationFiles": 1,
+      "persistence": "PERSISTED / VERIFIED",
+      "commands": [
+        "curl --fail --location --silent --show-error --dump-header http-headers.txt --output DualForge-007C4C2-Evidence.zip <remoteURL>",
+        "python3 -B tests/typed_registry/verify_archive.py <downloadedZip> --sha256 f7c909d47d14a73e9f46af07bfce1f4e2684f44c7041f316420afe0e56ab3b06",
+        "python3 -B /tmp/c4c2-remote-verify.py"
+      ]
+    }
+  },
+  "rawManifest": {
+    "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/evidence-export/DualForge-007C4C2-Evidence/MANIFEST.json",
+    "bytes": 1861428,
+    "sha256": "22ac884a1f13d505a6c2fcac15bb483223696954fc04e7845b4fee4132e36924"
+  },
+  "preservation": {
+    "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/preflight/preservation-current.json",
+    "bytes": 6135,
+    "sha256": "742ec1a8a05b5bfc7d42f0bd4ed16425aae32923eb3b22af2db795bd7f48aa05"
+  },
+  "release": {
+    "path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/tooling-final/port-and-counts.json",
+    "bytes": 645,
+    "sha256": "bf518d88c130ff4ac7b009341563fbff7a3adac345e3d28cb8189ae377db61a9"
+  },
+  "supersededAttempts": [
+    "initial observer Neo classpath compile failure fixed before fixture freeze",
+    "early malformed negative labels corrected; not production success",
+    "first control unique-discovery check counted the same record in debug/latest; corrected source and rerun",
+    "e6bc... initial whole cohort superseded after actual uninitialized icon alias false acceptance; final code/JAR all affected Neo/JVM checks rerun",
+    "PTY id lost on environment reconnect after completed raw result files; records preserved and checked without regeneration"
+  ],
+  "gitHubActions": "Final HEAD verification will be recorded in PR after documentation commit"
+}

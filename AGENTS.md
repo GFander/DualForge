@@ -122,3 +122,5 @@
 - 007C-4B在main收敛后明确授权受控Registry Helper、同ModFile跨类ABI计划及内部Mod Bus桥接；上一条为4A历史边界。tests/helper_registry/先验证原生Forge原字节输入，再以同一最终compat/fixture进行NeoForge C/T。Plan整组验证后发布，逐类克隆验证；不承诺JVM已定义类可回滚。严格归属的内部桥接不提供公开原生Bus解包；未知Supplier/Consumer/Bootstrap整组拒绝。FnF完整Helper闭包未准入时，运行门禁NOT RUN，不覆盖C3真实失败或4A PARTIAL；不批量启用Atlas候选、不进入4C。历史22个Context负例、007B 13负例/JPMS及374项冻结保护保持不变。
 
 - 007C-4C-1 的 tests/supplier_boundary/ 使用三个新身份的原生 Forge Fixture，Supplier 业务指令保留，只读验证类型与前向依赖；业务依赖不自动成为 Transformer Target。未知 Forge API、动态链接、未验证控制流及跨包 protected 成员访问拒绝。原 4B 严格模板/旧 Profile/归属/整组发布不放宽，FnF 的新 supplier-v1 只读 Contract 精确预期 ITEM_FIELD_DESCRIPTOR，正常 global Bus 排除与 FNF_RUNTIME=NOT RUN 保留；不能将67个 Supplier 静态通过声称为真实 FnF、Food/Fuel/Tab 或客户端运行通过。
+
+- 007C-4C-2 明确授权Item/CreativeModeTab两种typed Registry，新增受控ResourceKey Tab、延迟icon/display和跨类Holder Consumer；不推广任意Registry或实现Forge全局Bus。tests/typed_registry/先原生Forge再同原JAR Neo C/T，private guard/实际partial side effect诊断用独立观察器，不混入标准C/T、不声称安全沙箱或回滚。Bridge严格绑定计划类型和官方key，官方异常保留UNCERTAIN并拒绝重试。旧4B/4C-1全部相关动态和严格负例须绑定新最终JAR重跑；FnF历史supplier-v1原因保留，新typed-v1精确GLOBAL_EVENT_BUS_UNSUPPORTED，正常global Bus候选排除/FNF_RUNTIME=NOT RUN及客户端独立门槛不变。
