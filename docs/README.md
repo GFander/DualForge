@@ -7,7 +7,7 @@
 [原生基线](<../Dev Manuals/Convergence-007C Food N Fuel 原生Forge基线.md>)、
 [ABI/首失败](<../Dev Manuals/Convergence-007C 第三方Item ABI取证.md>)、
 [PARTIAL交付](<../Dev Manuals/Convergence-007C 真实物品兼容交付报告.md>)及
-[重跑入口](../tests/real_mods/food_n_fuel/README.md)分开记录，本轮没有生产功能扩展。
+[重跑入口](../tests/real_mods/food_n_fuel/README.md)分开记录，以上为冻结007C事实。007C-1新增 [TOML/身份](<../Dev Manuals/Convergence-007C-1 TOML解析与身份取证.md>)、[依赖语义](<../Dev Manuals/Convergence-007C-1 Forge依赖语义取证.md>)、[交付](<../Dev Manuals/Convergence-007C-1 交付报告.md>)和 [Contract](../tests/real_mods/food_n_fuel/metadata/README.md)：Parser/准入PASS、required forge实际拒绝、整体PARTIAL。
 
 | 主题 | 当前实现与验证 | 历史/决策/证据 |
 |---|---|---|

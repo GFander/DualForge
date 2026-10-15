@@ -110,3 +110,5 @@
 - 007B的tests/dropin_items保存无业务开关的原生Forge Item输入和独立查询观察器；原Forge JAR不预转换或修改。经真实失败取证，只对准入Forge automatic module名与FML metadata名不匹配使用官方ModJarMetadata；匹配旧descriptor保持委托，显式JPMS名不匹配拒绝。Reader识别guard、Parser及依赖语义不改；不新建Layer。普通profile单IEventBus ABI、API调用点/字段/数据依赖、拒绝原子性严格限定，真实第三方与Mac门槛分别交付。
 
 - 007C的tests/real_mods/food_n_fuel使用正式未改字节Forge发行制品；先做纯Forge基线，再记录NeoForge实际首失败。run_stock的生命周期PASS不代表模组功能；原生查询、实际玩家行为和客户端渲染分别验收。当前原生基线PARTIAL、目标发现FAIL，生产零修改；不得把未来TOML/上下文/跨类支持或旧客户端PASS说成已完成，详见docs/COMPATIBILITY.md及007C报告。
+
+- 007C-1 明确授权 metadata/准入前置修复：使用宿主 NightConfig 标准 TOML，结合真实同JAR Forge @Mod 与声明modId识别；loader支持范围和来源证据分离，原生/Library/冲突输入不接管。007B/007C上面的范围限制与结论为历史轮次记录，不覆盖本轮用户授权。不得删除/改名/豁免 required forge 依赖以制造兼容PASS；若没有可靠等价语义，停止于真实FML依赖拒绝，整体PARTIAL。当前契约及测试迁移理由见 tests/real_mods/food_n_fuel/metadata/README.md；旧冻结发行、Fixture、报告、原世界和374项保全继续不变。

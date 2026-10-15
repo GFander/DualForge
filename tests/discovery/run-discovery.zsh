@@ -15,11 +15,23 @@ workflow = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(workflow)
 assert hashlib.sha256(probe.read_bytes()).hexdigest() == workflow.PROBE_SHA, 'Fixed Probe mismatch'
 run = workflow.run_directory(repo/'out/convergence-003a/discovery')
+native = server/'libraries/net/neoforged/neoforge/21.1.256/neoforge-21.1.256-universal.jar'
+libraries = sorted((server/'libraries').rglob('*.jar'))
+jdk = Path(os.environ.get('JAVA_HOME', '/workspace/dualforge-cloud/tools/msjdk/usr/lib/jvm/msopenjdk-21-amd64'))/'bin'
+inputs = workflow.fingerprints([compat, probe, native, repo/'tests/discovery/DiscoveryContractTest.java',
+                               repo/'tests/discovery/run-discovery.zsh', repo/'tests/discovery/DiscoveryEntryFixture.java', *libraries])
+workflow.save(run/'inputs.json', inputs)
+cp = os.pathsep.join(map(str, [compat, *libraries]))
+fixture_classes = run/'fixture-classes'
+fixture_classes.mkdir()
+workflow.native(run, 'fixture-javac', [jdk/'javac', '--release', '21', '-cp', cp, '-d', fixture_classes,
+                 repo/'tests/discovery/DiscoveryEntryFixture.java'])
+workflow.native(run, 'fixture-java', [jdk/'java', '-cp', str(fixture_classes)+os.pathsep+cp,
+                 'io.github.gfander.dualforge.DiscoveryEntryFixture', run/'ControlledEntry.class'])
 root = run/'fixtures'
 names = ['A','B','C','D','E','F','native-dual','missing-loader','wrong-loader','multiple','ambiguous']
 for name in names:
     (root/name/'mods').mkdir(parents=True)
-native = server/'libraries/net/neoforged/neoforge/21.1.256/neoforge-21.1.256-universal.jar'
 with zipfile.ZipFile(probe) as archive:
     toml = archive.read('META-INF/mods.toml').decode()
 shutil.copy2(probe, root/'A/mods/forgeprobe.jar')
@@ -32,6 +44,7 @@ def jar(path, metadata=None):
                          'Manifest-Version: 1.0\nAutomatic-Module-Name: controlledcandidate\n\n')
         if metadata is not None:
             archive.writestr('META-INF/mods.toml', metadata)
+            archive.write(run/'ControlledEntry.class', 'com/example/discovery/ControlledEntry.class')
 
 controlled = toml.replace('forgeprobe', 'controlled_candidate')
 jar(root/'C/mods/second.jar', controlled)
@@ -45,14 +58,8 @@ jar(root/'missing-loader/mods/missing.jar', controlled.replace('loaderVersion="[
 jar(root/'wrong-loader/mods/wrong.jar', controlled.replace('javafml', 'not_a_supported_loader'))
 shutil.copy2(probe, root/'multiple/mods/z-probe.jar')
 shutil.copy2(root/'C/mods/second.jar', root/'multiple/mods/a-candidate.jar')
-jar(root/'ambiguous/mods/ambiguous.jar', controlled.replace('[52,)', '[1,)'))
+jar(root/'ambiguous/mods/ambiguous.jar', controlled.replace('[52,)', '[1,)') + '\n[[dependencies.controlled_candidate]]\nmodId="neoforge"\nmandatory=true\nversionRange="[21,)"\n')
 workflow.save(run/'fixtures.json', workflow.fingerprints(list(root.rglob('*.jar'))))
-libraries = sorted((server/'libraries').rglob('*.jar'))
-jdk = Path(os.environ.get('JAVA_HOME', '/workspace/dualforge-cloud/tools/msjdk/usr/lib/jvm/msopenjdk-21-amd64'))/'bin'
-inputs = workflow.fingerprints([compat, probe, native, repo/'tests/discovery/DiscoveryContractTest.java',
-                               repo/'tests/discovery/run-discovery.zsh', *libraries])
-workflow.save(run/'inputs.json', inputs)
-cp = os.pathsep.join(map(str, [compat, *libraries]))
 classes = run/'classes'
 classes.mkdir()
 result = {'status': 'FAIL', 'directory': str(run)}

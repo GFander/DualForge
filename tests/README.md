@@ -9,7 +9,7 @@ JVM 编译、metadata 测试和服务端运行均严格串行。
 
 [输入、原生运行和人工补充](real_mods/food_n_fuel/README.md)使用未改字节的官方发行JAR。
 独立Forge/NeoForge标准运行只声明生命周期；原生Registry/燃料子项不等于DualForge兼容。
-原生基线PARTIAL、NeoForge发现FAIL；本轮生产未改，实际食用和Mac仍NOT RUN。
+007C冻结事实为原生基线PARTIAL、NeoForge发现FAIL、生产未改；007C-1现已推进到真实FML必需forge依赖拒绝。新的metadata/admission入口见下方章节，实际食用和Mac仍NOT RUN。
 
 先通过新入口干净构建兼容层，再使用 result.json 中实际的新 JAR：
 
@@ -176,3 +176,7 @@ Manifest/SPI/模块/属性检查、官方 Module Layer 实际观测及串行兼�
 ## dropin_items：007B普通Forge输入
 
 [原生构建、范围/原子性与零参数包](dropin_items/README.md)支持无业务属性Item注册与独立查询。原始Forge JAR保持不变，automatic模块身份按真实FML metadata对齐；显式模块不匹配拒绝。客户端图形NOT RUN，旧阶段回归使用最终同一新JAR。
+
+## real_mods/food_n_fuel/metadata：007C-1前置机制
+
+[运行与契约](real_mods/food_n_fuel/metadata/README.md)使用完整原始TOML、真实FML元数据与ASM只读注解取证。覆盖标准字符串/嵌套表、非法语法/类型/UTF-8/超大输入、依赖保留和Forge/NeoForge身份隔离；未被接管类保存转换前后字节。两个测试SPI分别记录NightConfig实际Reader层访问、FML已分配provider；最终标准运行仅安装compat和原始发行JAR。历史发现/范围生成对照的必要迁移理由独立记录，不改冻结输入或原Java语义断言。宿主明确拒绝缺失 required forge 时，不能声称FnF已加载。
