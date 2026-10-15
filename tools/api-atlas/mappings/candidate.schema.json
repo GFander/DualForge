@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:dualforge:api-atlas:candidate:1",
+  "title": "Offline discovery candidate (does not authorize production use)",
+  "type": "object",
+  "required": ["schemaVersion", "id", "kind", "source", "targets", "strategy", "status", "scope", "evidence", "runtimeVerified", "productionEnabled"],
+  "properties": {
+    "schemaVersion": {"const": 1},
+    "id": {"type": "string", "minLength": 1},
+    "kind": {"enum": ["CLASS", "FIELD", "METHOD"]},
+    "source": {
+      "type": "object",
+      "required": ["platform", "version", "owner", "name", "descriptor", "artifact"],
+      "properties": {"owner": {"type": "string"}, "name": {"type": ["string", "null"]}, "descriptor": {"type": ["string", "null"]}}
+    },
+    "targets": {"type": "array", "items": {"type": "object", "required": ["owner", "name", "descriptor", "artifact", "access", "signature"]}},
+    "strategy": {"enum": ["EXACT_ABI_CANDIDATE", "CLASS_RENAME_CANDIDATE", "FIELD_REWRITE_CANDIDATE", "METHOD_REWRITE_CANDIDATE", "DESCRIPTOR_REWRITE_CANDIDATE", "RUNTIME_SHIM_REQUIRED", "SEMANTIC_REVIEW_REQUIRED", "UNRESOLVED"]},
+    "status": {"enum": ["SEMANTIC_REVIEW_REQUIRED", "AMBIGUOUS_MAPPING", "UNRESOLVED", "VERIFIED_STATIC", "VERIFIED_RUNTIME"]},
+    "scope": {"enum": ["CONTROLLED_ENTRY_ONLY", "CONTROLLED_HELPER", "GENERAL_CANDIDATE"]},
+    "evidence": {"type": "array", "items": {"type": "string"}},
+    "runtimeVerified": {"type": "boolean"},
+    "productionEnabled": {"const": false}
+  }
+}

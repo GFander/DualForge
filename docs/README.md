@@ -14,6 +14,7 @@
 | Architecture / Loader | [LanguageLoader](../dualforge/src/main/java/io/github/gfander/dualforge/DualForgeLanguageLoader.java)、[TransformationService](../dualforge/src/main/java/io/github/gfander/dualforge/DualForgeTransformationService.java) | [开发手册](<../Dev Manuals/Forge → NeoForge 兼容层开发手册.md>)、[身份迁移报告](<../Dev Manuals/DualForge 命名统一迁移报告.md>) |
 | Discovery / Metadata | [Locator](../dualforge/src/main/java/io/github/gfander/dualforge/ForgeModLocator.java)、[Parser](../dualforge/src/main/java/io/github/gfander/dualforge/ForgeModFileInfoParser.java)、[dependencies](../tests/dependencies/)、[discovery](../tests/discovery/) | [002](<../Dev Manuals/Convergence-002 交付报告.md>)、[003a](<../Dev Manuals/Convergence-003a 交付报告.md>) |
 | Forge platform dependencies | [Resolver](../dualforge/src/main/java/io/github/gfander/dualforge/ForgePlatformDependencyResolver.java)、[007C-2测试](../tests/real_mods/food_n_fuel/dependency/README.md) | [FML取证](<../Dev Manuals/Convergence-007C-2 FML依赖验证链取证.md>)、[方案比较](<../Dev Manuals/Convergence-007C-2 平台兼容方案比较.md>)、[契约](<../Dev Manuals/Convergence-007C-2 Forge依赖契约与验证.md>)、[交付](<../Dev Manuals/Convergence-007C-2 交付报告.md>) |
+| Entry Profile / constructor Context | [分类](../dualforge/src/main/java/io/github/gfander/dualforge/ForgeEntryProfile.java)、[Context profile](../dualforge/src/main/java/io/github/gfander/dualforge/ControlledForgeContextProfile.java)、[测试](../tests/entry_context/README.md) | [实际ABI](<../Dev Manuals/Convergence-007C-3 入口与构造器ABI取证.md>)、[A/B/C方案](<../Dev Manuals/Convergence-007C-3 方案比较.md>)、[契约](<../Dev Manuals/Convergence-007C-3 Profile与Context契约.md>)、[交付](<../Dev Manuals/Convergence-007C-3 交付报告.md>) |
 | Transformer / Constructor ABI | [Transformer](../dualforge/src/main/java/io/github/gfander/dualforge/DualForgeEntryTransformer.java)、[identity](../tests/identity/) | [003b](<../Dev Manuals/Convergence-003b 交付报告.md>)、[006A ABI矩阵](<../Dev Manuals/Convergence-006A ABI 与字节码报告.md>) |
 | EventBus Compatibility | [events](../tests/events/README.md)、Transformer的受控事件分支 | [004](<../Dev Manuals/Convergence-004 交付报告.md>)、[历史Spike-002-0n](<../Dev Manuals/Spike_002-0n.md>)、[历史订阅源码](../history/spike000/subscriber-002-0n/) |
 | Registry Compatibility | [Item profile](../dualforge/src/main/java/io/github/gfander/dualforge/ControlledForgeItemProfile.java)、[registry](../tests/registry/README.md)、[multi_registry](../tests/multi_registry/README.md) | [005](<../Dev Manuals/Convergence-005 交付报告.md>)、[006A](<../Dev Manuals/Convergence-006A 交付报告.md>) |
@@ -33,3 +34,7 @@
 用户正常安装见 [INSTALL](INSTALL.md)，007标准入口与配置验证见 [bootstrap](../tests/bootstrap/README.md)。默认安装方式与API兼容范围分别验收。
 
 007B普通Forge注册、模块身份取证和Mac零参数包见 [dropin_items](../tests/dropin_items/README.md) 与 [本轮报告](<../Dev Manuals/Convergence-007B Drop-in Runtime 交付报告.md>)。第三方兼容FAIL与整体PARTIAL明确分开。
+
+## 离线API研究
+
+[007C-4A交付与4B建议](<../Dev Manuals/Convergence-007C-4A 交付报告.md>)、[工具](../tools/api-atlas/README.md)、[测试](../tests/api_atlas/README.md)。生产和运行时兼容范围不变，完整客户端补丁输入缺失。

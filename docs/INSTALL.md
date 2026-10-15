@@ -2,7 +2,7 @@
 
 目标环境：Minecraft 1.21.1、NeoForge 21.1.256、Java 21。
 
-具体第三方结果见 [COMPATIBILITY](COMPATIBILITY.md)：Food N' Fuel Forge1.3在007C-2经过受控平台依赖投影后，下一真实失败为ASM targets中的既有Item profile结构拒绝，尚不能按本安装方式正常使用；平台条件通过和原生Forge对照均不是DualForge整体兼容PASS。
+具体第三方结果见 [COMPATIBILITY](COMPATIBILITY.md)：Food N' Fuel Forge1.3在007C-3越过平台依赖及入口Context后，于ItemRegistries初始化缺少ForgeRegistries，仍不能按本安装方式正常使用；Context子目标和原生Forge对照均不是DualForge整体兼容PASS。
 
 1. 安装正常的 NeoForge。
 2. 将 `DualForge.jar` 放入实例的 `mods/`。
