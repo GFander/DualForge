@@ -16,6 +16,8 @@ def main():
         p.add_argument('--'+key,type=Path,required=True)
     p.add_argument('--fnf-next-stage',choices=('item-profile','registry-helper'),default='item-profile',
                    help='Explicit expected next boundary; the 007C-2 historical default remains strict')
+    p.add_argument('--skip-fnf-runtime',action='store_true',
+                   help='007C-4B Gate 8: exclude N2 after read-only closure rejection; preserve all other assertions')
     a=p.parse_args()
     assert a.jar.name=='DualForge.jar'
     fixture=json.loads(a.fixture_index.read_text());assert fixture['status']=='PASS'
@@ -51,6 +53,10 @@ def main():
         ('native-optional-forge',[a.jar,jars['native-optional-forge']], 'healthy',['[DF007-NATIVE] SERVER_STARTED']),
     ]
     result={'status':'FAIL','compat':compat,'fnfExpectedStage':a.fnf_next_stage,'testedCommit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=REPO,text=True).strip(),'cases':{},'nativeForgeBaseline':'PARTIAL inherited, not rerun','clientRuntime':'NOT RUN'}
+    if a.skip_fnf_runtime:
+        cases=[case for case in cases if case[0]!='N2']
+        result['excludedCases']={'N2':{'status':'NOT RUN','reason':'007C-4B requires complete read-only Helper admission before FnF runtime'}}
+        result['full19CaseMatrix']='PARTIAL: N2 explicitly not run; remaining 18 cases retain original assertions'
     try:
         baseline=None
         for name,mods,kind,markers in cases:

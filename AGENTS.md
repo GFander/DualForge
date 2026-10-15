@@ -118,3 +118,5 @@
 - 007C-3明确授权独立Profile分类和严格无参Context入口；前轮“不扩展构造器”是历史任务边界。新Context使用官方无参构造和DualForge命名空间shim，核对真实caller/metadata/module/active container，来源ABI视图只关联该容器真实Mod Bus，不新增Forge Event API或全局Bus。旧Item/Block/事件Profile、原单Bus ABI和007B原13负例/JPMS不放宽。tests/entry_context/保存先原Forge验证的原字节夹具；helper仅只读取证，禁止进入跨类Registry/SRG/Food/Fuel/Tab生产适配。FnF完整构造/游戏功能仍FAIL或NOT RUN；详见本轮契约和交付。
 
 - 007C-4A仅授权tools/api-atlas及tests/api_atlas独立研究，生产目录不得修改，不启动游戏。候选发现、限定离线验证和运行时兼容分别报告；BusView不是原生Bus，不增加生产解包/事件/Registry Shim。记录固定输入和类来源；完整客户端补丁输入缺失时该门禁及整体保留PARTIAL。数据/class置于out，冻结输入保持原字节；历史动态只记INHERITED。本轮固定SHA FnF命名事实与历史勘误见007C-4A报告，冻结报告不改，不自动进入4B。
+
+- 007C-4B在main收敛后明确授权受控Registry Helper、同ModFile跨类ABI计划及内部Mod Bus桥接；上一条为4A历史边界。tests/helper_registry/先验证原生Forge原字节输入，再以同一最终compat/fixture进行NeoForge C/T。Plan整组验证后发布，逐类克隆验证；不承诺JVM已定义类可回滚。严格归属的内部桥接不提供公开原生Bus解包；未知Supplier/Consumer/Bootstrap整组拒绝。FnF完整Helper闭包未准入时，运行门禁NOT RUN，不覆盖C3真实失败或4A PARTIAL；不批量启用Atlas候选、不进入4C。历史22个Context负例、007B 13负例/JPMS及374项冻结保护保持不变。

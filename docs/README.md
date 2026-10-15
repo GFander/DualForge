@@ -11,6 +11,7 @@
 
 | 主题 | 当前实现与验证 | 历史/决策/证据 |
 |---|---|---|
+| Owned Registry Helper / Mod Bus | [Plan](../dualforge/src/main/java/io/github/gfander/dualforge/ForgeRegistryTransformationPlan.java)、[Bridge](../dualforge/src/main/java/io/github/gfander/dualforge/ForgeRegistryBridge.java)、[测试](../tests/helper_registry/README.md) | [4B契约](<../Dev Manuals/Convergence-007C-4B Registry Helper与转换计划契约.md>)、[Bus归属](<../Dev Manuals/Convergence-007C-4B Mod Bus桥接与归属验证.md>)、[交付](<../Dev Manuals/Convergence-007C-4B 交付报告.md>) |
 | Architecture / Loader | [LanguageLoader](../dualforge/src/main/java/io/github/gfander/dualforge/DualForgeLanguageLoader.java)、[TransformationService](../dualforge/src/main/java/io/github/gfander/dualforge/DualForgeTransformationService.java) | [开发手册](<../Dev Manuals/Forge → NeoForge 兼容层开发手册.md>)、[身份迁移报告](<../Dev Manuals/DualForge 命名统一迁移报告.md>) |
 | Discovery / Metadata | [Locator](../dualforge/src/main/java/io/github/gfander/dualforge/ForgeModLocator.java)、[Parser](../dualforge/src/main/java/io/github/gfander/dualforge/ForgeModFileInfoParser.java)、[dependencies](../tests/dependencies/)、[discovery](../tests/discovery/) | [002](<../Dev Manuals/Convergence-002 交付报告.md>)、[003a](<../Dev Manuals/Convergence-003a 交付报告.md>) |
 | Forge platform dependencies | [Resolver](../dualforge/src/main/java/io/github/gfander/dualforge/ForgePlatformDependencyResolver.java)、[007C-2测试](../tests/real_mods/food_n_fuel/dependency/README.md) | [FML取证](<../Dev Manuals/Convergence-007C-2 FML依赖验证链取证.md>)、[方案比较](<../Dev Manuals/Convergence-007C-2 平台兼容方案比较.md>)、[契约](<../Dev Manuals/Convergence-007C-2 Forge依赖契约与验证.md>)、[交付](<../Dev Manuals/Convergence-007C-2 交付报告.md>) |
@@ -39,4 +40,4 @@
 
 [007C-4A交付与4B建议](<../Dev Manuals/Convergence-007C-4A 交付报告.md>)、[工具](../tools/api-atlas/README.md)、[测试](../tests/api_atlas/README.md)。生产和运行时兼容范围不变，完整客户端补丁输入缺失。
 
-007C-4B前置[Git基线收敛](<../Dev Manuals/Convergence-007C-4B Git基线收敛报告.md>)记录独立集成PR；main尚未收敛时Registry Bridge生产开发保持BLOCKED。
+007C-4B前置[Git基线收敛](<../Dev Manuals/Convergence-007C-4B Git基线收敛报告.md>)保留当时BLOCKED快照；PR23合入main后，[独立时序与祖先取证](<../Dev Manuals/Convergence-007C-4B FML目标发现与加载时序取证.md>)已解除该门槛。当前受控Registry桥接与FnF未闭包边界分别记录，不能将旧Gate0报告当作当前状态。

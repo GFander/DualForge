@@ -47,6 +47,7 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
     private final Set<String> normalRegistryEntries = new HashSet<>();
     private final Map<String, String> blockEntries = new HashMap<>();
     private final Map<String, ControlledForgeContextProfile.Scope> contextEntries = new HashMap<>();
+    private volatile Map<String, ForgeRegistryTransformationPlan> helperPlans = Map.of();
 
     public DualForgeEntryTransformer() {
         this.rewriteEnabled = enabled("dualforge.2a.rewrite");
@@ -76,6 +77,14 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
         original.accept(input);
         try {
             log("offered: " + input.name);
+            var registryPlan = helperPlans.get(input.name);
+            if (registryPlan != null) {
+                if (!rewriteEnabled || !apiRewriteEnabled) throw new IllegalStateException("Registry helper requires enabled rewrites");
+                input = registryPlan.transform(input, context == null ? null : context.getInitialClassSha256());
+                log("HELPER_TRANSFORM class=" + input.name + " modId=" + registryPlan.modId + " plan=" + registryPlan.fingerprint);
+                dumpProfile(input);
+                return input;
+            }
             if (contextEntries.containsKey(input.name)) {
                 if (!rewriteEnabled) return input;
                 if (!apiRewriteEnabled) throw new IllegalStateException("007C-3 requires apiRewrite=true");
@@ -333,6 +342,8 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
         normalRegistryEntries.clear();
         blockEntries.clear();
         contextEntries.clear();
+        helperPlans = Map.of();
+        Map<String, ForgeRegistryTransformationPlan> pendingHelpers = new HashMap<>();
         Set<ITransformer.Target<ClassNode>> targets = new HashSet<>();
         // ModLauncher registers targets after FML completeScan, before the GAME layer.
         // getScanResult waits for the host's background scan; no classes are loaded here.
@@ -379,6 +390,21 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
                             try { return Files.readAllBytes(file.getFile().findResource(owner + ".class")); }
                             catch (java.io.IOException e) { throw new IllegalStateException("Cannot read owned Context helper " + owner, e); }
                         });
+                        if (ForgeRegistryTransformationPlan.isCandidate(candidate)) {
+                            var plan = ForgeRegistryTransformationPlan.create(info, internal);
+                            for (String name : plan.targets()) {
+                                for (var other : loading.getModFiles()) {
+                                    if (other == file) continue;
+                                    if (other.getFile().getScanResult().getClasses().stream().anyMatch(c -> c.clazz().getInternalName().equals(name)))
+                                        throw new IllegalStateException("TRANSFORMATION_RULE_CONFLICT foreign ModFile target " + name);
+                                }
+                                if (pendingHelpers.putIfAbsent(name, plan) != null)
+                                    throw new IllegalStateException("TRANSFORMATION_RULE_CONFLICT duplicate target " + name);
+                                targets.add(ITransformer.Target.targetClass(name.replace('/', '.')));
+                            }
+                            log("HELPER_PREPLAN modId=" + info.getModId() + " module=" + plan.module + " targets=" + new java.util.TreeSet<>(plan.targets()) + " plan=" + plan.fingerprint);
+                            continue;
+                        }
                         var stats = ControlledForgeContextProfile.validate(candidate, scope);
                         contextEntries.put(internal, scope);
                         targets.add(ITransformer.Target.targetClass(entry));
@@ -423,6 +449,13 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
                 }
             }
         }
+        for (String name : pendingHelpers.keySet()) {
+            if (contextEntries.containsKey(name) || registryEntries.containsKey(name) || blockEntries.containsKey(name)
+                    || entryEvents.containsKey(name) || eventClasses.contains(name))
+                throw new IllegalStateException("TRANSFORMATION_RULE_CONFLICT existing profile " + name);
+        }
+        helperPlans = Map.copyOf(pendingHelpers);
+        if (!helperPlans.isEmpty()) log("HELPER_PLANS_PUBLISHED targets=" + helperPlans.size() + " beforeGameLayer=true");
         return targets;
     }
 

@@ -1,0 +1,137 @@
+package example.helperobserver;
+import java.io.PrintStream;
+import java.util.concurrent.atomic.AtomicInteger;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import HOST.fml.ModList;
+import HOST.fml.common.Mod;
+import HOST.event.server.ServerStartedEvent;
+@Mod("helperobserver")
+public final class Observer {
+    private final PrintStream original = System.out;
+    private final AtomicInteger alpha = new AtomicInteger(), beta = new AtomicInteger();
+    private boolean official;
+    private boolean bridgeChecked;
+    public Observer() {
+        if ("neoforge".equals("HOST_KIND")) {
+            try {
+                Class<?> bridge=Class.forName("io.github.gfander.dualforge.ForgeRegistryBridge");
+                var method=java.util.Arrays.stream(bridge.getMethods()).filter(m -> m.getName().equals("register")).findFirst().orElseThrow();
+                Class<?> sourceBus=method.getParameterTypes()[1];
+                Object fake=java.lang.reflect.Proxy.newProxyInstance(sourceBus.getClassLoader(),new Class<?>[]{sourceBus},(proxy,m,args)->null);
+                for(Object source : new Object[]{null,fake}) {
+                    try {method.invoke(null,new Object(),source,"unowned");throw new AssertionError("Unowned source bus accepted");}
+                    catch(java.lang.reflect.InvocationTargetException expected) {
+                        if (!(expected.getCause() instanceof IllegalStateException) || !expected.getCause().getMessage().contains("unrecognized source BusView")) throw new AssertionError(expected);
+                    }
+                }
+                System.out.println("[DF4B] BRIDGE REFUSED unowned-source cases=2");
+            } catch(ReflectiveOperationException failure) {throw new AssertionError(failure);}
+        }
+        System.setOut(new PrintStream(original) {
+            @Override public void println(String text) {
+                original.println(text);
+                if ("neoforge".equals("HOST_KIND") && "true".equals(System.getenv("DF4B_BRIDGE_NEGATIVES"))
+                        && !bridgeChecked && text.startsWith("[DUALFORGE-REGISTRY-BRIDGE] ATTACHED modId=helperprobe ")) {
+                    bridgeChecked = true;
+                    bridgeNegatives(true);
+                }
+                if (!text.equals("[DF4B] SUPPLIER alpha") && !text.equals("[DF4B] SUPPLIER beta")) return;
+                var frames = StackWalker.getInstance(StackWalker.Option.SHOW_HIDDEN_FRAMES).walk(s -> s.toList());
+                boolean supplier = frames.stream().anyMatch(f -> f.getClassName().equals("example.helperprobe.ItemHelper"));
+                boolean register = frames.stream().anyMatch(f -> f.getClassName().equals("REGISTRY_PACKAGE.RegisterEvent"));
+                boolean deferred = frames.stream().anyMatch(f -> f.getClassName().equals("EXACT_DEFERRED"));
+                if (!supplier || !register || !deferred) throw new AssertionError("Missing official supplier registration stack");
+                official = true;
+                (text.endsWith("alpha") ? alpha : beta).incrementAndGet();
+                for (var f : frames) original.println("[DF4B] FRAME " + f.getClassName() + "." + f.getMethodName());
+            }
+        });
+        GLOBAL_BUS.addListener(this::started);
+    }
+    private void started(ServerStartedEvent event) {
+        System.setOut(original);
+        try {
+            if ("neoforge".equals("HOST_KIND") && "true".equals(System.getenv("DF4B_BRIDGE_NEGATIVES"))) {
+                if (!bridgeChecked) throw new AssertionError("Constructor bridge checks did not run");
+                bridgeNegatives(false);
+            }
+            boolean enabled = !"false".equals(System.getenv("DF4B_REGISTER"));
+            var container = ModList.get().getModContainerById("helperprobe").orElseThrow();
+            Object modBus = container.getClass().getMethod("getEventBus").invoke(container);
+            System.out.println("[DF4B] MODBUS owner="+container.getModId()+" identity="+System.identityHashCode(modBus));
+            String moduleName = container.getModInfo().getOwningFile().moduleName();
+            Module module = getClass().getModule().getLayer().findModule(moduleName).orElseThrow();
+            Class<?> helper = Class.forName(module, "example.helperprobe.ItemHelper");
+            Class<?> consumer = Class.forName(module, "example.helperprobe.Consumer");
+            Object previous = null;
+            for (String name : new String[]{"alpha", "beta"}) {
+                var id = ResourceLocation.fromNamespaceAndPath("helperprobe", name + "_item");
+                if (BuiltInRegistries.ITEM.containsKey(id) != enabled) throw new AssertionError("Registry presence " + id);
+                int calls = name.equals("alpha") ? alpha.get() : beta.get();
+                if (calls != (enabled ? 1 : 0)) throw new AssertionError("Supplier count " + name);
+                if (enabled) {
+                    Object item = BuiltInRegistries.ITEM.getOptional(id).orElseThrow();
+                    Object value = consumer.getMethod(name).invoke(null);
+                    Object holder = helper.getField(name.toUpperCase(java.util.Locale.ROOT)).get(null);
+                    if (item != value || item == previous || item.getClass() != Item.class
+                            || holder.getClass().getMethod("get").invoke(holder) != item
+                            || !id.equals(BuiltInRegistries.ITEM.getKey((Item)item))) throw new AssertionError("Holder/item/key identity");
+                    if (name.equals("alpha") && consumer.getMethod("receipt").invoke(null) != holder) throw new AssertionError("Cross-class Holder return");
+                    previous = item;
+                }
+                System.out.println("[DF4B] QUERY id=" + id + " enabled=" + enabled + " suppliers=" + calls + " identity=true");
+            }
+            if (enabled && !official) throw new AssertionError("No official event evidence");
+            System.out.println("[DF4B] REGISTRY PASS enabled=" + enabled + " owner=" + container.getModId());
+        } catch (ReflectiveOperationException failure) { throw new AssertionError(failure); }
+    }
+
+    // Separate diagnostic run only: real containers and original helper; private view
+    // construction/active-state changes are white-box negative inputs, never positive evidence.
+    private void bridgeNegatives(boolean constructing) {
+        try {
+            var owner=ModList.get().getModContainerById("helperprobe").orElseThrow();
+            Module layerModule=getClass().getModule().getLayer().findModule(owner.getModInfo().getOwningFile().moduleName()).orElseThrow();
+            Class<?> helper=Class.forName(layerModule,"example.helperprobe.ItemHelper");
+            Class<?> context=Class.forName("net.neoforged.fml.ModLoadingContext");
+            Object active=context.getMethod("get").invoke(null);
+            var activeField=context.getDeclaredField("activeContainer");activeField.setAccessible(true);Object previous=activeField.get(active);
+            Class<?> containerType=Class.forName("net.neoforged.fml.ModContainer");
+            var setActive=context.getMethod("setActiveContainer",containerType);
+            Class<?> viewType=Class.forName("io.github.gfander.dualforge.ForgeConstructorContext$BusView");
+            var viewConstructor=viewType.getDeclaredConstructor(containerType);viewConstructor.setAccessible(true);
+            Object view=viewConstructor.newInstance(owner);
+            var attach=java.util.Arrays.stream(helper.getMethods()).filter(m->m.getName().equals("attach")).findFirst().orElseThrow();
+            try {
+                setActive.invoke(active,owner);
+                if (constructing) {
+                    refused("duplicate-attachment",()->attach.invoke(null,view),"DUPLICATE_REGISTRY_ATTACHMENT");
+                    var bridge=java.util.Arrays.stream(Class.forName("io.github.gfander.dualforge.ForgeRegistryBridge").getMethods()).filter(m->m.getName().equals("register")).findFirst().orElseThrow();
+                    refused("foreign-helper-module",()->bridge.invoke(null,new Object(),view,"unowned"),"foreign helper module");
+                    setActive.invoke(active,ModList.get().getModContainerById("helperobserver").orElseThrow());
+                    refused("wrong-active-container",()->attach.invoke(null,view),"foreign or escaped registry context");
+                } else {
+                    refused("outside-constructor",()->attach.invoke(null,view),"registry bridge outside owned entry constructor");
+                    var peer=ModList.get().getModContainerById("contextpeer").orElseThrow();
+                    Module peerModule=getClass().getModule().getLayer().findModule(peer.getModInfo().getOwningFile().moduleName()).orElseThrow();
+                    Object actualPeerView=Class.forName(peerModule,"com.example.contextpeer.ContextPeer").getField("capturedBus").get(null);
+                    if(actualPeerView==null)throw new AssertionError("Peer's actual Context view missing");
+                    refused("two-forge-mods-cross-bus",()->attach.invoke(null,actualPeerView),"foreign or escaped registry context");
+                    setActive.invoke(active,new Object[]{null});
+                    refused("escaped-context",()->attach.invoke(null,view),"foreign or escaped registry context");
+                }
+            } finally {setActive.invoke(active,previous);}
+        } catch(ReflectiveOperationException failure) {throw new AssertionError(failure);}
+    }
+    private interface Invocation {void call() throws ReflectiveOperationException;}
+    private void refused(String label,Invocation invocation,String reason) throws ReflectiveOperationException {
+        try {invocation.call();throw new AssertionError("Bridge accepted "+label);}
+        catch(java.lang.reflect.InvocationTargetException expected) {
+            Throwable cause=expected.getCause();
+            if(!(cause instanceof IllegalStateException) || !cause.getMessage().contains(reason))throw new AssertionError("Wrong bridge refusal "+label,expected);
+            original.println("[DF4B] BRIDGE NEGATIVE PASS "+label+" reason="+cause.getMessage());
+        }
+    }
+}
