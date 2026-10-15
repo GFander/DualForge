@@ -108,6 +108,11 @@ final class ControlledItemSupplier {
         // Cross-package protected access needs an additional receiver proof; outside this contract.
         require((m.access&Opcodes.ACC_PUBLIC)!=0 || same || (m.access&Opcodes.ACC_PRIVATE)==0 && samePackage,"MEMBER_INACCESSIBLE "+m.owner);
     }
+    void hostCall(String caller,MethodInsnNode c) {
+        type(Type.getMethodType(c.desc));Member ref=member(c.owner,c.name,c.desc,true,new HashSet<>());accessible(caller,c.owner,ref,c.getOpcode()==Opcodes.INVOKESTATIC);
+        boolean itf=(node(c.owner).access&Opcodes.ACC_INTERFACE)!=0;
+        require(c.itf==itf && (c.getOpcode()!=Opcodes.INVOKEINTERFACE || itf) && (c.getOpcode()!=Opcodes.INVOKEVIRTUAL || !itf),"METHOD_OPCODE "+c.owner);
+    }
     void verify(String owner,MethodNode method) {validate(owner,method,true);}
     private void initialize(String owner) {
         if(!owned.containsKey(owner) || !classes.add(owner))return;
