@@ -105,7 +105,8 @@ final class ControlledItemSupplier {
         require((target.access&Opcodes.ACC_PUBLIC)!=0 || owned.containsKey(symbolicOwner)&&pack(caller).equals(pack(symbolicOwner)),"CLASS_INACCESSIBLE "+symbolicOwner);
         require(((m.access&Opcodes.ACC_STATIC)!=0)==isStatic,"MEMBER_STATIC_MISMATCH "+m.owner);
         boolean same=caller.equals(m.owner),samePackage=owned.containsKey(m.owner)&&pack(caller).equals(pack(m.owner));
-        require((m.access&Opcodes.ACC_PUBLIC)!=0 || same || (m.access&Opcodes.ACC_PRIVATE)==0 && (samePackage || (m.access&Opcodes.ACC_PROTECTED)!=0 && inherits(caller,m.owner,new HashSet<>())),"MEMBER_INACCESSIBLE "+m.owner);
+        // Cross-package protected access needs an additional receiver proof; outside this contract.
+        require((m.access&Opcodes.ACC_PUBLIC)!=0 || same || (m.access&Opcodes.ACC_PRIVATE)==0 && samePackage,"MEMBER_INACCESSIBLE "+m.owner);
     }
     void verify(String owner,MethodNode method) {validate(owner,method,true);}
     private void initialize(String owner) {
