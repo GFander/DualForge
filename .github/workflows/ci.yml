@@ -29,6 +29,15 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Verify helper bytecode without a game install
+        run: python3 -B tests/helper_registry/run_ci_contract.py --java-home "$JAVA_HOME"
+
       - name: Install zsh
         run: |
           sudo apt-get update
@@ -47,7 +56,8 @@ jobs:
             tests/project_identity \
             tests/multi_registry \
             tests/block_registry \
-            tests/api_atlas
+            tests/api_atlas \
+            tests/helper_registry
           do
             python3 -B -m unittest discover \
               -s "$dir" -p 'test_*.py' -v
