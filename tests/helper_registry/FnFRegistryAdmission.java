@@ -21,8 +21,9 @@ public final class FnFRegistryAdmission {
         ClassNode entry=ForgeRegistryTransformationPlan.read(Files.readAllBytes(file.findResource("net/natevg/fnf/FoodNFuel.class")));
         if(ForgeEntryProfile.select(entry,false)!=ForgeEntryProfile.Kind.CONTEXT || ForgeRegistryTransformationPlan.isCandidate(entry))throw new AssertionError("Old global-bus Context boundary changed");
         System.out.println("FnF old Context retained; new Helper candidate excluded by unverified global bus");
-        try {ForgeRegistryTransformationPlan.create(file.getModInfos().getFirst(),entry.name);throw new AssertionError("Unverified FnF closure admitted");}
-        catch(IllegalStateException rejected) {System.out.println("FNF_PLAN_ADMISSION=REJECTED reason="+rejected.getMessage());}
+        FnFAdmissionExpectation.requireSupplierRejection(
+                () -> ForgeRegistryTransformationPlan.create(file.getModInfos().getFirst(),entry.name));
+        System.out.println("FNF_PLAN_ADMISSION=REJECTED reason="+FnFAdmissionExpectation.REASON);
         for(String name:List.of("net/natevg/fnf/item/ItemRegistries","net/natevg/fnf/item/FnFCreativeModeTabs")) {
             ClassNode n=ForgeRegistryTransformationPlan.read(Files.readAllBytes(file.findResource(name+".class")));int count=0;
             for(FieldNode f:n.fields)System.out.println("FIELD "+name+" "+f.name+" "+f.desc+" signature="+f.signature);
