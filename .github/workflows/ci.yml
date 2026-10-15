@@ -46,7 +46,8 @@ jobs:
             tests/registry \
             tests/project_identity \
             tests/multi_registry \
-            tests/block_registry
+            tests/block_registry \
+            tests/api_atlas
           do
             python3 -B -m unittest discover \
               -s "$dir" -p 'test_*.py' -v

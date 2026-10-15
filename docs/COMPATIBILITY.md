@@ -1,5 +1,7 @@
 # 实际兼容范围
 
+007C-4A只新增[离线API研究](<../Dev Manuals/Convergence-007C-4A 交付报告.md>)，生产目录逐字节不变，兼容范围没有扩大。候选和离线字节码成功不代表运行时成功；原FnF FAIL继承且未重跑。完整客户端补丁输入缺失，研究整体PARTIAL。固定SHA发行字节码的命名勘误见本轮取证，冻结报告不改。
+
 目标宿主为 Minecraft 1.21.1、NeoForge 21.1.256、Java 21。安装方式见 [INSTALL](INSTALL.md)。
 
 | 输入 | 实际范围与结论 |
