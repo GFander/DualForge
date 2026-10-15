@@ -21,9 +21,15 @@ public final class FnFRegistryAdmission {
         ClassNode entry=ForgeRegistryTransformationPlan.read(Files.readAllBytes(file.findResource("net/natevg/fnf/FoodNFuel.class")));
         if(ForgeEntryProfile.select(entry,false)!=ForgeEntryProfile.Kind.CONTEXT || ForgeRegistryTransformationPlan.isCandidate(entry))throw new AssertionError("Old global-bus Context boundary changed");
         System.out.println("FnF old Context retained; new Helper candidate excluded by unverified global bus");
-        FnFAdmissionExpectation.requireSupplierRejection(
-                () -> ForgeRegistryTransformationPlan.create(file.getModInfos().getFirst(),entry.name));
-        System.out.println("FNF_PLAN_ADMISSION=REJECTED reason="+FnFAdmissionExpectation.REASON);
+        if(args.length>1) {
+            var oracle=new PinnedHostOracle(Path.of(args[1]));
+            FnFAdmissionExpectation.requireSupplierV1Rejection(() -> ForgeRegistryTransformationPlan.create(file.getModInfos().getFirst(),entry.name,oracle));
+            System.out.println("FNF_CONTRACT_VERSION=supplier-v1");
+            System.out.println("FNF_PLAN_ADMISSION=REJECTED reason="+FnFAdmissionExpectation.SUPPLIER_V1_REASON);
+        } else {
+            FnFAdmissionExpectation.requireSupplierRejection(() -> ForgeRegistryTransformationPlan.create(file.getModInfos().getFirst(),entry.name));
+            System.out.println("FNF_PLAN_ADMISSION=REJECTED reason="+FnFAdmissionExpectation.REASON);
+        }
         for(String name:List.of("net/natevg/fnf/item/ItemRegistries","net/natevg/fnf/item/FnFCreativeModeTabs")) {
             ClassNode n=ForgeRegistryTransformationPlan.read(Files.readAllBytes(file.findResource(name+".class")));int count=0;
             for(FieldNode f:n.fields)System.out.println("FIELD "+name+" "+f.name+" "+f.desc+" signature="+f.signature);

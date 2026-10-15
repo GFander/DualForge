@@ -1,0 +1,230 @@
+{
+  "task": "Convergence-007C-4C-1",
+  "originalFixtureCohort": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1",
+  "cases": {
+    "ordinary": {
+      "status": "PASS",
+      "case": "ordinary",
+      "modId": "basicboundary",
+      "package": "lab.simple",
+      "artifacts": {
+        "fixture": {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/ordinary/basicboundary.jar",
+          "SHA256": "f204ff4c3139ade62c6343197a8213518a834d76324c76b40c89fe65c0d8e19e",
+          "Bytes": 5900
+        },
+        "forgeObserver": {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/ordinary/forge/forge-observer.jar",
+          "SHA256": "a2753d3fd9f9fd3e76e6c619d9048a241a577ec24a30e38189f67e17c11da63a",
+          "Bytes": 16751
+        },
+        "neoforgeObserver": {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/ordinary/neoforge/neoforge-observer.jar",
+          "SHA256": "e72a7949f704f04ca80c65864fb3bc16865ce9b830d3e00dd07c99e6becb87c8",
+          "Bytes": 16693
+        }
+      },
+      "purity": "Official Forge52.1.0 compile inputs only, no NeoForge/DualForge",
+      "source": [
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/ordinary/source/Consumer.java",
+          "SHA256": "f058284478da5a7e8cdb4e498198cf81d949005b4386362797a73971d40361f9",
+          "Bytes": 393
+        },
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/ordinary/source/HelperProbe.java",
+          "SHA256": "131f433463b9795513b19d5512299e526a5f201f9271d0fe555bf792360a1ee3",
+          "Bytes": 362
+        },
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/ordinary/source/ItemHelper.java",
+          "SHA256": "21f1aa929a7c784ec3ea8c7621d1735344fe43db36eb11280656da71e19821c2",
+          "Bytes": 1104
+        },
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/ordinary/source/Unused.java",
+          "SHA256": "f5a5dec5add53d8c58b18b973fe6df0aa8786843456dafe4810ef28394ddeabd",
+          "Bytes": 281
+        }
+      ],
+      "classes": [
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/ordinary/classes/lab/simple/Consumer.class",
+          "SHA256": "f50da429a8f15b2b140831ca087c31a829b44fa4a66657d18271f5c07ff8162c",
+          "Bytes": 866
+        },
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/ordinary/classes/lab/simple/HelperProbe.class",
+          "SHA256": "481c48c6fe9ff1fb1fc6e82108668c9d967d7c08b43841acf14186f37def5ce5",
+          "Bytes": 954
+        },
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/ordinary/classes/lab/simple/ItemHelper.class",
+          "SHA256": "b8d5ed3250531066291c058e071e22fd1a9ea0e3c1315a203303339c446e1dfc",
+          "Bytes": 2902
+        },
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/ordinary/classes/lab/simple/Unused.class",
+          "SHA256": "0407323d111eeedb41ecd9a95825b70c3d245ef81c8f12967050a02b1b664eb8",
+          "Bytes": 436
+        }
+      ]
+    },
+    "data": {
+      "status": "PASS",
+      "case": "data",
+      "modId": "databoundary",
+      "package": "different.pantry",
+      "artifacts": {
+        "fixture": {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/data/databoundary.jar",
+          "SHA256": "34e7ddf7f44bc2d01caf1c415bbb34f4557c65b5951b601fc849fb31ba36f74c",
+          "Bytes": 7662
+        },
+        "forgeObserver": {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/data/forge/forge-observer.jar",
+          "SHA256": "0bb8ba2881921481ff1c86442f54b7c0c8b0f662ebb76444d5692a2eed7530b0",
+          "Bytes": 17237
+        },
+        "neoforgeObserver": {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/data/neoforge/neoforge-observer.jar",
+          "SHA256": "4ca455afe1a29027447d5579bea50fa349858ef960e54150677cf0cebf1a3cc7",
+          "Bytes": 17179
+        }
+      },
+      "purity": "Official Forge52.1.0 compile inputs only, no NeoForge/DualForge",
+      "source": [
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/data/source/Consumer.java",
+          "SHA256": "8bfcd81a8dc735dce7aae7d7ab31d8ae296f8bfa6740247dfe0bd2e64d93f770",
+          "Bytes": 399
+        },
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/data/source/HelperProbe.java",
+          "SHA256": "1691c6147a002d9e7c8b7e1a030164e5890b00c325a996738e4616a0064233ec",
+          "Bytes": 367
+        },
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/data/source/ItemHelper.java",
+          "SHA256": "5f3d1490fb0a3ede417da0c74327e23d023cefa3e945975d361604a036fa9bf2",
+          "Bytes": 1117
+        },
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/data/source/Pantry.java",
+          "SHA256": "c373265095a3fa99b16873ad21045e8c6d6288fae050434aff0d8619f6399350",
+          "Bytes": 468
+        },
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/data/source/Unused.java",
+          "SHA256": "9972e3c539f6d87f93a4b02f4158398a459f3df516cc01e1cb08e71423f60095",
+          "Bytes": 287
+        }
+      ],
+      "classes": [
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/data/classes/different/pantry/Consumer.class",
+          "SHA256": "874b9e57e511741647ac220fd766fd26850ae44864ac38bb33d68cd78d4bcdc2",
+          "Bytes": 884
+        },
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/data/classes/different/pantry/HelperProbe.class",
+          "SHA256": "2419ae1aac9f50fd56dea1e50c4a0a8b2b8be457d5cef661ff015aa6cded0c37",
+          "Bytes": 971
+        },
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/data/classes/different/pantry/ItemHelper.class",
+          "SHA256": "52aa38a873b04373d8d4c2f834424b0115c8382598f28174bea35830ab39b0c2",
+          "Bytes": 3072
+        },
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/data/classes/different/pantry/Pantry.class",
+          "SHA256": "514cf4dda5515a59c9b668242d87861b8c41a6b65db007882e96434cfd9d83fb",
+          "Bytes": 1364
+        },
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/data/classes/different/pantry/Unused.class",
+          "SHA256": "32d18c2d4df1176adf73e8db4f5d77a7e8e314601cbc80e8fc6ca4cb36eda59f",
+          "Bytes": 448
+        }
+      ]
+    },
+    "subclass": {
+      "status": "PASS",
+      "case": "subclass",
+      "modId": "constructboundary",
+      "package": "another.crystal",
+      "artifacts": {
+        "fixture": {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/subclass/constructboundary.jar",
+          "SHA256": "dba306c393c198033b02895e0ae73ee76a1994707a09802229b1ab18a0528070",
+          "Bytes": 7566
+        },
+        "forgeObserver": {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/subclass/forge/forge-observer.jar",
+          "SHA256": "ebb1cfb41e51ff6033aa0b6945efe6e38a6e6c06c1910e3a3da694d58e0d1fa4",
+          "Bytes": 17201
+        },
+        "neoforgeObserver": {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/subclass/neoforge/neoforge-observer.jar",
+          "SHA256": "b0d9cb80e09c9aa742b0cc122d4377ac335f581d2cefda5c48ebf783350f3805",
+          "Bytes": 17143
+        }
+      },
+      "purity": "Official Forge52.1.0 compile inputs only, no NeoForge/DualForge",
+      "source": [
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/subclass/source/Consumer.java",
+          "SHA256": "1c31d9e8f8a606023342c34a58fe574435b10f6eef996310c7e26db5fda88831",
+          "Bytes": 398
+        },
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/subclass/source/EnergyShard.java",
+          "SHA256": "275a1030f88062fcab5608e3d40554d777f11dc9ee73b611a5f58daf86208185",
+          "Bytes": 398
+        },
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/subclass/source/HelperProbe.java",
+          "SHA256": "ce9cabb52e51132bc561580e418e58972ef91348e3543442a3102c0b2c96dca4",
+          "Bytes": 371
+        },
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/subclass/source/ItemHelper.java",
+          "SHA256": "1532527adb216724eb23453dc829e7b0caf3636496810b37aaa047f84cf9cb79",
+          "Bytes": 1165
+        },
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/subclass/source/Unused.java",
+          "SHA256": "87ab8950d16a1fdc7e89cfff10d19e0e3da701a67e56636dff4f605e9166f125",
+          "Bytes": 286
+        }
+      ],
+      "classes": [
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/subclass/classes/another/crystal/Consumer.class",
+          "SHA256": "42edf5b1e5e3f018213982373a2e5ca329258809fbd1a7a9fd82e32e9a71aaea",
+          "Bytes": 881
+        },
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/subclass/classes/another/crystal/EnergyShard.class",
+          "SHA256": "65f7f3cd6e267b6fe523e99907829adb819b25fd439eabfc8060776291973b58",
+          "Bytes": 1303
+        },
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/subclass/classes/another/crystal/HelperProbe.class",
+          "SHA256": "48b00e1291c685748395bfaaf23e90f8f4b2b91d9f60111969c884a5feedbcdb",
+          "Bytes": 973
+        },
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/subclass/classes/another/crystal/ItemHelper.class",
+          "SHA256": "f95754635eb1c94be2f6401d172c853f8a7f24e1c4ab5d4d5e4b904f8b3f0b53",
+          "Bytes": 3035
+        },
+        {
+          "Path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/fixture/20261015-150702-1581dce1/subclass/classes/another/crystal/Unused.class",
+          "SHA256": "35829f58c5b53c8f7f946406b46bb33e846440728983285658f0a87f921088ae",
+          "Bytes": 446
+        }
+      ]
+    }
+  }
+}
