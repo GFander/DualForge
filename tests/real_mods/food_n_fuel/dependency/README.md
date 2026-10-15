@@ -44,3 +44,11 @@ Its contract-only host snapshot is explicit; the production resolver always uses
 FML's real VersionInfo/dist. This is a deliberate migration of the pre-projection
 model expectation, not a relaxed parser/identity negative. Frozen source/reports
 and third-party bytes are not changed.
+
+007C-3 preserves this matrix's default `--fnf-next-stage item-profile` for the
+historical 007C-2 boundary. Its current regression explicitly selects
+`--fnf-next-stage registry-helper`: verified platform projection, Context profile
+selection/mapping/binding, the real FnF constructor stack, and the exact missing
+ForgeRegistries failure in ItemRegistries initialization are all required.
+FnF lifecycle remains FAIL. Ordinary dependency/native/stock/cohort checks stay
+unchanged; see [Context contracts](../../../entry_context/README.md).
