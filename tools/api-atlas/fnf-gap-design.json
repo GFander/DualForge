@@ -85,6 +85,16 @@
         "stage": "INHERITED_C3_RUNTIME",
         "result": "FAIL inherited; NOT RERUN",
         "reason": "ItemRegistries.<clinit> NoClassDefFoundError net/minecraftforge/registries/ForgeRegistries; no claimed progress beyond this actual runtime point"
+      },
+      {
+        "id": "registry-bus-key",
+        "stage": "OWNED_MOD_BUS_BRIDGE",
+        "result": "ITEM_ONLY; TAB_NOT_SUPPORTED",
+        "evidence": [
+          "dualforge/src/main/java/io/github/gfander/dualforge/ForgeRegistryBridge.java#register"
+        ],
+        "reason": "Bridge requires receiver.getRegistryKey() == Registries.ITEM; correct owner Bus alone does not authorize Creative Tab registry attachment",
+        "next": "typed-tab-closure"
       }
     ],
     "fnfRuntime": "NOT RUN",
@@ -141,7 +151,7 @@
         "dependsOn": [
           "supplier-boundary"
         ],
-        "scope": "Typed ResourceKey<CreativeModeTab> create/register and full icon/display Holder closure",
+        "scope": "Typed ResourceKey<CreativeModeTab> create/register and full icon/display Holder closure; extend the independently verified internal bridge registry-key contract, currently ITEM-only, rather than reusing it for Tab unchanged",
         "api": [
           "DeferredRegister.create(ResourceKey,String)",
           "DeferredHolder<CreativeModeTab,CreativeModeTab>",

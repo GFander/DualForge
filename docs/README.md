@@ -11,6 +11,7 @@
 
 | 主题 | 当前实现与验证 | 历史/决策/证据 |
 |---|---|---|
+| FnF API closure / gap analysis | [read-only tool](../tools/api-atlas/fnf_gap.py)、[Schema](../tools/api-atlas/fnf-gap.schema.json) | [4C-0 report](<../Dev Manuals/Convergence-007C-4C-0 FnF兼容缺口报告.md>)、[six derived datasets](<../Dev Manuals/Convergence-007C-4C-0/>) |
 | Owned Registry Helper / Mod Bus | [Plan](../dualforge/src/main/java/io/github/gfander/dualforge/ForgeRegistryTransformationPlan.java)、[Bridge](../dualforge/src/main/java/io/github/gfander/dualforge/ForgeRegistryBridge.java)、[测试](../tests/helper_registry/README.md) | [4B契约](<../Dev Manuals/Convergence-007C-4B Registry Helper与转换计划契约.md>)、[Bus归属](<../Dev Manuals/Convergence-007C-4B Mod Bus桥接与归属验证.md>)、[交付](<../Dev Manuals/Convergence-007C-4B 交付报告.md>) |
 | Architecture / Loader | [LanguageLoader](../dualforge/src/main/java/io/github/gfander/dualforge/DualForgeLanguageLoader.java)、[TransformationService](../dualforge/src/main/java/io/github/gfander/dualforge/DualForgeTransformationService.java) | [开发手册](<../Dev Manuals/Forge → NeoForge 兼容层开发手册.md>)、[身份迁移报告](<../Dev Manuals/DualForge 命名统一迁移报告.md>) |
 | Discovery / Metadata | [Locator](../dualforge/src/main/java/io/github/gfander/dualforge/ForgeModLocator.java)、[Parser](../dualforge/src/main/java/io/github/gfander/dualforge/ForgeModFileInfoParser.java)、[dependencies](../tests/dependencies/)、[discovery](../tests/discovery/) | [002](<../Dev Manuals/Convergence-002 交付报告.md>)、[003a](<../Dev Manuals/Convergence-003a 交付报告.md>) |

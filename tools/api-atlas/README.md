@@ -84,3 +84,21 @@ BusView is not a native bus. FnF output is refused, not published as usable.
 Full generated data stays under ignored `out/`, with fingerprints and an external
 evidence archive. See [delivery](<../../Dev Manuals/Convergence-007C-4A 交付报告.md>)
 for actual results, limitations and the separate 007C-4B proposal.
+
+## 007C-4C-0: read-only FnF gap analysis
+
+`usage` now also retains instruction operands, labels/frames/locals and exception tables in each method's `code` section. Reference counting is unchanged. No input class is defined.
+
+After a fresh `atlas.py usage` scan of the fixed original release:
+
+```zsh
+python3 -B tools/api-atlas/fnf_gap.py \
+  --scan /absolute/new-fnf-usage.jsonl.gz \
+  --atlas /absolute/fixed-available-server-atlas \
+  --fnf /absolute/original-fnf-forge-1.3-1.21.x.jar \
+  --output "$PWD/out/convergence-007c4c0/new-analysis"
+```
+
+This reuses `analyze.usage` and the existing ABI resolver. It verifies complete ClassFile inventory and class SHA against the original JAR, keeps unresolved symbols, classifies all bootstrap sites, and emits six versioned datasets. [Schema](fnf-gap.schema.json) defines the envelope/data contracts; [design decisions](fnf-gap-design.json) generate the frontier and dependency DAG. Classification describes structure and conditional boundaries; it approves no Supplier business code or production mapping. The release SHA is a research input guard, never a production selector.
+
+The six derived datasets and report are versioned under [Dev Manuals/Convergence-007C-4C-0](../../Dev%20Manuals/Convergence-007C-4C-0/). Original ASM scans, javap, commands/logs and binary inputs remain under ignored out/. Existing 4A ABI data is reused with exact dataset hashes and freshly reverified official artifact checksums; the server view still does not supply a full patched client ABI.

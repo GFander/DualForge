@@ -70,3 +70,7 @@ and [current delivery](<../../../Dev Manuals/Convergence-007C-2 交付报告.md>
 Historical [delivery](<../../../Dev Manuals/Convergence-007C 真实物品兼容交付报告.md>),
 [index](<../../../Dev Manuals/Convergence-007C 证据索引.json>) and
 [native client checklist](NATIVE-CLIENT-CHECKLIST.md).
+
+## 007C-4C-0 read-only closure analysis
+
+The [gap report](../../../Dev%20Manuals/Convergence-007C-4C-0%20FnF兼容缺口报告.md) and [six derived datasets](../../../Dev%20Manuals/Convergence-007C-4C-0/) distinguish current profile exclusion from exact forced-plan refusal. Use [fnf_gap.py](../../../tools/api-atlas/fnf_gap.py) after a new Atlas usage scan. All commands are offline/read-only; no FnF runtime is started, production support is unchanged, and C4A/client limitations remain explicit.
