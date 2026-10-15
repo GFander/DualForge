@@ -48,3 +48,14 @@ control. The original identity fixture, control source and all existing scope
 assertions remain unchanged. Matching native/Forge ownership conflicts are
 also explicitly refused by the new admission contract. Native metadata stays
 on the official Reader even when a Forge payload is diagnosed as ambiguous.
+
+## 007C-2 projected-model migration
+
+The original declaration assertions now read a real unprojected `ModFileInfo`
+built from the parsed release TOML. They still require both original dependencies
+and their exact fields. Separate assertions inspect the live Reader model: one
+Minecraft dependency remains, both originals remain in the audit configuration,
+and the active Forge platform requirement has a verified projection decision.
+Only the offline contract supplies a discovery context; production reads FML's
+actual context. See [dependency contracts](../dependency/README.md). Existing
+parser/admission negatives and frozen inputs are retained.

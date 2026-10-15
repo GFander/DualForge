@@ -42,12 +42,13 @@ python3 -B tests/real_mods/food_n_fuel/build_observer.py \
   --output "$PWD/out/convergence-007c/new-observer-build"
 ```
 
-All JVMs run serially. Native player functionality is a prerequisite to production
-expansion. A registry-only native baseline is PARTIAL; unavailable interactions
-and graphics are NOT RUN. No third-party compatibility PASS follows from Done.
+All JVMs run serially. The 007C native player-functionality gate remains PARTIAL;
+unavailable interactions and graphics are NOT RUN. The later 007C-1/007C-2 tasks
+explicitly authorize admission/platform-dependency work while retaining that
+native limitation. No third-party compatibility PASS follows from Done.
 
-`ReleaseBoundaryTest.java` uses the existing host NightConfig parser on the actual
-release, then checks the current guard/Reader decline, unsupported constructor
+`ReleaseBoundaryTest.java` records the historical 007C NightConfig/guard boundary
+on the actual release, then checks the old guard/Reader decline, unsupported constructor
 profile and original ClassNode/JAR preservation. A passing boundary test does not
 mean discovery was repaired. Contract JVM module options are diagnostic only.
 
@@ -56,7 +57,16 @@ returns zero. The final runner was exercised with a real FML missing-required-mo
 negative. Its verified `zeroDualForgeParameters` field supports the existing stock
 bootstrap baseline reader; older raw results keep their original schema.
 
-Actual Food N' Fuel on NeoForge remains L0 / PARTIAL; current production is unchanged.
-See the [delivery](<../../../Dev Manuals/Convergence-007C 真实物品兼容交付报告.md>),
+That old decline Contract is not a current admission expectation after 007C-1;
+the [metadata Contract](metadata/README.md) retains the original parsing/profile
+checks and adds positive same-JAR ownership. The 007C-2 read-only ASM dump checks
+all release nodes against the original 007C dump without rewriting them.
+
+The frozen 007C result is L0 / PARTIAL with production unchanged at that time.
+Current 007C-2 production projects only independently verified platform requirements;
+original Food N' Fuel then fails in transformer targets on the existing Item class
+structure check, before construction. See [platform contracts](dependency/README.md)
+and [current delivery](<../../../Dev Manuals/Convergence-007C-2 交付报告.md>).
+Historical [delivery](<../../../Dev Manuals/Convergence-007C 真实物品兼容交付报告.md>),
 [index](<../../../Dev Manuals/Convergence-007C 证据索引.json>) and
 [native client checklist](NATIVE-CLIENT-CHECKLIST.md).

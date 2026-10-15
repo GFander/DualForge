@@ -21,6 +21,7 @@ REPO = Path(__file__).resolve().parents[2]
 SOURCE = REPO / "dualforge/src"
 PROBE_SHA = "a774d2f737b17f089046014ab55a53767dbad008cd44dcce52c727b87e559ae8"
 LIBRARIES = (
+    "net/neoforged/mergetool/2.0.0/mergetool-2.0.0-api.jar",
     "com/electronwill/night-config/core/3.8.3/core-3.8.3.jar",
     "com/electronwill/night-config/toml/3.8.3/toml-3.8.3.jar",
     "net/neoforged/fancymodloader/loader/4.0.45/loader-4.0.45.jar",

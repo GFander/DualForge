@@ -31,7 +31,7 @@ zsh tools/entry/test-forge-dependencies.zsh --stage after --boundary-only \
   --compat-jar out/unix/build/<actual-run>/dualforge.jar
 ```
 
-Preparation downloads only the ten fixed compile JARs, not a complete server
+Preparation downloads only the eleven fixed compile JARs, not a complete server
 installation. Boundary tests additionally need the complete runtime libraries
 and the original fixed Probe. Its required SHA-256 is
 `A774D2F737B17F089046014AB55A53767DBAD008CD44DCCE52C727B87E559AE8`.

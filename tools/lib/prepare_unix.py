@@ -57,7 +57,7 @@ def main():
         print("VERIFIED " + name)
     manifest = args.server_input / "compile-inputs.json"
     manifest.write_text(json.dumps(records, indent=2) + "\n")
-    print("Prepared ten compile JARs only; complete runtime and fixed Probe remain separate inputs.")
+    print("Prepared eleven compile JARs only; complete runtime and fixed Probe remain separate inputs.")
 
 
 if __name__ == "__main__":

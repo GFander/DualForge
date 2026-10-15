@@ -11,6 +11,10 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 import java.util.zip.ZipEntry;
 import net.neoforged.fml.loading.LoadingModList;
+import net.neoforged.fml.loading.FMLLoader;
+import net.neoforged.fml.loading.VersionInfo;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.loading.moddiscovery.ModFileInfo;
 import net.neoforged.fml.loading.moddiscovery.ModFile;
 import net.neoforged.neoforgespi.locating.ModFileDiscoveryAttributes;
 import org.objectweb.asm.ClassReader;
@@ -91,6 +95,10 @@ public final class MetadataAdmissionTest {
     private static byte[] bytes(ClassNode node) { ClassWriter w = new ClassWriter(0); node.accept(w); return w.toByteArray(); }
     public static void main(String[] args) throws Exception {
         output = Path.of(args[7]); Files.createDirectories(output);
+        // Contract-only discovery context; no production property, override or game-layer modification.
+        var host = FMLLoader.class.getDeclaredField("versionInfo"); host.setAccessible(true);
+        host.set(null, new VersionInfo("21.1.256", "4.0.45", "1.21.1", "20240808.144430"));
+        var side = FMLLoader.class.getDeclaredField("dist"); side.setAccessible(true); side.set(null, Dist.DEDICATED_SERVER);
         // FnF, 007B, 006A, 006B, Clumps: use complete original TOML and bytes.
         for (int i = 0; i < 5; i++) {
             Path path = Path.of(args[i]);
@@ -106,13 +114,23 @@ public final class MetadataAdmissionTest {
                 check(DualForgeLanguageLoader.forgeEntrypoints(file.getModInfos().getFirst(), file.getScanResult()).size() == 1,
                         "actual FML @Mod owner " + path.getFileName());
                 if (i == 0) {
-                    var info = file.getModInfos().getFirst();
+                    // Preserve every original metadata assertion on the real unprojected FML model.
+                    Map<String,Object> original;
+                    try (var zip = new ZipFile(path.toFile()); var stream = zip.getInputStream(zip.getEntry("META-INF/mods.toml"))) {
+                        original = parse(ForgeModFileInfoParser.readMetadata(stream));
+                    }
+                    var info = new ModFileInfo(file, ForgeModFileInfo.configOf(original), ignored -> { }).getMods().getFirst();
+                    check(file.getModInfos().getFirst().getDependencies().size() == 1
+                            && file.getModInfos().getFirst().getDependencies().getFirst().getModId().equals("minecraft"),
+                            "007C-2 live model has explicit validated projection, ordinary Minecraft remains");
+                    check(file.getModFileInfo().getConfig().getConfigList("dualforgeOriginalDependencies", "fnf").size() == 2,
+                            "007C-2 source dependency snapshot remains accessible");
                     check(info.getModId().equals("fnf") && file.getSecureJar().name().equals("fnf"), "FnF module and mod identity");
                     check(info.getDescription().equals("Adding new varieties of food and fuel obtainable from vanilla resources."), "FnF description matches native Forge");
                     var dep = info.getDependencies().stream().filter(d -> d.getModId().equals("forge")).findFirst().orElseThrow();
                     check(dep.getType().name().equals("REQUIRED") && dep.getVersionRange().toString().equals("[0,)")
-                            && dep.getOrdering().name().equals("NONE") && dep.getSide().name().equals("BOTH"), "real FML Forge dependency preserved");
-                    check(info.getDependencies().size() == 2, "FnF dependency count unchanged");
+                            && dep.getOrdering().name().equals("NONE") && dep.getSide().name().equals("BOTH"), "original FML Forge dependency declaration preserved");
+                    check(info.getDependencies().size() == 2, "original FnF dependency declaration count unchanged");
                     check(file.getModFileInfo().requiredLanguageLoaders().getFirst().acceptedVersions().toString().equals("[0,)"), "FnF language range unchanged");
                 }
             }
