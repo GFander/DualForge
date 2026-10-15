@@ -24,11 +24,12 @@ final class ForgeRegistryTransformationPlan {
     private final Map<String,byte[]> original, normalized, output;
 
     private ForgeRegistryTransformationPlan(IModInfo info, String entry, Map<String,byte[]> original,
-            Map<String,ClassNode> nodes, Set<String> targets, Map<String,String> registers, Set<String> helpers) {
+            Map<String,ClassNode> nodes, Set<String> targets, Map<String,String> registers, Set<String> helpers, ControlledItemSupplier suppliers) {
         this.modId=info.getModId();this.module=info.getOwningFile().moduleName();this.entry=entry;
         this.original=Map.copyOf(original);this.registers=Map.copyOf(registers);this.helperMethods=Set.copyOf(helpers);
-        StringBuilder id=new StringBuilder("registry-helper-v2\n"+modId+"\n"+module+"\n"+info.getOwningFile().getFile().getFilePath().toAbsolutePath()+"\n");
+        StringBuilder id=new StringBuilder("registry-helper-v3\n"+modId+"\n"+module+"\n"+info.getOwningFile().getFile().getFilePath().toAbsolutePath()+"\n");
         original.keySet().stream().sorted().forEach(n -> id.append(n).append(':').append(digest(original.get(n))).append('\n'));
+        suppliers.hostFingerprints().entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(x -> id.append("host:").append(x.getKey()).append(':').append(x.getValue()).append('\n'));
         fingerprint=digest(id.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
         Map<String,byte[]> source=new HashMap<>(), changed=new HashMap<>();
         var context=new ControlledForgeContextProfile.Scope(modId,Set.copyOf(nodes.keySet()),original::get);
@@ -51,6 +52,9 @@ final class ForgeRegistryTransformationPlan {
         return helper;
     }
     static ForgeRegistryTransformationPlan create(IModInfo info, String entry) {
+        return create(info,entry,ControlledItemSupplier::hostResource);
+    }
+    static ForgeRegistryTransformationPlan create(IModInfo info,String entry,java.util.function.Function<String,byte[]> host) {
         var file=info.getOwningFile();var scan=file.getFile().getScanResult();
         require(scan!=null,"SCAN_NOT_COMPLETE");
         require(!Files.exists(file.getFile().findResource("module-info.class")),"EXPLICIT_JPMS_HELPER_UNSUPPORTED");
@@ -64,17 +68,18 @@ final class ForgeRegistryTransformationPlan {
             try {byte[] b=Files.readAllBytes(file.getFile().findResource(name+".class"));ClassNode n=read(b);require(n.name.equals(name),"CLASS_RESOURCE_IDENTITY");raw.put(name,b);nodes.put(name,n);}
             catch(java.io.IOException e){throw new IllegalStateException("Registry helper rejected: CLASS_RESOURCE_MISSING "+name,e);}
         }
-        return prepare(info,entry,raw,nodes);
+        return prepare(info,entry,raw,nodes,host);
     }
-    private static ForgeRegistryTransformationPlan prepare(IModInfo info,String entry,Map<String,byte[]> raw,Map<String,ClassNode> nodes) {
+    private static ForgeRegistryTransformationPlan prepare(IModInfo info,String entry,Map<String,byte[]> raw,Map<String,ClassNode> nodes,java.util.function.Function<String,byte[]> host) {
         require(nodes.containsKey(entry),"ENTRY_ABSENT_FROM_SCAN");
+        ControlledItemSupplier suppliers=new ControlledItemSupplier(nodes,host);
         Set<String> helpers=new HashSet<>();Map<String,String> regs=new TreeMap<>();Set<String> ids=new HashSet<>();
         ClassNode e=nodes.get(entry);
         for(MethodNode m:e.methods)for(var i:m.instructions)if(i instanceof MethodInsnNode c && c.getOpcode()==Opcodes.INVOKESTATIC && c.desc.equals("("+BUS+")V")) {
             require(!c.itf && nodes.containsKey(c.owner) && !entry.equals(c.owner),"HELPER_OUTSIDE_MODFILE");
             require(helpers.add(key(c.owner,c.name,c.desc)),"DUPLICATE_TARGET");
             require(!regs.containsKey(c.owner),"DUPLICATE_HELPER_ATTACHMENT");
-            regs.put(c.owner,validateHelper(nodes.get(c.owner),c.name,info.getModId(),ids));
+            regs.put(c.owner,validateHelper(nodes.get(c.owner),c.name,info.getModId(),ids,suppliers));
         }
         require(!helpers.isEmpty(),"NO_REGISTRY_HELPERS");
         Set<String> closure=new HashSet<>(regs.keySet());boolean added;
@@ -102,7 +107,7 @@ final class ForgeRegistryTransformationPlan {
             }
         }
         Set<String> targets=new HashSet<>(closure);require(targets.add(entry),"TRANSFORMATION_RULE_CONFLICT");
-        return new ForgeRegistryTransformationPlan(info,entry,raw,nodes,targets,regs,helpers);
+        return new ForgeRegistryTransformationPlan(info,entry,raw,nodes,targets,regs,helpers,suppliers);
     }
     Set<String> targets(){return output.keySet();}
     String registerField(String owner){return registers.get(owner);}
@@ -112,7 +117,7 @@ final class ForgeRegistryTransformationPlan {
         require(Arrays.equals(bytes(input),normalized.get(input.name)),"TRANSFORMATION_INPUT_CHANGED");
         return read(output.get(input.name));
     }
-    private static String validateHelper(ClassNode n,String attach,String modId,Set<String> ids) {
+    private static String validateHelper(ClassNode n,String attach,String modId,Set<String> ids,ControlledItemSupplier suppliers) {
         structure(n);List<FieldNode> registers=n.fields.stream().filter(f->f.desc.equals(R)).toList();
         require(registers.size()==1,"ONE_TYPED_ITEM_REGISTER");FieldNode reg=registers.getFirst();
         Set<String> names=new HashSet<>();Set<String> holders=new HashSet<>();
@@ -138,7 +143,7 @@ final class ForgeRegistryTransformationPlan {
             } else if(i instanceof VarInsnNode v) {
                 if(v.getOpcode()==Opcodes.ASTORE){require(pop(stack).equals(Value.REGISTER) && !locals.containsKey(v.var),"LOCAL_DATAFLOW");locals.put(v.var,Value.REGISTER);}
                 else {require(v.getOpcode()==Opcodes.ALOAD && locals.containsKey(v.var),"LOCAL_DATAFLOW");stack.add(locals.get(v.var));}
-            } else if(i instanceof InvokeDynamicInsnNode d) {String impl=supplier(n,d);usedSuppliers.add(impl);stack.add(Value.SUPPLIER);}
+            } else if(i instanceof InvokeDynamicInsnNode d) {String impl=supplier(n,d,suppliers);usedSuppliers.add(impl);stack.add(Value.SUPPLIER);}
             else if(i instanceof MethodInsnNode c) {
                 if(call(c,Opcodes.INVOKESTATIC,F+"DeferredRegister","create",CREATE)) {require(!created && pop(stack).equals(modId) && pop(stack).equals(Value.REGISTRY),"CREATE_REGISTRY_NAMESPACE");created=true;stack.add(Value.REGISTER);}
                 else {require(call(c,Opcodes.INVOKEVIRTUAL,F+"DeferredRegister","register",REGISTER),"UNKNOWN_DEFERRED_REGISTER_DESCRIPTOR");require(pop(stack).equals(Value.SUPPLIER),"SUPPLIER_DATAFLOW");Object id=pop(stack);require(id instanceof String s && s.matches("[a-z0-9_./-]+") && ids.add((String)id),"DUPLICATE_OR_INVALID_REGISTRY_ID");require(pop(stack).equals(Value.REGISTER),"REGISTER_RECEIVER");stack.add(Value.HOLDER);}
@@ -160,14 +165,16 @@ final class ForgeRegistryTransformationPlan {
                 && call(code.get(start+2),Opcodes.INVOKEVIRTUAL,F+"DeferredRegister","register","("+BUS+")V") && code.getLast().getOpcode()==Opcodes.RETURN,"ATTACHMENT_RECEIVER_BUS");
         return reg.name;
     }
-    private static String supplier(ClassNode n,InvokeDynamicInsnNode d) {
+    private static String supplier(ClassNode n,InvokeDynamicInsnNode d,ControlledItemSupplier suppliers) {
         require(d.bsm.equals(META) && d.name.equals("get") && d.desc.equals("()Ljava/util/function/Supplier;") && d.bsmArgs.length==3
                 && Type.getMethodType("()Ljava/lang/Object;").equals(d.bsmArgs[0]) && d.bsmArgs[1] instanceof Handle
                 && Type.getMethodType("()L"+ITEM+";").equals(d.bsmArgs[2]),"UNKNOWN_LAMBDA_BOOTSTRAP");
         Handle h=(Handle)d.bsmArgs[1];require(h.getTag()==Opcodes.H_INVOKESTATIC && !h.isInterface() && h.getOwner().equals(n.name) && h.getDesc().equals("()L"+ITEM+";"),"SUPPLIER_CAPTURE_OR_FOREIGN_HANDLE");
         MethodNode m=method(n,h.getName(),h.getDesc());require(supplierMethod(m),"SUPPLIER_FLAGS");metadata(m,false);require(m.signature==null,"SUPPLIER_SIGNATURE");var c=ops(m);int a=0;
-        if(c.size()==10) {require(c.get(0) instanceof FieldInsnNode f && f.getOpcode()==Opcodes.GETSTATIC && f.owner.equals("java/lang/System") && f.name.equals("out") && f.desc.equals("Ljava/io/PrintStream;") && c.get(1) instanceof LdcInsnNode l && l.cst instanceof String && call(c.get(2),Opcodes.INVOKEVIRTUAL,"java/io/PrintStream","println","(Ljava/lang/String;)V"),"SUPPLIER_MARKER");a=3;}
-        require(c.size()-a==7 && type(c.get(a),Opcodes.NEW,ITEM) && c.get(a+1).getOpcode()==Opcodes.DUP && type(c.get(a+2),Opcodes.NEW,ITEM+"$Properties") && c.get(a+3).getOpcode()==Opcodes.DUP && call(c.get(a+4),Opcodes.INVOKESPECIAL,ITEM+"$Properties","<init>","()V") && call(c.get(a+5),Opcodes.INVOKESPECIAL,ITEM,"<init>","(L"+ITEM+"$Properties;)V") && c.get(a+6).getOpcode()==Opcodes.ARETURN,"SUPPLIER_BUSINESS_UNSUPPORTED");return h.getName();
+        if(c.size()==10 && c.get(0) instanceof FieldInsnNode f && f.getOpcode()==Opcodes.GETSTATIC && f.owner.equals("java/lang/System") && f.name.equals("out") && f.desc.equals("Ljava/io/PrintStream;") && c.get(1) instanceof LdcInsnNode l && l.cst instanceof String && call(c.get(2),Opcodes.INVOKEVIRTUAL,"java/io/PrintStream","println","(Ljava/lang/String;)V"))a=3;
+        boolean legacy=c.size()-a==7 && type(c.get(a),Opcodes.NEW,ITEM) && c.get(a+1).getOpcode()==Opcodes.DUP && type(c.get(a+2),Opcodes.NEW,ITEM+"$Properties") && c.get(a+3).getOpcode()==Opcodes.DUP && call(c.get(a+4),Opcodes.INVOKESPECIAL,ITEM+"$Properties","<init>","()V") && call(c.get(a+5),Opcodes.INVOKESPECIAL,ITEM,"<init>","(L"+ITEM+"$Properties;)V") && c.get(a+6).getOpcode()==Opcodes.ARETURN;
+        if(!legacy) {require(c.stream().noneMatch(i -> i.getOpcode()==Opcodes.NOP),"SUPPLIER_BUSINESS_UNSUPPORTED");suppliers.verify(n.name,m);}
+        return h.getName();
     }
     private static void validateAccessor(Map<String,ClassNode> nodes,Set<String> closure,String owner,MethodNode m,Set<String> visiting) {
         require(m.access==(Opcodes.ACC_PUBLIC|Opcodes.ACC_STATIC) && (m.desc.equals("()"+H) || m.desc.equals("()L"+ITEM+";")),"UNVERIFIED_CONSUMER_METHOD");

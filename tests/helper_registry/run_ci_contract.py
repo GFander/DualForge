@@ -28,6 +28,6 @@ def main():
     r=subprocess.run(cmd,cwd=ROOT,capture_output=True,text=True)
     (a.output/'fnf-expectation.stdout.log').write_text(r.stdout);(a.output/'fnf-expectation.stderr.log').write_text(r.stderr)
     (a.output/'fnf-expectation.exit.json').write_text(json.dumps({'exitCode':r.returncode})+'\n')
-    assert r.returncode==0 and r.stdout.strip()=='FNF EXPECTATION CONTRACT PASS positive=1 negatives=6'
+    assert r.returncode==0 and r.stdout.strip()=='FNF EXPECTATION CONTRACT PASS positive=2 negatives=9'
     text=(a.output/'java.stdout.log').read_text();assert 'BYTECODE VERIFIER CONTRACT PASS' in text;print(text)
 if __name__=='__main__':main()

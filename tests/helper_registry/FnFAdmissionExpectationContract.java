@@ -15,7 +15,16 @@ public final class FnFAdmissionExpectationContract {
             FnFAdmissionExpectation.requireSupplierRejection(() -> { throw new IllegalArgumentException("wrong type"); });
             throw new AssertionError("Wrong exception type accepted");
         } catch (IllegalArgumentException expected) { }
-        System.out.println("FNF EXPECTATION CONTRACT PASS positive=1 negatives=6");
+        FnFAdmissionExpectation.requireSupplierV1Rejection(() -> {throw new IllegalStateException(FnFAdmissionExpectation.SUPPLIER_V1_REASON);});
+        rejectedV1(() -> {});
+        rejectedV1(() -> {throw new IllegalStateException(FnFAdmissionExpectation.REASON);});
+        rejectedV1(() -> {throw new IllegalStateException(FnFAdmissionExpectation.SUPPLIER_V1_REASON+" extra");});
+        System.out.println("FNF EXPECTATION CONTRACT PASS positive=2 negatives=9");
+    }
+
+    private static void rejectedV1(Runnable admission) {
+        boolean failed=false;try{FnFAdmissionExpectation.requireSupplierV1Rejection(admission);}catch(AssertionError expected){failed=true;}
+        if(!failed)throw new AssertionError("Invalid supplier-v1 outcome accepted");
     }
 
     private static void rejected(Runnable admission) {

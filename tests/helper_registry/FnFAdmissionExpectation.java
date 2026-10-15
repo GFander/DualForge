@@ -4,11 +4,15 @@ package io.github.gfander.dualforge;
 final class FnFAdmissionExpectation {
     static final String REASON = "Registry helper rejected: SUPPLIER_BUSINESS_UNSUPPORTED";
 
-    static void requireSupplierRejection(Runnable admission) {
+    static final String SUPPLIER_V1_REASON = "Registry helper rejected: ITEM_FIELD_DESCRIPTOR";
+
+    static void requireSupplierRejection(Runnable admission) { requireRejection(admission,REASON); }
+    static void requireSupplierV1Rejection(Runnable admission) { requireRejection(admission,SUPPLIER_V1_REASON); }
+    private static void requireRejection(Runnable admission,String expected) {
         try {
             admission.run();
         } catch (IllegalStateException rejected) {
-            if (!REASON.equals(rejected.getMessage())) {
+            if (!expected.equals(rejected.getMessage())) {
                 throw new AssertionError("Unexpected FnF rejection reason: " + rejected.getMessage(), rejected);
             }
             return;
