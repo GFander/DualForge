@@ -1,0 +1,10 @@
+"""Build a separate NeoForge observer for labeled white-box bridge fault injection."""
+from pathlib import Path
+import argparse,importlib.util,os
+ROOT=Path(__file__).resolve().parents[2]
+spec=importlib.util.spec_from_file_location('fixture',Path(__file__).with_name('build_fixture.py'));b=importlib.util.module_from_spec(spec);spec.loader.exec_module(b);w=b.w
+p=argparse.ArgumentParser(description=__doc__)
+for n in ['neo-install','jdk-home','output']:p.add_argument('--'+n,type=Path,required=True)
+a=p.parse_args();a.output.mkdir(parents=True,exist_ok=False);template=Path(__file__).parent/'driver/Observer.java.in';extra=template.with_name('BridgeDiagnostics.java.in');text=template.read_text();text=text.replace('original.println(text);if(text.equals','original.println(text);if(!bridgeDiagnosed&&text.startsWith("[DUALFORGE-REGISTRY-BRIDGE] ATTACHED modId=tabboundary helper=demo.shelves.Shelves ")){bridgeDiagnosed=true;bridgeDiagnostics();}if(text.equals');text=text.rstrip()[:-1]+extra.read_text()+'\n}\n';reps={'HOST.fml':'net.neoforged.fml','HOST.event':'net.neoforged.neoforge.event','REGISTRY_PACKAGE':'net.neoforged.neoforge.registries','GLOBAL_BUS':'net.neoforged.neoforge.common.NeoForge.EVENT_BUS'}
+for k,v in reps.items():text=text.replace(k,v)
+source=a.output/'Observer.java';source.write_text(text);classes=a.output/'classes';classes.mkdir();libs=sorted((a.neo_install/'libraries').rglob('*.jar'),key=lambda p:(p.name!='neoforge-21.1.256-server.jar',str(p)));inputs=w.fingerprints([template,extra,Path(__file__),*libs]);w.save(a.output/'inputs.json',inputs);w.native(a.output,'javac',[a.jdk_home/'bin/javac','--release','21','-proc:none','-cp',os.pathsep.join(map(str,libs)),'-d',classes,source]);jar=a.output/'neoforge-tab-observer.jar';b.pack(jar,classes,'tabobserver',True);w.unchanged(inputs);w.save(a.output/'result.json',{'status':'PASS','artifact':w.fingerprints([jar])[0],'whiteBox':'Temporary source fixture static-final receiver and actual container bus substitution; official register adds one listener then fails; restores originals. Never standard C/T.'});print(jar)

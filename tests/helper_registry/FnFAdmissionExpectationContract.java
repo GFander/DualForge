@@ -19,7 +19,9 @@ public final class FnFAdmissionExpectationContract {
         rejectedV1(() -> {});
         rejectedV1(() -> {throw new IllegalStateException(FnFAdmissionExpectation.REASON);});
         rejectedV1(() -> {throw new IllegalStateException(FnFAdmissionExpectation.SUPPLIER_V1_REASON+" extra");});
-        System.out.println("FNF EXPECTATION CONTRACT PASS positive=2 negatives=9");
+        FnFAdmissionExpectation.requireTypedV1Rejection(() -> {throw new IllegalStateException(FnFAdmissionExpectation.TYPED_V1_REASON);});
+        for(int scenario=0;scenario<3;scenario++) {final int chosen=scenario;boolean failed=false;try{FnFAdmissionExpectation.requireTypedV1Rejection(() -> {if(chosen==0)return;throw new IllegalStateException(chosen==1?FnFAdmissionExpectation.SUPPLIER_V1_REASON:FnFAdmissionExpectation.TYPED_V1_REASON+" extra");});}catch(AssertionError expected){failed=true;}if(!failed)throw new AssertionError("Invalid typed-v1 outcome accepted");}
+        System.out.println("FNF EXPECTATION CONTRACT PASS positive=3 negatives=12");
     }
 
     private static void rejectedV1(Runnable admission) {

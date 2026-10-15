@@ -4,8 +4,8 @@ PASS_LINE = "FNF READ_ONLY ADMISSION PASS; FNF_RUNTIME=NOT RUN; no helper output
 
 
 def validate_fnf_admission(text, version="legacy-4b"):
-    reason = REASON if version == "legacy-4b" else "Registry helper rejected: ITEM_FIELD_DESCRIPTOR"
-    if version not in ("legacy-4b", "supplier-v1"):
+    reason = {"legacy-4b":REASON,"supplier-v1":"Registry helper rejected: ITEM_FIELD_DESCRIPTOR","typed-v1":"Registry helper rejected: GLOBAL_EVENT_BUS_UNSUPPORTED"}.get(version)
+    if version not in ("legacy-4b", "supplier-v1", "typed-v1"):
         raise AssertionError("Unknown FnF contract version")
     lines = text.splitlines()
     admissions = [line for line in lines if line.startswith("FNF_PLAN_ADMISSION=")]
@@ -14,6 +14,6 @@ def validate_fnf_admission(text, version="legacy-4b"):
     runtime = [line for line in lines if "FNF_RUNTIME=" in line]
     if runtime != [PASS_LINE]:
         raise AssertionError("Missing or conflicting read-only FnF runtime status")
-    if version == "supplier-v1" and [line for line in lines if line.startswith("FNF_CONTRACT_VERSION=")] != ["FNF_CONTRACT_VERSION=supplier-v1"]:
-        raise AssertionError("Missing supplier-v1 version receipt")
+    if [line for line in lines if line.startswith("FNF_CONTRACT_VERSION=")] != ([] if version=="legacy-4b" else ["FNF_CONTRACT_VERSION="+version]):
+        raise AssertionError("Missing or conflicting version receipt")
     return reason

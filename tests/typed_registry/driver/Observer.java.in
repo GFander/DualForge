@@ -1,0 +1,41 @@
+package demo.observer;
+import java.io.PrintStream;
+import java.util.*;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.*;
+import net.minecraft.world.flag.FeatureFlags;
+import HOST.fml.ModList;
+import HOST.fml.common.Mod;
+import HOST.event.server.ServerStartedEvent;
+@Mod("tabobserver")
+public final class Observer {
+ private final PrintStream original=System.out;
+ private final Map<String,Integer> calls=new HashMap<>();
+ private boolean queried,early; private String phase="LOADING";
+ public Observer(){
+  System.setOut(new PrintStream(original){@Override public void println(String text){original.println(text);if(text.equals("[DF4C2] BEFORE TAB"))early();if(text.startsWith("[DF4C2] SUPPLIER ")||text.startsWith("[DF4C2] CALLBACK ")){
+   calls.merge(text,1,Integer::sum);var stack=StackWalker.getInstance().walk(s->s.toList());boolean registering=stack.stream().anyMatch(f->f.getClassName().equals("REGISTRY_PACKAGE.RegisterEvent"));
+   if(text.contains(" SUPPLIER ")&&!registering)throw new AssertionError("Not official RegisterEvent");
+   if(text.contains(" CALLBACK ")&&(registering||!phase.equals("QUERY")))throw new AssertionError("Callback executed too early");
+   for(var f:stack)original.println("[DF4C2] FRAME "+text.substring(8)+" "+f.getClassName()+"."+f.getMethodName());
+  }}});
+  GLOBAL_BUS.addListener(this::started);
+ }
+ private Class<?> source(String name)throws ReflectiveOperationException {var owner=ModList.get().getModContainerById("tabboundary").orElseThrow();var module=getClass().getModule().getLayer().findModule(owner.getModInfo().getOwningFile().moduleName()).orElseThrow();return Class.forName(module,"demo.shelves."+name);}
+ private void early(){try{if(early)throw new AssertionError("Repeated early probe");early=true;source("Consumer").getMethod("first").invoke(null);throw new AssertionError("Early Holder consumption succeeded");}catch(java.lang.reflect.InvocationTargetException e){if(!(e.getCause() instanceof NullPointerException || e.getCause() instanceof IllegalStateException))throw new AssertionError(e);original.println("[DF4C2] EARLY REFUSED "+e.getCause());}catch(ReflectiveOperationException e){throw new AssertionError(e);}}
+ private int count(String name){return calls.getOrDefault("[DF4C2] "+name,0);}
+ private void started(ServerStartedEvent event){try{
+  boolean enabled=!"false".equals(System.getenv("DF4C2_REGISTER"));if(queried||!early)throw new AssertionError("Lifecycle probe missing");queried=true;
+  var owner=ModList.get().getModContainerById("tabboundary").orElseThrow();Object bus=owner.getClass().getMethod("getEventBus").invoke(owner);original.println("[DF4C2] MODBUS identity="+System.identityHashCode(bus));
+  Object[] items=new Object[2];String[] ids={"shared","second"},fields={"FIRST","SECOND"};
+  for(int i=0;i<2;i++){var id=ResourceLocation.fromNamespaceAndPath("tabboundary",ids[i]);if(BuiltInRegistries.ITEM.containsKey(id)!=enabled||count("SUPPLIER "+(i==0?"first":"second"))!=(enabled?1:0))throw new AssertionError("Item count/identity");if(enabled){items[i]=BuiltInRegistries.ITEM.getOptional(id).orElseThrow();Object h=source("Items").getField(fields[i]).get(null);if(h.getClass().getMethod("get").invoke(h)!=items[i]||!id.equals(BuiltInRegistries.ITEM.getKey((Item)items[i])))throw new AssertionError("Item Holder identity");}}
+  var id=ResourceLocation.fromNamespaceAndPath("tabboundary","shared");if(BuiltInRegistries.CREATIVE_MODE_TAB.containsKey(id)!=enabled||count("SUPPLIER tab")!=(enabled?1:0)||count("CALLBACK icon")!=0||count("CALLBACK display")!=0)throw new AssertionError("Tab identity or eager callback");
+  if(enabled){var tab=BuiltInRegistries.CREATIVE_MODE_TAB.getOptional(id).orElseThrow();Object holder=source("Shelves").getField("SHELF").get(null);if(holder.getClass().getMethod("get").invoke(holder)!=tab||source("Consumer").getMethod("tab").invoke(null)!=tab||source("Consumer").getMethod("tabReceipt").invoke(null)!=holder||items[0]==items[1])throw new AssertionError("Tab consumer/Holder identity");
+   phase="QUERY";if(tab.getIconItem().getItem()!=items[0]||tab.getIconItem().getItem()!=items[0]||count("CALLBACK icon")!=1)throw new AssertionError("Icon deferred/cached count");
+   tab.buildContents(new CreativeModeTab.ItemDisplayParameters(FeatureFlags.DEFAULT_FLAGS,true,event.getServer().registryAccess()));
+   var displayed=tab.getDisplayItems().stream().map(ItemStack::getItem).toList();if(!displayed.equals(List.of(items[0],items[1]))||count("CALLBACK display")!=1)throw new AssertionError("Display callback data/count");phase="DONE";
+  }
+  original.println("[DF4C2] TAB PASS enabled="+enabled+" itemAndTabSamePath=true icon="+count("CALLBACK icon")+" display="+count("CALLBACK display"));System.setOut(original);
+ }catch(ReflectiveOperationException e){throw new AssertionError(e);}}
+}

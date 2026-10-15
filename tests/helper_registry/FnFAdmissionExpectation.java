@@ -6,6 +6,9 @@ final class FnFAdmissionExpectation {
 
     static final String SUPPLIER_V1_REASON = "Registry helper rejected: ITEM_FIELD_DESCRIPTOR";
 
+    static final String TYPED_V1_REASON = "Registry helper rejected: GLOBAL_EVENT_BUS_UNSUPPORTED";
+    static void requireTypedV1Rejection(Runnable admission) { requireRejection(admission,TYPED_V1_REASON); }
+
     static void requireSupplierRejection(Runnable admission) { requireRejection(admission,REASON); }
     static void requireSupplierV1Rejection(Runnable admission) { requireRejection(admission,SUPPLIER_V1_REASON); }
     private static void requireRejection(Runnable admission,String expected) {
