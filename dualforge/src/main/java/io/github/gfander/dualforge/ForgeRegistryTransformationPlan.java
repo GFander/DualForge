@@ -13,27 +13,36 @@ final class ForgeRegistryTransformationPlan {
     static final String ITEM = "net/minecraft/world/item/Item", BUS = ControlledForgeContextProfile.BUS;
     static final String R = "L" + F + "DeferredRegister;", H = "L" + F + "RegistryObject;";
     static final String CREATE = "(L" + F + "IForgeRegistry;Ljava/lang/String;)" + R;
+    static final String CREATE_KEY = "(Lnet/minecraft/resources/ResourceKey;Ljava/lang/String;)" + R;
+    static final String TAB = "net/minecraft/world/item/CreativeModeTab";
+    enum Kind {
+        ITEM(ForgeRegistryTransformationPlan.ITEM,"ITEM","minecraft:item"), TAB(ForgeRegistryTransformationPlan.TAB,"CREATIVE_MODE_TAB","minecraft:creative_mode_tab");
+        final String type,field,id;Kind(String type,String field,String id){this.type=type;this.field=field;this.id=id;}
+        String generic(String source){return "L"+F+source+"<L"+type+";>;";}
+    }
     static final String REGISTER = "(Ljava/lang/String;Ljava/util/function/Supplier;)" + H;
     static final String BRIDGE = "io/github/gfander/dualforge/ForgeRegistryBridge";
     private enum Value { REGISTRY, REGISTER, SUPPLIER, HOLDER }
-    private static final Handle META = new Handle(Opcodes.H_INVOKESTATIC,"java/lang/invoke/LambdaMetafactory","metafactory",
+    static final Handle META = new Handle(Opcodes.H_INVOKESTATIC,"java/lang/invoke/LambdaMetafactory","metafactory",
             "(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;",false);
     final String modId, module, entry, fingerprint;
     final Map<String,String> registers;
+    private final Map<String,Kind> kinds;
     final Set<String> helperMethods;
     private final Map<String,byte[]> original, normalized, output;
 
     private ForgeRegistryTransformationPlan(IModInfo info, String entry, Map<String,byte[]> original,
             Map<String,ClassNode> nodes, Set<String> targets, Map<String,String> registers, Set<String> helpers, ControlledItemSupplier suppliers) {
         this.modId=info.getModId();this.module=info.getOwningFile().moduleName();this.entry=entry;
+        Map<String,Kind> typed=new TreeMap<>();for(String name:registers.keySet())typed.put(name,kind(nodes.get(name)));kinds=Map.copyOf(typed);
         this.original=Map.copyOf(original);this.registers=Map.copyOf(registers);this.helperMethods=Set.copyOf(helpers);
-        StringBuilder id=new StringBuilder("registry-helper-v3\n"+modId+"\n"+module+"\n"+info.getOwningFile().getFile().getFilePath().toAbsolutePath()+"\n");
+        StringBuilder id=new StringBuilder("registry-helper-v4\n"+modId+"\n"+module+"\n"+info.getOwningFile().getFile().getFilePath().toAbsolutePath()+"\n");
         original.keySet().stream().sorted().forEach(n -> id.append(n).append(':').append(digest(original.get(n))).append('\n'));
         suppliers.hostFingerprints().entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(x -> id.append("host:").append(x.getKey()).append(':').append(x.getValue()).append('\n'));
         fingerprint=digest(id.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
         Map<String,byte[]> source=new HashMap<>(), changed=new HashMap<>();
         var context=new ControlledForgeContextProfile.Scope(modId,Set.copyOf(nodes.keySet()),original::get);
-        ControlledForgeContextProfile.validateRegistry(nodes.get(entry),context,helperMethods);
+        require(ControlledForgeContextProfile.validateRegistry(nodes.get(entry),context,helperMethods).pendingGlobalCalls()==0,"GLOBAL_EVENT_BUS_UNSUPPORTED");
         for(String name:targets) {
             ClassNode n=read(bytes(nodes.get(name)));source.put(name,bytes(n));
             if(name.equals(entry)) ControlledForgeContextProfile.rewriteRegistry(n,context,helperMethods);
@@ -73,16 +82,18 @@ final class ForgeRegistryTransformationPlan {
     private static ForgeRegistryTransformationPlan prepare(IModInfo info,String entry,Map<String,byte[]> raw,Map<String,ClassNode> nodes,java.util.function.Function<String,byte[]> host) {
         require(nodes.containsKey(entry),"ENTRY_ABSENT_FROM_SCAN");
         ControlledItemSupplier suppliers=new ControlledItemSupplier(nodes,host);
-        Set<String> helpers=new HashSet<>();Map<String,String> regs=new TreeMap<>();Set<String> ids=new HashSet<>();
+        Set<String> helpers=new HashSet<>();Map<String,String> regs=new TreeMap<>();Set<String> ids=new HashSet<>();Map<String,Kind> kinds=new TreeMap<>();
         ClassNode e=nodes.get(entry);
         for(MethodNode m:e.methods)for(var i:m.instructions)if(i instanceof MethodInsnNode c && c.getOpcode()==Opcodes.INVOKESTATIC && c.desc.equals("("+BUS+")V")) {
             require(!c.itf && nodes.containsKey(c.owner) && !entry.equals(c.owner),"HELPER_OUTSIDE_MODFILE");
             require(helpers.add(key(c.owner,c.name,c.desc)),"DUPLICATE_TARGET");
             require(!regs.containsKey(c.owner),"DUPLICATE_HELPER_ATTACHMENT");
-            regs.put(c.owner,validateHelper(nodes.get(c.owner),c.name,info.getModId(),ids,suppliers));
+            regs.put(c.owner,c.name);kinds.put(c.owner,kind(nodes.get(c.owner)));
         }
         require(!helpers.isEmpty(),"NO_REGISTRY_HELPERS");
-        Set<String> closure=new HashSet<>(regs.keySet());boolean added;
+        ControlledCreativeTab tabs=new ControlledCreativeTab(nodes,kinds,suppliers);
+        for(String owner:new TreeSet<>(regs.keySet()))regs.put(owner,validateHelper(nodes.get(owner),regs.get(owner),info.getModId(),ids,suppliers,kinds.get(owner),tabs));
+        Set<String> closure=new HashSet<>(regs.keySet());closure.addAll(tabs.owners());boolean added;
         do {
             added=false;
             for(ClassNode n:nodes.values()) {
@@ -102,8 +113,9 @@ final class ForgeRegistryTransformationPlan {
             if(!regs.containsKey(name))require(n.fields.isEmpty(),"UNVERIFIED_CONSUMER_FIELD");
             for(MethodNode m:n.methods) {
                 if(m.name.equals("<init>")){emptyConstructor(n,m);continue;}
-                if(regs.containsKey(name) && (m.name.equals("<clinit>") || helpers.contains(key(name,m.name,m.desc)) || supplierMethod(m)))continue;
-                validateAccessor(nodes,closure,name,m,new HashSet<>());
+                if(regs.containsKey(name) && (m.name.equals("<clinit>") || helpers.contains(key(name,m.name,m.desc)) || supplierMethod(m) || tabs.verified(name,m)))continue;
+                if(tabs.verified(name,m))continue;
+                validateAccessor(nodes,closure,kinds,name,m,new HashSet<>());
             }
         }
         Set<String> targets=new HashSet<>(closure);require(targets.add(entry),"TRANSFORMATION_RULE_CONFLICT");
@@ -111,20 +123,22 @@ final class ForgeRegistryTransformationPlan {
     }
     Set<String> targets(){return output.keySet();}
     String registerField(String owner){return registers.get(owner);}
+    Kind registryKind(String owner){return kinds.get(owner);}
+    static Kind kind(ClassNode n){return n.fields.stream().anyMatch(f->f.desc.equals(R)&&Kind.TAB.generic("DeferredRegister").equals(f.signature))?Kind.TAB:Kind.ITEM;}
     ClassNode transform(ClassNode input, byte[] initialSHA) {
         require(normalized.containsKey(input.name),"UNAUTHORIZED_TARGET");
         if(initialSHA!=null)require(Arrays.equals(initialSHA,MessageDigestHolder.sha(original.get(input.name))),"INPUT_JAR_SHA_CHANGED");
         require(Arrays.equals(bytes(input),normalized.get(input.name)),"TRANSFORMATION_INPUT_CHANGED");
         return read(output.get(input.name));
     }
-    private static String validateHelper(ClassNode n,String attach,String modId,Set<String> ids,ControlledItemSupplier suppliers) {
+    private static String validateHelper(ClassNode n,String attach,String modId,Set<String> ids,ControlledItemSupplier suppliers,Kind kind,ControlledCreativeTab tabs) {
         structure(n);List<FieldNode> registers=n.fields.stream().filter(f->f.desc.equals(R)).toList();
         require(registers.size()==1,"ONE_TYPED_ITEM_REGISTER");FieldNode reg=registers.getFirst();
         Set<String> names=new HashSet<>();Set<String> holders=new HashSet<>();
         for(FieldNode f:n.fields) {
             require(names.add(f.name) && f.access==(Opcodes.ACC_PUBLIC|Opcodes.ACC_STATIC|Opcodes.ACC_FINAL) && f.value==null
                     && empty(f.visibleAnnotations) && empty(f.invisibleAnnotations),"FIELD_METADATA");
-            require((f==reg || f.desc.equals(H)) && generic(f==reg?"DeferredRegister":"RegistryObject").equals(f.signature),"ITEM_FIELD_DESCRIPTOR");
+            require((f==reg || f.desc.equals(H)) && kind.generic(f==reg?"DeferredRegister":"RegistryObject").equals(f.signature),"ITEM_FIELD_DESCRIPTOR");
             if(f!=reg)holders.add(f.name);
         }
         require(!holders.isEmpty(),"NO_ITEM_DECLARATIONS");
@@ -134,7 +148,8 @@ final class ForgeRegistryTransformationPlan {
             require(!done,"INITIALIZER_AFTER_RETURN");
             if(i instanceof LdcInsnNode l){require(l.cst instanceof String,"INITIALIZER_LITERAL");stack.add(l.cst);}
             else if(i instanceof FieldInsnNode f) {
-                if(f.owner.equals(F+"ForgeRegistries")) {require(f.getOpcode()==Opcodes.GETSTATIC && f.name.equals("ITEMS") && f.desc.equals("L"+F+"IForgeRegistry;"),"UNKNOWN_REGISTRY_FIELD");stack.add(Value.REGISTRY);}
+                if(f.owner.equals(F+"ForgeRegistries")) {require(f.getOpcode()==Opcodes.GETSTATIC && kind==Kind.ITEM && f.name.equals("ITEMS") && f.desc.equals("L"+F+"IForgeRegistry;"),"UNKNOWN_REGISTRY_FIELD");stack.add(Value.REGISTRY);}
+                else if(f.owner.equals("net/minecraft/core/registries/Registries")){require(kind==Kind.TAB && f.getOpcode()==Opcodes.GETSTATIC && f.name.equals("CREATIVE_MODE_TAB") && f.desc.equals("Lnet/minecraft/resources/ResourceKey;"),"WRONG_TYPED_REGISTRY_KEY");stack.add(Value.REGISTRY);}
                 else {
                     require(f.owner.equals(n.name) && names.contains(f.name) && field(n,f.name).desc.equals(f.desc),"FOREIGN_FIELD_REFERENCE");
                     if(f.getOpcode()==Opcodes.GETSTATIC){require(f.name.equals(reg.name) && assigned.contains(f.name),"REGISTER_DATAFLOW");stack.add(Value.REGISTER);}
@@ -143,10 +158,10 @@ final class ForgeRegistryTransformationPlan {
             } else if(i instanceof VarInsnNode v) {
                 if(v.getOpcode()==Opcodes.ASTORE){require(pop(stack).equals(Value.REGISTER) && !locals.containsKey(v.var),"LOCAL_DATAFLOW");locals.put(v.var,Value.REGISTER);}
                 else {require(v.getOpcode()==Opcodes.ALOAD && locals.containsKey(v.var),"LOCAL_DATAFLOW");stack.add(locals.get(v.var));}
-            } else if(i instanceof InvokeDynamicInsnNode d) {String impl=supplier(n,d,suppliers);usedSuppliers.add(impl);stack.add(Value.SUPPLIER);}
+            } else if(i instanceof InvokeDynamicInsnNode d) {String impl=kind==Kind.ITEM?supplier(n,d,suppliers):tabs.supplier(n,d);usedSuppliers.add(impl);stack.add(Value.SUPPLIER);}
             else if(i instanceof MethodInsnNode c) {
-                if(call(c,Opcodes.INVOKESTATIC,F+"DeferredRegister","create",CREATE)) {require(!created && pop(stack).equals(modId) && pop(stack).equals(Value.REGISTRY),"CREATE_REGISTRY_NAMESPACE");created=true;stack.add(Value.REGISTER);}
-                else {require(call(c,Opcodes.INVOKEVIRTUAL,F+"DeferredRegister","register",REGISTER),"UNKNOWN_DEFERRED_REGISTER_DESCRIPTOR");require(pop(stack).equals(Value.SUPPLIER),"SUPPLIER_DATAFLOW");Object id=pop(stack);require(id instanceof String s && s.matches("[a-z0-9_./-]+") && ids.add((String)id),"DUPLICATE_OR_INVALID_REGISTRY_ID");require(pop(stack).equals(Value.REGISTER),"REGISTER_RECEIVER");stack.add(Value.HOLDER);}
+                if(call(c,Opcodes.INVOKESTATIC,F+"DeferredRegister","create",kind==Kind.ITEM?CREATE:CREATE_KEY)) {require(!created && pop(stack).equals(modId) && pop(stack).equals(Value.REGISTRY),"CREATE_REGISTRY_NAMESPACE");created=true;stack.add(Value.REGISTER);}
+                else {require(call(c,Opcodes.INVOKEVIRTUAL,F+"DeferredRegister","register",REGISTER),"UNKNOWN_DEFERRED_REGISTER_DESCRIPTOR");require(pop(stack).equals(Value.SUPPLIER),"SUPPLIER_DATAFLOW");Object id=pop(stack);require(id instanceof String s && s.matches("[a-z0-9_./-]+") && ids.add(kind.id+"/"+modId+":"+id),"DUPLICATE_OR_INVALID_REGISTRY_ID");require(pop(stack).equals(Value.REGISTER),"REGISTER_RECEIVER");stack.add(Value.HOLDER);}
             } else {require(i.getOpcode()==Opcodes.RETURN && stack.isEmpty(),"INITIALIZER_INSTRUCTION");done=true;}
         }
         require(done && created && assigned.equals(names),"INCOMPLETE_INITIALIZER");
@@ -176,25 +191,35 @@ final class ForgeRegistryTransformationPlan {
         if(!legacy) {require(c.stream().noneMatch(i -> i.getOpcode()==Opcodes.NOP),"SUPPLIER_BUSINESS_UNSUPPORTED");suppliers.verify(n.name,m);}
         return h.getName();
     }
-    private static void validateAccessor(Map<String,ClassNode> nodes,Set<String> closure,String owner,MethodNode m,Set<String> visiting) {
-        require(m.access==(Opcodes.ACC_PUBLIC|Opcodes.ACC_STATIC) && (m.desc.equals("()"+H) || m.desc.equals("()L"+ITEM+";")),"UNVERIFIED_CONSUMER_METHOD");
-        require(m.desc.equals("()"+H)?("()"+generic("RegistryObject")).equals(m.signature):m.signature==null,"CONSUMER_GENERIC_SIGNATURE");metadata(m,false);
+    static Kind holderKind(Map<String,ClassNode> nodes,Map<String,Kind> kinds,String owner,String name) {
+        require(kinds.containsKey(owner),"CONSUMER_FIELD_CLOSURE");Kind k=kinds.get(owner);FieldNode f=field(nodes.get(owner),name);
+        require(f.desc.equals(H)&&k.generic("RegistryObject").equals(f.signature),"CONSUMER_FIELD_CLOSURE");return k;
+    }
+    static Kind accessorKind(MethodNode m) {
+        for(Kind k:Kind.values())if(m.desc.equals("()"+H)?("()"+k.generic("RegistryObject")).equals(m.signature):m.desc.equals("()L"+k.type+";")&&m.signature==null)return k;
+        throw new IllegalStateException("Registry helper rejected: CONSUMER_GENERIC_SIGNATURE");
+    }
+    static void validateAccessor(Map<String,ClassNode> nodes,Set<String> closure,Map<String,Kind> kinds,String owner,MethodNode m,Set<String> visiting) {
+        require(m.access==(Opcodes.ACC_PUBLIC|Opcodes.ACC_STATIC) && (m.desc.equals("()"+H) || m.desc.equals("()L"+ITEM+";") || m.desc.equals("()L"+TAB+";")),"UNVERIFIED_CONSUMER_METHOD");
+        Kind expected=accessorKind(m);metadata(m,false);
         require(visiting.add(key(owner,m.name,m.desc)),"CYCLIC_CONSUMER");List<String> stack=new ArrayList<>();boolean done=false;
         for(var i:ops(m)) {
             require(!done,"CONSUMER_AFTER_RETURN");
-            if(i instanceof FieldInsnNode f){require(f.getOpcode()==Opcodes.GETSTATIC && closure.contains(f.owner) && f.desc.equals(H) && field(nodes.get(f.owner),f.name).desc.equals(H),"CONSUMER_FIELD_CLOSURE");stack.add(H);}
+            if(i instanceof FieldInsnNode f){require(f.getOpcode()==Opcodes.GETSTATIC && closure.contains(f.owner) && f.desc.equals(H),"CONSUMER_FIELD_CLOSURE");stack.add("holder:"+holderKind(nodes,kinds,f.owner,f.name).type);}
             else if(i instanceof MethodInsnNode c) {
-                if(call(c,Opcodes.INVOKEVIRTUAL,F+"RegistryObject","get","()Ljava/lang/Object;")){require(pop(stack).equals(H),"HOLDER_RECEIVER");stack.add("L"+ITEM+";");}
-                else {require(c.getOpcode()==Opcodes.INVOKESTATIC && !c.itf && closure.contains(c.owner),"CONSUMER_METHOD_CLOSURE");MethodNode target=method(nodes.get(c.owner),c.name,c.desc);validateAccessor(nodes,closure,c.owner,target,visiting);stack.add(Type.getReturnType(c.desc).getDescriptor());}
-            } else if(type(i,Opcodes.CHECKCAST,ITEM)){require(!stack.isEmpty() && stack.getLast().equals("L"+ITEM+";"),"CONSUMER_CHECKCAST");}
-            else {require(i.getOpcode()==Opcodes.ARETURN && stack.size()==1 && pop(stack).equals(Type.getReturnType(m.desc).getDescriptor()),"CONSUMER_RETURN");done=true;}
+                if(call(c,Opcodes.INVOKEVIRTUAL,F+"RegistryObject","get","()Ljava/lang/Object;")){String h=pop(stack);require(h.startsWith("holder:"),"HOLDER_RECEIVER");stack.add(h.substring(7));}
+                else {require(c.getOpcode()==Opcodes.INVOKESTATIC && !c.itf && closure.contains(c.owner),"CONSUMER_METHOD_CLOSURE");MethodNode target=method(nodes.get(c.owner),c.name,c.desc);validateAccessor(nodes,closure,kinds,c.owner,target,visiting);stack.add((c.desc.equals("()"+H)?"holder:":"")+accessorKind(target).type);}
+            } else if(type(i,Opcodes.CHECKCAST,ITEM)||type(i,Opcodes.CHECKCAST,TAB)){require(!stack.isEmpty() && stack.getLast().equals(((TypeInsnNode)i).desc),"CONSUMER_CHECKCAST");}
+            else {require(i.getOpcode()==Opcodes.ARETURN && stack.size()==1 && pop(stack).equals((m.desc.equals("()"+H)?"holder:":"")+expected.type),"CONSUMER_RETURN");done=true;}
         }
         require(done,"CONSUMER_MISSING_RETURN");visiting.remove(key(owner,m.name,m.desc));
     }
+    private static String mappedGeneric(String s) {for(Kind k:Kind.values())if(k.generic("RegistryObject").equals(s))return "L"+N+"DeferredHolder<L"+k.type+";L"+k.type+";>;";throw new IllegalStateException("Registry helper rejected: UNVERIFIED_GENERIC_REWRITE");}
     private static void rewrite(ClassNode n,boolean helper,String fingerprint) {
-        for(FieldNode f:n.fields) {if(f.desc.equals(R)){f.desc="L"+N+"DeferredRegister;";f.signature="L"+N+"DeferredRegister<L"+ITEM+";>;";}else if(f.desc.equals(H)){f.desc="L"+N+"DeferredHolder;";f.signature="L"+N+"DeferredHolder<L"+ITEM+";L"+ITEM+";>;";}}
+        Kind typed=kind(n);
+        for(FieldNode f:n.fields) {if(f.desc.equals(R)){f.desc="L"+N+"DeferredRegister;";f.signature="L"+N+"DeferredRegister<L"+typed.type+";>;";}else if(f.desc.equals(H)){f.desc="L"+N+"DeferredHolder;";f.signature=mappedGeneric(f.signature);}}
         for(MethodNode m:n.methods) {
-            if(m.desc.equals("()"+H)){m.desc="()L"+N+"DeferredHolder;";m.signature="()L"+N+"DeferredHolder<L"+ITEM+";L"+ITEM+";>;";}
+            if(m.desc.equals("()"+H)){m.desc="()L"+N+"DeferredHolder;";m.signature="()"+mappedGeneric(m.signature.substring(2));}
             for(var i:m.instructions.toArray()) {
                 if(i instanceof FieldInsnNode f) {
                     if(f.owner.equals(F+"ForgeRegistries")){f.owner="net/minecraft/core/registries/BuiltInRegistries";f.name="ITEM";f.desc="Lnet/minecraft/core/DefaultedRegistry;";}
@@ -204,35 +229,34 @@ final class ForgeRegistryTransformationPlan {
                     if(c.owner.equals(F+"DeferredRegister")) {
                         if(c.desc.equals("("+BUS+")V")) {
                             m.instructions.insertBefore(c,new LdcInsnNode(fingerprint));c.setOpcode(Opcodes.INVOKESTATIC);c.owner=BRIDGE;c.name="register";c.desc="(Ljava/lang/Object;"+BUS+"Ljava/lang/String;)V";c.itf=false;m.maxStack++;
-                        } else {c.owner=N+"DeferredRegister";c.desc=c.desc.equals(CREATE)?"(Lnet/minecraft/core/Registry;Ljava/lang/String;)L"+N+"DeferredRegister;":"(Ljava/lang/String;Ljava/util/function/Supplier;)L"+N+"DeferredHolder;";}
+                        } else {c.owner=N+"DeferredRegister";c.desc=c.desc.equals(CREATE_KEY)?"(Lnet/minecraft/resources/ResourceKey;Ljava/lang/String;)L"+N+"DeferredRegister;":c.desc.equals(CREATE)?"(Lnet/minecraft/core/Registry;Ljava/lang/String;)L"+N+"DeferredRegister;":"(Ljava/lang/String;Ljava/util/function/Supplier;)L"+N+"DeferredHolder;";}
                     } else if(c.owner.equals(F+"RegistryObject"))c.owner=N+"DeferredHolder";
                     else if(c.desc.equals("()"+H))c.desc="()L"+N+"DeferredHolder;";
                 }
             }
         }
     }
-    private static void structure(ClassNode n) {
+    static void structure(ClassNode n) {
         require(n.version==Opcodes.V21 && (n.access==(Opcodes.ACC_PUBLIC|Opcodes.ACC_FINAL|Opcodes.ACC_SUPER) || n.access==(Opcodes.ACC_PUBLIC|Opcodes.ACC_SUPER)) && n.superName.equals("java/lang/Object") && n.interfaces.isEmpty() && n.signature==null && n.module==null && empty(n.visibleAnnotations) && empty(n.invisibleAnnotations),"HELPER_CLASS_METADATA");
         require(!n.name.startsWith("java/") && !n.name.startsWith("net/minecraft/") && !n.name.startsWith("net/minecraftforge/") && !n.name.startsWith("net/neoforged/"),"PLATFORM_CLASS_EXCLUDED");
         Set<String> unique=new HashSet<>();for(MethodNode m:n.methods)require(unique.add(m.name+m.desc),"DUPLICATE_METHOD");
     }
-    private static void metadata(MethodNode m,boolean frames) {
+    static void metadata(MethodNode m,boolean frames) {
         require(m.tryCatchBlocks.isEmpty() && empty(m.exceptions) && empty(m.visibleAnnotations) && empty(m.invisibleAnnotations),"METHOD_METADATA");
         for(var i:m.instructions)if(i instanceof FrameNode f)require(frames && f.type==Opcodes.F_SAME && empty(f.local) && empty(f.stack),"FRAME_NOT_VERIFIED");
         require(m.localVariables==null || m.localVariables.stream().allMatch(v->!v.desc.contains(F+"DeferredRegister") && !v.desc.contains(F+"RegistryObject")),"LOCAL_TYPE_CLOSURE");
     }
     private static void emptyConstructor(ClassNode n,MethodNode m) {metadata(m,false);var c=ops(m);require(m.desc.equals("()V") && (m.access==Opcodes.ACC_PRIVATE || m.access==Opcodes.ACC_PUBLIC) && c.size()==3 && c.get(0) instanceof VarInsnNode v && v.getOpcode()==Opcodes.ALOAD && v.var==0 && call(c.get(1),Opcodes.INVOKESPECIAL,"java/lang/Object","<init>","()V") && c.get(2).getOpcode()==Opcodes.RETURN,"HELPER_CONSTRUCTOR");}
     private static boolean supplierMethod(MethodNode m){return m.desc.equals("()L"+ITEM+";") && (m.access==(Opcodes.ACC_PRIVATE|Opcodes.ACC_STATIC) || m.access==(Opcodes.ACC_PRIVATE|Opcodes.ACC_STATIC|Opcodes.ACC_SYNTHETIC));}
-    private static String generic(String type){return "L"+F+type+"<L"+ITEM+";>;";}
-    private static String key(String owner,String name,String desc){return owner+"."+name+desc;}
-    private static FieldNode field(ClassNode n,String name){return n.fields.stream().filter(f->f.name.equals(name)).findFirst().orElseThrow(()->new IllegalStateException("Registry helper rejected: MISSING_FIELD"));}
-    private static MethodNode method(ClassNode n,String name,String desc){return n.methods.stream().filter(m->m.name.equals(name)&&m.desc.equals(desc)).findFirst().orElseThrow(()->new IllegalStateException("Registry helper rejected: MISSING_METHOD_CLOSURE"));}
+    static String key(String owner,String name,String desc){return owner+"."+name+desc;}
+    static FieldNode field(ClassNode n,String name){return n.fields.stream().filter(f->f.name.equals(name)).findFirst().orElseThrow(()->new IllegalStateException("Registry helper rejected: MISSING_FIELD"));}
+    static MethodNode method(ClassNode n,String name,String desc){return n.methods.stream().filter(m->m.name.equals(name)&&m.desc.equals(desc)).findFirst().orElseThrow(()->new IllegalStateException("Registry helper rejected: MISSING_METHOD_CLOSURE"));}
     private static boolean empty(Collection<?> c){return c==null || c.isEmpty();}
-    private static List<AbstractInsnNode> ops(MethodNode m){return Arrays.stream(m.instructions.toArray()).filter(i->i.getOpcode()>=0).toList();}
+    static List<AbstractInsnNode> ops(MethodNode m){return Arrays.stream(m.instructions.toArray()).filter(i->i.getOpcode()>=0).toList();}
     private static AbstractInsnNode next(AbstractInsnNode i){while(i!=null && i.getOpcode()<0)i=i.getNext();return i;}
     private static <T> T pop(List<T> s){require(!s.isEmpty(),"STACK_UNDERFLOW");return s.removeLast();}
     private static boolean type(AbstractInsnNode i,int op,String type){return i instanceof TypeInsnNode t && t.getOpcode()==op && t.desc.equals(type);}
-    private static boolean call(AbstractInsnNode i,int op,String owner,String name,String desc){return i instanceof MethodInsnNode m && m.getOpcode()==op && !m.itf && m.owner.equals(owner) && m.name.equals(name) && m.desc.equals(desc);}
+    static boolean call(AbstractInsnNode i,int op,String owner,String name,String desc){return i instanceof MethodInsnNode m && m.getOpcode()==op && !m.itf && m.owner.equals(owner) && m.name.equals(name) && m.desc.equals(desc);}
     static ClassNode read(byte[] b){ClassNode n=new ClassNode();new ClassReader(b).accept(n,0);return n;}
     static byte[] bytes(ClassNode n){ClassWriter w=new ClassWriter(0);n.accept(w);return w.toByteArray();}
     static String digest(byte[] b){return HexFormat.of().formatHex(MessageDigestHolder.sha(b));}

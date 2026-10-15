@@ -8,7 +8,8 @@ import net.neoforged.fml.loading.FMLLoader;
 /** Exact public host API invocation across the service/GAME boundary; no raw bus escapes. */
 public final class ForgeRegistryBridge {
     private static final StackWalker WALKER=StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE);
-    private static final Map<ModContainer,Set<Object>> ATTACHED=new WeakHashMap<>();
+    private enum Attachment { ATTACHING, ATTACHED, UNCERTAIN }
+    private static final Map<ModContainer,Map<Object,Attachment>> ATTACHED=new WeakHashMap<>();
     private ForgeRegistryBridge() { }
 
     public static void register(Object receiver, net.minecraftforge.eventbus.api.IEventBus source, String fingerprint) {
@@ -22,26 +23,39 @@ public final class ForgeRegistryBridge {
         require(plan.fingerprint.equals(fingerprint),"PLAN_FINGERPRINT_MISMATCH");
         require(plan.helperMethods.contains(internal+"."+caller.getMethodName()+"("+ForgeRegistryTransformationPlan.BUS+")V"),"UNVERIFIED_HELPER_CALLER");
         try {
-            var game=FMLLoader.getGameLayer();
-            require(helper.getModule().getLayer()==game,"WRONG_GAME_LAYER");
-            Class<?> register=Class.forName(game.findModule("neoforge").orElseThrow(),"net.neoforged.neoforge.registries.DeferredRegister");
-            require(receiver!=null && receiver.getClass()==register,"NON_NATIVE_DEFERRED_REGISTER");
-            require(helper.getField(plan.registerField(internal)).get(null)==receiver,"FOREIGN_REGISTER_RECEIVER");
-            require(register.getMethod("getNamespace").invoke(receiver).equals(owner.getModId()),"WRONG_REGISTER_NAMESPACE");
-            Class<?> registries=Class.forName(game.findModule("minecraft").orElseThrow(),"net.minecraft.core.registries.Registries");
-            require(register.getMethod("getRegistryKey").invoke(receiver)==registries.getField("ITEM").get(null),"WRONG_REGISTRY_IDENTITY");
+            Class<?> register=validateReceiver(receiver,helper,owner,plan,internal);
             synchronized(ATTACHED) {
-                Set<Object> attached=ATTACHED.computeIfAbsent(owner,k->Collections.newSetFromMap(new IdentityHashMap<>()));
-                require(attached.add(receiver),"DUPLICATE_REGISTRY_ATTACHMENT");
-                register.getMethod("register",net.neoforged.bus.api.IEventBus.class).invoke(receiver,owner.getEventBus());
+                Map<Object,Attachment> attached=ATTACHED.computeIfAbsent(owner,k->new IdentityHashMap<>());
+                Attachment state=attached.get(receiver);
+                require(state!=Attachment.UNCERTAIN,"REGISTRY_ATTACHMENT_UNCERTAIN");
+                require(state!=Attachment.ATTACHING,"REGISTRY_ATTACHMENT_IN_PROGRESS");
+                require(state==null,"DUPLICATE_REGISTRY_ATTACHMENT");
+                var official=register.getMethod("register",net.neoforged.bus.api.IEventBus.class);
+                attached.put(receiver,Attachment.ATTACHING);
+                try {official.invoke(receiver,owner.getEventBus());attached.put(receiver,Attachment.ATTACHED);}
+                catch(ReflectiveOperationException|RuntimeException|Error failure){attached.put(receiver,Attachment.UNCERTAIN);throw failure;}
             }
             System.out.println("[DUALFORGE-REGISTRY-BRIDGE] ATTACHED modId="+owner.getModId()+" helper="+helper.getName()
-                    +" registry=minecraft:item nativeBus="+System.identityHashCode(owner.getEventBus())+" plan="+fingerprint);
+                    +" registry="+plan.registryKind(internal).id+" nativeBus="+System.identityHashCode(owner.getEventBus())+" plan="+fingerprint);
         } catch(InvocationTargetException e) {
             throw new IllegalStateException("Registry bridge official register failed",e.getCause());
         } catch(ReflectiveOperationException e) {
             throw new IllegalStateException("Registry bridge fixed host ABI unavailable",e);
         }
+    }
+    private static Class<?> validateReceiver(Object receiver,Class<?> helper,ModContainer owner,ForgeRegistryTransformationPlan plan,String internal) throws ReflectiveOperationException {
+        var game=FMLLoader.getGameLayer();
+        require(helper.getModule().getLayer()==game,"WRONG_GAME_LAYER");
+        Class<?> register=Class.forName(game.findModule("neoforge").orElseThrow(),"net.neoforged.neoforge.registries.DeferredRegister");
+        require(receiver!=null && receiver.getClass()==register,"NON_NATIVE_DEFERRED_REGISTER");
+        require(helper.getField(plan.registerField(internal)).get(null)==receiver,"FOREIGN_REGISTER_RECEIVER");
+        require(register.getMethod("getNamespace").invoke(receiver).equals(owner.getModId()),"WRONG_REGISTER_NAMESPACE");
+        registryIdentity(register,receiver,plan.registryKind(internal).field);
+        return register;
+    }
+    private static void registryIdentity(Class<?> register,Object receiver,String field) throws ReflectiveOperationException {
+        Class<?> registries=Class.forName(FMLLoader.getGameLayer().findModule("minecraft").orElseThrow(),"net.minecraft.core.registries.Registries");
+        require(register.getMethod("getRegistryKey").invoke(receiver)==registries.getField(field).get(null),"WRONG_REGISTRY_IDENTITY");
     }
     private static void require(boolean valid,String reason){if(!valid)throw new IllegalStateException("Registry bridge rejected: "+reason);}
 }

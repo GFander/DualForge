@@ -23,9 +23,11 @@ public final class FnFRegistryAdmission {
         System.out.println("FnF old Context retained; new Helper candidate excluded by unverified global bus");
         if(args.length>1) {
             var oracle=new PinnedHostOracle(Path.of(args[1]));
-            FnFAdmissionExpectation.requireSupplierV1Rejection(() -> ForgeRegistryTransformationPlan.create(file.getModInfos().getFirst(),entry.name,oracle));
-            System.out.println("FNF_CONTRACT_VERSION=supplier-v1");
-            System.out.println("FNF_PLAN_ADMISSION=REJECTED reason="+FnFAdmissionExpectation.SUPPLIER_V1_REASON);
+            boolean typed=args.length>2 && args[2].equals("typed-v1");
+            Runnable admission=() -> ForgeRegistryTransformationPlan.create(file.getModInfos().getFirst(),entry.name,oracle);
+            if(typed)FnFAdmissionExpectation.requireTypedV1Rejection(admission);else FnFAdmissionExpectation.requireSupplierV1Rejection(admission);
+            System.out.println("FNF_CONTRACT_VERSION="+(typed?"typed-v1":"supplier-v1"));
+            System.out.println("FNF_PLAN_ADMISSION=REJECTED reason="+(typed?FnFAdmissionExpectation.TYPED_V1_REASON:FnFAdmissionExpectation.SUPPLIER_V1_REASON));
         } else {
             FnFAdmissionExpectation.requireSupplierRejection(() -> ForgeRegistryTransformationPlan.create(file.getModInfos().getFirst(),entry.name));
             System.out.println("FNF_PLAN_ADMISSION=REJECTED reason="+FnFAdmissionExpectation.REASON);

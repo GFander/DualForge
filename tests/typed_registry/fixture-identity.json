@@ -1,0 +1,65 @@
+{
+  "status": "PASS",
+  "artifacts": {
+    "fixture": {
+      "Path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/fixture/20261015-171633-5a41068e/tab-boundary.jar",
+      "SHA256": "e440da9d73a04c0ec76798c723fee074be83bc176f1b51834b022b640722cd84",
+      "Bytes": 4803
+    },
+    "forgeObserver": {
+      "Path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/fixture/20261015-171633-5a41068e/forge/forge-tab-observer.jar",
+      "SHA256": "46e9fda346f274f4bbebfa39f94b07c4b61806f7971d7ae91c8edb6a297e4ee1",
+      "Bytes": 6272
+    },
+    "neoforgeObserver": {
+      "Path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/fixture/20261015-171633-5a41068e/neoforge/neoforge-tab-observer.jar",
+      "SHA256": "ae1f169ff41c960ab133dbe9b4ce90be8c7c462f9860d4b671fd9bf74e5c82c3",
+      "Bytes": 6296
+    }
+  },
+  "source": [
+    {
+      "Path": "/workspace/DualForge-007C4C2/tests/typed_registry/fixture/demo/shelves/Consumer.java",
+      "SHA256": "a73965a7a67e8c3cabd71f4b4ae6949b7fa98d73b668b49aef4d9a2b96dd3988",
+      "Bytes": 436
+    },
+    {
+      "Path": "/workspace/DualForge-007C4C2/tests/typed_registry/fixture/demo/shelves/EntryPoint.java",
+      "SHA256": "5e5769a37240a962a1b7fb5d5397bd65486187609a9e8cb17da28cc20cdd279b",
+      "Bytes": 428
+    },
+    {
+      "Path": "/workspace/DualForge-007C4C2/tests/typed_registry/fixture/demo/shelves/Items.java",
+      "SHA256": "0f2ff8cc2c40b1a6a24f9586bb730a35c878226a86f8299068c0d26e87baca5c",
+      "Bytes": 823
+    },
+    {
+      "Path": "/workspace/DualForge-007C4C2/tests/typed_registry/fixture/demo/shelves/Shelves.java",
+      "SHA256": "db7a257b048945de442e7fd3401df006645858e7209d0ca63954fd9203b4deb9",
+      "Bytes": 1231
+    }
+  ],
+  "classes": [
+    {
+      "Path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/fixture/20261015-171633-5a41068e/classes/demo/shelves/Consumer.class",
+      "SHA256": "8be54a2c8613851707c57ac2acbf8799c42a8c704b45ebb271957a94aadd0d9d",
+      "Bytes": 1157
+    },
+    {
+      "Path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/fixture/20261015-171633-5a41068e/classes/demo/shelves/EntryPoint.class",
+      "SHA256": "ddf3932774ab2a8126b1bf6d2f9b36dd1e613afc1f93019b913b3a75a3d6d047",
+      "Bytes": 1058
+    },
+    {
+      "Path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/fixture/20261015-171633-5a41068e/classes/demo/shelves/Items.class",
+      "SHA256": "322efdc57497283af923eb4c07080f02cfbf858af886ff45888467d892b5b725",
+      "Bytes": 2689
+    },
+    {
+      "Path": "/workspace/DualForge-007C4C2/out/convergence-007c4c2/fixture/20261015-171633-5a41068e/classes/demo/shelves/Shelves.class",
+      "SHA256": "3fd323a14efd534d6f468bef22370d7b1e1f5d6a6c1e79b74348f47a2521862a",
+      "Bytes": 4425
+    }
+  ],
+  "purity": "Official Forge52.1.0 only; platform observers separate"
+}
