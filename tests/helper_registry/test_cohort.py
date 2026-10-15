@@ -8,7 +8,7 @@ from cohort import validate
 class CohortTest(unittest.TestCase):
     def setUp(self):
         self.contract={'status':'PASS','compatSHA256':'a'*64,'fixtureSHA256':'b'*64}
-        self.control={**self.contract,'installedJARs':{'compat':'a'*64,'fixture':'b'*64},'observerSHA256':'c'*64,'fixtureEnvironment':{'DF4B_REGISTER':'false'}}
+        self.control={**self.contract,'installedJARs':{'compat':'a'*64,'fixture':'b'*64,'observer':'c'*64},'observerSHA256':'c'*64,'fixtureEnvironment':{'DF4B_REGISTER':'false'}}
         self.treatment=copy.deepcopy(self.control);self.treatment['fixtureEnvironment']={'DF4B_REGISTER':'true'}
     def test_matching(self):self.assertEqual(validate(self.contract,self.control,self.treatment)['status'],'PASS')
     def test_different_build(self):
@@ -29,3 +29,15 @@ class CohortTest(unittest.TestCase):
     def test_extra_condition(self):
         self.control['fixtureEnvironment']['OTHER']='true'
         with self.assertRaisesRegex(ValueError,'condition'):validate(self.contract,self.control,self.treatment)
+    def test_missing_installed_receipts(self):
+        for row in [self.control,self.treatment]:row.pop('installedJARs')
+        with self.assertRaisesRegex(ValueError,'Installed'):validate(self.contract,self.control,self.treatment)
+    def test_missing_observer(self):
+        for row in [self.control,self.treatment]:row.pop('observerSHA256')
+        with self.assertRaisesRegex(ValueError,'Observer'):validate(self.contract,self.control,self.treatment)
+    def test_installed_receipt_disagrees_with_declared_sha(self):
+        for row in [self.control,self.treatment]:row['installedJARs']['compat']='d'*64
+        with self.assertRaisesRegex(ValueError,'Installed'):validate(self.contract,self.control,self.treatment)
+    def test_non_hex_digest(self):
+        for row in [self.contract,self.control,self.treatment]:row['compatSHA256']='z'*64
+        with self.assertRaisesRegex(ValueError,'compatSHA256'):validate(self.contract,self.control,self.treatment)
