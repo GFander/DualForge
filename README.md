@@ -1,12 +1,12 @@
 # DualForge
 
-DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。main 已集成007A/007B/007C；本分支007C-1修复标准Forge TOML和入口身份准入，实际FnF推进到必需forge依赖拒绝，整体PARTIAL。唯一生产源码位于 [dualforge/src/main](dualforge/src/main)，构建生成 `dualforge.jar`，交付副本命名为 `DualForge.jar`。007B记录见 [007B报告](<Dev Manuals/Convergence-007B Drop-in Runtime 交付报告.md>)，独立前置结果保留在 [007A报告](<Dev Manuals/Convergence-007 Drop-in Runtime 交付报告.md>)，历史事实保留在 [006B报告](<Dev Manuals/Convergence-006B 交付报告.md>)。
+DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。本分支007C-2增加经过版本、宿主、side和ordering校验的Forge平台依赖内部投影；平台条件通过不代表Forge API兼容。唯一生产源码位于 [dualforge/src/main](dualforge/src/main)，构建生成 `dualforge.jar`，交付副本命名为 `DualForge.jar`。当前结果与边界见 [007C-2报告](<Dev Manuals/Convergence-007C-2 交付报告.md>)；007B记录见 [007B报告](<Dev Manuals/Convergence-007B Drop-in Runtime 交付报告.md>)，独立前置结果保留在 [007A报告](<Dev Manuals/Convergence-007 Drop-in Runtime 交付报告.md>)，历史事实保留在 [006B报告](<Dev Manuals/Convergence-006B 交付报告.md>)。
 
 仓库只维护 **zsh 脚本入口**。Python 3 标准库负责内部的构建编排、JSON、JAR 指纹、进程及日志捕获；运行不需要 Windows 或 PowerShell。当前仍使用原单参数构造器 ABI；004 的监听器支持范围如下。
 
 ## 用户安装
 
-007C-1已让原始Food N' Fuel正确解析并准入，实际FML因缺失required `forge [0,)` 拒绝，整体PARTIAL，尚不能正常使用。见 [真实兼容范围](docs/COMPATIBILITY.md) 和 [本轮报告](<Dev Manuals/Convergence-007C-1 交付报告.md>)；[007C原始取证](<Dev Manuals/Convergence-007C 真实物品兼容交付报告.md>)保持原样。
+原始Food N' Fuel仍不能正常使用。007C-2让其越过缺失`forge`依赖检查后，下一真实失败是ASM targets阶段的既有Item profile结构拒绝，尚未进入构造器。见 [真实兼容范围](docs/COMPATIBILITY.md) 和 [本轮报告](<Dev Manuals/Convergence-007C-2 交付报告.md>)；[007C-1报告](<Dev Manuals/Convergence-007C-1 交付报告.md>)及[007C原始取证](<Dev Manuals/Convergence-007C 真实物品兼容交付报告.md>)保持原样。
 
 正常安装 NeoForge 后，将 `DualForge.jar` 和当前受支持的原生 Forge JAR 放入 `mods/`，照常启动；不需要 DualForge JVM 参数或开发工具。支持边界与诊断见 [安装指南](docs/INSTALL.md)。默认启动成功不代表任意 Forge 模组兼容；本轮 Mac 图形验收 NOT RUN。
 
@@ -23,6 +23,7 @@ DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。main 已
 - 003b 证明 register 真实返回；004 证明一个受控自定义 Event 在正常启动后的宿主全局总线上真实 post 一次，注册组回调一次、未注册组零次。测试型 NeoForge driver 不属于 Forge API 兼容能力。
 - 支持原单参数 Forge IEventBus 构造器、空 listener，以及严格四条打印指令的 marker-only listener；Event profile 和构造器 ABI 保持不变。
 - metadata 使用宿主NightConfig标准TOML，先校验类型和语义再交给真实FML；保留依赖 owner 分组及 mandatory 到 FML REQUIRED/OPTIONAL 的适配。
+- 007C-2：只对已确认的同JAR Forge来源、当前精确宿主，按参考来源ABI Forge 52.1.0校验平台范围。active required/optional且ordering NONE的`forge`项通过后从FML实际依赖列表投影移出，原依赖及决策另行保存。其他依赖仍交官方FML；原生NeoForge不投影，没有伪造forge模组或新JVM参数。详见[契约](<Dev Manuals/Convergence-007C-2 Forge依赖契约与验证.md>)及[测试入口](tests/real_mods/food_n_fuel/dependency/README.md)。
 - 005：一个扫描归属明确、严格结构匹配的 Forge DeferredRegister<Item> 入口；转换创建、单 Supplier、MOD bus 挂接、holder 字段及 get 引用。原构造器 ABI 不变，真实注册 C/T 与旧回归通过。物品 `registryprobe:ice_ether` 已打包用户原始 16×16 RGBA PNG，字节与来源 SHA 严格一致；原 005-S 与资源静态验收 PASS，原 005-C 在用户 macOS arm64 受控人工验收中 PASS；该客户端结论只属于历史 cohort，新制品 Mac 验收为 NOT RUN。详见 [005 报告](<Dev Manuals/Convergence-005 交付报告.md>)。
 
 006A 在保持原构造器 ABI、Mod Event Bus 和 Supplier 业务字节不变的前提下，将整类固定计数改为逐 API 调用点与数据依赖验证。一个原生 Forge 模组通过同一个 DeferredRegister<Item> 声明 lambda Alpha 与静态 method reference Beta，006A-S 原冻结 fixture 动态 PASS；Beta 资源更新版 006A-C 在用户 macOS arm64 人工验收中受控 PASS，见 [客户端报告](<Dev Manuals/Convergence-006A-C macOS 客户端人工验收报告.md>)。Codex仅取得用户控制台摘录/审查报告，未独立取得原始日志或截图。详见 [006A 报告](<Dev Manuals/Convergence-006A 交付报告.md>) 和 [新测试入口](tests/multi_registry/README.md)。
@@ -46,6 +47,7 @@ DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。main 已
 | securejarhandler / NeoForge bus | 3.0.8 / 8.0.5 |
 | ASM / asm-tree | 9.10.1 / 9.10.1 |
 | slf4j-api / maven-artifact | 2.0.9 / 3.8.5 |
+| mergetool API（官方Dist类型） | 2.0.0 |
 | 工具 | zsh、Python 3.11+；服务端运行另需 pgrep |
 
 通过 `JAVA_HOME` 或 `--jdk-home` 选择 JDK。克隆仓库后仍需准备以下外部输入：

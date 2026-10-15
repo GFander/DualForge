@@ -112,3 +112,5 @@
 - 007C的tests/real_mods/food_n_fuel使用正式未改字节Forge发行制品；先做纯Forge基线，再记录NeoForge实际首失败。run_stock的生命周期PASS不代表模组功能；原生查询、实际玩家行为和客户端渲染分别验收。当前原生基线PARTIAL、目标发现FAIL，生产零修改；不得把未来TOML/上下文/跨类支持或旧客户端PASS说成已完成，详见docs/COMPATIBILITY.md及007C报告。
 
 - 007C-1 明确授权 metadata/准入前置修复：使用宿主 NightConfig 标准 TOML，结合真实同JAR Forge @Mod 与声明modId识别；loader支持范围和来源证据分离，原生/Library/冲突输入不接管。007B/007C上面的范围限制与结论为历史轮次记录，不覆盖本轮用户授权。不得删除/改名/豁免 required forge 依赖以制造兼容PASS；若没有可靠等价语义，停止于真实FML依赖拒绝，整体PARTIAL。当前契约及测试迁移理由见 tests/real_mods/food_n_fuel/metadata/README.md；旧冻结发行、Fixture、报告、原世界和374项保全继续不变。
+
+- 007C-2用户明确授权经过独立前置校验的内部平台依赖投影，替代上一轮对该机制的禁止；不得无条件删除或将forge改名为neoforge。精确宿主MC1.21.1/Neo21.1.256/FML4.0.45/Java21、来源ABI参考52.1.0、required/optional、side/ordering契约见 tests/real_mods/food_n_fuel/dependency/README.md 和本轮契约文档。保留原声明及审计，非平台依赖保持官方FML语义，原生路径不投影；不提供forge容器、不使用override或用户参数。FnF下一真实失败仅记录，不在本轮扩展构造器、Registry、映射或Food/Fuel/Tab。历史007C/007C-1结果与2554项原始证据不改写。

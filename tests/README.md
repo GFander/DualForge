@@ -9,7 +9,7 @@ JVM 编译、metadata 测试和服务端运行均严格串行。
 
 [输入、原生运行和人工补充](real_mods/food_n_fuel/README.md)使用未改字节的官方发行JAR。
 独立Forge/NeoForge标准运行只声明生命周期；原生Registry/燃料子项不等于DualForge兼容。
-007C冻结事实为原生基线PARTIAL、NeoForge发现FAIL、生产未改；007C-1现已推进到真实FML必需forge依赖拒绝。新的metadata/admission入口见下方章节，实际食用和Mac仍NOT RUN。
+007C冻结事实为原生基线PARTIAL、NeoForge发现FAIL、生产未改；007C-1记录必需forge依赖拒绝；007C-2经过校验的内部投影已推进到ASM targets的既有Item profile结构拒绝。新的metadata/admission和dependency入口见下方章节，实际食用和Mac仍NOT RUN。
 
 先通过新入口干净构建兼容层，再使用 result.json 中实际的新 JAR：
 
@@ -180,3 +180,9 @@ Manifest/SPI/模块/属性检查、官方 Module Layer 实际观测及串行兼�
 ## real_mods/food_n_fuel/metadata：007C-1前置机制
 
 [运行与契约](real_mods/food_n_fuel/metadata/README.md)使用完整原始TOML、真实FML元数据与ASM只读注解取证。覆盖标准字符串/嵌套表、非法语法/类型/UTF-8/超大输入、依赖保留和Forge/NeoForge身份隔离；未被接管类保存转换前后字节。两个测试SPI分别记录NightConfig实际Reader层访问、FML已分配provider；最终标准运行仅安装compat和原始发行JAR。历史发现/范围生成对照的必要迁移理由独立记录，不改冻结输入或原Java语义断言。宿主明确拒绝缺失 required forge 时，不能声称FnF已加载。
+
+## real_mods/food_n_fuel/dependency：007C-2平台契约
+
+[入口、原生夹具和范围](real_mods/food_n_fuel/dependency/README.md)包括真实FML sorter的离线Contract、独立Forge A/B依赖夹具和19组串行标准启动。`run_contract.py`验证平台范围/宿主/side/ordering/原子性及普通依赖语义；`build_fixture.py`只使用固定Forge编译输入；`run_matrix.py`绑定同一新JAR并保留每次原始生命周期结果及独立门禁断言。原FnF N2仅安装compat与未改发行JAR，不带测试SPI或DualForge参数。
+
+007C-1 Contract将原声明断言保留在真实未投影ModFileInfo上，另加实际Reader投影模型断言；迁移理由见dependency README。平台版本条件PASS不表示API兼容，负例拒绝PASS也不表示模组启动成功。FnF下一结构拒绝不在本轮修复。

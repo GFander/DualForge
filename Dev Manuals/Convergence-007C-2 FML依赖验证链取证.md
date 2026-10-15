@@ -21,7 +21,8 @@ FMLLoader.completeScan
   → ModValidator.stage2Validation → validateLanguages → ModFile.identifyLanguage
   → ModSorter.sort → buildUniqueList → verifyDependencyVersions
   → 无错误才sort依赖图；LoadingModList → background scan
-  → 返回GAME resources、模块装配 → transformer.targets → entry/container/constructor
+  → 返回GAME资源候选 → gatherTransformers/transformer.targets
+  → 后续加载、entry/container/constructor（最终FnF未到达）
 ```
 
 `ModFileInfo`读取config的language spec和mods列表，`ModInfo`从同owner的`dependencies.<modId>`创建每项ModVersion。现Parser保留mandatory布尔并添加required/optional type；range/ordering/side原值保留。源TOML、MapConfigurable、真实FML列表是不同表示，不能混称“原样交给FML”。
@@ -53,3 +54,5 @@ ModSorter从传入ModFile列表的IModInfo构造唯一modId及实际getVersion�
 CandidateLocator/Reader可经官方pipeline提供ModFile和元数据，Parser到ModFileInfo之间可做独立验证后投影；不必改ModSorter。VersionSupportMatrix只含MC/NeoForge特定历史版本替代，无forge项、无公开注册API；反射改表不是正式方案。`0.0NONE`开发版本的通配捷径也不能用于Forge范围验证。FML-System-Mods只标记已存在身份，不创建forge。dependencyOverrides可删除约束/加排序，不是兼容语义，本轮正式环境禁用。
 
 隔离`ProjectionFeasibilityTest`使用原FnF元数据和实际ModSorter：原模型缺forge拒绝；先验证52.1.0/NONE/BOTH，再在测试内存副本投影，实际Sorter接受fnf且不存在forge记录，Minecraft要求保留、原模型仍有两依赖。测试使用显式合成的Minecraft/NeoForge metadata记录，不装配GAME、不证明用户环境已通过，全部标DIAGNOSTIC_ONLY。真实生产投影仍需独立Contract、标准动态和历史回归后才能验收。
+
+实施后补充：最终FnF的真实调用栈已到达`TransformationServicesHandler.initialiseServiceTransformers → TransformationServiceDecorator.gatherTransformers → DualForgeEntryTransformer.targets → ControlledForgeItemProfile.validate`，随后以class structure拒绝。不能由此声称FnF的GAME层、ModContainer、入口构造或API已成功。
