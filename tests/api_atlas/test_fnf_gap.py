@@ -3,7 +3,7 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / 'tools/api-atlas'))
-from fnf_gap import cfg, disposition, implementation, known_bootstrap, supplier_kind
+from fnf_gap import cfg, disposition, implementation, known_bootstrap, supplier_kind, target
 
 
 class FnFGapTests(unittest.TestCase):
@@ -44,6 +44,15 @@ class FnFGapTests(unittest.TestCase):
         self.assertEqual(disposition(ref), 'RUNTIME_BRIDGE_REQUIRED')
         ref.update(owner='org/jetbrains/annotations/Nullable', currentCompatibilityStatus='UNRESOLVED')
         self.assertEqual(disposition(ref), 'UNRESOLVED')
+
+    def test_context_target_preserves_source_bus_view(self):
+        ref = {'owner': 'net/minecraftforge/fml/javafmlmod/FMLJavaModLoadingContext',
+               'kind': 'METHOD', 'name': 'getModEventBus'}
+        candidate = target(ref, {})
+        self.assertEqual(candidate['descriptor'], '()Lnet/minecraftforge/eventbus/api/IEventBus;')
+        self.assertEqual(candidate['staticResolution'], 'EXISTING_PRODUCTION_CONTRACT')
+        ref.update(owner='net/minecraftforge/fml/common/Mod', kind='CLASS', name=None)
+        self.assertEqual(target(ref, {})['staticResolution'], 'METADATA_ONLY')
 
 
 if __name__ == '__main__':

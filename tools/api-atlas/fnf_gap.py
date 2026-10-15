@@ -81,6 +81,19 @@ def disposition(ref):
 
 
 def target(ref, host):
+    context = F + 'fml/javafmlmod/FMLJavaModLoadingContext'
+    bridge = 'io/github/gfander/dualforge/ForgeConstructorContext'
+    if ref['owner'] == F + 'fml/common/Mod':
+        return {'owner': ref['owner'], 'name': None, 'descriptor': None,
+                'staticResolution': 'METADATA_ONLY', 'binaryDeclarations': [],
+                'scope': 'ASM/FML scan identity; no runtime annotation type replacement claimed',
+                'semanticEquivalence': 'NOT VERIFIED'}
+    if ref['owner'] == context and ref['kind'] == 'METHOD':
+        return {'owner': bridge, 'name': ref['name'],
+                'descriptor': '()L' + bridge + ';' if ref['name'] == 'get' else '()L' + F + 'eventbus/api/IEventBus;',
+                'staticResolution': 'EXISTING_PRODUCTION_CONTRACT', 'binaryDeclarations': [],
+                'scope': 'Owned entry constructor pair only; ForgeConstructorContext source and actual Context Contract',
+                'semanticEquivalence': 'CONDITIONAL: source BusView, never a native bus alias'}
     remaps = {DR: 'net/neoforged/neoforge/registries/DeferredRegister',
               RO: 'net/neoforged/neoforge/registries/DeferredHolder',
               F + 'registries/IForgeRegistry': 'net/minecraft/core/Registry',
@@ -99,6 +112,7 @@ def target(ref, host):
     return {'owner': owner, 'name': name, 'descriptor': desc,
             'binaryDeclarations': [{k: x[k] for k in ('owner', 'name', 'descriptor', 'signature', 'access', 'artifact', 'classSHA256') if k in x} for x in hits],
             'staticResolution': 'UNIQUE' if len(hits) == 1 else 'UNRESOLVED' if not hits else 'AMBIGUOUS',
+            'scope': 'Candidate boundary only; FnF complete plan rejected; no global type alias',
             'semanticEquivalence': 'NOT VERIFIED'}
 
 
