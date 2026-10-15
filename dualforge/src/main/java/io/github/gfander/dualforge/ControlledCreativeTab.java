@@ -51,12 +51,12 @@ final class ControlledCreativeTab {
     }
     private void callback(ClassNode n,MethodNode m,boolean display) {
         if(verified(n.name,m))return;
-        List<V> stack=new ArrayList<>();boolean done=false;int reads=0,outputs=0;var code=ops(m);
+        List<V> stack=new ArrayList<>();boolean done=false,allocated=false;int reads=0,outputs=0;var code=ops(m);
         for(int i=0;i<code.size();i++) {
             var op=code.get(i);require(!done,"TAB_CALLBACK_AFTER_RETURN");int marker=marker(code,i,n.name);if(marker>0){i+=marker-1;continue;}
             if(op instanceof VarInsnNode v){require(display&&v.getOpcode()==Opcodes.ALOAD&&v.var==1,"TAB_CALLBACK_LOCAL");stack.add(V.OUTPUT);}
             else if(op instanceof TypeInsnNode t) {
-                if(t.getOpcode()==Opcodes.NEW){require(!display&&t.desc.equals(STACK),"TAB_CALLBACK_ALLOCATION");stack.add(V.ALLOCATION);}
+                if(t.getOpcode()==Opcodes.NEW){require(!display&&t.desc.equals(STACK)&&!allocated,"TAB_CALLBACK_ALLOCATION");allocated=true;stack.add(V.ALLOCATION);}
                 else {require(t.getOpcode()==Opcodes.CHECKCAST&&(t.desc.equals(ITEM)||t.desc.equals(LIKE))&&!stack.isEmpty()&&stack.getLast()==V.ITEM,"TAB_CALLBACK_CAST");}
             } else if(op.getOpcode()==Opcodes.DUP){require(!display&&!stack.isEmpty()&&stack.getLast()==V.ALLOCATION,"TAB_CALLBACK_DUP");stack.add(V.ALLOCATION);}
             else if(op instanceof FieldInsnNode f){require(f.getOpcode()==Opcodes.GETSTATIC&&f.desc.equals(H)&&holderKind(nodes,kinds,f.owner,f.name)==Kind.ITEM,"TAB_HOLDER_SOURCE");stack.add(V.HOLDER);reads++;}
