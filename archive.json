@@ -1,0 +1,12 @@
+{
+  "status": "ARCHIVE_READY",
+  "path": "/workspace/DualForge-007C4C1/out/convergence-007c4c1/evidence-export-final/DualForge-007C4C1-Evidence.zip",
+  "bytes": 2562401,
+  "sha256": "7b99ef408f518a787c3ad4f36454817e35d2e467155013751ca33af3dd0d6b9e",
+  "manifestSHA256": "94d9fca0bd112694c66697ec3a3b015f3afe886fbaf70101cd49254b189daf08",
+  "fileCount": 1452,
+  "payloadBytes": 18703560,
+  "redactedCopies": 4,
+  "originalsUnchanged": true,
+  "safety": "Credential-pattern scan PASS; worlds/dependencies/config excluded; release copies redact private IP/email; no secrets found."
+}
