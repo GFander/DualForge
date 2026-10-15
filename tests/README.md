@@ -1,5 +1,7 @@
 # 测试入口
 
+007C-4C-1 的 [supplier_boundary](supplier_boundary/README.md) 验证未改写的 Item Supplier、独立数据与自定义 Item 子类；三个新身份的 Fixture 先运行原生 Forge，再以同一原 JAR 运行 NeoForge C/T。独立静态准入不代表 FnF 运行；当前 FnF 使用版本化只读拒绝，FNF_RUNTIME=NOT RUN。
+
 007C-4B新增 [helper_registry](helper_registry/README.md)：实际FML扫描的同JAR闭包、逐调用Registry ABI、构造期Mod Bus桥接、原生Forge基线和同cohort NeoForge C/T。独立桥接负例使用真实容器及明确标注的白盒诊断；默认用户启动和正式C/T不含诊断注入。FnF闭包只读拒绝时不启动其运行门禁，旧Profile断言不放宽。
 
 007C-4A新增[api_atlas](api_atlas/README.md)：固定官方ABI扫描、候选/冲突、FnF静态使用及离线ASM/JVM验证。该组不启动游戏、不修改生产；历史动态结果只继承，客户端补丁输入缺失单独标记PARTIAL。

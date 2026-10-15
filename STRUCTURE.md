@@ -9,6 +9,7 @@ DualForge/
 │   └── resources/                  活跃：Manifest与SPI
 ├── tests/
 │   ├── helper_registry/            活跃：007C-4B同ModFile Helper/Consumer计划、Registry桥接及独立原生Forge/Neo C/T
+│   ├── supplier_boundary/          活跃：4C-1 Supplier类型/依赖、业务保留及三组原生Forge/Neo C/T
 │   ├── api_atlas/                   活跃研究：007C-4A离线ABI、映射与ASM/JVM验证，不启动游戏
 │   ├── real_mods/food_n_fuel/       活跃：007C冻结发行身份/原生对照与标准运行
 │   │   ├── metadata/               活跃：007C-1标准TOML、注解归属/准入负例及诊断SPI

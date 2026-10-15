@@ -120,3 +120,5 @@
 - 007C-4A仅授权tools/api-atlas及tests/api_atlas独立研究，生产目录不得修改，不启动游戏。候选发现、限定离线验证和运行时兼容分别报告；BusView不是原生Bus，不增加生产解包/事件/Registry Shim。记录固定输入和类来源；完整客户端补丁输入缺失时该门禁及整体保留PARTIAL。数据/class置于out，冻结输入保持原字节；历史动态只记INHERITED。本轮固定SHA FnF命名事实与历史勘误见007C-4A报告，冻结报告不改，不自动进入4B。
 
 - 007C-4B在main收敛后明确授权受控Registry Helper、同ModFile跨类ABI计划及内部Mod Bus桥接；上一条为4A历史边界。tests/helper_registry/先验证原生Forge原字节输入，再以同一最终compat/fixture进行NeoForge C/T。Plan整组验证后发布，逐类克隆验证；不承诺JVM已定义类可回滚。严格归属的内部桥接不提供公开原生Bus解包；未知Supplier/Consumer/Bootstrap整组拒绝。FnF完整Helper闭包未准入时，运行门禁NOT RUN，不覆盖C3真实失败或4A PARTIAL；不批量启用Atlas候选、不进入4C。历史22个Context负例、007B 13负例/JPMS及374项冻结保护保持不变。
+
+- 007C-4C-1 的 tests/supplier_boundary/ 使用三个新身份的原生 Forge Fixture，Supplier 业务指令保留，只读验证类型与前向依赖；业务依赖不自动成为 Transformer Target。未知 Forge API、动态链接、未验证控制流及跨包 protected 成员访问拒绝。原 4B 严格模板/旧 Profile/归属/整组发布不放宽，FnF 的新 supplier-v1 只读 Contract 精确预期 ITEM_FIELD_DESCRIPTOR，正常 global Bus 排除与 FNF_RUNTIME=NOT RUN 保留；不能将67个 Supplier 静态通过声称为真实 FnF、Food/Fuel/Tab 或客户端运行通过。
