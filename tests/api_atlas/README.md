@@ -42,3 +42,9 @@ The latter loads fixture classes and checks a null receipt; Registry creation,
 events, suppliers and game lifecycle are NOT RUN. FnF is only inventoried and
 rejected. A partial Registry chain remains PARTIAL despite successful controlled
 bytecode output. Complete patched client inputs are a separate missing gate.
+
+## FnF closure evidence (007C-4C-0)
+
+`test_fnf_gap.py` covers descriptive supplier categories, unknown bootstrap/descriptor preservation, CFG branch/exception edges, conditional plan refusal, and the source BusView return ABI. `ScannerContract` additionally checks serialized instruction operands and exception targets (14 assertions total). The same existing CI unit-test step discovers the Python tests. All actual Java checks remain serial.
+
+The [report](../../Dev%20Manuals/Convergence-007C-4C-0%20FnF兼容缺口报告.md) separates normal candidate exclusion, forced read-only plan rejection, static symbols, proposed rules and unexecuted gameplay. No test starts FnF or changes its original JAR.

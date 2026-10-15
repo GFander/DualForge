@@ -26,6 +26,16 @@ public class ScannerContract {
         c.methods.add(bridge);String encoded=Atlas.JSON.toJson(Atlas.abi(c,"test","Condy.class"));
         check(encoded.contains("\"bridge\":true"));check(encoded.contains("\"synthetic\":true"));
         check(Atlas.JSON.toJson(Atlas.constant(Double.NEGATIVE_INFINITY)).contains("fff0000000000000"));
+        String code=Atlas.JSON.toJson(Atlas.code(parsed));
+        check(code.contains("constantDynamic"));check(code.contains("exceptionTable"));check(code.contains("maxStack"));
+        MethodNode flow=new MethodNode(Opcodes.ACC_STATIC,"flow","()V",null,null);
+        LabelNode start=new LabelNode(),end=new LabelNode(),handler=new LabelNode();
+        flow.instructions.add(start);flow.instructions.add(new JumpInsnNode(Opcodes.GOTO,end));
+        flow.instructions.add(end);flow.instructions.add(new InsnNode(Opcodes.RETURN));
+        flow.instructions.add(handler);flow.instructions.add(new InsnNode(Opcodes.ATHROW));
+        flow.tryCatchBlocks.add(new TryCatchBlockNode(start,end,handler,"java/lang/Exception"));
+        parsed.methods.add(flow);code=Atlas.JSON.toJson(Atlas.code(parsed));
+        check(code.contains("\"target\":2"));check(code.contains("\"handler\":4"));
         System.out.println("SCANNER_CONTRACT_PASS assertions="+checks+"; metadata only, dynamic constants NOT EXECUTED");
     }
 }
