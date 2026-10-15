@@ -40,6 +40,8 @@ public final class HelperRegistryContract {
         check(method(read(changed.get(C)),"receipt").signature.contains("Item;Lnet/minecraft/world/item/Item;"),"Holder two-parameter generic signature closed");
         negative("duplicate-id",H,n->{for(var i:method(n,"<clinit>").instructions)if(i instanceof LdcInsnNode l && "beta_item".equals(l.cst))l.cst="alpha_item";},"DUPLICATE_OR_INVALID_REGISTRY_ID");
         negative("wrong-registry",H,n->{for(var i:method(n,"<clinit>").instructions)if(i instanceof FieldInsnNode f && f.owner.equals(F+"ForgeRegistries"))f.name="BLOCKS";},"UNKNOWN_REGISTRY_FIELD");
+        negative("literal-registry-token",H,n->{MethodNode m=method(n,"<clinit>");for(var i:m.instructions.toArray())if(i instanceof FieldInsnNode f && f.owner.equals(F+"ForgeRegistries"))m.instructions.set(i,new LdcInsnNode("@registry"));},"CREATE_REGISTRY_NAMESPACE");
+        negative("literal-supplier-token",H,n->{MethodNode m=method(n,"<clinit>");for(var i:m.instructions.toArray())if(i instanceof InvokeDynamicInsnNode)m.instructions.set(i,new LdcInsnNode("@supplier"));n.methods.removeIf(x->x.name.startsWith("lambda$") || x.name.equals("makeBeta"));},"SUPPLIER_DATAFLOW");
         negative("wrong-namespace",H,n->{for(var i:method(n,"<clinit>").instructions)if(i instanceof LdcInsnNode l && "helperprobe".equals(l.cst))l.cst="foreign";},"CREATE_REGISTRY_NAMESPACE");
         negative("unknown-bootstrap",H,n->{indy(n).bsm=new Handle(Opcodes.H_INVOKESTATIC,"foreign/Bootstrap","make","()Ljava/lang/invoke/CallSite;",false);},"UNKNOWN_LAMBDA_BOOTSTRAP");
         negative("captured-lambda",H,n->indy(n).desc="(Ljava/lang/Object;)Ljava/util/function/Supplier;","UNKNOWN_LAMBDA_BOOTSTRAP");

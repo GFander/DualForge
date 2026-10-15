@@ -15,6 +15,7 @@ final class ForgeRegistryTransformationPlan {
     static final String CREATE = "(L" + F + "IForgeRegistry;Ljava/lang/String;)" + R;
     static final String REGISTER = "(Ljava/lang/String;Ljava/util/function/Supplier;)" + H;
     static final String BRIDGE = "io/github/gfander/dualforge/ForgeRegistryBridge";
+    private enum Value { REGISTRY, REGISTER, SUPPLIER, HOLDER }
     private static final Handle META = new Handle(Opcodes.H_INVOKESTATIC,"java/lang/invoke/LambdaMetafactory","metafactory",
             "(Ljava/lang/invoke/MethodHandles$Lookup;Ljava/lang/String;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodType;Ljava/lang/invoke/MethodHandle;Ljava/lang/invoke/MethodType;)Ljava/lang/invoke/CallSite;",false);
     final String modId, module, entry, fingerprint;
@@ -26,7 +27,7 @@ final class ForgeRegistryTransformationPlan {
             Map<String,ClassNode> nodes, Set<String> targets, Map<String,String> registers, Set<String> helpers) {
         this.modId=info.getModId();this.module=info.getOwningFile().moduleName();this.entry=entry;
         this.original=Map.copyOf(original);this.registers=Map.copyOf(registers);this.helperMethods=Set.copyOf(helpers);
-        StringBuilder id=new StringBuilder("registry-helper-v1\n"+modId+"\n"+module+"\n"+info.getOwningFile().getFile().getFilePath().toAbsolutePath()+"\n");
+        StringBuilder id=new StringBuilder("registry-helper-v2\n"+modId+"\n"+module+"\n"+info.getOwningFile().getFile().getFilePath().toAbsolutePath()+"\n");
         original.keySet().stream().sorted().forEach(n -> id.append(n).append(':').append(digest(original.get(n))).append('\n'));
         fingerprint=digest(id.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
         Map<String,byte[]> source=new HashMap<>(), changed=new HashMap<>();
@@ -128,19 +129,19 @@ final class ForgeRegistryTransformationPlan {
             require(!done,"INITIALIZER_AFTER_RETURN");
             if(i instanceof LdcInsnNode l){require(l.cst instanceof String,"INITIALIZER_LITERAL");stack.add(l.cst);}
             else if(i instanceof FieldInsnNode f) {
-                if(f.owner.equals(F+"ForgeRegistries")) {require(f.getOpcode()==Opcodes.GETSTATIC && f.name.equals("ITEMS") && f.desc.equals("L"+F+"IForgeRegistry;"),"UNKNOWN_REGISTRY_FIELD");stack.add("@registry");}
+                if(f.owner.equals(F+"ForgeRegistries")) {require(f.getOpcode()==Opcodes.GETSTATIC && f.name.equals("ITEMS") && f.desc.equals("L"+F+"IForgeRegistry;"),"UNKNOWN_REGISTRY_FIELD");stack.add(Value.REGISTRY);}
                 else {
                     require(f.owner.equals(n.name) && names.contains(f.name) && field(n,f.name).desc.equals(f.desc),"FOREIGN_FIELD_REFERENCE");
-                    if(f.getOpcode()==Opcodes.GETSTATIC){require(f.name.equals(reg.name) && assigned.contains(f.name),"REGISTER_DATAFLOW");stack.add("@register");}
-                    else {require(f.getOpcode()==Opcodes.PUTSTATIC && assigned.add(f.name),"FIELD_ASSIGNMENT");Object v=pop(stack);require(f.name.equals(reg.name)?v.equals("@register"):v.equals("@holder"),"REGISTRY_HOLDER_DATAFLOW");}
+                    if(f.getOpcode()==Opcodes.GETSTATIC){require(f.name.equals(reg.name) && assigned.contains(f.name),"REGISTER_DATAFLOW");stack.add(Value.REGISTER);}
+                    else {require(f.getOpcode()==Opcodes.PUTSTATIC && assigned.add(f.name),"FIELD_ASSIGNMENT");Object v=pop(stack);require(f.name.equals(reg.name)?v.equals(Value.REGISTER):v.equals(Value.HOLDER),"REGISTRY_HOLDER_DATAFLOW");}
                 }
             } else if(i instanceof VarInsnNode v) {
-                if(v.getOpcode()==Opcodes.ASTORE){require(pop(stack).equals("@register") && !locals.containsKey(v.var),"LOCAL_DATAFLOW");locals.put(v.var,"@register");}
+                if(v.getOpcode()==Opcodes.ASTORE){require(pop(stack).equals(Value.REGISTER) && !locals.containsKey(v.var),"LOCAL_DATAFLOW");locals.put(v.var,Value.REGISTER);}
                 else {require(v.getOpcode()==Opcodes.ALOAD && locals.containsKey(v.var),"LOCAL_DATAFLOW");stack.add(locals.get(v.var));}
-            } else if(i instanceof InvokeDynamicInsnNode d) {String impl=supplier(n,d);usedSuppliers.add(impl);stack.add("@supplier");}
+            } else if(i instanceof InvokeDynamicInsnNode d) {String impl=supplier(n,d);usedSuppliers.add(impl);stack.add(Value.SUPPLIER);}
             else if(i instanceof MethodInsnNode c) {
-                if(call(c,Opcodes.INVOKESTATIC,F+"DeferredRegister","create",CREATE)) {require(!created && pop(stack).equals(modId) && pop(stack).equals("@registry"),"CREATE_REGISTRY_NAMESPACE");created=true;stack.add("@register");}
-                else {require(call(c,Opcodes.INVOKEVIRTUAL,F+"DeferredRegister","register",REGISTER),"UNKNOWN_DEFERRED_REGISTER_DESCRIPTOR");require(pop(stack).equals("@supplier"),"SUPPLIER_DATAFLOW");Object id=pop(stack);require(id instanceof String s && s.matches("[a-z0-9_./-]+") && ids.add((String)id),"DUPLICATE_OR_INVALID_REGISTRY_ID");require(pop(stack).equals("@register"),"REGISTER_RECEIVER");stack.add("@holder");}
+                if(call(c,Opcodes.INVOKESTATIC,F+"DeferredRegister","create",CREATE)) {require(!created && pop(stack).equals(modId) && pop(stack).equals(Value.REGISTRY),"CREATE_REGISTRY_NAMESPACE");created=true;stack.add(Value.REGISTER);}
+                else {require(call(c,Opcodes.INVOKEVIRTUAL,F+"DeferredRegister","register",REGISTER),"UNKNOWN_DEFERRED_REGISTER_DESCRIPTOR");require(pop(stack).equals(Value.SUPPLIER),"SUPPLIER_DATAFLOW");Object id=pop(stack);require(id instanceof String s && s.matches("[a-z0-9_./-]+") && ids.add((String)id),"DUPLICATE_OR_INVALID_REGISTRY_ID");require(pop(stack).equals(Value.REGISTER),"REGISTER_RECEIVER");stack.add(Value.HOLDER);}
             } else {require(i.getOpcode()==Opcodes.RETURN && stack.isEmpty(),"INITIALIZER_INSTRUCTION");done=true;}
         }
         require(done && created && assigned.equals(names),"INCOMPLETE_INITIALIZER");
