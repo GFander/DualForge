@@ -1,5 +1,7 @@
 # DualForge
 
+008A 的限定事件初始化 Profile 已用未修改的 Clumps Forge 19.0.0.1 完成 NeoForge 服务端启动、真实经验球合并/总经验对照及经验球重载；独立身份夹具和事件取消/可变值观察通过。真实玩家拾取、Mending 和新 JAR 客户端人工验收仍 NOT_RUN，整体 PARTIAL。见 [008A 报告](<Dev Manuals/Convergence-008A Clumps 交付报告.md>)、[测试入口](tests/real_mods/clumps/README.md)。这不是一般 Forge post API 支持。
+
 007C-4C-5已用同一固定制品完成[真实服务端行为对照](<Dev Manuals/Convergence-007C-4C-5 交付报告.md>)：两种代表燃料的真实熔炉tick/槽位结果、Tab icon及66项display/search、全部58个Food属性与原生Forge一致，**4C5_SERVER_BEHAVIOR=PASS**。实际玩家食用、客户端UI和重启/物品持久化仍NOT RUN；没有生产兼容代码修改，不代表FnF全部功能已兼容。
 
 007C-4C-4已合并基线曾用固定4C-3制品完成原始Food N' Fuel首次NeoForge服务端运行：**FNF_SERVER_BOOT=PASS**，原生Forge/Neo只读对照确认67个Item、Holder及Creative Tab。该阶段实际玩家食用、燃料消耗、客户端UI和重启/物品持久化均NOT RUN，不能据此宣称完整适配。本轮不修改生产。见[运行报告](<Dev Manuals/Convergence-007C-4C-4 交付报告.md>)和[重跑入口](tests/real_mods/food_n_fuel/runtime/README.md)。
