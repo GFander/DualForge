@@ -48,8 +48,12 @@ def main():
         installation = Path.home() / 'Env/DualForge' / host
         installed = read(directory / 'installed-inputs.json')
         if args.final_cohort and directory.parent == args.final_cohort:
-            check(any(row['path'] == 'mods/dualforge.jar' and row['sha256'] == sha(args.jar)
-                      for row in installed), directory.name + ' installed final compat SHA')
+            if host == 'neoforge-21.1.256':
+                check(any(row['path'] == 'mods/dualforge.jar' and row['sha256'] == sha(args.jar)
+                          for row in installed), directory.name + ' installed final compat SHA')
+            else:
+                check(not any(row['path'] == 'mods/dualforge.jar' for row in installed),
+                      directory.name + ' native baseline excludes compat')
         for row in installed:
             if row['path'].startswith('mods/'):
                 continue
