@@ -26,12 +26,17 @@ final class ControlledForgeGlobalBus {
     int listeners() { return listener == null ? 0 : 1; }
     static boolean isCandidate(ClassNode n) {
         return n.methods.stream().flatMap(m -> Arrays.stream(m.instructions.toArray()))
-                .anyMatch(i -> i instanceof FieldInsnNode f && f.owner.equals(SOURCE));
+                .anyMatch(i -> i instanceof FieldInsnNode f && f.owner.equals(SOURCE)
+                        || i instanceof MethodInsnNode c && c.owner.equals("net/minecraftforge/eventbus/api/IEventBus")
+                        && c.name.equals("register") && c.desc.equals("(Ljava/lang/Object;)V"));
     }
     static ControlledForgeGlobalBus validate(ClassNode n, ControlledForgeContextProfile.Scope scope,
             Set<String> helpers, Function<String,byte[]> host) {
         if (!isCandidate(n)) return null;
         RegistryBytecodeVerifier.verify(n);
+        require(scope.classes().stream().noneMatch(name -> name.startsWith("java/") || name.startsWith("javax/")
+                || name.startsWith("net/minecraft/") || name.startsWith("net/minecraftforge/")
+                || name.startsWith("net/neoforged/") || name.startsWith("io/github/gfander/dualforge/")), "PLATFORM_CLASS_OWNER");
         require(empty(n.visibleTypeAnnotations) && empty(n.invisibleTypeAnnotations), "ENTRY_ANNOTATION");
         for (FieldNode f : n.fields) require(empty(f.visibleTypeAnnotations) && empty(f.invisibleTypeAnnotations), "FIELD_ANNOTATION");
         String listener = null; Set<String> methods = new HashSet<>();

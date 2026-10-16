@@ -54,10 +54,9 @@ final class ForgeRegistryTransformationPlan {
         normalized=Map.copyOf(source);output=Map.copyOf(changed);
     }
     static boolean isCandidate(ClassNode n) {
-        boolean helper=false;
+        boolean helper=ControlledForgeGlobalBus.isCandidate(n);
         for(MethodNode m:n.methods)for(var i:m.instructions) {
-            // Global sources require the same complete plan, including independent semantic validation.
-            if(i instanceof FieldInsnNode f && f.owner.equals(ControlledForgeGlobalBus.SOURCE))helper=true;
+            // Candidate routing never substitutes for full Global/Registry validation.
             if(i instanceof MethodInsnNode c && c.getOpcode()==Opcodes.INVOKESTATIC && c.desc.equals("("+BUS+")V"))helper=true;
         }
         return helper;

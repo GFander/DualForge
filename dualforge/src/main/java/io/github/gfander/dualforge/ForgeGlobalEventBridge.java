@@ -76,9 +76,11 @@ public final class ForgeGlobalEventBridge {
             var m = methods[0]; var annotations = m.getDeclaredAnnotations();
             require(m.getName().equals(global.listener) && m.getModifiers() == java.lang.reflect.Modifier.PUBLIC
                     && m.getReturnType() == void.class && m.getParameterCount() == 1
-                    && m.getParameterTypes()[0].getName().equals(ControlledForgeGlobalBus.HOST_EVENT.replace('/', '.'))
+                    && m.getParameterTypes()[0] == Class.forName(FMLLoader.getGameLayer().findModule("neoforge").orElseThrow(), ControlledForgeGlobalBus.HOST_EVENT.replace('/', '.'))
                     && annotations.length == 1 && annotations[0].annotationType() == net.neoforged.bus.api.SubscribeEvent.class,
                     "MAPPED_LISTENER_IDENTITY");
+            var annotation = (net.neoforged.bus.api.SubscribeEvent) annotations[0];
+            require(annotation.priority() == net.neoforged.bus.api.EventPriority.NORMAL && !annotation.receiveCanceled(), "MAPPED_LISTENER_OPTIONS");
         }
     }
     private static boolean emptyRejection(Throwable failure, Object target) {
