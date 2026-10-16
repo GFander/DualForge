@@ -74,3 +74,7 @@ Historical [delivery](<../../../Dev Manuals/Convergence-007C 真实物品兼容�
 ## 007C-4C-0 read-only closure analysis
 
 The [gap report](../../../Dev%20Manuals/Convergence-007C-4C-0%20FnF兼容缺口报告.md) and [six derived datasets](../../../Dev%20Manuals/Convergence-007C-4C-0/) distinguish current profile exclusion from exact forced-plan refusal. Use [fnf_gap.py](../../../tools/api-atlas/fnf_gap.py) after a new Atlas usage scan. All commands are offline/read-only; no FnF runtime is started, production support is unchanged, and C4A/client limitations remain explicit.
+
+## 007C-4C-4 original release runtime experiment
+
+The [runtime experiment](runtime/README.md) tests the original release on native Forge first, then stock NeoForge Control/Treatment with the exact accepted 4C-3 JAR. Production compatibility is frozen. Earlier NOT RUN/refusal receipts remain historical; actual runtime, registry observations and player/client behavior are reported separately.
