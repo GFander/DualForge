@@ -1,5 +1,7 @@
 # 测试入口
 
+007C-4C-4 的 [原始FnF运行实验](real_mods/food_n_fuel/runtime/README.md) 使用固定4C-3 JAR，先原生Forge，再标准Neo C/T与独立只读观察；实际注册/启动与玩家食用、燃料、客户端及持久化分开验收。历史NOT RUN收据不改写，本轮无生产修改。
+
 007C-4C-3 的 [global_bus](global_bus/README.md) 先验证官方Forge/Neo全局Bus差异，再验证Context入口的受控register(this)与Typed Registry不可分割计划。原Forge夹具跨宿主SHA不变，标准运行和白盒故障观察器分开；FnF新global-v1仅证明完整只读计划，FNF_RUNTIME=NOT RUN，旧typed-v1收据保留历史。
 
 007C-4C-2 的 [typed_registry](typed_registry/README.md) 使用原生Forge的两个Item与一个Creative Tab，验证真实typed Registry、延迟icon/display与跨类Holder Consumer。标准C/T和独立Bridge故障诊断分开；FnF使用typed-v1只读精确GLOBAL_EVENT_BUS_UNSUPPORTED拒绝，运行及客户端显示NOT RUN。
