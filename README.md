@@ -1,6 +1,8 @@
 # DualForge
 
-007C-4C-4已用固定4C-3制品完成原始Food N' Fuel首次NeoForge服务端运行：**FNF_SERVER_BOOT=PASS**，原生Forge/Neo只读对照确认67个Item、Holder及Creative Tab。实际玩家食用、燃料消耗、客户端UI和重启/物品持久化均NOT RUN，不能据此宣称完整适配。本轮不修改生产。见[运行报告](<Dev Manuals/Convergence-007C-4C-4 交付报告.md>)和[重跑入口](tests/real_mods/food_n_fuel/runtime/README.md)。
+007C-4C-5已用同一固定制品完成[真实服务端行为对照](<Dev Manuals/Convergence-007C-4C-5 交付报告.md>)：两种代表燃料的真实熔炉tick/槽位结果、Tab icon及66项display/search、全部58个Food属性与原生Forge一致，**4C5_SERVER_BEHAVIOR=PASS**。实际玩家食用、客户端UI和重启/物品持久化仍NOT RUN；没有生产兼容代码修改，不代表FnF全部功能已兼容。
+
+007C-4C-4已合并基线曾用固定4C-3制品完成原始Food N' Fuel首次NeoForge服务端运行：**FNF_SERVER_BOOT=PASS**，原生Forge/Neo只读对照确认67个Item、Holder及Creative Tab。该阶段实际玩家食用、燃料消耗、客户端UI和重启/物品持久化均NOT RUN，不能据此宣称完整适配。本轮不修改生产。见[运行报告](<Dev Manuals/Convergence-007C-4C-4 交付报告.md>)和[重跑入口](tests/real_mods/food_n_fuel/runtime/README.md)。
 
 历史007C-4B阶段新增受控同JAR Registry Helper/Consumer闭包和构造期Mod Bus桥接，使用原生Forge夹具验证实际Item注册；旧Profile保持原严格契约。范围、最终同JAR回归及未运行项见[4B交付](<Dev Manuals/Convergence-007C-4B 交付报告.md>)和[测试入口](tests/helper_registry/README.md)。该阶段FnF新Helper计划只读拒绝，运行NOT RUN；该历史结论与4A PARTIAL不改写。
 

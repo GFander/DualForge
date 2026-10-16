@@ -1,0 +1,106 @@
+package sample.fnfbehavior;
+
+import com.google.gson.GsonBuilder;
+import java.nio.file.*;
+import java.util.*;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.*;
+import HOST.fml.ModList;
+import HOST.fml.common.Mod;
+import HOST.event.server.ServerStartedEvent;
+import HOST.registry.RegisterEvent;
+
+/** Native measurement only: does not replace any FnF Supplier, callback, Item or Bus. */
+@Mod("fnfbehaviorobserver")
+public final class BehaviorObserver {
+    private final Map<String,Object> result = new LinkedHashMap<>();
+    public BehaviorObserver(CONSTRUCTOR_PARAMS) {
+        MOD_BUS.addListener(this::registration);
+        GLOBAL_BUS.addListener(this::started);
+    }
+    private void registration(RegisterEvent event) {
+        if (!Set.of("minecraft:item","minecraft:creative_mode_tab").contains(event.getRegistryKey().location().toString())) return;
+        System.out.println("[DF4C5] REGISTER_EVENT "+event.getRegistryKey());
+        for (var frame: Thread.currentThread().getStackTrace()) System.out.println("[DF4C5] REGISTER_STACK "+frame);
+    }
+    private static String id(Item item) {return BuiltInRegistries.ITEM.getKey(item).toString();}
+    private void failure(String gate, Throwable t) {
+        var writer = new java.io.StringWriter();t.printStackTrace(new java.io.PrintWriter(writer));
+        result.put(gate,Map.of("status","FAIL","exception",t.toString(),"stack",writer.toString()));
+        System.out.println("[DF4C5] GATE_FAILURE "+gate+" "+t);t.printStackTrace(System.out);
+    }
+    private Class<?> source(String name) {
+        var info=ModList.get().getModContainerById("fnf").orElseThrow().getModInfo();
+        var module=getClass().getModule().getLayer().findModule(info.getOwningFile().moduleName()).orElseThrow();
+        return Objects.requireNonNull(Class.forName(module,name));
+    }
+    private void registry() throws Exception {
+        var ids=BuiltInRegistries.ITEM.keySet().stream().filter(k->k.getNamespace().equals("fnf")).map(Object::toString).sorted().toList();
+        Object register=source("net.natevg.fnf.item.ItemRegistries").getField("ITEMS").get(null);
+        var holders=new TreeMap<String,Boolean>();
+        for(Object holder:(Collection<?>)register.getClass().getMethod("getEntries").invoke(register)) {
+            Object value=holder.getClass().getMethod("get").invoke(holder);
+            String key=holder.getClass().getMethod("getId").invoke(holder).toString();
+            if(BuiltInRegistries.ITEM.getOptional(net.minecraft.resources.ResourceLocation.parse(key)).orElseThrow()!=value) throw new AssertionError("Holder identity "+key);
+            holders.put(key,true);
+        }
+        if(ids.size()!=67||!holders.keySet().equals(new TreeSet<>(ids)))throw new AssertionError("67 items/holders");
+        Object container=ModList.get().getModContainerById("fnf").orElseThrow();Object bus=container.getClass().getMethod("getEventBus").invoke(container);
+        var field=GLOBAL_BUS.getClass().getDeclaredField("listeners");field.setAccessible(true);
+        long count=((Map<?,?>)field.get(GLOBAL_BUS)).keySet().stream().filter(k->k.getClass()==source("net.natevg.fnf.FoodNFuel")).count();
+        if(count!=0||bus==GLOBAL_BUS)throw new AssertionError("Global/Mod bus identity");
+        result.put("registry",Map.of("status","PASS","ids",ids,"holders",holders,"modBus",System.identityHashCode(bus),"globalBus",System.identityHashCode(GLOBAL_BUS),"nativeGlobalSourceObjects",count));
+    }
+    private void food() {
+        var foods=new TreeMap<String,Object>();var items=new TreeMap<String,Object>();
+        for(var key:BuiltInRegistries.ITEM.keySet()) {
+            if(!key.getNamespace().equals("fnf"))continue;
+            Item item=BuiltInRegistries.ITEM.getOptional(key).orElseThrow();var stack=new ItemStack(item);
+            var props=stack.get(DataComponents.FOOD);var facts=new LinkedHashMap<String,Object>();
+            facts.put("class",item.getClass().getName());facts.put("stacksTo",stack.getMaxStackSize());
+            if(props!=null) {
+                facts.put("nutrition",props.nutrition());facts.put("saturation",props.saturation());facts.put("canAlwaysEat",props.canAlwaysEat());facts.put("eatSeconds",props.eatSeconds());
+                facts.put("usingConvertsTo",props.usingConvertsTo().map(s->Map.of("id",id(s.getItem()),"count",s.getCount())).orElse(null));
+                var effects=new ArrayList<Object>();
+                for(var possible:props.effects()) {
+                    var e=possible.effect();effects.add(Map.of("id",e.getEffect().unwrapKey().orElseThrow().location().toString(),"duration",e.getDuration(),"amplifier",e.getAmplifier(),"probability",possible.probability(),"ambient",e.isAmbient(),"visible",e.isVisible()));
+                }
+                facts.put("effects",effects);foods.put(key.toString(),facts);
+            }
+            items.put(key.toString(),facts);
+        }
+        if(foods.size()!=58)throw new AssertionError("Expected 58 FOOD components, got "+foods.size());
+        result.put("food",Map.of("status","PASS","foods",foods,"allItems",items,"playerConsumption","NOT RUN"));
+    }
+    private void tab(ServerStartedEvent event) throws Exception {
+        Object holder=source("net.natevg.fnf.item.FnFCreativeModeTabs").getField("FNF_ITEM_TAB").get(null);
+        var tab=(CreativeModeTab)holder.getClass().getMethod("get").invoke(holder);
+        String key=holder.getClass().getMethod("getId").invoke(holder).toString();
+        if(BuiltInRegistries.CREATIVE_MODE_TAB.getOptional(net.minecraft.resources.ResourceLocation.parse(key)).orElseThrow()!=tab)throw new AssertionError("Tab Holder identity");
+        var cached=CreativeModeTab.class.getDeclaredField("iconItemStack");cached.setAccessible(true);
+        boolean iconAbsent=cached.get(tab)==null;int before=tab.getDisplayItems().size();
+        if(!iconAbsent||before!=0)throw new AssertionError("Tab callbacks already populated state before late query");
+        var icon=tab.getIconItem();if(!id(icon.getItem()).equals("fnf:logo"))throw new AssertionError("Icon Holder identity");
+        boolean reused=tab.getIconItem()==icon;
+        tab.buildContents(new CreativeModeTab.ItemDisplayParameters(FeatureFlags.DEFAULT_FLAGS,true,event.getServer().registryAccess()));
+        var display=tab.getDisplayItems().stream().map(s->id(s.getItem())).toList();
+        var search=tab.getSearchTabDisplayItems().stream().map(s->id(s.getItem())).toList();
+        boolean identities=tab.getDisplayItems().stream().allMatch(s->BuiltInRegistries.ITEM.getOptional(BuiltInRegistries.ITEM.getKey(s.getItem())).orElseThrow()==s.getItem());
+        if(display.size()!=66||new HashSet<>(display).size()!=66||!identities||!reused)throw new AssertionError("66 unique callback objects/cached icon");
+        result.put("tab",Map.of("status","PASS","id",key,"holderIdentity",true,"icon",id(icon.getItem()),"iconCacheInitiallyNull",iconAbsent,"iconSecondQueryReusesStack",reused,"displayInitiallyEmpty",before==0,"display",display,"search",search,"displayObjectIdentities",identities));
+    }
+    private void started(ServerStartedEvent event) {
+        boolean present=ModList.get().isLoaded("fnf");result.put("fnfPresent",present);
+        if(present) {
+            try{registry();}catch(Throwable t){failure("registry",t);}
+            try{food();}catch(Throwable t){failure("food",t);}
+            try{tab(event);}catch(Throwable t){failure("tab",t);}
+        } else result.put("absentItems",BuiltInRegistries.ITEM.keySet().stream().filter(k->k.getNamespace().equals("fnf")).count());
+        result.put("foodPlayerConsumption","NOT RUN");result.put("clientUI","NOT RUN");result.put("persistence","NOT RUN");
+        try {Files.writeString(Path.of("fnf-behavior.json"),new GsonBuilder().serializeNulls().setPrettyPrinting().create().toJson(result)+"\n");}
+        catch(java.io.IOException e){throw new AssertionError(e);}
+        System.out.println("[DF4C5] OBSERVATION_COMPLETE present="+present);
+    }
+}

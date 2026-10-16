@@ -1,6 +1,8 @@
 # 实际兼容范围
 
-当前007C-4C-4：固定原始FnF及4C-3 DualForge在真实NeoForge服务端 **FNF_SERVER_BOOT=PASS**。同轮官方Forge基线和独立只读查询确认67个Item/Holder、Creative Tab及宿主Bus身份；标准C/T正常启动、保存、停止、退出。玩家食用、燃料消耗、客户端UI、回调UI显示和重启/物品持久化仍NOT RUN，不能推导为FnF全部功能兼容。生产零修改；[交付与证据](<../Dev Manuals/Convergence-007C-4C-4 交付报告.md>)、[运行入口](../tests/real_mods/food_n_fuel/runtime/README.md)。
+当前007C-4C-5仅验证既有固定制品：两种代表燃料及负例的真实熔炉状态、Tab icon/66项display/search和58个Food属性与本轮原生Forge一致，4C5_SERVER_BEHAVIOR=PASS。36项食物转换组件也按属性比对，并未模拟实际返还。玩家实际食用、客户端UI、重启/物品持久化仍NOT RUN；[报告与边界](<../Dev Manuals/Convergence-007C-4C-5 交付报告.md>)、[重跑](../tests/real_mods/food_n_fuel/behavior/README.md)。
+
+已合并007C-4C-4基线：固定原始FnF及4C-3 DualForge在真实NeoForge服务端 **FNF_SERVER_BOOT=PASS**。同轮官方Forge基线和独立只读查询确认67个Item/Holder、Creative Tab及宿主Bus身份；标准C/T正常启动、保存、停止、退出。该阶段玩家食用、燃料消耗、客户端UI、回调UI显示和重启/物品持久化为NOT RUN，不能推导为FnF全部功能兼容。生产零修改；[交付与证据](<../Dev Manuals/Convergence-007C-4C-4 交付报告.md>)、[运行入口](../tests/real_mods/food_n_fuel/runtime/README.md)。
 
 以下按阶段记录历史范围；其中旧FnF拒绝/NOT RUN不替代上面的本轮实际运行结果。
 
@@ -14,7 +16,7 @@
 |---|---|
 | 002–006B 冻结受控输入 | 构造、事件、Item、双 Item、Block/BlockItem 等各自限定的契约和回归；不代表一般 Forge API |
 | 007B 普通原生 Forge 双 Item | 单 IEventBus 构造器、同入口零捕获纯 Item 工厂、typed 字段/get-only；服务端受控 PASS |
-| Food N' Fuel Forge 1.3 | **007C-4C-4 FNF_SERVER_BOOT=PASS**；指定SHA的原始发行JAR完成67 Item/Holder及Tab查询、标准启动/停止。实际食用、燃料、客户端及重启持久化NOT RUN；007C-3旧构造失败保留为历史，不是当前首失败 |
+| Food N' Fuel Forge 1.3 | **FNF_SERVER_BOOT=PASS / 4C5_SERVER_BEHAVIOR=PASS**；指定SHA原JAR的67 Item/Holder、Tab注册和两种代表燃料/Tab回调/58 Food属性对照通过。实际玩家食用、客户端及重启持久化NOT RUN；007C-3旧构造失败保留为历史，不是当前首失败 |
 | Clumps Forge 19.0.0.1 | 007历史发现失败保留；007C-1仅重新验证完整TOML静态解析，未运行/适配Clumps功能 |
 
 冻结007C记录中，Food N' Fuel 的原生基线为 PARTIAL：普通对象/Holder、食物 component 和代表燃料的真实熔炉行为已经验证；食用后变化、创造 UI、手持及重进未执行。

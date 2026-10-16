@@ -11,6 +11,7 @@
 
 | 主题 | 当前实现与验证 | 历史/决策/证据 |
 |---|---|---|
+| FnF服务端行为 | [官方熔炉tick/原生观察器](../tests/real_mods/food_n_fuel/behavior/README.md) | [4C-5交付](<../Dev Manuals/Convergence-007C-4C-5 交付报告.md>)、[矩阵](../tests/real_mods/food_n_fuel/behavior/MATRIX.md)；玩家/客户端/重启持久化独立NOT RUN |
 | 原始FnF服务端运行 | [标准运行/独立只读查询](../tests/real_mods/food_n_fuel/runtime/README.md) | [4C-4交付](<../Dev Manuals/Convergence-007C-4C-4 交付报告.md>)、[机器索引](<../Dev Manuals/Convergence-007C-4C-4 证据索引.json>)；仅FNF_SERVER_BOOT=PASS，玩家/客户端/持久化NOT RUN |
 | FnF API closure / gap analysis | [read-only tool](../tools/api-atlas/fnf_gap.py)、[Schema](../tools/api-atlas/fnf-gap.schema.json) | [4C-0 report](<../Dev Manuals/Convergence-007C-4C-0 FnF兼容缺口报告.md>)、[six derived datasets](<../Dev Manuals/Convergence-007C-4C-0/>) |
 | Owned Registry Helper / Mod Bus | [Plan](../dualforge/src/main/java/io/github/gfander/dualforge/ForgeRegistryTransformationPlan.java)、[Bridge](../dualforge/src/main/java/io/github/gfander/dualforge/ForgeRegistryBridge.java)、[测试](../tests/helper_registry/README.md) | [4B契约](<../Dev Manuals/Convergence-007C-4B Registry Helper与转换计划契约.md>)、[Bus归属](<../Dev Manuals/Convergence-007C-4B Mod Bus桥接与归属验证.md>)、[交付](<../Dev Manuals/Convergence-007C-4B 交付报告.md>) |

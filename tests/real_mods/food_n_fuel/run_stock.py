@@ -26,7 +26,7 @@ def sha(path):
         return hashlib.file_digest(stream, 'sha256').hexdigest()
 
 
-def run(args):
+def run(args, console_driver=None, initial_properties=None):
     for proc in Path('/proc').iterdir():
         try:
             if (proc / 'exe').resolve().name in ('java', 'javac'):
@@ -58,6 +58,10 @@ def run(args):
     for name in startup_files:
         shutil.copyfile(source / name, server / name)
     (server / 'eula.txt').write_text('eula=true\n')
+    if initial_properties is not None:
+        (server / 'server.properties').write_text(initial_properties)
+        # The host rewrites/defaults this file; preserve its initial bytes separately.
+        (output / 'initial-server.properties').write_text(initial_properties)
     (server / 'mods').mkdir()
     for jar in args.mod:
         target = server / 'mods' / jar.name
@@ -98,10 +102,13 @@ def run(args):
                         except (FileNotFoundError, PermissionError):
                             pass
                 if 'Done (' in (output / 'stdout.log').read_text(errors='replace'):
-                    for console in args.console:
-                        process.stdin.write((console + '\n').encode())
-                        process.stdin.flush()
-                        time.sleep(2)
+                    if console_driver is not None:
+                        console_driver(process, output)
+                    else:
+                        for console in args.console:
+                            process.stdin.write((console + '\n').encode())
+                            process.stdin.flush()
+                            time.sleep(2)
                     process.stdin.write(b'stop\n')
                     process.stdin.flush()
                     process.wait(timeout=90)
