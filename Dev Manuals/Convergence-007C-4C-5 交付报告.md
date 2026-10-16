@@ -98,3 +98,45 @@ carrot_bread本轮重新测得nutrition=6、saturation=7.2000003、maxStack=64�
 重跑见 [behavior](../tests/real_mods/food_n_fuel/behavior/README.md)，完整逐文件路径/SHA及精确状态见 [机器索引](<Convergence-007C-4C-5 证据索引.json>)。本地原始路径保留，不冒充远端下载URL。
 
 后续4C-6若另行授权，需要同一原FnF/4C3 DualForge的上述SHA、官方MC1.21.1/NeoForge21.1.256/Java21客户端、干净实例和可登录玩家，并核对客户端自身制品。待验收：真实饥饿/饱和度与食用消耗/效果/转换返还，创造栏icon及66展示物的GUI/模型/名称，背包/容器物品保存重进。服务端API和旧受控Mac PASS不能代替这些项。本轮不制作/启动客户端任务，不自动合并、Release或适配其他模组。
+
+
+---
+
+## 事后证据上传与最终 CI 核验（2026-10-16）
+
+本节为 4C-5 原始实验完成后的追加交付收据，不修改原始实验结果、冻结制品或历史证据。
+
+### 证据持久化
+
+状态：**PERSISTED / VERIFIED（Git Blob 身份验证）**。
+
+用户已手动将原始证据 ZIP 上传至 GitHub：
+
+- 证据分支：`evidence/convergence-007c4c5`
+- 固定提交：`29136dd79701f7ebe2eee1e56d8a7bfd2ab52835`
+- 文件：`DualForge-007C4C5-Evidence.zip`
+- 大小：835787 bytes
+- SHA-256：`1995361e09b8e6e6bb1836ee552ae29c9cd55c18009a5fbd2a7e540fb87f2a95`
+- Git Blob SHA-1：`bbd3f8e7f2e14fd92bf458646f83ef2d91eff6b6`
+
+[固定提交证据 ZIP](https://github.com/GFander/DualForge/blob/29136dd79701f7ebe2eee1e56d8a7bfd2ab52835/DualForge-007C4C5-Evidence.zip)
+
+已核对本地原始 ZIP 与 GitHub Blob 身份一致。原始 ZIP 的 CRC、Manifest、SHA256SUMS、236 个载荷文件及路径安全检查 PASS。
+
+本次复核未执行公开 HTTP URL 的独立重新下载及 SHA-256 计算。公开内容仅完成初步自动模式扫描，不声明完整人工安全审查 PASS。
+
+原报告及机器索引中的 `ARCHIVE_READY / NOT PERSISTED` 记录的是归档创建当时的历史状态，予以保留；本节记录之后由用户手动完成的上传与核验。
+
+### 最终 GitHub Actions
+
+- 被验证任务 HEAD：`d8c84bec09bdc69cf36c2e863b9575727d6a0a8e`
+- [Actions #38853805075](https://github.com/GFander/DualForge/actions/runs/38853805075)
+- Workflow：DualForge CI
+- 状态：COMPLETED / SUCCESS
+- Job：`static-and-unit` SUCCESS
+
+该 CI 不包含本轮八组真实游戏运行，不以静态和单元测试代替已归档的动态服务端证据。
+
+本次追加仅涉及交付元数据，未修改生产兼容层、原始 FnF、固定 DualForge JAR 或既有实验结果，也未重新运行游戏。
+
+`4C5_SERVER_BEHAVIOR=PASS` 保持不变。玩家食用、客户端 UI、重启及物品持久化仍为 NOT RUN。
