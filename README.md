@@ -1,16 +1,18 @@
 # DualForge
 
-007C-4B新增受控同JAR Registry Helper/Consumer闭包和构造期Mod Bus桥接，使用原生Forge夹具验证实际Item注册；旧Profile保持原严格契约。范围、最终同JAR回归及未运行项见[4B交付](<Dev Manuals/Convergence-007C-4B 交付报告.md>)和[测试入口](tests/helper_registry/README.md)。FnF新Helper计划只读拒绝，运行NOT RUN；它仍不兼容，4A历史PARTIAL不改写。
+007C-4C-4已用固定4C-3制品完成原始Food N' Fuel首次NeoForge服务端运行：**FNF_SERVER_BOOT=PASS**，原生Forge/Neo只读对照确认67个Item、Holder及Creative Tab。实际玩家食用、燃料消耗、客户端UI和重启/物品持久化均NOT RUN，不能据此宣称完整适配。本轮不修改生产。见[运行报告](<Dev Manuals/Convergence-007C-4C-4 交付报告.md>)和[重跑入口](tests/real_mods/food_n_fuel/runtime/README.md)。
 
-007C-4A新增[独立API图谱与离线ASM研究工具](tools/api-atlas/README.md)，生产目录不变；缺少完整客户端补丁输入，整体PARTIAL。原FnF运行FAIL仅继承，未重跑。见[研究交付](<Dev Manuals/Convergence-007C-4A 交付报告.md>)；候选映射不代表生产支持。
+历史007C-4B阶段新增受控同JAR Registry Helper/Consumer闭包和构造期Mod Bus桥接，使用原生Forge夹具验证实际Item注册；旧Profile保持原严格契约。范围、最终同JAR回归及未运行项见[4B交付](<Dev Manuals/Convergence-007C-4B 交付报告.md>)和[测试入口](tests/helper_registry/README.md)。该阶段FnF新Helper计划只读拒绝，运行NOT RUN；该历史结论与4A PARTIAL不改写。
 
-DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。当前实现保留007C-3的入口Profile分类和构造期Context，007C-4B仅在其基础上增加受控Registry Helper及内部Mod Bus桥接；007C-2的平台依赖契约继续保留。唯一生产源码位于 [dualforge/src/main](dualforge/src/main)，构建生成 `dualforge.jar`，交付副本命名为 `DualForge.jar`。Context历史结果与边界见 [007C-3报告](<Dev Manuals/Convergence-007C-3 交付报告.md>)；历史结果见 [007C-2报告](<Dev Manuals/Convergence-007C-2 交付报告.md>)、[007B报告](<Dev Manuals/Convergence-007B Drop-in Runtime 交付报告.md>)、[007A报告](<Dev Manuals/Convergence-007 Drop-in Runtime 交付报告.md>)及[006B报告](<Dev Manuals/Convergence-006B 交付报告.md>)。
+历史007C-4A阶段新增[独立API图谱与离线ASM研究工具](tools/api-atlas/README.md)，生产目录不变；缺少完整客户端补丁输入，整体PARTIAL。原FnF运行FAIL仅继承，未重跑。见[研究交付](<Dev Manuals/Convergence-007C-4A 交付报告.md>)；候选映射不代表生产支持。
+
+DualForge 是以 NeoForge 为宿主的受控 Forge 入口兼容原型。当前实现包括入口Profile/Context、受控Registry Helper、Supplier、Typed Registry及Global Bus组合；007C-2的平台依赖契约继续保留。007C-4C-4只验证既有生产制品的真实运行。唯一生产源码位于 [dualforge/src/main](dualforge/src/main)，构建生成 `dualforge.jar`，交付副本命名为 `DualForge.jar`。Context历史结果与边界见 [007C-3报告](<Dev Manuals/Convergence-007C-3 交付报告.md>)；历史结果见 [007C-2报告](<Dev Manuals/Convergence-007C-2 交付报告.md>)、[007B报告](<Dev Manuals/Convergence-007B Drop-in Runtime 交付报告.md>)、[007A报告](<Dev Manuals/Convergence-007 Drop-in Runtime 交付报告.md>)及[006B报告](<Dev Manuals/Convergence-006B 交付报告.md>)。
 
 仓库只维护 **zsh 脚本入口**。Python 3 标准库负责内部的构建编排、JSON、JAR 指纹、进程及日志捕获；运行不需要 Windows 或 PowerShell。旧Profile保留原单参数构造器ABI；新Context Profile仅支持下述严格无参入口。
 
 ## 用户安装
 
-原始Food N' Fuel仍不能正常使用。007C-3让其越过targets及构造期Context获取，随后在ItemRegistries初始化时缺少ForgeRegistries；完整构造器和Registry没有通过。见 [真实兼容范围](docs/COMPATIBILITY.md) 和 [本轮报告](<Dev Manuals/Convergence-007C-3 交付报告.md>)；[007C-2](<Dev Manuals/Convergence-007C-2 交付报告.md>)及更早冻结报告保持原样。
+原始Food N' Fuel 1.3的指定JAR已在MC1.21.1/NeoForge21.1.256/Java21上完成服务端启动与注册查询；完整玩家功能和客户端仍未验收。制品SHA及限制见[当前运行报告](<Dev Manuals/Convergence-007C-4C-4 交付报告.md>)和[真实兼容范围](docs/COMPATIBILITY.md)。[007C-3](<Dev Manuals/Convergence-007C-3 交付报告.md>)的构造期失败及更早冻结事实保留为历史结果。
 
 正常安装 NeoForge 后，将 `DualForge.jar` 和当前受支持的原生 Forge JAR 放入 `mods/`，照常启动；不需要 DualForge JVM 参数或开发工具。支持边界与诊断见 [安装指南](docs/INSTALL.md)。默认启动成功不代表任意 Forge 模组兼容；本轮 Mac 图形验收 NOT RUN。
 
