@@ -1,7 +1,6 @@
 {
   "task": "Convergence-007C-4C-5",
   "PR": "https://github.com/GFander/DualForge/pull/30",
-  
   "postPublicationVerification": {
     "status": "PERSISTED / VERIFIED (Git blob identity)",
     "publishedBy": "user manual upload",
