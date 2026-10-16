@@ -7,7 +7,7 @@ import net.neoforged.neoforgespi.language.IModInfo;
 import org.objectweb.asm.*;
 import org.objectweb.asm.tree.*;
 
-/** Immutable, same-ModFile Item helper closure; no source class is defined while planning. */
+/** Immutable same-ModFile typed Registry/Global closure; no source class is defined while planning. */
 final class ForgeRegistryTransformationPlan {
     static final String F = "net/minecraftforge/registries/", N = "net/neoforged/neoforge/registries/";
     static final String ITEM = "net/minecraft/world/item/Item", BUS = ControlledForgeContextProfile.BUS;
@@ -29,33 +29,34 @@ final class ForgeRegistryTransformationPlan {
     final Map<String,String> registers;
     private final Map<String,Kind> kinds;
     final Set<String> helperMethods;
+    final ControlledForgeGlobalBus global;
     private final Map<String,byte[]> original, normalized, output;
 
     private ForgeRegistryTransformationPlan(IModInfo info, String entry, Map<String,byte[]> original,
-            Map<String,ClassNode> nodes, Set<String> targets, Map<String,String> registers, Set<String> helpers, ControlledItemSupplier suppliers) {
-        this.modId=info.getModId();this.module=info.getOwningFile().moduleName();this.entry=entry;
+            Map<String,ClassNode> nodes, Set<String> targets, Map<String,String> registers, Set<String> helpers, ControlledItemSupplier suppliers, ControlledForgeGlobalBus global) {
+        this.global=global;this.modId=info.getModId();this.module=info.getOwningFile().moduleName();this.entry=entry;
         Map<String,Kind> typed=new TreeMap<>();for(String name:registers.keySet())typed.put(name,kind(nodes.get(name)));kinds=Map.copyOf(typed);
         this.original=Map.copyOf(original);this.registers=Map.copyOf(registers);this.helperMethods=Set.copyOf(helpers);
-        StringBuilder id=new StringBuilder("registry-helper-v4\n"+modId+"\n"+module+"\n"+info.getOwningFile().getFile().getFilePath().toAbsolutePath()+"\n");
+        StringBuilder id=new StringBuilder("registry-helper-v5-global\n"+modId+"\n"+module+"\n"+info.getOwningFile().getFile().getFilePath().toAbsolutePath()+"\n");
         original.keySet().stream().sorted().forEach(n -> id.append(n).append(':').append(digest(original.get(n))).append('\n'));
         suppliers.hostFingerprints().entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(x -> id.append("host:").append(x.getKey()).append(':').append(x.getValue()).append('\n'));
+        if(global!=null)global.hostFingerprints.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(x -> id.append("global-host:").append(x.getKey()).append(':').append(x.getValue()).append('\n'));
         fingerprint=digest(id.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
         Map<String,byte[]> source=new HashMap<>(), changed=new HashMap<>();
         var context=new ControlledForgeContextProfile.Scope(modId,Set.copyOf(nodes.keySet()),original::get);
-        require(ControlledForgeContextProfile.validateRegistry(nodes.get(entry),context,helperMethods).pendingGlobalCalls()==0,"GLOBAL_EVENT_BUS_UNSUPPORTED");
+        if(global==null)require(ControlledForgeContextProfile.validateRegistry(nodes.get(entry),context,helperMethods).pendingGlobalCalls()==0,"GLOBAL_EVENT_BUS_UNSUPPORTED");
         for(String name:targets) {
             ClassNode n=read(bytes(nodes.get(name)));source.put(name,bytes(n));
-            if(name.equals(entry)) ControlledForgeContextProfile.rewriteRegistry(n,context,helperMethods);
+            if(name.equals(entry)) {if(global==null)ControlledForgeContextProfile.rewriteRegistry(n,context,helperMethods);else global.rewrite(n,context,helperMethods,fingerprint);}
             else rewrite(n,registers.containsKey(name),fingerprint);
             RegistryBytecodeVerifier.verify(n);changed.put(name,bytes(n));
         }
         normalized=Map.copyOf(source);output=Map.copyOf(changed);
     }
     static boolean isCandidate(ClassNode n) {
-        boolean helper=false;
+        boolean helper=ControlledForgeGlobalBus.isCandidate(n);
         for(MethodNode m:n.methods)for(var i:m.instructions) {
-            // Keep the original Context-only/global-bus boundary unchanged; no partial Registry plan.
-            if(i instanceof FieldInsnNode f && f.owner.equals("net/minecraftforge/common/MinecraftForge"))return false;
+            // Candidate routing never substitutes for full Global/Registry validation.
             if(i instanceof MethodInsnNode c && c.getOpcode()==Opcodes.INVOKESTATIC && c.desc.equals("("+BUS+")V"))helper=true;
         }
         return helper;
@@ -90,7 +91,7 @@ final class ForgeRegistryTransformationPlan {
             require(!regs.containsKey(c.owner),"DUPLICATE_HELPER_ATTACHMENT");
             regs.put(c.owner,c.name);kinds.put(c.owner,kind(nodes.get(c.owner)));
         }
-        require(!helpers.isEmpty(),"NO_REGISTRY_HELPERS");
+        require(!helpers.isEmpty() || ControlledForgeGlobalBus.isCandidate(e),"NO_REGISTRY_HELPERS");
         ControlledCreativeTab tabs=new ControlledCreativeTab(nodes,kinds,suppliers);
         for(String owner:new TreeSet<>(regs.keySet()))regs.put(owner,validateHelper(nodes.get(owner),regs.get(owner),info.getModId(),ids,suppliers,kinds.get(owner),tabs));
         Set<String> closure=new HashSet<>(regs.keySet());closure.addAll(tabs.owners());boolean added;
@@ -119,7 +120,9 @@ final class ForgeRegistryTransformationPlan {
             }
         }
         Set<String> targets=new HashSet<>(closure);require(targets.add(entry),"TRANSFORMATION_RULE_CONFLICT");
-        return new ForgeRegistryTransformationPlan(info,entry,raw,nodes,targets,regs,helpers,suppliers);
+        var scope=new ControlledForgeContextProfile.Scope(info.getModId(),Set.copyOf(nodes.keySet()),raw::get);
+        var global=ControlledForgeGlobalBus.validate(e,scope,helpers,host);
+        return new ForgeRegistryTransformationPlan(info,entry,raw,nodes,targets,regs,helpers,suppliers,global);
     }
     Set<String> targets(){return output.keySet();}
     String registerField(String owner){return registers.get(owner);}

@@ -1,5 +1,7 @@
 # 测试入口
 
+007C-4C-3 的 [global_bus](global_bus/README.md) 先验证官方Forge/Neo全局Bus差异，再验证Context入口的受控register(this)与Typed Registry不可分割计划。原Forge夹具跨宿主SHA不变，标准运行和白盒故障观察器分开；FnF新global-v1仅证明完整只读计划，FNF_RUNTIME=NOT RUN，旧typed-v1收据保留历史。
+
 007C-4C-2 的 [typed_registry](typed_registry/README.md) 使用原生Forge的两个Item与一个Creative Tab，验证真实typed Registry、延迟icon/display与跨类Holder Consumer。标准C/T和独立Bridge故障诊断分开；FnF使用typed-v1只读精确GLOBAL_EVENT_BUS_UNSUPPORTED拒绝，运行及客户端显示NOT RUN。
 
 007C-4C-1 的 [supplier_boundary](supplier_boundary/README.md) 验证未改写的 Item Supplier、独立数据与自定义 Item 子类；三个新身份的 Fixture 先运行原生 Forge，再以同一原 JAR 运行 NeoForge C/T。独立静态准入不代表 FnF 运行；当前 FnF 使用版本化只读拒绝，FNF_RUNTIME=NOT RUN。

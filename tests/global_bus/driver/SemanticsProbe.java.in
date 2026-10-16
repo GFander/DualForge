@@ -1,0 +1,32 @@
+package sample.bussemantics;
+import HOST.fml.common.Mod;
+import HOST.fml.javafmlmod.FMLJavaModLoadingContext;
+import HOST.bus.api.SubscribeEvent;
+import HOST.bus.api.EventPriority;
+import HOST.event.server.ServerStartedEvent;
+@Mod("bussemantics")
+public final class SemanticsProbe {
+ private static int direct,inherited;
+ public SemanticsProbe() {
+  var global=GLOBAL_BUS;
+  if ((Object)FMLJavaModLoadingContext.get().getModEventBus()==global) throw new AssertionError("Bus identities equal");
+  System.out.println("[DF4C3-SEM] DISTINCT_BUSES");
+  attempt("empty",new Empty());
+  var good=new Good();attempt("instance",good);attempt("duplicate",good);
+  attempt("static-instance",new StaticOnly());
+  attempt("inherited",new Child());
+  attempt("invalid-type",new Invalid());
+  global.addListener(EventPriority.LOWEST,this::check);
+ }
+ private static void attempt(String label,Object value) {
+  try {GLOBAL_BUS.register(value);System.out.println("[DF4C3-SEM] REGISTER "+label+" RETURNED");}
+  catch (IllegalArgumentException e){System.out.println("[DF4C3-SEM] REGISTER "+label+" REJECTED "+e.getClass().getName()+" "+e.getMessage().replace('\n',' '));}
+ }
+ public static class Empty {}
+ public static class Good { @SubscribeEvent public void started(ServerStartedEvent e){direct++;System.out.println("[DF4C3-SEM] DIRECT "+direct);}}
+ public static class Parent { @SubscribeEvent public void started(ServerStartedEvent e){inherited++;System.out.println("[DF4C3-SEM] INHERITED "+inherited);}}
+ public static class Child extends Parent {}
+ public static class StaticOnly { @SubscribeEvent public static void started(ServerStartedEvent e){throw new AssertionError("Static instance listener fired");}}
+ public static class Invalid { @SubscribeEvent public void wrong(String e){} }
+ private void check(ServerStartedEvent e){if(direct!=1||inherited!=EXPECTED_INHERITED)throw new AssertionError("Incorrect delivery counts "+direct+"/"+inherited);System.out.println("[DF4C3-SEM] PASS direct="+direct+" inherited="+inherited);}
+}

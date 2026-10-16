@@ -61,6 +61,13 @@ public final class ForgeConstructorContext {
         return active;
     }
 
+    static ModContainer globalOwner(Class<?> entry) {
+        require(WALKER.getCallerClass() == ForgeGlobalEventBridge.class, "unowned global bridge caller");
+        ModContainer active = ModLoadingContext.get().getActiveContainer();
+        validateCaller(entry, active);
+        return active;
+    }
+
     // The existing source interface remains a marker shell. This view adds no Forge
     // register/post/listener API and creates no bus; its delegate is the real host bus.
     private static final class BusView implements net.minecraftforge.eventbus.api.IEventBus {

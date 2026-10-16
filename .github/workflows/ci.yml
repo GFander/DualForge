@@ -59,7 +59,8 @@ jobs:
             tests/api_atlas \
             tests/helper_registry \
             tests/supplier_boundary \
-            tests/typed_registry
+            tests/typed_registry \
+            tests/global_bus
           do
             python3 -B -m unittest discover \
               -s "$dir" -p 'test_*.py' -v

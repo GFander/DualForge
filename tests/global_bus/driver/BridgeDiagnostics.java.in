@@ -1,0 +1,34 @@
+package sample.globalobserver;
+import java.lang.reflect.*;
+import java.util.*;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.server.ServerStartedEvent;
+import net.neoforged.bus.api.*;
+
+/** Separate white-box diagnostics: isolated state-machine tests do not validate caller admission. */
+public final class BridgeDiagnostics {
+ private static boolean ran;private static int calls,delivered;private static final List<String> verified=new ArrayList<>();
+ public static final class FaultTarget { @SubscribeEvent public void event(ServerStartedEvent e){delivered++;if(StackWalker.getInstance().walk(f->f.noneMatch(x->x.getClassName().equals("net.neoforged.bus.EventBus")&&x.getMethodName().equals("post"))))throw new AssertionError("No native post");System.out.println("[DF4C3-DIAG] FAULT_CALLBACK "+delivered);}}
+ private static void check(boolean b,String label){if(!b)throw new AssertionError(label);verified.add(label);System.out.println("[DF4C3-DIAG] PASS "+label);}
+ private static Throwable refusal(Method method,Object[] args)throws ReflectiveOperationException{try{method.invoke(null,args);throw new AssertionError("Unexpected acceptance");}catch(InvocationTargetException e){return e.getCause();}}
+ public static void run(){if(ran)throw new AssertionError("Repeated diagnostic");ran=true;try{
+  var owner=ModLoadingContext.get().getActiveContainer();Class<?> bridge=Class.forName("io.github.gfander.dualforge.ForgeGlobalEventBridge");var field=bridge.getDeclaredField("STATES");field.setAccessible(true);var states=(Map<Object,Object>)field.get(null);Object original=states.get(owner);if(!original.toString().equals("EMPTY_SOURCE_TRANSLATION"))throw new AssertionError("Missing real empty transition");
+  var publicRegister=bridge.getMethod("register",Object.class,String.class);check(refusal(publicRegister,new Object[]{new Object(),"wrong"}).getMessage().equals("Global bus bridge rejected: ENTRY_CONSTRUCTOR_OBJECT"),"outside-constructor-wrong-object");
+  var info=owner.getModInfo();var module=BridgeDiagnostics.class.getModule().getLayer().findModule(info.getOwningFile().moduleName()).orElseThrow();Class<?> source=Class.forName(module,"org.example.quietbus.EntryPoint");
+  try{source.getConstructor().newInstance();throw new AssertionError("Duplicate accepted");}catch(InvocationTargetException e){check(e.getCause().getMessage().equals("Global bus bridge rejected: DUPLICATE_GLOBAL_REGISTRATION"),"real-constructor-duplicate");}
+  Class<?> global=Class.forName("io.github.gfander.dualforge.ControlledForgeGlobalBus");var ctor=global.getDeclaredConstructor(String.class,Map.class);ctor.setAccessible(true);var invoke=bridge.getDeclaredMethod("invoke",net.neoforged.fml.ModContainer.class,Object.class,Object.class,global);invoke.setAccessible(true);
+  Object plan=ctor.newInstance("event",Map.of());FaultTarget target=new FaultTarget();
+  IEventBus proxy=(IEventBus)Proxy.newProxyInstance(IEventBus.class.getClassLoader(),new Class<?>[]{IEventBus.class},(p,m,a)->{if(m.getName().equals("register")){calls++;NeoForge.EVENT_BUS.register(a[0]);throw new IllegalStateException("DF4C3 injected after real registration");}throw new AssertionError("Unexpected proxy call");});
+  try{
+   states.remove(owner);Throwable failure=refusal(invoke,new Object[]{owner,proxy,target,plan});var listeners=NeoForge.EVENT_BUS.getClass().getDeclaredField("listeners");listeners.setAccessible(true);boolean retained=((Map<?,?>)listeners.get(NeoForge.EVENT_BUS)).containsKey(target);
+   check(failure.getCause()!=null&&failure.getCause().getMessage().equals("DF4C3 injected after real registration")&&states.get(owner).toString().equals("UNCERTAIN")&&retained&&calls==1,"real-partial-native-registration-retained");
+   check(refusal(invoke,new Object[]{owner,proxy,target,plan}).getMessage().equals("Global bus bridge rejected: GLOBAL_REGISTRATION_UNCERTAIN")&&calls==1,"uncertain-retry-no-second-call");
+   Object empty=ctor.newInstance(null,Map.of());IEventBus wrong=(IEventBus)Proxy.newProxyInstance(IEventBus.class.getClassLoader(),new Class<?>[]{IEventBus.class},(p,m,a)->{throw new IllegalArgumentException("different empty failure");});states.remove(owner);
+   Throwable mismatch=refusal(invoke,new Object[]{owner,wrong,new Object(),empty});check(mismatch.getCause() instanceof IllegalArgumentException&&states.get(owner).toString().equals("UNCERTAIN"),"wrong-empty-exception-not-swallowed");
+   IEventBus noop=(IEventBus)Proxy.newProxyInstance(IEventBus.class.getClassLoader(),new Class<?>[]{IEventBus.class},(p,m,a)->null);states.remove(owner);
+   check(refusal(invoke,new Object[]{owner,noop,new Object(),empty}).getMessage().equals("Global bus bridge rejected: UNEXPECTED_EMPTY_NATIVE_RETURN")&&states.get(owner).toString().equals("UNCERTAIN"),"empty-noop-return-rejected");
+  }finally{states.put(owner,original);}
+ }catch(ReflectiveOperationException e){throw new AssertionError(e);}}
+ public static void completed(){check(ran&&verified.size()==6&&calls==1&&delivered==1,"all-six-negatives-and-one-native-delivery");System.out.println("[DF4C3-DIAG] COMPLETE cases=6 calls=1 delivered=1 partialEffectsRetained=true");}
+}
