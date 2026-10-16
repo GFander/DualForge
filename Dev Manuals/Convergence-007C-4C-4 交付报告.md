@@ -63,9 +63,17 @@ Neo空宿主、Control及Treatment正常启动/停止。原生共存模组构造
 
 最早一次Forge空宿主调用被云sandbox拒绝socket，发生在安装/JVM之前；原失败保留，之后在新目录使用网络权限运行。所有运行目录中的旧结果不覆盖。现有runner只删除本轮自己的、已核对SHA的物理运行库副本，世界、mods、原始命令、日志、结果均保留。
 
-原始附件本地ZIP `out/convergence-007c4c4/evidence-export/DualForge-007C4C4-Evidence.zip`：**627450 bytes、193个payload文件、3034503 bytes**，SHA `0e022f4ebbb5cc932b88290dd1314bd258be6923733d02485a1c421eeaf77859`。Manifest SHA `7f1f3a0b4fc6335956b42ea9a9f4c09ce5214b44309ddae61d9aac6aa6c936f5`。ZIP/CRC/路径/重复/软链接、Manifest、解压逐文件SHA及192个原文件不变核验PASS。包含命令、退出、日志、查询、指纹、本项目制品和必要原始FnF五ClassFile；不含世界、第三方运行库、完整FnF JAR或实例配置。它是选定附件，不是完整工作区备份；原路径保留，未作公开发布审查或脱敏声明。
+原始附件本地ZIP `out/convergence-007c4c4/evidence-export/DualForge-007C4C4-Evidence.zip`：**627450 bytes、193个payload文件、3034503 bytes**，SHA `0e022f4ebbb5cc932b88290dd1314bd258be6923733d02485a1c421eeaf77859`。Manifest SHA `7f1f3a0b4fc6335956b42ea9a9f4c09ce5214b44309ddae61d9aac6aa6c936f5`。ZIP/CRC/路径/重复/软链接、Manifest、解压逐文件SHA及192个原文件不变核验PASS。包含命令、退出、日志、查询、指纹、本项目制品和必要原始FnF五ClassFile；不含世界、第三方运行库、完整FnF JAR或实例配置。它是选定附件，不是完整工作区备份；原路径保留，生成时未作公开发布审查；后续审查结果见下节。
 
-**ARCHIVE_READY / NOT PERSISTED**：本轮明确禁止未经另行授权公开证据，未上传该新载荷，不沿用C3具体载荷的授权。报告和机器索引入Git，原始附件仅本地保存；不把本地路径说成远端下载链接。新档案生成后的Git/CI收据由PR实时链接，非本ZIP内历史运行附件。
+## 原始证据持久化与远端复核
+
+**PERSISTED / VERIFIED**。用户于本轮明确授权上传4C-4证据后，已将上述原ZIP原字节上传到 `evidence/convergence-007c4c4`，远端提交 `36f23ce10e4a9b74dd2522fa096dd095a3128f15`。没有复用旧C3授权，没有生成替代历史日志。
+
+[固定提交证据ZIP](https://raw.githubusercontent.com/GFander/DualForge/36f23ce10e4a9b74dd2522fa096dd095a3128f15/DualForge-007C4C4-Evidence.zip)；文件大小、ZIP/Manifest SHA及覆盖范围保持上文原值。核验时间：2026-10-16T04:17:03.039995+00:00。从公开URL独立下载至新目录，HTTP、ZIP SHA/CRC、Manifest/SHA256SUMS、无路径穿越/软链接/重复成员及解压后193个文件逐项大小/SHA全部PASS；192个原文件再次核对不变。结构化复核收据嵌入机器索引archive.remoteVerification。
+
+公开前模式扫描与内容范围复核PASS：47个邮箱模式命中实际为45个Java模块版本串及2个公开Git SSH地址，未发现个人邮箱/凭据，未作脱敏改写；保留/workspace路径。仅含已声明的本项目制品及五个必要FnF原ClassFile，排除世界、运行库、完整第三方JAR和实例配置。安全复核记录随证据分支保存。ZIP内README/Manifest保留生成时“尚未授权/未发布”的历史快照，不重写原归档；本节与证据分支外层README记录之后的授权、上传和独立复核。
+
+本次只持久化证据并更新报告/索引及PR，生产Java、测试工具和已测JAR未改，不重新执行游戏回归。此前FNF_SERVER_BOOT=PASS及所有NOT RUN边界保持。后续Git/CI收据由PR实时链接，非原ZIP内历史运行附件。
 
 [运行和重跑命令](../tests/real_mods/food_n_fuel/runtime/README.md)，[机器索引](<Convergence-007C-4C-4 证据索引.json>)。当前[PR #29](https://github.com/GFander/DualForge/pull/29)，基线main，最终交付HEAD/CI由PR及最终回复实际核验；不将旧main CI代替新HEAD CI。
 

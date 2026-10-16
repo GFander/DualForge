@@ -665,7 +665,7 @@
     }
   ],
   "archive": {
-    "status": "ARCHIVE_READY / NOT PERSISTED",
+    "status": "PERSISTED / VERIFIED",
     "path": "/workspace/DualForge-007C4C4/out/convergence-007c4c4/evidence-export/DualForge-007C4C4-Evidence.zip",
     "bytes": 627450,
     "sha256": "0e022f4ebbb5cc932b88290dd1314bd258be6923733d02485a1c421eeaf77859",
@@ -674,9 +674,28 @@
     "payloadBytes": 3034503,
     "originalsUnchanged": true,
     "redactedCopies": 0,
-    "remoteUpload": "NOT RUN / NOT AUTHORIZED",
+    "remoteUpload": "PASS",
     "scope": "selected experiment evidence; no worlds/dependencies/whole original FnF JAR/configuration",
-    "safety": "Local archive only; no public distribution review or authorization claimed"
+    "safety": "PASS: pattern scan, binary scope review, 47 email-pattern false positives adjudicated (45 module/version identities, 2 public SSH remote examples); no redactions required",
+    "remoteDownload": "PASS",
+    "remoteVerification": {
+      "status": "PERSISTED / VERIFIED",
+      "url": "https://raw.githubusercontent.com/GFander/DualForge/36f23ce10e4a9b74dd2522fa096dd095a3128f15/DualForge-007C4C4-Evidence.zip",
+      "evidenceCommit": "36f23ce10e4a9b74dd2522fa096dd095a3128f15",
+      "verifiedUTC": "2026-10-16T04:17:03.039995+00:00",
+      "bytes": 627450,
+      "sha256": "0e022f4ebbb5cc932b88290dd1314bd258be6923733d02485a1c421eeaf77859",
+      "manifestSHA256": "7f1f3a0b4fc6335956b42ea9a9f4c09ce5214b44309ddae61d9aac6aa6c936f5",
+      "payloadFiles": 193,
+      "payloadBytes": 3034503,
+      "originalFilesUnchanged": 192,
+      "httpRead": "PASS",
+      "zipCRCManifestSafePathsNoSymlinks": "PASS",
+      "extractedFileSHA256": "PASS",
+      "safety": "PASS: pattern scan, binary scope review, 47 email-pattern false positives adjudicated (45 module/version identities, 2 public SSH remote examples); no redactions required",
+      "authorization": "User explicitly authorized upload of this 4C-4 evidence: 先上传证据，我授权了. Destination evidence/convergence-007c4c4 announced before upload.",
+      "productionTestsRerun": false
+    }
   },
   "archiveVerification": {
     "status": "PASS",
@@ -2429,5 +2448,10 @@
       "archiveSHA256": "1ce500bb697613bcfcaa71471da156969cfb7c524896b8b8694639ec406f3cf9",
       "redacted": false
     }
-  ]
+  ],
+  "publicationSafetyReview": {
+    "path": "/workspace/DualForge-007C4C4/out/convergence-007c4c4/public-safety-scan.json",
+    "sha256": "8e1174c055bde30c94174964f60e8fdeb48eaa0b1d5f09efe2858187e37ed09e",
+    "url": "https://github.com/GFander/DualForge/blob/36f23ce10e4a9b74dd2522fa096dd095a3128f15/SAFETY-REVIEW.json"
+  }
 }
