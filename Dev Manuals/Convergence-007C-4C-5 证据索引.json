@@ -1,6 +1,31 @@
 {
   "task": "Convergence-007C-4C-5",
   "PR": "https://github.com/GFander/DualForge/pull/30",
+  
+  "postPublicationVerification": {
+    "status": "PERSISTED / VERIFIED (Git blob identity)",
+    "publishedBy": "user manual upload",
+    "branch": "evidence/convergence-007c4c5",
+    "commit": "29136dd79701f7ebe2eee1e56d8a7bfd2ab52835",
+    "fixedUrl": "https://github.com/GFander/DualForge/blob/29136dd79701f7ebe2eee1e56d8a7bfd2ab52835/DualForge-007C4C5-Evidence.zip",
+    "filename": "DualForge-007C4C5-Evidence.zip",
+    "bytes": 835787,
+    "sha256": "1995361e09b8e6e6bb1836ee552ae29c9cd55c18009a5fbd2a7e540fb87f2a95",
+    "gitBlobSha1": "bbd3f8e7f2e14fd92bf458646f83ef2d91eff6b6",
+    "gitBlobMatchesOriginal": true,
+    "localIntegrity": "PASS: CRC, Manifest, SHA256SUMS, 236 payload files",
+    "remoteHttpDownloadRehash": "NOT RUN",
+    "publicSafetyReview": "PARTIAL: automated pattern scan, not complete manual audit",
+    "ci": {
+      "head": "d8c84bec09bdc69cf36c2e863b9575727d6a0a8e",
+      "runId": 38853805075,
+      "conclusion": "SUCCESS",
+      "scope": "static-and-unit only"
+    },
+    "historicalArchiveEntryPreserved": true,
+    "newGameRerun": "NOT RUN"
+  },
+
   "branch": "codex/convergence-007c4c5-fnf-behavior",
   "generatedUTC": "2026-10-16T05:02:32.954799+00:00",
   "baseCommit": "dd3d046820589b9c1e4eb46f1a3249efd816fd93",
