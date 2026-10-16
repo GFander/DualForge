@@ -57,6 +57,11 @@ def driver(process, output):
     command('tick freeze')
     command('tick rate 1000')
     command('forceload add 0 0')
+    deadline = time.monotonic()+60
+    while 'DF4C5_CHUNK_READY' not in command('execute if loaded 0 100 0 run say DF4C5_CHUNK_READY')['response']:
+        if time.monotonic() > deadline:
+            raise ValueError('Forced test chunk did not load')
+        time.sleep(.1)
     for x, (name, block, item, count, fuel) in enumerate(CASES):
         command('setblock '+str(x)+' 100 0 minecraft:'+block)
         if item:
@@ -84,7 +89,8 @@ def driver(process, output):
             actual = origin
         for x, case in enumerate(CASES):
             r = command('data get block '+str(x)+' 100 0')
-            snapshots.append({'case':case[0], 'elapsed':elapsed, 'worldGameTime':actual, 'response':r['response']})
+            lit = command('execute if block '+str(x)+' 100 0 minecraft:'+case[1]+'[lit=true] run say DF4C5_LIT')['response']
+            snapshots.append({'case':case[0], 'elapsed':elapsed, 'worldGameTime':actual, 'response':r['response'], 'lit': '[Server] DF4C5_LIT' in lit})
         previous = elapsed
     (output/'furnace-snapshots.json').write_text(json.dumps({'cases':CASES, 'snapshots':snapshots,
         'mechanism':'official server ticks with item-replace slots; no burn/cook/NBT assignment'},indent=2)+'\n')
