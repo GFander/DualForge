@@ -96,7 +96,9 @@ public final class ContextProfileContract {
         try{ForgeConstructorContext.get();throw new AssertionError("Static caller acquired context");}catch(IllegalStateException expected){check(expected.getMessage().contains("outside entry constructor"),"escaped static context acquisition rejected");}
         byte[] fnfBefore=Files.readAllBytes(Path.of(args[1]));ModFile fnf=scan(Path.of(args[1]),false);String name=DualForgeLanguageLoader.forgeEntrypoints(fnf.getModInfos().getFirst(),fnf.getScanResult()).getFirst().replace('.','/');ClassNode entry=read(Files.readAllBytes(fnf.findResource(name+".class")));
         var owned=scope(fnf);var stats=ControlledForgeContextProfile.validate(entry,owned);check(stats.helpers()==2 && stats.pendingGlobalCalls()==1 && stats.receipts()==0,"real FnF helper boundaries accounted without adapting Registry");
-        var realTransformer=new DualForgeEntryTransformer();check(realTransformer.targets().equals(Set.of(ITransformer.Target.targetClass(name.replace('/','.')))),"FnF target is entry only, no helper conversion");ClassNode actual=realTransformer.transform(entry,null);reverseAndCompare(entry,actual,"original-fnf");
+        // 4C-3 production uses the complete Registry/Global plan. Preserve the original
+        // Context validator's two-call behavior here; global-v1 separately tests full admission.
+        check(ForgeRegistryTransformationPlan.isCandidate(entry),"FnF now routes to complete composed plan");ClassNode actual=read(bytes(entry));ControlledForgeContextProfile.rewrite(actual,owned);reverseAndCompare(entry,actual,"original-fnf-context-only-contract");
         String helper="net/natevg/fnf/item/ItemRegistries";Set<String> missing=new java.util.HashSet<>(owned.classes());missing.remove(helper);
         profileReject(entry,new ControlledForgeContextProfile.Scope("fnf",missing,owned.read()),"helper-outside-owner");
         Set<String> missingSecond=new java.util.HashSet<>(owned.classes());missingSecond.remove("net/natevg/fnf/item/FnFCreativeModeTabs");
