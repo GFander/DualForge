@@ -14,6 +14,7 @@ DualForge/
 │   ├── typed_registry/             活跃：4C-2 Item/Creative Tab类型闭包、延迟回调、跨类Holder与Bridge诊断
 │   ├── api_atlas/                   活跃研究：007C-4A离线ABI、映射与ASM/JVM验证，不启动游戏
 │   ├── real_mods/food_n_fuel/       活跃：007C冻结发行身份/原生对照与标准运行
+│   │   ├── behavior/               活跃：4C-5真实熔炉tick、原生Tab/Food对照及精确SNBT收据
 │   │   ├── runtime/                活跃：4C-4原始FnF标准服务端实验及独立原生只读注册查询
 │   │   ├── metadata/               活跃：007C-1标准TOML、注解归属/准入负例及诊断SPI
 │   │   └── dependency/             活跃：007C-2平台契约、独立Forge夹具、串行零参数依赖矩阵

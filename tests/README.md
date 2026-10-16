@@ -1,5 +1,7 @@
 # 测试入口
 
+007C-4C-5的[behavior](real_mods/food_n_fuel/behavior/README.md)先取得本轮原生Forge实际熔炉/Tab/Food基线，再用固定同JAR进行Neo标准与观察C/T。官方命令推进真实世界tick、只读比较58个Food component和官方Tab延迟查询；玩家食用、UI和重启持久化独立NOT RUN。新SNBT解析负例按该README手动运行，不冒充CI/旧游戏全矩阵。
+
 007C-4C-4 的 [原始FnF运行实验](real_mods/food_n_fuel/runtime/README.md) 使用固定4C-3 JAR，先原生Forge，再标准Neo C/T与独立只读观察；实际注册/启动与玩家食用、燃料、客户端及持久化分开验收。历史NOT RUN收据不改写，本轮无生产修改。
 
 007C-4C-3 的 [global_bus](global_bus/README.md) 先验证官方Forge/Neo全局Bus差异，再验证Context入口的受控register(this)与Typed Registry不可分割计划。原Forge夹具跨宿主SHA不变，标准运行和白盒故障观察器分开；FnF新global-v1仅证明完整只读计划，FNF_RUNTIME=NOT RUN，旧typed-v1收据保留历史。
