@@ -1,0 +1,273 @@
+{
+  "textFilesScanned": 184,
+  "patterns": [
+    "private_key",
+    "github_token",
+    "aws_access_id",
+    "bearer_secret",
+    "credential_assignment",
+    "private_ip",
+    "email",
+    "personal_home",
+    "cookie_header"
+  ],
+  "findings": [
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/preflight/pr28.json",
+      "kind": "email",
+      "line": 1
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/preflight/pr28.json",
+      "kind": "email",
+      "line": 1
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-empty-network/stock/logs/debug.log",
+      "kind": "email",
+      "line": 355
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-empty-network/stock/logs/debug.log",
+      "kind": "email",
+      "line": 356
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-empty-network/stock/logs/debug.log",
+      "kind": "email",
+      "line": 358
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-empty-network/stock/logs/debug.log",
+      "kind": "email",
+      "line": 359
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-empty-network/stock/logs/debug.log",
+      "kind": "email",
+      "line": 360
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-empty-network/stock/logs/debug.log",
+      "kind": "email",
+      "line": 361
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-empty-network/stock/logs/debug.log",
+      "kind": "email",
+      "line": 362
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-empty-network/stock/logs/debug.log",
+      "kind": "email",
+      "line": 363
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-empty-network/stock/logs/debug.log",
+      "kind": "email",
+      "line": 384
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-empty-network/stock/logs/debug.log",
+      "kind": "email",
+      "line": 386
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-empty-network/stock/logs/debug.log",
+      "kind": "email",
+      "line": 387
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-empty-network/stock/logs/debug.log",
+      "kind": "email",
+      "line": 388
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-empty-network/stock/logs/debug.log",
+      "kind": "email",
+      "line": 389
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-empty-network/stock/logs/debug.log",
+      "kind": "email",
+      "line": 390
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-empty-network/stock/logs/debug.log",
+      "kind": "email",
+      "line": 391
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf/stock/logs/debug.log",
+      "kind": "email",
+      "line": 372
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf/stock/logs/debug.log",
+      "kind": "email",
+      "line": 373
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf/stock/logs/debug.log",
+      "kind": "email",
+      "line": 375
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf/stock/logs/debug.log",
+      "kind": "email",
+      "line": 376
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf/stock/logs/debug.log",
+      "kind": "email",
+      "line": 377
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf/stock/logs/debug.log",
+      "kind": "email",
+      "line": 378
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf/stock/logs/debug.log",
+      "kind": "email",
+      "line": 379
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf/stock/logs/debug.log",
+      "kind": "email",
+      "line": 380
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf/stock/logs/debug.log",
+      "kind": "email",
+      "line": 401
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf/stock/logs/debug.log",
+      "kind": "email",
+      "line": 403
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf/stock/logs/debug.log",
+      "kind": "email",
+      "line": 404
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf/stock/logs/debug.log",
+      "kind": "email",
+      "line": 405
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf/stock/logs/debug.log",
+      "kind": "email",
+      "line": 406
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf/stock/logs/debug.log",
+      "kind": "email",
+      "line": 407
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf/stock/logs/debug.log",
+      "kind": "email",
+      "line": 408
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf-observed/stock/logs/debug.log",
+      "kind": "email",
+      "line": 389
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf-observed/stock/logs/debug.log",
+      "kind": "email",
+      "line": 390
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf-observed/stock/logs/debug.log",
+      "kind": "email",
+      "line": 392
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf-observed/stock/logs/debug.log",
+      "kind": "email",
+      "line": 393
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf-observed/stock/logs/debug.log",
+      "kind": "email",
+      "line": 394
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf-observed/stock/logs/debug.log",
+      "kind": "email",
+      "line": 395
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf-observed/stock/logs/debug.log",
+      "kind": "email",
+      "line": 396
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf-observed/stock/logs/debug.log",
+      "kind": "email",
+      "line": 397
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf-observed/stock/logs/debug.log",
+      "kind": "email",
+      "line": 418
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf-observed/stock/logs/debug.log",
+      "kind": "email",
+      "line": 420
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf-observed/stock/logs/debug.log",
+      "kind": "email",
+      "line": 421
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf-observed/stock/logs/debug.log",
+      "kind": "email",
+      "line": 422
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf-observed/stock/logs/debug.log",
+      "kind": "email",
+      "line": 423
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf-observed/stock/logs/debug.log",
+      "kind": "email",
+      "line": 424
+    },
+    {
+      "file": "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/runtime/forge-fnf-observed/stock/logs/debug.log",
+      "kind": "email",
+      "line": 425
+    }
+  ],
+  "binaryFiles": [
+    "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/forge-observer-build/classes/io/github/gfander/dualforge/observation/NativeRegistryObserver.class",
+    "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/forge-observer-build/native-observer.jar",
+    "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/inputs/DualForge.jar",
+    "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/inputs/native-bootstrap.jar",
+    "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/neo-observer-build/classes/sample/fnfruntime/NeoRegistryObserver.class",
+    "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/neo-observer-build/fnf-runtime-observer.jar",
+    "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/preflight/original-classes/net/natevg/fnf/FoodNFuel.class",
+    "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/preflight/original-classes/net/natevg/fnf/item/FnFCreativeModeTabs.class",
+    "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/preflight/original-classes/net/natevg/fnf/item/FnFFoodProperties.class",
+    "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/preflight/original-classes/net/natevg/fnf/item/ItemRegistries.class",
+    "DualForge-007C4C4-Evidence/raw/out/convergence-007c4c4/preflight/original-classes/net/natevg/fnf/item/custom/FuelItem.class"
+  ],
+  "zipSHA256": "0e022f4ebbb5cc932b88290dd1314bd258be6923733d02485a1c421eeaf77859",
+  "status": "PASS",
+  "note": "Pattern scan plus manual scope review required; binary evidence is project JARs and original five FnF ClassFiles, not runtime dependencies.",
+  "manualReview": {
+    "emailMatches": "47 false positives: 45 Java module/version identities io.netty.common@4.1.97.Final; 2 public SSH remote examples git@github.com",
+    "workspacePaths": "Retained /workspace paths; no personal home paths detected",
+    "binaryScope": "Project-only compat/observer/coexistence classes/JARs and five necessary original FnF ClassFiles; no whole third-party JAR"
+  },
+  "limitations": "Pattern and scope review, not a mathematical proof of absence. No payload redaction required; original ZIP remains byte-identical."
+}
