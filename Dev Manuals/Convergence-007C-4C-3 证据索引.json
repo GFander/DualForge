@@ -1,6 +1,6 @@
 {
   "task": "Convergence-007C-4C-3",
-  "functionalStatus": "PASS in controlled server scope; archive publication pending exact authorization",
+  "functionalStatus": "PASS in controlled server scope; evidence PERSISTED / VERIFIED",
   "baseCommit": "c4860adbea6a69e3a16499fc9eeb3e021519433a",
   "PR27": {
     "merged": true,
@@ -730,7 +730,7 @@
     "A vanilla random-world MonsterRoomFeature ERROR failed the earlier combined-control health gate; final same-artifact full runs passed in new directories; no error assertion relaxed."
   ],
   "archive": {
-    "status": "ARCHIVE_READY",
+    "status": "PERSISTED / VERIFIED",
     "path": "/workspace/DualForge-007C4C3/out/convergence-007c4c3/evidence-export/DualForge-007C4C3-Evidence.zip",
     "bytes": 4086831,
     "sha256": "6076da52a82b93640c5ab9c657e96b06fc77f1ad5699aba0e8a460589fa4c154",
@@ -740,10 +740,27 @@
     "redactedCopies": 9,
     "originalsUnchanged": true,
     "safety": "Credential-pattern scan PASS; world/dependency/config exclusion; any redaction affects publication copies only.",
-    "persistence": "ARCHIVE_READY / NOT PERSISTED",
-    "remoteUpload": "NOT RUN",
-    "remoteDownload": "NOT RUN",
-    "authorization": "Pending user approval for this exact public ZIP and evidence/convergence-007c4c3 branch; no upload attempted."
+    "persistence": "PERSISTED / VERIFIED",
+    "remoteUpload": "PASS",
+    "remoteDownload": "PASS",
+    "authorization": "User explicitly approved this exact public archive and evidence/convergence-007c4c3 destination; latest instruction: 上传证据，我来授权.",
+    "remoteVerification": {
+      "status": "PERSISTED / VERIFIED",
+      "verifiedUTC": "2026-10-16T03:33:46.024435+00:00",
+      "url": "https://raw.githubusercontent.com/GFander/DualForge/fbfbe5aaeaf4c65433fbc81e6c20f9bb900d0037/DualForge-007C4C3-Evidence.zip",
+      "evidenceCommit": "fbfbe5aaeaf4c65433fbc81e6c20f9bb900d0037",
+      "bytes": 4086831,
+      "sha256": "6076da52a82b93640c5ab9c657e96b06fc77f1ad5699aba0e8a460589fa4c154",
+      "manifestSHA256": "8df30cbe6109d4dddaa7376eb9b1644c34abdf9080d04fe7cd2423c3c72e5179",
+      "payloadFiles": 1767,
+      "payloadBytes": 23123298,
+      "originalFilesUnchanged": 1766,
+      "httpRead": "PASS",
+      "zipCRCAndSafePaths": "PASS (archive-verifier.py before extraction)",
+      "manifestAndExtractedFiles": "PASS",
+      "authorization": "User explicitly approved this exact public archive and evidence/convergence-007c4c3 destination; latest instruction: 上传证据，我来授权.",
+      "productionTestsRerun": false
+    }
   },
   "archiveManifest": {
     "path": "/workspace/DualForge-007C4C3/out/convergence-007c4c3/evidence-export/DualForge-007C4C3-Evidence/MANIFEST.json",

@@ -1,6 +1,6 @@
 # Convergence-007C-4C-3 交付报告
 
-**受控服务端 Global register(this) / Typed Registry 组合：PASS。** 原始证据已本地归档并逐文件验证；公开上传等待本次具体载荷授权，当前ARCHIVE_READY / NOT PERSISTED。FnF完整游戏、客户端及未支持事件语义NOT RUN。
+**受控服务端 Global register(this) / Typed Registry 组合：PASS。** 原始证据已获本次具体载荷授权并公开持久化，独立远端下载和逐文件核验通过：PERSISTED / VERIFIED。FnF完整游戏、客户端及未支持事件语义NOT RUN。
 
 ## 基线、源码和制品
 
@@ -76,4 +76,12 @@ Global故障观察器不混入标准C/T：真实入口二次构造验证duplicat
 
 Manifest SHA `8df30cbe6109d4dddaa7376eb9b1644c34abdf9080d04fe7cd2423c3c72e5179`。ZIP/CRC/无重复/软链接/路径穿越、清单/解压后逐文件SHA及原件不变PASS。包含命令/退出/原日志/结果/断言/指纹、必要项目制品及FnF三个目标的前后ClassFile（只读转换证据，不是可运行发行包）；排除世界、完整服务器配置、第三方运行库、完整FnF JAR、重复编译输出。不声称全部附件无裁剪副本。9份发布副本脱敏，原SHA与发布SHA分别记录，原始日志未改。
 
-**ARCHIVE_READY / NOT PERSISTED**：本次ZIP公开上传的具体授权待用户选择，远端上传/下载NOT RUN；没有沿用C2特定载荷授权。重跑命令见tests/global_bus/README.md；逐文件关系、准确路径和状态见本轮机器索引。独立PR不自动合并，不创建Release，不进入FnF游戏或下一阶段。
+## 原始证据持久化与远端复核
+
+**PERSISTED / VERIFIED**。用户明确授权本次具体ZIP与GitHub evidence/convergence-007c4c3目的地后，已上传并核对远端分支提交 `fbfbe5aaeaf4c65433fbc81e6c20f9bb900d0037`。
+
+[原始证据ZIP（固定提交）](https://raw.githubusercontent.com/GFander/DualForge/fbfbe5aaeaf4c65433fbc81e6c20f9bb900d0037/DualForge-007C4C3-Evidence.zip)；归档名称、大小、ZIP/Manifest SHA及覆盖范围见上文，保持原归档字节。核验日期：2026-10-16T03:33:46.024435+00:00。
+
+从公开URL独立下载至新的remote-independent目录，HTTP读取、ZIP SHA/CRC、无重复/软链接/路径穿越、Manifest/SHA256SUMS及解压后1767个文件逐项大小与SHA全部PASS；再次核对1766个原文件的大小与原SHA不变。9份脱敏发布副本的原始与发布SHA分别保留，原始日志未改；既有安全扫描PASS，不包含世界、第三方运行库、完整FnF JAR或实例配置。完整结构化远端复核收据嵌入本轮证据索引archive.remoteVerification；本地原路径和历史状态不删除。
+
+本次仅持久化证据并更新文档，不修改生产源码或字节，不重新执行游戏回归；此前同最终JAR的受控功能结论保持，FnF游戏与客户端仍NOT RUN。重跑命令见tests/global_bus/README.md。不自动合并、不创建Release、不进入下一阶段。
