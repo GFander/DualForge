@@ -1,5 +1,7 @@
 # DualForge
 
+2026-10-18：009C清单全部项目已获 **USER_REPORTED_MANUAL_PASS**，包括原生/兼容双实例、鼠标/配置持久化及FnF+Clumps混装。新日志与Windows安装SHA未提供独立复核，见[人工验收补充](<Dev Manuals/Convergence-009C Windows 客户端人工验收补充报告.md>)。以下009C交付时的NOT_RUN为历史状态。
+
 009C 新增有限客户端鼠标事件 Profile，已用原始 Mouse Tweaks Forge 2.26 完成严格准入、真实原生/Neo事件 API 隔离、原始配置初始化模型及完整客户端 ABI 链接。新 JAR 的 FnF、Clumps 和混装服务端回归另行通过。Windows 启动/鼠标/配置 UI 仍 NOT_RUN，整体 PARTIAL；见 [009C 报告](<Dev Manuals/Convergence-009C Mouse Tweaks 交付报告.md>)、[Windows 清单](tests/real_mods/mouse_tweaks/CLIENT.md)。用户已报告的 009A/009B 及此前 FnF/Clumps 人工 PASS 属于旧制品，不由下列历史 NOT_RUN 覆盖，也不继承到本轮新 JAR。
 
 008A 的限定事件初始化 Profile 已用未修改的 Clumps Forge 19.0.0.1 完成 NeoForge 服务端启动、真实经验球合并/总经验对照及经验球重载；独立身份夹具和事件取消/可变值观察通过。真实玩家拾取、Mending 和新 JAR 客户端人工验收仍 NOT_RUN，整体 PARTIAL。见 [008A 报告](<Dev Manuals/Convergence-008A Clumps 交付报告.md>)、[测试入口](tests/real_mods/clumps/README.md)。这不是一般 Forge post API 支持。

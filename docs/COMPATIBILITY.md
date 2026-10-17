@@ -1,5 +1,7 @@
 # 实际兼容范围
 
+2026-10-18后续反馈：009C原CLIENT.md的全部A/B及混装项目为 **USER_REPORTED_MANUAL_PASS**，四客户端门禁已获用户人工PASS。原始新客户端日志未提供，Windows安装SHA未独立复核，Codex没有重新执行Windows实验；详见[验收补充](<../Dev Manuals/Convergence-009C Windows 客户端人工验收补充报告.md>)。下列009C的NOT_RUN/PARTIAL保留交付时历史含义，不能覆盖后续用户事实；新制品也不能继承此PASS。
+
 009C 当前新增有限客户端鼠标事件入口：保留原始初始化与注册顺序，仅验证并映射 MouseButtonPressed.Pre、MouseButtonReleased.Pre、MouseDragged.Pre、MouseScrolled.Post 四类默认实例订阅；显式适配滚轮 getter 和配置工厂 SAM，未知构造器/事件/注解/跨文件归属继续拒绝。原始 Mouse Tweaks Forge 2.26 的事件 API 隔离、配置初始化模型、成员与 Mixin 目标静态链接通过；实际客户端构造、Mixin 应用、鼠标 GUI 和配置 UI 未运行，整体 PARTIAL。见 [009C 报告](<../Dev Manuals/Convergence-009C Mouse Tweaks 交付报告.md>)。
 
 用户在 009C 任务书中确认：此前 FnF/Clumps 人工、009A 混装和009B联机/重启持久化已报告 PASS。这是旧制品的用户历史验收，不能被下列旧轮次 NOT_RUN 改写，也不能继承给009C新JAR。本轮新JAR已独立通过18组服务端实验及列明回归，新Windows/真实玩家门禁仍NOT_RUN。
