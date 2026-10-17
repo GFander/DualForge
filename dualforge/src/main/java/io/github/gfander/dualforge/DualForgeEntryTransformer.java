@@ -49,6 +49,7 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
     private final Map<String, ControlledForgeContextProfile.Scope> contextEntries = new HashMap<>();
     private volatile Map<String, ForgeRegistryTransformationPlan> helperPlans = Map.of();
     private volatile Map<String, ForgeEventInitializerPlan> eventInitializerPlans = Map.of();
+    private volatile Map<String, ForgeClientEventPlan> clientEventPlans = Map.of();
 
     public DualForgeEntryTransformer() {
         this.rewriteEnabled = enabled("dualforge.2a.rewrite");
@@ -78,6 +79,15 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
         original.accept(input);
         try {
             log("offered: " + input.name);
+            var clientPlan = clientEventPlans.get(input.name);
+            if (clientPlan != null) {
+                if (!rewriteEnabled || !apiRewriteEnabled || !subscriberRewriteEnabled)
+                    throw new IllegalStateException("Client events require enabled rewrites");
+                input = clientPlan.transform(input, context == null ? null : context.getInitialClassSha256());
+                log("CLIENT_EVENT_TRANSFORM class=" + input.name + " modId=" + clientPlan.modId + " plan=" + clientPlan.fingerprint);
+                dumpProfile(input);
+                return input;
+            }
             var eventPlan = eventInitializerPlans.get(input.name);
             if (eventPlan != null) {
                 if (!rewriteEnabled || !apiRewriteEnabled)
@@ -354,8 +364,10 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
         contextEntries.clear();
         helperPlans = Map.of();
         eventInitializerPlans = Map.of();
+        clientEventPlans = Map.of();
         Map<String, ForgeRegistryTransformationPlan> pendingHelpers = new HashMap<>();
         Map<String, ForgeEventInitializerPlan> pendingEvents = new HashMap<>();
+        Map<String, ForgeClientEventPlan> pendingClients = new HashMap<>();
         Set<ITransformer.Target<ClassNode>> targets = new HashSet<>();
         // ModLauncher registers targets after FML completeScan, before the GAME layer.
         // getScanResult waits for the host's background scan; no classes are loaded here.
@@ -392,6 +404,27 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
                     }
                     var kind = ForgeEntryProfile.select(candidate, !events.isEmpty());
                     log("ENTRY_PROFILE modId=" + info.getModId() + " entry=" + entry + " selected=" + kind);
+                    if (kind == ForgeEntryProfile.Kind.CLIENT_EVENTS) {
+                        var plan = ForgeClientEventPlan.create(info, internal);
+                        for (var other : loading.getModFiles()) {
+                            if (other == file) continue;
+                            plan.rejectForeignClasses(other.getFile().getScanResult().getClasses().stream()
+                                .map(c -> c.clazz().getInternalName()).collect(java.util.stream.Collectors.toSet()));
+                        }
+                        for (String name : plan.targets()) {
+                            for (var other : loading.getModFiles()) {
+                                if (other == file) continue;
+                                if (other.getFile().getScanResult().getClasses().stream()
+                                        .anyMatch(c -> c.clazz().getInternalName().equals(name)))
+                                    throw new IllegalStateException("TRANSFORMATION_RULE_CONFLICT foreign client target " + name);
+                            }
+                            if (pendingClients.putIfAbsent(name, plan) != null)
+                                throw new IllegalStateException("TRANSFORMATION_RULE_CONFLICT duplicate client target " + name);
+                            targets.add(ITransformer.Target.targetClass(name.replace('/', '.')));
+                        }
+                        log("CLIENT_EVENT_PREPLAN modId=" + info.getModId() + " module=" + plan.module + " plan=" + plan.fingerprint);
+                        continue;
+                    }
                     if (kind == ForgeEntryProfile.Kind.EVENT_INITIALIZER) {
                         var plan = ForgeEventInitializerPlan.create(info, internal);
                         for (String name : plan.targets()) {
@@ -480,16 +513,22 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
         }
         for (String name : pendingHelpers.keySet()) {
             if (contextEntries.containsKey(name) || registryEntries.containsKey(name) || blockEntries.containsKey(name)
-                    || entryEvents.containsKey(name) || eventClasses.contains(name) || pendingEvents.containsKey(name))
+                    || entryEvents.containsKey(name) || eventClasses.contains(name) || pendingEvents.containsKey(name) || pendingClients.containsKey(name))
                 throw new IllegalStateException("TRANSFORMATION_RULE_CONFLICT existing profile " + name);
         }
         for (String name : pendingEvents.keySet()) {
             if (contextEntries.containsKey(name) || registryEntries.containsKey(name) || blockEntries.containsKey(name)
-                    || entryEvents.containsKey(name) || eventClasses.contains(name))
+                    || entryEvents.containsKey(name) || eventClasses.contains(name) || pendingClients.containsKey(name))
                 throw new IllegalStateException("TRANSFORMATION_RULE_CONFLICT existing event profile " + name);
+        }
+        for (String name : pendingClients.keySet()) {
+            if (contextEntries.containsKey(name) || registryEntries.containsKey(name) || blockEntries.containsKey(name)
+                    || entryEvents.containsKey(name) || eventClasses.contains(name))
+                throw new IllegalStateException("TRANSFORMATION_RULE_CONFLICT existing client profile " + name);
         }
         helperPlans = Map.copyOf(pendingHelpers);
         eventInitializerPlans = Map.copyOf(pendingEvents);
+        clientEventPlans = Map.copyOf(pendingClients);
         if (!helperPlans.isEmpty()) log("HELPER_PLANS_PUBLISHED targets=" + helperPlans.size() + " beforeGameLayer=true");
         if (!eventInitializerPlans.isEmpty()) log("EVENT_INITIALIZER_PLANS_PUBLISHED targets=" + eventInitializerPlans.size() + " beforeGameLayer=true");
         return targets;

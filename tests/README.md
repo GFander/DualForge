@@ -1,5 +1,9 @@
 # 测试入口
 
+009C的后续Windows/PCL清单全部项目已获 **USER_REPORTED_MANUAL_PASS**，见[补充报告](<../Dev Manuals/Convergence-009C Windows 客户端人工验收补充报告.md>)。原自动化报告/清单/矩阵的NOT_RUN保持历史原字节；没有本次独立Windows日志或安装SHA复核。
+
+009C 的 [Mouse Tweaks 测试](real_mods/mouse_tweaks/README.md) 使用原始 Forge 2.26、不同身份 Forge 夹具和官方完整客户端 SDK，验证有限四事件、配置工厂、实际 Reader/预计划、初始化模型及字节码链接；SDK 安装与模型不算客户端启动。最终同 JAR 重跑 FnF/Clumps/混装服务端，旧工具和冻结输入不改。四个 Windows 门禁保持 NOT_RUN，见 [矩阵](real_mods/mouse_tweaks/MATRIX.md)。
+
 008A 的 [Clumps 测试](real_mods/clumps/README.md) 使用原始 Forge 发行 JAR，先建立原生经验球/事件基线，再复现 Neo 首失败，验证有限事件初始化闭包及独立身份正负例。新运行、世界和制品全部在本机 SSD；旧入口与冻结输入不改。真实玩家拾取、Mending、客户端人工门禁独立 NOT_RUN，实际覆盖见交付报告。
 
 007C-4C-5的[behavior](real_mods/food_n_fuel/behavior/README.md)先取得本轮原生Forge实际熔炉/Tab/Food基线，再用固定同JAR进行Neo标准与观察C/T。官方命令推进真实世界tick、只读比较58个Food component和官方Tab延迟查询；玩家食用、UI和重启持久化独立NOT RUN。新SNBT解析负例按该README手动运行，不冒充CI/旧游戏全矩阵。
