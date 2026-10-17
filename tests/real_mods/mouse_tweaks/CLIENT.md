@@ -22,6 +22,12 @@
 `750dd1806a9e67ba23be58403648293bc1e936a068ba6d8184aac88fc3e0bc62`。
 DualForge 的准确摘要见本包 `SHA256SUMS` 与交付报告。
 
+本包 DualForge SHA-256：
+`50b6ca25eecf2d08505b534df16a4af1fedf23816ca4ceb41cac09a509637db4`。
+生产源码绑定提交：`8f1e9008b1ca83d024ab6ad1b06a9690ac3647f6`。
+混装阶段沿用原始 FnF Forge 1.3 与 Clumps Forge 19.0.0.1；校验和也列在
+SHA256SUMS 中，交付包仍不包含第三方文件。
+
 ```powershell
 Get-FileHash -Algorithm SHA256 '实例路径\mods\dualforge.jar'
 Get-FileHash -Algorithm SHA256 '实例路径\mods\MouseTweaks-forge-mc1.21-2.26.jar'

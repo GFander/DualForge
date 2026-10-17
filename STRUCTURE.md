@@ -8,6 +8,7 @@ DualForge/
 │   ├── java/                       活跃：唯一生产Java
 │   └── resources/                  活跃：Manifest与SPI
 ├── tests/
+│   ├── real_mods/mouse_tweaks/      活跃：009C客户端有限事件/配置工厂、完整SDK链接、隔离模型及新JAR服务端回归
 │   ├── real_mods/clumps/           活跃：008A原始发行取证、有限事件初始化Profile、原生/Neo经验球对照与SSD运行
 │   ├── helper_registry/            活跃：007C-4B同ModFile Helper/Consumer计划、Registry桥接及独立原生Forge/Neo C/T
 │   ├── supplier_boundary/          活跃：4C-1 Supplier类型/依赖、业务保留及三组原生Forge/Neo C/T
