@@ -17,7 +17,9 @@
 | JEI item/recipe/use/search/bookmark/config/GUI and mixed inputs | Windows/PCL | NOT_RUN / BLOCKED by required ABI |
 | 010A client kit | Delivery | BLOCKED; deliberately not built |
 
-Related current-build regression results are recorded in the delivery report and
-index after actual execution. Full historical game/client matrices are NOT_RUN.
+Current-build related regression PASS:18 fresh native/Neo/mixed groups, original
+Probe and strict Registry/Context/Global/FnF/Clumps/Mouse contracts;106 Python
+tests,25 zsh scripts,374 frozen files. The2008 aggregate checks include file
+identity/copy checks. Full historical game/client matrices are NOT_RUN.
 The new baseline JAR contains the same production entries as009C; no production
 change is introduced, and no old Windows PASS is claimed as a new experiment.

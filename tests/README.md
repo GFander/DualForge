@@ -1,5 +1,7 @@
 # 测试入口
 
+010A的[JEI研究与边界契约](real_mods/jei/README.md)保留完整原/参考发行ABI、实际原生Forge观察和Neo首失败。28项双dist模型断言验证精确拒绝与无部分计划，生产零修改；GUI与最终客户端包仍被必要ABI阻塞。见[矩阵](real_mods/jei/MATRIX.md)。
+
 009C的后续Windows/PCL清单全部项目已获 **USER_REPORTED_MANUAL_PASS**，见[补充报告](<../Dev Manuals/Convergence-009C Windows 客户端人工验收补充报告.md>)。原自动化报告/清单/矩阵的NOT_RUN保持历史原字节；没有本次独立Windows日志或安装SHA复核。
 
 009C 的 [Mouse Tweaks 测试](real_mods/mouse_tweaks/README.md) 使用原始 Forge 2.26、不同身份 Forge 夹具和官方完整客户端 SDK，验证有限四事件、配置工厂、实际 Reader/预计划、初始化模型及字节码链接；SDK 安装与模型不算客户端启动。最终同 JAR 重跑 FnF/Clumps/混装服务端，旧工具和冻结输入不改。四个 Windows 门禁保持 NOT_RUN，见 [矩阵](real_mods/mouse_tweaks/MATRIX.md)。
