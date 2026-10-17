@@ -59,5 +59,10 @@ runner is `tests/real_mods/clumps/run_server.py`; its lifecycle result never
 declares JEI GUI functionality PASS. Existing Mouse/Registry/Context/Global/
 FnF/Clumps contracts and server experiments run against this round's build.
 
+After those runs, `assess.py --run /absolute/SSD/run --output /absolute/SSD/run/new-assessment.json`
+checks the actual fatal chain and artifact bindings independently of successful
+refusal/regression assertions. Overall PARTIAL and Neo JEI FAIL are retained;
+the generic Mouse regression assessment alone cannot declare JEI compatible.
+
 See [MATRIX](MATRIX.md), [deferred Windows checklist](CLIENT.md), and the
 [delivery report](<../../../Dev Manuals/Convergence-010A JEI 交付报告.md>).
