@@ -1,5 +1,7 @@
 # 测试入口
 
+008A 的 [Clumps 测试](real_mods/clumps/README.md) 使用原始 Forge 发行 JAR，先建立原生经验球/事件基线，再复现 Neo 首失败，验证有限事件初始化闭包及独立身份正负例。新运行、世界和制品全部在本机 SSD；旧入口与冻结输入不改。真实玩家拾取、Mending、客户端人工门禁独立 NOT_RUN，实际覆盖见交付报告。
+
 007C-4C-5的[behavior](real_mods/food_n_fuel/behavior/README.md)先取得本轮原生Forge实际熔炉/Tab/Food基线，再用固定同JAR进行Neo标准与观察C/T。官方命令推进真实世界tick、只读比较58个Food component和官方Tab延迟查询；玩家食用、UI和重启持久化独立NOT RUN。新SNBT解析负例按该README手动运行，不冒充CI/旧游戏全矩阵。
 
 007C-4C-4 的 [原始FnF运行实验](real_mods/food_n_fuel/runtime/README.md) 使用固定4C-3 JAR，先原生Forge，再标准Neo C/T与独立只读观察；实际注册/启动与玩家食用、燃料、客户端及持久化分开验收。历史NOT RUN收据不改写，本轮无生产修改。

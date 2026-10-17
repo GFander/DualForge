@@ -1,0 +1,89 @@
+package example.clumpsobserver;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.BiPredicate;
+import java.util.function.Consumer;
+import HOST.bus.api.Event;
+import HOST.bus.api.EventPriority;
+import HOST.event.server.ServerStartedEvent;
+import HOST.event.entity.player.PlayerXpEvent;
+
+@HOST.fml.common.Mod("clumpsobserver")
+public final class EventObserver {
+    public EventObserver(CONSTRUCTOR_PARAMS) {
+        GLOBAL_BUS.addListener(this::started);
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    private void started(ServerStartedEvent started) {
+        List<String> assertions = new ArrayList<>();
+        try {
+            Class<?> common = Class.forName("com.blamejared.clumps.ClumpsCommon");
+            BiPredicate<Object, Object> pickup = (BiPredicate<Object, Object>) common.getField("pickupXPEvent").get(null);
+            check(!pickup.test(null, null), "uncancelled pickup returns false", assertions);
+            AtomicInteger calls = new AtomicInteger();
+            Consumer<PlayerXpEvent.PickupXp> cancel = event -> {
+                if (event.getEntity() != null || event.getOrb() != null)
+                    throw new AssertionError("Synthetic null inputs changed identity");
+                calls.incrementAndGet();
+                event.setCanceled(true);
+            };
+            GLOBAL_BUS.addListener(EventPriority.NORMAL, false, PlayerXpEvent.PickupXp.class, cancel);
+            try {
+                check(pickup.test(null, null), "listener cancellation returns true", assertions);
+                check(calls.get() == 1, "pickup listener dispatched exactly once", assertions);
+            } finally {
+                GLOBAL_BUS.unregister(cancel);
+            }
+            check(!pickup.test(null, null), "pickup listener removal restores false", assertions);
+            Class<?> services = Class.forName("com.blamejared.clumps.platform.Services");
+            Object helper = services.getField("EVENT").get(null);
+            check(helper.getClass().getModule() == common.getModule(), "ServiceLoader provider module identity", assertions);
+            for (String kind : List.of("Value", "Repair")) {
+                Class<?> eventType = Class.forName("com.blamejared.clumps.api.events." + kind + "Event");
+                AtomicReference<Event> observed = new AtomicReference<>();
+                Consumer<Event> listener = event -> {
+                    try {
+                        check(eventType.isInstance(event), kind + " listener type identity", assertions);
+                        check((int) eventType.getMethod("getValue").invoke(event) == 7, kind + " initial value", assertions);
+                        eventType.getMethod("setValue", int.class).invoke(event, 19);
+                        observed.set(event);
+                    } catch (ReflectiveOperationException error) {
+                        throw new AssertionError(error);
+                    }
+                };
+                GLOBAL_BUS.addListener(EventPriority.NORMAL, false, (Class) eventType, listener);
+                Object value;
+                try {
+                    Object either = helper.getClass().getMethod("fire" + kind + "Event",
+                        net.minecraft.world.entity.player.Player.class, int.class).invoke(helper, null, 7);
+                    value = ((com.mojang.datafixers.util.Either<?, ?>) either).left().orElseThrow();
+                    check(value == observed.get(), kind + " returns same mutable event object", assertions);
+                    check((int) eventType.getMethod("getValue").invoke(value) == 19, kind + " listener change visible to consumer", assertions);
+                    check(eventType.getMethod("getPlayer").invoke(value) == null, kind + " player argument identity", assertions);
+                } finally {
+                    GLOBAL_BUS.unregister(listener);
+                }
+            }
+            Files.writeString(Path.of("event-observer.json"), "{\"status\":\"PASS\",\"scope\":\"synthetic null-input API test; no player XP or Mending test\",\"assertions\": " + assertions.size() + "}\n");
+        } catch (Throwable error) {
+            error.printStackTrace();
+            try {
+                Files.writeString(Path.of("event-observer.json"), "{\"status\":\"FAIL\"}\n");
+            } catch (Exception secondary) {
+                error.addSuppressed(secondary);
+            }
+        }
+    }
+
+    private static void check(boolean condition, String label, List<String> assertions) {
+        if (!condition) throw new AssertionError(label);
+        assertions.add(label);
+        System.out.println("[DF008A-EVENT] PASS " + label);
+    }
+}

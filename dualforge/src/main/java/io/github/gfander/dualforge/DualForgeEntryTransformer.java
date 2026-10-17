@@ -48,6 +48,7 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
     private final Map<String, String> blockEntries = new HashMap<>();
     private final Map<String, ControlledForgeContextProfile.Scope> contextEntries = new HashMap<>();
     private volatile Map<String, ForgeRegistryTransformationPlan> helperPlans = Map.of();
+    private volatile Map<String, ForgeEventInitializerPlan> eventInitializerPlans = Map.of();
 
     public DualForgeEntryTransformer() {
         this.rewriteEnabled = enabled("dualforge.2a.rewrite");
@@ -77,6 +78,15 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
         original.accept(input);
         try {
             log("offered: " + input.name);
+            var eventPlan = eventInitializerPlans.get(input.name);
+            if (eventPlan != null) {
+                if (!rewriteEnabled || !apiRewriteEnabled)
+                    throw new IllegalStateException("Event initializer requires enabled rewrites");
+                input = eventPlan.transform(input, context == null ? null : context.getInitialClassSha256());
+                log("EVENT_INITIALIZER_TRANSFORM class=" + input.name + " modId=" + eventPlan.modId + " plan=" + eventPlan.fingerprint);
+                dumpProfile(input);
+                return input;
+            }
             var registryPlan = helperPlans.get(input.name);
             if (registryPlan != null) {
                 if (!rewriteEnabled || !apiRewriteEnabled) throw new IllegalStateException("Registry helper requires enabled rewrites");
@@ -343,7 +353,9 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
         blockEntries.clear();
         contextEntries.clear();
         helperPlans = Map.of();
+        eventInitializerPlans = Map.of();
         Map<String, ForgeRegistryTransformationPlan> pendingHelpers = new HashMap<>();
+        Map<String, ForgeEventInitializerPlan> pendingEvents = new HashMap<>();
         Set<ITransformer.Target<ClassNode>> targets = new HashSet<>();
         // ModLauncher registers targets after FML completeScan, before the GAME layer.
         // getScanResult waits for the host's background scan; no classes are loaded here.
@@ -380,6 +392,23 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
                     }
                     var kind = ForgeEntryProfile.select(candidate, !events.isEmpty());
                     log("ENTRY_PROFILE modId=" + info.getModId() + " entry=" + entry + " selected=" + kind);
+                    if (kind == ForgeEntryProfile.Kind.EVENT_INITIALIZER) {
+                        var plan = ForgeEventInitializerPlan.create(info, internal);
+                        for (String name : plan.targets()) {
+                            for (var other : loading.getModFiles()) {
+                                if (other == file) continue;
+                                if (other.getFile().getScanResult().getClasses().stream()
+                                        .anyMatch(c -> c.clazz().getInternalName().equals(name)))
+                                    throw new IllegalStateException("TRANSFORMATION_RULE_CONFLICT foreign event target " + name);
+                            }
+                            if (pendingEvents.putIfAbsent(name, plan) != null)
+                                throw new IllegalStateException("TRANSFORMATION_RULE_CONFLICT duplicate event target " + name);
+                            targets.add(ITransformer.Target.targetClass(name.replace('/', '.')));
+                        }
+                        log("EVENT_INITIALIZER_PREPLAN modId=" + info.getModId() + " module=" + plan.module
+                                + " targets=" + new java.util.TreeSet<>(plan.targets()) + " plan=" + plan.fingerprint);
+                        continue;
+                    }
                     if (kind == ForgeEntryProfile.Kind.CONTEXT) {
                         long entries = scan.getAnnotations().stream().filter(a -> a.targetType() == ElementType.TYPE
                                 && a.annotationType().getClassName().equals("net.minecraftforge.fml.common.Mod")).count();
@@ -451,11 +480,18 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
         }
         for (String name : pendingHelpers.keySet()) {
             if (contextEntries.containsKey(name) || registryEntries.containsKey(name) || blockEntries.containsKey(name)
-                    || entryEvents.containsKey(name) || eventClasses.contains(name))
+                    || entryEvents.containsKey(name) || eventClasses.contains(name) || pendingEvents.containsKey(name))
                 throw new IllegalStateException("TRANSFORMATION_RULE_CONFLICT existing profile " + name);
         }
+        for (String name : pendingEvents.keySet()) {
+            if (contextEntries.containsKey(name) || registryEntries.containsKey(name) || blockEntries.containsKey(name)
+                    || entryEvents.containsKey(name) || eventClasses.contains(name))
+                throw new IllegalStateException("TRANSFORMATION_RULE_CONFLICT existing event profile " + name);
+        }
         helperPlans = Map.copyOf(pendingHelpers);
+        eventInitializerPlans = Map.copyOf(pendingEvents);
         if (!helperPlans.isEmpty()) log("HELPER_PLANS_PUBLISHED targets=" + helperPlans.size() + " beforeGameLayer=true");
+        if (!eventInitializerPlans.isEmpty()) log("EVENT_INITIALIZER_PLANS_PUBLISHED targets=" + eventInitializerPlans.size() + " beforeGameLayer=true");
         return targets;
     }
 
