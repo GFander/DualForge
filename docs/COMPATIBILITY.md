@@ -1,5 +1,7 @@
 # 实际兼容范围
 
+010A最新JEI结论：原始Forge19.27.0.340在固定Forge52.1.0真实服务端基线PASS；Neo21.1.256+DualForge在targets预计划以`Global bus rejected: LISTENER_CONTRACT`拒绝，尚未构造JEI。生产零修改，GUI/插件runtime/AT应用NOT_RUN，整体PARTIAL，不生成客户端验收包。详见[010A报告](<../Dev Manuals/Convergence-010A JEI 交付报告.md>)。原生服务端与SDK链接不代表JEI客户端兼容。
+
 2026-10-18后续反馈：009C原CLIENT.md的全部A/B及混装项目为 **USER_REPORTED_MANUAL_PASS**，四客户端门禁已获用户人工PASS。原始新客户端日志未提供，Windows安装SHA未独立复核，Codex没有重新执行Windows实验；详见[验收补充](<../Dev Manuals/Convergence-009C Windows 客户端人工验收补充报告.md>)。下列009C的NOT_RUN/PARTIAL保留交付时历史含义，不能覆盖后续用户事实；新制品也不能继承此PASS。
 
 009C 当前新增有限客户端鼠标事件入口：保留原始初始化与注册顺序，仅验证并映射 MouseButtonPressed.Pre、MouseButtonReleased.Pre、MouseDragged.Pre、MouseScrolled.Post 四类默认实例订阅；显式适配滚轮 getter 和配置工厂 SAM，未知构造器/事件/注解/跨文件归属继续拒绝。原始 Mouse Tweaks Forge 2.26 的事件 API 隔离、配置初始化模型、成员与 Mixin 目标静态链接通过；实际客户端构造、Mixin 应用、鼠标 GUI 和配置 UI 未运行，整体 PARTIAL。见 [009C 报告](<../Dev Manuals/Convergence-009C Mouse Tweaks 交付报告.md>)。
@@ -26,9 +28,10 @@
 |---|---|
 | 002–006B 冻结受控输入 | 构造、事件、Item、双 Item、Block/BlockItem 等各自限定的契约和回归；不代表一般 Forge API |
 | 007B 普通原生 Forge 双 Item | 单 IEventBus 构造器、同入口零捕获纯 Item 工厂、typed 字段/get-only；服务端受控 PASS |
-| Food N' Fuel Forge 1.3 | 009C新JAR服务端相关回归PASS：67 Item/Holder、66 Tab、58 Food及代表燃料72快照对照通过，含Clumps混装。此前用户交互/客户端PASS属于旧制品，新JAR真实玩家/Windows仍NOT_RUN；007C-3旧失败保留为历史 |
-| Clumps Forge 19.0.0.1 | 009C新JAR启动、真实经验球合并/XP21/重载、事件API及FnF混装服务端PASS。此前用户XP/Mending/持久化PASS属于旧制品，新JAR玩家/Windows仍NOT_RUN；旧首失败不覆盖最新验收 |
-| Mouse Tweaks Forge 2.26 | 009C严格Profile、四事件/工厂API隔离及初始化模型/静态链接PASS；客户端启动、鼠标GUI、配置GUI和人工验收NOT_RUN，整体PARTIAL。不是任意客户端事件或通用Forge配置API支持 |
+| Food N' Fuel Forge 1.3 | 010A本轮重建基线服务端相关回归PASS：67 Item/Holder、66 Tab、58 Food及72熔炉快照对照，含Clumps混装。009C原清单混装抽检获用户PASS；当前重建JAR的Windows/真实玩家仍NOT_RUN |
+| Clumps Forge 19.0.0.1 | 010A本轮重建基线实际经验球合并/XP21/重载、事件API及FnF混装服务端PASS。009C清单混装抽检获用户PASS；本轮Windows/玩家未重跑 |
+| Mouse Tweaks Forge 2.26 | 009C双实例、鼠标、配置持久化及混装为USER_REPORTED_MANUAL_PASS，日志未提供/安装SHA未独立核实；010A当前JAR的ABI全组PASS，Windows/GUI仍NOT_RUN |
+| JEI Forge 19.27.0.340 | 010A原生Forge服务端基线PASS，Neo严格预计划LISTENER_CONTRACT失败；无新增生产兼容、无客户端ZIP，整体PARTIAL |
 
 冻结007C记录中，Food N' Fuel 的原生基线为 PARTIAL：普通对象/Holder、食物 component 和代表燃料的真实熔炉行为已经验证；食用后变化、创造 UI、手持及重进未执行。
 原生 Forge 的成功子项不等于 DualForge 兼容成功。007C-1采用宿主NightConfig标准TOML，来源依据同JAR Forge `@Mod` 与metadata归属；loader范围须兼容当前Forge52 ABI，宽范围本身不能证明来源。FML仍负责实际provider版本、Minecraft与模组依赖检查。

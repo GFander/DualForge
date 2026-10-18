@@ -1,5 +1,7 @@
 # DualForge
 
+010A完成原始JEI Forge19.27.0.340完整取证及真实Forge基线，Neo仍在严格预计划以`LISTENER_CONTRACT`拒绝。生产零修改，整体PARTIAL，尚无JEI兼容客户端包；见[010A报告](<Dev Manuals/Convergence-010A JEI 交付报告.md>)。
+
 2026-10-18：009C清单全部项目已获 **USER_REPORTED_MANUAL_PASS**，包括原生/兼容双实例、鼠标/配置持久化及FnF+Clumps混装。新日志与Windows安装SHA未提供独立复核，见[人工验收补充](<Dev Manuals/Convergence-009C Windows 客户端人工验收补充报告.md>)。以下009C交付时的NOT_RUN为历史状态。
 
 009C 新增有限客户端鼠标事件 Profile，已用原始 Mouse Tweaks Forge 2.26 完成严格准入、真实原生/Neo事件 API 隔离、原始配置初始化模型及完整客户端 ABI 链接。新 JAR 的 FnF、Clumps 和混装服务端回归另行通过。Windows 启动/鼠标/配置 UI 仍 NOT_RUN，整体 PARTIAL；见 [009C 报告](<Dev Manuals/Convergence-009C Mouse Tweaks 交付报告.md>)、[Windows 清单](tests/real_mods/mouse_tweaks/CLIENT.md)。用户已报告的 009A/009B 及此前 FnF/Clumps 人工 PASS 属于旧制品，不由下列历史 NOT_RUN 覆盖，也不继承到本轮新 JAR。
