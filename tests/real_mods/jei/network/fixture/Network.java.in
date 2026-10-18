@@ -1,0 +1,28 @@
+package @PACKAGE@;
+import java.util.function.BiConsumer;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraftforge.network.Channel;
+import net.minecraftforge.network.ChannelBuilder;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+
+public final class Network {
+    private final BiConsumer<Up,CustomPayloadEvent.Context> upHandler;
+    private final BiConsumer<Down,CustomPayloadEvent.Context> downHandler;
+    private final Channel<CustomPacketPayload> channel;
+    private int upCount,downCount,lastUp,lastDown;
+    private String upThread,downThread;
+    public Network(ResourceLocation id,int version) {
+        upHandler=this::up;
+        downHandler=this::down;
+        channel=ChannelBuilder.named(id).networkProtocolVersion(version).optional().payloadChannel().play()
+            .serverbound().addMain(Up.TYPE,Up.STREAM_CODEC,upHandler)
+            .clientbound().addMain(Down.TYPE,Down.STREAM_CODEC,downHandler).build();
+    }
+    private void up(Up data,CustomPayloadEvent.Context context) {
+        upCount++;lastUp=data.number();upThread=Thread.currentThread().getName();
+    }
+    private void down(Down data,CustomPayloadEvent.Context context) {
+        downCount++;lastDown=data.number();downThread=Thread.currentThread().getName();
+    }
+}

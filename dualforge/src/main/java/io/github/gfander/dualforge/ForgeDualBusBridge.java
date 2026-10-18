@@ -84,6 +84,13 @@ public final class ForgeDualBusBridge {
         var c=caller();Session s=current(c);require(s.entry.get()==entry,"WRONG_LISTENER_OWNER");synchronized(s){
             require(s.configured && s.next==s.plan.listeners.size() && s.router.get()!=null,"WRONG_REGISTRATION_ORDER");s.phase=Phase.COMPLETE;}
     }
+    static ForgeNetworkBridge.Owner networkOwner(Class<?> caller) {
+        ModContainer owner=ModLoadingContext.get().getActiveContainer();Session s;
+        synchronized(STATES){var ref=STATES.get(owner);require(ref!=null && ref.get()!=null,"WRONG_MOD_CONTAINER");s=ref.get();}
+        construction(s);entryFrame(s);s.identity.sameOwner(caller);
+        require(s.plan.network!=null && caller.getName().replace('.','/').equals(s.plan.network.owner),"WRONG_CHANNEL_OWNER");
+        return new ForgeNetworkBridge.Owner(s.identity,s.plan.network,s.entry,()->s.phase==Phase.COMPLETE);
+    }
     private static Session session(Object token,StackWalker.StackFrame c) {
         require(token instanceof Session,"UNKNOWN_BUS_ORIGIN");Session s=(Session)token;s.identity.sameOwner(c.getDeclaringClass());
         synchronized(STATES){var ref=STATES.get(s.identity.owner.get());require(ref!=null && ref.get()==s,"WRONG_MOD_CONTAINER");}return s;
