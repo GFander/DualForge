@@ -1,0 +1,44 @@
+private void ownerModels(Object owner,Object a,Object b,IEventBus ma,IEventBus mb)throws Exception {
+                Class<?> bridge=Class.forName("io.github.gfander.dualforge.ForgeDualBusBridge");Field states=bridge.getDeclaredField("STATES");states.setAccessible(true);
+                Object session=((java.lang.ref.Reference<?>)((Map<?,?>)states.get(null)).get(owner)).get();Object identity=get(session,"identity");Class<?> entry=a.getClass();
+                Object settingsB=get(b,"settings"), valueB=get(settingsB,"enabled");
+                rejected("CONFIG_OWNER_MISMATCH_B_TO_A","WRONG_MODULE",()->{try {settingsB.getClass().getMethod("register",Object.class).invoke(null,session);}catch(Exception e){throw new RuntimeException(e);}});
+                check(get(settingsB,"enabled")==valueB,"foreign config attempt leaves real B value binding unchanged");
+                rejected("MOD_A_TO_BUS_B","UNKNOWN_BUS_ORIGIN",()->invoke(identity,"route",new Class<?>[]{IEventBus.class,boolean.class},mb,true));
+                IEventBus unknown=BusBuilder.builder().build();
+                rejected("CUSTOM_BUS_UNSUPPORTED","UNKNOWN_BUS_ORIGIN",()->invoke(identity,"route",new Class<?>[]{IEventBus.class,boolean.class},unknown,false));
+                Class<?>[] signature={Class.class};
+                rejected("WRONG_MODULE","WRONG_MODULE",()->invoke(identity,"sameOwner",signature,b.getClass()));
+                for(String field:List.of("loader","file","owner","mod","layer")) {
+                    Object old=get(identity,field);Object bad=switch(field){case "loader"->new ClassLoader(){};case "owner"->new java.lang.ref.WeakReference<>(null);case "mod"->mb;case "layer"->ModuleLayer.empty();default->new Object();};
+                    String expected=switch(field){case "loader"->"WRONG_CLASSLOADER";case "file"->"WRONG_MODFILE";case "owner"->"WRONG_MOD_CONTAINER";case "mod"->"FOREIGN_MOD_BUS";default->"WRONG_MODULE";};
+                    try {set(identity,field,bad);rejected(expected,expected,()->invoke(identity,"sameOwner",signature,entry));}finally{set(identity,field,old);}
+                }
+                rejected("UNKNOWN_BUS_ORIGIN","UNKNOWN_BUS_ORIGIN",()->invoke(identity,"route",new Class<?>[]{IEventBus.class,boolean.class},mb,false));
+                rejected("WRONG_EVENT_DOMAIN","WRONG_EVENT_DOMAIN",()->invoke(identity,"route",new Class<?>[]{IEventBus.class,boolean.class},ma,false));
+                Class<?> semantics=Class.forName("io.github.gfander.dualforge.ForgeEventSemantics");
+                for(int kind=0;kind<3;kind++) {
+                    String method=kind==0?"modEvent":"options";Class<?>[] types=kind==0?new Class<?>[]{Class.class}:new Class<?>[]{EventPriority.class,boolean.class,Class.class};
+                    Object[] args=kind==0?new Object[]{String.class}:new Object[]{kind==1?EventPriority.HIGH:EventPriority.NORMAL,kind==2,ServerStartedEvent.class};
+                    String why=kind==0?"WRONG_EVENT_CLASS":kind==1?"UNVERIFIED_PRIORITY":"UNVERIFIED_RECEIVE_CANCELED";
+                    rejected(why,why,()->{try {Method m=semantics.getDeclaredMethod(method,types);m.setAccessible(true);m.invoke(null,args);}catch(Exception e){throw new RuntimeException(e);}});
+                }
+
+                // Isolated host-operation fault injection. Caller/owner guards are deliberately bypassed.
+                Object plan=get(session,"plan");Constructor<?> create=session.getClass().getDeclaredConstructor(net.neoforged.fml.ModContainer.class,Object.class,plan.getClass());create.setAccessible(true);
+                Method core=bridge.getDeclaredMethod("installListener",session.getClass(),IEventBus.class,EventPriority.class,boolean.class,Class.class,Consumer.class);core.setAccessible(true);
+                Method phaseCheck=bridge.getDeclaredMethod("construction",session.getClass());phaseCheck.setAccessible(true);
+                for(boolean after:new boolean[]{false,true}) {
+                    Object isolated=create.newInstance(owner,a,plan);IEventBus nativeBus=BusBuilder.builder().build();int[] calls={0};Consumer<ServerStartedEvent> consumer=e->calls[0]++;
+                    RuntimeException sentinel=new RuntimeException("010B_HOST_FAULT");
+                    IEventBus fault=(IEventBus)Proxy.newProxyInstance(IEventBus.class.getClassLoader(),new Class<?>[]{IEventBus.class},(proxy,m,args)->{
+                        if(m.getName().equals("addListener")){if(after)m.invoke(nativeBus,args);throw sentinel;}return m.invoke(nativeBus,args);
+                    });
+                    try {core.invoke(null,isolated,fault,EventPriority.NORMAL,false,ServerStartedEvent.class,consumer);throw new AssertionError("host fault swallowed");}
+                    catch(InvocationTargetException failure){check(failure.getCause()==sentinel,"same host exception propagated");}
+                    check(get(isolated,"phase").toString().equals("UNCERTAIN"),"host fault marks UNCERTAIN");
+                    nativeBus.post(new ServerStartedEvent(null));check(calls[0]==(after?1:0),"real native partial side effect retained, no rollback claim");nativeBus.unregister(consumer);
+                    rejected("UNCERTAIN_RETRY","WRONG_REGISTRATION_ORDER",()->{try{phaseCheck.invoke(null,isolated);}catch(Exception e){throw new RuntimeException(e);}});
+                }
+                System.out.println("DUAL_HOST_FAULT_MODEL_PASS scope=ISOLATED_HOST_OPERATION callerPath=NOT_EXERCISED");
+            }

@@ -1,0 +1,265 @@
+{
+  "task": "Convergence-010B v1.2",
+  "date": "2026-10-18",
+  "overall": "PARTIAL",
+  "scopedAutomation": "PASS",
+  "branch": "codex/convergence-010b-dual-bus-config",
+  "baseCommit": "5459bec261610769c6c1901b5fdeb5f999f85b45",
+  "implementationCommit": "438cbd3e52495c31cba04b27acfc0dc5eeede91e",
+  "integration": {
+    "main": "e47423aa2a48e02b128098a03d5486ad8faa37f8",
+    "010A_PR": "https://github.com/GFander/DualForge/pull/35",
+    "state": "OPEN_DRAFT_NOT_MERGED",
+    "CI": "SUCCESS",
+    "CI_URL": "https://github.com/GFander/DualForge/actions/runs/39102354470",
+    "010B_BASE": "codex/convergence-010a-jei",
+    "finalHeadPRCIReceipt": "SSD delivery.json after final documentation commit"
+  },
+  "environment": {
+    "source": "/home/albert/Codex/DualForge-010B",
+    "runtime": "/home/albert/Env/DualForge/runs/convergence-010b",
+    "jdk": "Microsoft 21.0.10+7-LTS",
+    "mc": "1.21.1",
+    "forge": "52.1.0",
+    "neo": "21.1.256",
+    "fml": "4.0.45",
+    "jvmPolicy": "serial stock game arguments"
+  },
+  "jar": {
+    "path": "/home/albert/Env/DualForge/runs/convergence-010b/build-current/dualforge.jar",
+    "bytes": 224219,
+    "sha256": "7eb452be98d70cda6cabf31e20aa8070dc6ac73664366c61cb20563f15dc2afc"
+  },
+  "fixtures": {
+    "status": "PASS",
+    "scope": "FORGE_ONLY_COMPILE",
+    "artifacts": [
+      {
+        "identity": "busalpha",
+        "configType": "COMMON",
+        "jar": {
+          "path": "/home/albert/Env/DualForge/runs/convergence-010b/fixture-build-2/busalpha/busalpha.jar",
+          "bytes": 4774,
+          "sha256": "f595d74a3ad64ac94bd7f8117bef46ecfa41482a38a6565a314688b74c31aaaf"
+        }
+      },
+      {
+        "identity": "busbeta",
+        "configType": "SERVER",
+        "jar": {
+          "path": "/home/albert/Env/DualForge/runs/convergence-010b/fixture-build-2/busbeta/busbeta.jar",
+          "bytes": 4774,
+          "sha256": "f60b6f627eb34ad4840b74bc6d661b2e3f5aa64275a9cfcd298879619b4a4b0b"
+        }
+      }
+    ]
+  },
+  "originalJEI": [
+    {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010a-jei/inputs/jei-1.21.1-forge-19.27.0.340.jar",
+      "bytes": 1529402,
+      "sha256": "f5e61a001d57dd044d6f2ba255daf955c50d90e4173f8b4933ab0eb8cd386ed5"
+    },
+    {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010a-jei/inputs/jei-1.21.1-neoforge-19.27.0.340.jar",
+      "bytes": 1529391,
+      "sha256": "8aaf547432f1b4958239b036356b910692fe40f858c3073d996f56bbf7c99826"
+    }
+  ],
+  "references": {
+    "kilt": {
+      "repo": "KiltMC/Kilt",
+      "branch": "version/1.21.1",
+      "commit": "8f008c5b427be2aedd87419a9bf7b99d8271395e",
+      "role": "ARCHITECTURE_REFERENCE_ONLY; no code copied"
+    },
+    "forgified": {
+      "repo": "Sinytra/ForgifiedFabricAPI",
+      "branch": "1.21.1",
+      "commit": "204211bf9c26bcb87379cefbca4ba10e75adee15",
+      "role": "ARCHITECTURE_REFERENCE_ONLY; no code copied"
+    },
+    "architectury": {
+      "repo": "architectury/architectury-api",
+      "branch": "1.21",
+      "commit": "321ad305a1caacd20ea655f4c392a87c3376a244",
+      "role": "ARCHITECTURE_REFERENCE_ONLY; no code copied"
+    }
+  },
+  "results": {
+    "planAssertions": 128,
+    "nativeAPIAssertions": {
+      "forge": 7,
+      "neo": 7
+    },
+    "primaryDualOwnerRuns": 6,
+    "ownerDiagnosticAssertions": 42,
+    "oldRuntimeGroups": 18,
+    "mouse": "101 assertions / 52 negatives / ownership15+7 / native53+65 / links728 / mixinTargets6 / noInit21 / initModel8",
+    "clumps": "99 assertions / 28 negatives; real XP merge/reload/mixed rerun",
+    "units": 106,
+    "zsh": 25,
+    "protected": 374,
+    "JEI_NEO": "FAIL_AT_PREPLAN; UNKNOWN_CONSTRUCTOR_EFFECT actualType=MinecraftLocaleSupplier",
+    "JEIClient": "NOT_RUN",
+    "clientSpecLifecycle": "NOT_RUN",
+    "livingDeathGameplay": "NOT_RUN; diagnostics/models only",
+    "CUSTOM_BUS_SUPPORT": "NOT_IMPLEMENTED",
+    "CLIENT_ZIP_STATUS": "010B_JEI_CLIENT_ZIP=NOT_PRODUCED"
+  },
+  "evidenceRoles": {
+    "build-current/result.json": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/build-current/result.json",
+      "bytes": 338,
+      "sha256": "6c67ae5663b2015d7b9da8acc897e0fcb67f59037f0a3287797e087ae6ec5e37"
+    },
+    "contracts-verified/result.json": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/contracts-verified/result.json",
+      "bytes": 309,
+      "sha256": "50c8234649767da8cbae3c340230e7c3c19d6638c1817827ff86f8c7c02af9bd"
+    },
+    "contracts-verified/plan.stdout.log": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/contracts-verified/plan.stdout.log",
+      "bytes": 4507,
+      "sha256": "0a92ef9a0fcd7a9ad45d4561e38cbc114d3ca82ee60752d25b9749225df5ad0c"
+    },
+    "live-current/result.json": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/live-current/result.json",
+      "bytes": 11735,
+      "sha256": "e438731e291743eaf67162372bdf478421b18adf0286f0ab0a96b112ace3f719"
+    },
+    "owner-negative-current/result.json": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/owner-negative-current/result.json",
+      "bytes": 316,
+      "sha256": "3bae27e3613fedb376df733c851134126cb2b893da5f0396515ca340788849ca"
+    },
+    "owner-negative-current/stdout.log": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/owner-negative-current/stdout.log",
+      "bytes": 27301,
+      "sha256": "195401fe38b8ee1763ed76626545fc5140664be531ec89a140bfd323746b1405"
+    },
+    "regressions-current/result.json": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/regressions-current/result.json",
+      "bytes": 371,
+      "sha256": "34f12be6b7afbf854ddb87b93b852d5f7abab59efb3b0bf03510e139f4d4d49b"
+    },
+    "regressions-current/existing-contracts/result.json": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/regressions-current/existing-contracts/result.json",
+      "bytes": 385,
+      "sha256": "242825cb6aac876ff6ec64af529c65842da57e0b190430b764a2a541b298f654"
+    },
+    "regressions-current/profiles/result.json": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/regressions-current/profiles/result.json",
+      "bytes": 229,
+      "sha256": "6bde3326f70e80ce2424e21827e465906b2f82f40c7612e25790dec361141017"
+    },
+    "regressions-current/clumps-contract/result.json": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/regressions-current/clumps-contract/result.json",
+      "bytes": 148,
+      "sha256": "d1e21782ee41322bec62c34fdce139d162228e38574b6ea18a3c3ff01bb91bbd"
+    },
+    "mouse-final8/result.json": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/mouse-final8/result.json",
+      "bytes": 372,
+      "sha256": "13aa80d6b482a2a474328ed527aed2bc8431de993ac74b1a9946616298c86438"
+    },
+    "mouse-final8/contract/result.json": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/mouse-final8/contract/result.json",
+      "bytes": 417,
+      "sha256": "8835fb38363e2986098e6b297561223c9134be7dba57321407a978b985d42062"
+    },
+    "mouse-final8/api-forge/result.json": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/mouse-final8/api-forge/result.json",
+      "bytes": 403,
+      "sha256": "ef775b10c8a5a3f89331f4e1ca0d2f630c1b876a61c1d475aaafa6ff1d7498a4"
+    },
+    "mouse-final8/api-neo/result.json": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/mouse-final8/api-neo/result.json",
+      "bytes": 401,
+      "sha256": "07da79836b7754fa2bd83a39c06e7bd7dd10481e22924d40b847c45a769127fa"
+    },
+    "mouse-final8/links/result.json": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/mouse-final8/links/result.json",
+      "bytes": 507,
+      "sha256": "42a407c148988491fa948fb060b5b5f2ac4f49e4a24678d189b5298c8c4329ff"
+    },
+    "helper-final8-driver.exit.json": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/helper-final8-driver.exit.json",
+      "bytes": 20,
+      "sha256": "ff8ae5796bcef71911ff9c5c3eaea341819c471f669549e252b830106edd4305"
+    },
+    "helper-final8-driver.stdout.log": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/helper-final8-driver.stdout.log",
+      "bytes": 254,
+      "sha256": "07e6bc1ff8aa38b19d0432abecad15d746f3c0282e8ccc204a38573225d1526f"
+    },
+    "jei-abi-final/result.json": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/jei-abi-final/result.json",
+      "bytes": 868,
+      "sha256": "ceb5f241e26815dae7bbe93213780b72be077cead2a4a4c59be9f1256de22943"
+    },
+    "jei-abi-final/bus-abi.json": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/jei-abi-final/bus-abi.json",
+      "bytes": 355225,
+      "sha256": "03a04a551fe619697ecbd93f62e0f1fc6892721b0d6b89386be4fa736c49843b"
+    },
+    "jei-current-receipt.json": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/jei-current-receipt.json",
+      "bytes": 960,
+      "sha256": "4e1f6ec240502c3193103c56c418ab5b79af09a185689a3bda546ec98a361bf6"
+    },
+    "jei-current/stderr.log": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/jei-current/stderr.log",
+      "bytes": 2381,
+      "sha256": "3006ccc11bfa4a9810eefdd34d4edec9921794ed4358bf7240991dc1d28a5991"
+    },
+    "jei-current/result.json": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/jei-current/result.json",
+      "bytes": 323,
+      "sha256": "a54e7108989acaac92616376cadd2519aca0c9702e6483659541822d9b0eb7f1"
+    },
+    "jei-forge-final/result.json": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/jei-forge-final/result.json",
+      "bytes": 316,
+      "sha256": "04e29bd0986a3cd9fba96e16a7b4d4679cbe81c295c8ad9d50354eb7ea2976d6"
+    },
+    "local-current/result.json": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/local-current/result.json",
+      "bytes": 417,
+      "sha256": "13811ab8cf79a09767f1cbe037d1ed33c2e8abfd5bb69f0220f608268ab24dee"
+    },
+    "local-current/identity.stdout.log": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/local-current/identity.stdout.log",
+      "bytes": 134,
+      "sha256": "68df0da1b81cca86cfb885e6eb1a49cca0c27fb186efb1a2ee07a4258ada110a"
+    },
+    "assessment-final.json": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/assessment-final.json",
+      "bytes": 8701,
+      "sha256": "168f702ce28077139b045f94cac461ee51ffa1809f04c58e717c4c3200852ee3"
+    },
+    "committed-source-binding.json": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/committed-source-binding.json",
+      "bytes": 13305,
+      "sha256": "8e8a402b9b235690fbd75bdbef8145567f537f6b8abaca5169f5705d97789a3d"
+    },
+    "evidence-current-manifest.json": {
+      "path": "/home/albert/Env/DualForge/runs/convergence-010b/evidence-current-manifest.json",
+      "bytes": 580167,
+      "sha256": "f1a640c2fe8f038a28b95e139efc9959e415f829932a418f4ce7613cf4975809"
+    }
+  },
+  "archive": {
+    "path": "/home/albert/Env/DualForge/runs/convergence-010b/Convergence-010B-Evidence.zip",
+    "bytes": 45455730,
+    "sha256": "e0a15258db31bff974195d23a4a67032d48dd404ba4b72e202e2bb6c704fe0dd"
+  },
+  "archiveMemberCount": 2422,
+  "supersededEvidence": "Other build-1..7 / earlier live/contracts/regression folders remain on SSD and are not current PASS. Preserve original failures including initial FnF candidate routing failure. Frozen historical reports are unchanged.",
+  "remainingBlockers": [
+    "Real JEI original locale constructor/interface/helper/weak consumer and later dynamic registration closure not admitted",
+    "JEI network/Dist/client lifecycle and rendering/AT remain unexecuted",
+    "CLIENT config loading/sync, per-world policy equivalence, gameplay and final-JAR Windows GUI NOT_RUN"
+  ],
+  "git": "pushed/PR/final CI is recorded separately after the documentation commit; never merged automatically"
+}

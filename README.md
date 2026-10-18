@@ -1,5 +1,7 @@
 # DualForge
 
+010B 新增受控三类闭包的官方双 Bus、显式 Class/Consumer 和布尔配置适配；两个原始 Forge 身份在双平台验证，仍不支持真实 JEI 完整入口。当前 JEI 在新 profile 的构造器模板预计划处拒绝，整体 PARTIAL，客户端 NOT_RUN、不生成 JEI ZIP。见 [010B 契约](tests/real_mods/jei/dual_bus/README.md)；010A/009C 的既有结论保持各自历史含义。
+
 010A完成原始JEI Forge19.27.0.340完整取证及真实Forge基线，Neo仍在严格预计划以`LISTENER_CONTRACT`拒绝。生产零修改，整体PARTIAL，尚无JEI兼容客户端包；见[010A报告](<Dev Manuals/Convergence-010A JEI 交付报告.md>)。
 
 2026-10-18：009C清单全部项目已获 **USER_REPORTED_MANUAL_PASS**，包括原生/兼容双实例、鼠标/配置持久化及FnF+Clumps混装。新日志与Windows安装SHA未提供独立复核，见[人工验收补充](<Dev Manuals/Convergence-009C Windows 客户端人工验收补充报告.md>)。以下009C交付时的NOT_RUN为历史状态。

@@ -1,5 +1,9 @@
 # 实际兼容范围
 
+010B 当前新增有限三类构造器/路由/布尔配置闭包：复用真实 NeoForge Game/逐容器 Mod Bus，显式 Class/Consumer 与固定三种事件，保留原 Consumer、取消和真实配置副作用。COMMON/SERVER 双 Owner 默认值、修改值、重启恢复与原生控制分别验证；CLIENT 文件生命周期、真实 JEI WeakConsumer/动态订阅及客户端仍 NOT_RUN。真实 JEI 现在由新 profile 在入口 LocaleSupplier 前缀与受控模板不匹配处预计划拒绝（`UNKNOWN_CONSTRUCTOR_EFFECT`），尚未定义/构造；不能把新失败文字当作 JEI 的 Bus/Config 已运行通过。整体 PARTIAL，`CUSTOM_BUS_SUPPORT=NOT_IMPLEMENTED`，无 010B JEI 客户端 ZIP。详见 [010B 契约与限制](../tests/real_mods/jei/dual_bus/README.md)。
+
+以下 010A 是当时基线的冻结结论；后续新构建另行验证，不继承 Windows 人工 PASS。
+
 010A最新JEI结论：原始Forge19.27.0.340在固定Forge52.1.0真实服务端基线PASS；Neo21.1.256+DualForge在targets预计划以`Global bus rejected: LISTENER_CONTRACT`拒绝，尚未构造JEI。生产零修改，GUI/插件runtime/AT应用NOT_RUN，整体PARTIAL，不生成客户端验收包。详见[010A报告](<../Dev Manuals/Convergence-010A JEI 交付报告.md>)。原生服务端与SDK链接不代表JEI客户端兼容。
 
 2026-10-18后续反馈：009C原CLIENT.md的全部A/B及混装项目为 **USER_REPORTED_MANUAL_PASS**，四客户端门禁已获用户人工PASS。原始新客户端日志未提供，Windows安装SHA未独立复核，Codex没有重新执行Windows实验；详见[验收补充](<../Dev Manuals/Convergence-009C Windows 客户端人工验收补充报告.md>)。下列009C的NOT_RUN/PARTIAL保留交付时历史含义，不能覆盖后续用户事实；新制品也不能继承此PASS。
