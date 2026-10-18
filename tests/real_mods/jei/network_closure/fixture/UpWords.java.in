@@ -1,0 +1,15 @@
+package @PACKAGE@;
+import java.util.List;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+public final class UpWords implements CustomPacketPayload {
+    public static final Type<UpWords> TYPE=new Type<>(ResourceLocation.fromNamespaceAndPath("@ID@","upwords"));
+    public static final StreamCodec<RegistryFriendlyByteBuf,UpWords> STREAM_CODEC=StreamCodec.composite(ByteBufCodecs.STRING_UTF8.apply(ByteBufCodecs.<io.netty.buffer.ByteBuf,String>list()),UpWords::words,UpWords::new);
+    private final List<String> words;
+    public UpWords(List<String> words){this.words=words;}
+    public List<String> words(){return words;}
+    public Type<UpWords> type(){return TYPE;}
+}

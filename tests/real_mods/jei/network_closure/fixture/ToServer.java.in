@@ -1,0 +1,6 @@
+package @PACKAGE@;
+public final class ToServer implements IServerConnection {
+    private final Network network;
+    public ToServer(Network network){this.network=network;}
+    public Network owner(){return network;}
+}

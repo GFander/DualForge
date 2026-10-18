@@ -1,0 +1,14 @@
+package @PACKAGE@;
+import java.util.List;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+public final class UpUnit implements CustomPacketPayload {
+    public static final Type<UpUnit> TYPE=new Type<>(ResourceLocation.fromNamespaceAndPath("@ID@","upunit"));
+    public static final UpUnit INSTANCE=new UpUnit();
+    public static final StreamCodec<RegistryFriendlyByteBuf,UpUnit> STREAM_CODEC=StreamCodec.unit(INSTANCE);
+    private UpUnit(){}
+    public Type<UpUnit> type(){return TYPE;}
+}

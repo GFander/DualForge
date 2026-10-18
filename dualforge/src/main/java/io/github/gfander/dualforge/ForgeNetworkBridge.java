@@ -14,7 +14,7 @@ public final class ForgeNetworkBridge {
     record Owner(ForgeBusIdentity identity,ForgeNetworkPlan plan,WeakReference<Object> entry,BooleanSupplier complete) { }
     private static final StackWalker WALKER=StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE);
     private static final Map<ModContainer,WeakReference<Session>> STATES=new WeakHashMap<>();
-    private enum Phase { NAMED, VERSION, OPTIONAL, PAYLOAD, PLAY, SERVERBOUND, SERVER_ADDED, CLIENTBOUND, CLIENT_ADDED, PLANNED, REGISTERING, REGISTERED, UNCERTAIN }
+    private enum Phase { CONSTRUCTOR_STARTED, GLOBAL_SETTER_ENTERED, GLOBAL_REFERENCE_ASSIGNED, NAMED, VERSION, OPTIONAL, PAYLOAD, PLAY, SERVERBOUND, SERVER_ADDED, CLIENTBOUND, CLIENT_ADDED, PLANNED, REGISTERING, REGISTERED, UNCERTAIN }
     private record Definition(Object type,Object codec,BiConsumer<Object,Object> consumer,ForgeNetworkPlan.Payload source) { }
     private static final class Session {
         final Owner owner;final Object network;List<Definition> definitions=new ArrayList<>();Phase phase=Phase.NAMED;
@@ -22,11 +22,34 @@ public final class ForgeNetworkBridge {
     }
     private ForgeNetworkBridge() { }
     private static StackWalker.StackFrame caller(){return WALKER.walk(s->s.skip(2).findFirst().orElseThrow());}
+    public static Object begin(Object network){
+        var caller=caller();require(network!=null && network.getClass()==caller.getDeclaringClass() && caller.getMethodName().equals("<init>"),"WRONG_NETWORK_HANDLER_IDENTITY");Owner owner=ForgeDualBusBridge.networkOwner(caller.getDeclaringClass());require(owner.plan.closure!=null,"WRONG_NETWORK_HANDLER_IDENTITY");
+        synchronized(STATES){ModContainer container=owner.identity.owner.get();require(!STATES.containsKey(container),"DUPLICATE_GLOBAL_CONNECTION_WRITE");Session s=new Session(owner,network);s.phase=Phase.CONSTRUCTOR_STARTED;STATES.put(container,new WeakReference<>(s));return s;}
+    }
+    private static Session active(){synchronized(STATES){var ref=STATES.get(ModLoadingContext.get().getActiveContainer());require(ref!=null && ref.get()!=null,"WRONG_MOD_CONTAINER");return ref.get();}}
+    private static Class<?> source(Session s,String name){Class<?> c=Class.forName(s.owner.identity.module,name.replace('/','.'));require(c!=null && c.getClassLoader()==s.owner.identity.loader,"WRONG_CLASSLOADER");return c;}
+    public static void globalWrite(Object connection){
+        var caller=caller();Session s=active();var p=s.owner.plan.closure;require(p!=null,"GLOBAL_CONNECTION_OWNER_MISMATCH");s.owner.identity.sameOwner(caller.getDeclaringClass());
+        require(caller.getDeclaringClass()==source(s,p.global.owner()) && caller.getMethodName().equals(p.global.setter()),"GLOBAL_CONNECTION_OWNER_MISMATCH");require(s.phase==Phase.CONSTRUCTOR_STARTED,"DUPLICATE_GLOBAL_CONNECTION_WRITE");
+        require(connection!=null && connection.getClass()==source(s,p.server.owner()) && field(connection.getClass(),connection,p.server.parent())==s.network && field(s.network.getClass(),s.network,p.serverField)==connection,"WRONG_NETWORK_HANDLER_IDENTITY");
+        require(field(source(s,p.global.owner()),null,p.global.value())==null,"DUPLICATE_GLOBAL_CONNECTION_WRITE");
+        require(field(s.network.getClass(),s.network,ForgeNetworkClosurePlan.ANCHOR)==s,"WRONG_CHANNEL_OWNER");
+        require(WALKER.walk(frames->frames.anyMatch(f->f.getDeclaringClass()==s.network.getClass() && f.getMethodName().equals("<init>"))),"GLOBAL_CONNECTION_WRONG_ORDER");s.phase=Phase.GLOBAL_SETTER_ENTERED;
+    }
+    public static void globalAssigned(Object network){
+        var caller=caller();Session s=active();constructor(s,caller);require(network==s.network && s.phase==Phase.GLOBAL_SETTER_ENTERED,"GLOBAL_CONNECTION_WRONG_ORDER");var p=s.owner.plan.closure;
+        require(field(source(s,p.global.owner()),null,p.global.value())==field(network.getClass(),network,p.serverField),"GLOBAL_CONNECTION_OWNER_MISMATCH");
+        if(p.global.counter()!=null)require(field(source(s,p.global.owner()),null,p.global.counter()).equals(1),"DUPLICATE_GLOBAL_CONNECTION_WRITE");s.phase=Phase.GLOBAL_REFERENCE_ASSIGNED;
+    }
+    public static void constructorFailure(Object network,Throwable failure){var caller=caller();Session s=active();constructor(s,caller);require(s.network==network && failure!=null,"WRONG_NETWORK_HANDLER_IDENTITY");s.phase=Phase.UNCERTAIN;}
     public static Object named(Object id,Object network) {
         var caller=caller();require(network!=null && network.getClass()==caller.getDeclaringClass() && caller.getMethodName().equals("<init>"),"WRONG_CHANNEL_OWNER");
         Owner owner=ForgeDualBusBridge.networkOwner(caller.getDeclaringClass());
         require(id!=null && id.getClass()==host(ForgeNetworkPlan.RL,"minecraft") && id.toString().equals(owner.plan.channelId),"WRONG_CHANNEL_OWNER");
-        synchronized(STATES){ModContainer container=owner.identity.owner.get();require(!STATES.containsKey(container),"DUPLICATE_REGISTRATION");Session s=new Session(owner,network);STATES.put(container,new WeakReference<>(s));return s;}
+        synchronized(STATES){ModContainer container=owner.identity.owner.get();
+            if(owner.plan.closure!=null){Session s=active();var p=owner.plan.closure;require(s.network==network && s.phase==Phase.GLOBAL_REFERENCE_ASSIGNED,"GLOBAL_CONNECTION_WRONG_ORDER");
+                Object entry=owner.entry.get();require(entry!=null && field(network.getClass(),network,p.configField)==field(entry.getClass(),entry,p.entryConfig),"WRONG_NETWORK_HANDLER_IDENTITY");Object client=field(network.getClass(),network,p.clientField);require(client!=null && client.getClass()==source(s,p.client.owner()) && field(client.getClass(),client,p.client.parent())==network,"WRONG_NETWORK_HANDLER_IDENTITY");s.phase=Phase.NAMED;return s;}
+            require(!STATES.containsKey(container),"DUPLICATE_REGISTRATION");Session s=new Session(owner,network);STATES.put(container,new WeakReference<>(s));return s;}
     }
     private static Session constructor(Object token,StackWalker.StackFrame caller) {
         require(token instanceof Session,"WRONG_CHANNEL_OWNER");Session s=(Session)token;s.owner.identity.sameOwner(caller.getDeclaringClass());
@@ -43,20 +66,22 @@ public final class ForgeNetworkBridge {
     public static Object play(Object token){return transition(token,caller(),Phase.PAYLOAD,Phase.PLAY);}
     public static Object serverbound(Object token){return transition(token,caller(),Phase.PLAY,Phase.SERVERBOUND);}
     public static Object clientbound(Object token){return transition(token,caller(),Phase.SERVER_ADDED,Phase.CLIENTBOUND);}
+    public static Object addMain(Object token,Object type,Object codec,BiConsumer<?,?> consumer){return capture(token,type,codec,consumer,caller(),false);}
+    public static Object add(Object token,Object type,Object codec,BiConsumer<?,?> consumer){return capture(token,type,codec,consumer,caller(),true);}
     @SuppressWarnings("unchecked")
-    public static Object addMain(Object token,Object type,Object codec,BiConsumer<?,?> consumer) {
-        Session s=constructor(token,caller());int index=s.definitions.size();require(index<2,"DUPLICATE_PAYLOAD_ID");
-        require(s.phase==(index==0?Phase.SERVERBOUND:Phase.CLIENTBOUND),"WRONG_PAYLOAD_DIRECTION");var p=s.owner.plan.payloads.get(index);
-        Class<?> packet=Class.forName(s.owner.identity.module,p.owner().replace('/','.'));require(packet!=null && packet.getClassLoader()==s.owner.identity.loader,"WRONG_CLASSLOADER");
-        require(type==field(packet,null,p.typeField()) && codec==field(packet,null,p.codecField()),"UNSUPPORTED_CODEC");
+    private static Object capture(Object token,Object type,Object codec,BiConsumer<?,?> consumer,StackWalker.StackFrame caller,boolean contextful) {
+        Session s=constructor(token,caller);int index=s.definitions.size();require(index<s.owner.plan.payloads.size(),"DUPLICATE_PAYLOAD_ID");
+        require((s.owner.plan.closure!=null)==contextful,"CONTEXT_ENQUEUE_UNVERIFIED");var p=s.owner.plan.payloads.get(index);
+        boolean server=s.phase==Phase.SERVERBOUND || contextful && s.phase==Phase.SERVER_ADDED;boolean client=s.phase==Phase.CLIENTBOUND || contextful && s.phase==Phase.CLIENT_ADDED;
+        require((server && p.direction().equals("SERVERBOUND")) || (client && p.direction().equals("CLIENTBOUND")),"WRONG_PAYLOAD_DIRECTION");
+        Class<?> packet=source(s,p.owner());require(type==field(packet,null,p.typeField()) && codec==field(packet,null,p.codecField()),"WRONG_CODEC_OWNER");
         require(type.getClass()==host(ForgeNetworkPlan.PT,"minecraft") && invoke(type,"id").toString().equals(p.id()),"CROSS_MODFILE_PAYLOAD");
-        require(consumer!=null && consumer.getClass().isHidden() && consumer.getClass().getModule()==s.owner.identity.module && consumer.getClass().getClassLoader()==s.owner.identity.loader
-            && consumer==field(s.network.getClass(),s.network,p.handlerField()),"UNVERIFIED_HANDLER");
-        s.definitions.add(new Definition(type,codec,(BiConsumer<Object,Object>)consumer,p));s.phase=index==0?Phase.SERVER_ADDED:Phase.CLIENT_ADDED;return s;
+        require(consumer!=null && consumer.getClass().isHidden() && consumer.getClass().getModule()==s.owner.identity.module && consumer.getClass().getClassLoader()==s.owner.identity.loader && consumer==field(s.network.getClass(),s.network,p.handlerField()),"UNVERIFIED_HANDLER_CAPTURE");
+        s.definitions.add(new Definition(type,codec,(BiConsumer<Object,Object>)consumer,p));s.phase=server?Phase.SERVER_ADDED:Phase.CLIENT_ADDED;return s;
     }
     @SuppressWarnings({"rawtypes","unchecked"})
     public static Object build(Object token) {
-        Session s=transition(token,caller(),Phase.CLIENT_ADDED,Phase.PLANNED);require(s.definitions.size()==2,"PARTIAL_NETWORK_PLAN");
+        Session s=transition(token,caller(),Phase.CLIENT_ADDED,Phase.PLANNED);require(s.definitions.size()==s.owner.plan.payloads.size(),"PARTIAL_NETWORK_PLAN");
         s.definitions=List.copyOf(s.definitions);
         Class<?> event=host("net/neoforged/neoforge/network/event/RegisterPayloadHandlersEvent","neoforge");
         try {s.owner.identity.mod.addListener(EventPriority.NORMAL,false,(Class)event,(Consumer)(e->register(s,e)));}
@@ -72,7 +97,7 @@ public final class ForgeNetworkBridge {
         s.phase=Phase.REGISTERING;
         try {
             Object registrar=invoke(event,"registrar",Integer.toString(s.owner.plan.version));
-            Class<?> thread=host("net/neoforged/neoforge/network/registration/HandlerThread","neoforge");Object main=enumValue(thread,"MAIN");
+            Class<?> thread=host("net/neoforged/neoforge/network/registration/HandlerThread","neoforge");Object main=enumValue(thread,s.owner.plan.closure==null?"MAIN":"NETWORK");
             registrar=invoke(registrar,"executesOn",main);registrar=invoke(registrar,"optional");
             Class<?> handler=host("net/neoforged/neoforge/network/handling/IPayloadHandler","neoforge");
             for(Definition d:s.definitions) {
@@ -85,7 +110,8 @@ public final class ForgeNetworkBridge {
                     require(context!=null && context.getClass().getModule()==registry.getModule() && context.getClass().getClassLoader()==registry.getClassLoader(),"UNVERIFIED_HANDLER");
                     require(invoke(context,"flow").toString().equals(d.source.direction()),"WRONG_PAYLOAD_DIRECTION");
                     // Supported source callbacks never inspect the Forge Context; an opaque private token preserves that finite ABI.
-                    d.consumer.accept(payload,new Object());return null;
+                    if(s.owner.plan.closure==null)d.consumer.accept(payload,new Object());
+                    else {var scope=ForgeSourceContextBridge.open(s.owner.identity,context,s.network,d.source.handlerMethod(),d.source.direction());boolean normal=false;try{d.consumer.accept(payload,scope);normal=true;}finally{ForgeSourceContextBridge.close(scope,normal);}}return null;
                 });
                 invoke(registrar,d.source.direction().equals("SERVERBOUND")?"playToServer":"playToClient",d.type,d.codec,proxy);
             }
@@ -97,7 +123,7 @@ public final class ForgeNetworkBridge {
     private static Object field(Class<?> type,Object value,String name){try{Field f=type.getDeclaredField(name);require(f.trySetAccessible(),"WRONG_MODULE");return f.get(value);}catch(ReflectiveOperationException e){throw new IllegalStateException("WRONG_CHANNEL_OWNER "+name,e);}}
     static Object invoke(Object target,String name,Object...args) {
         Method selected=null;
-        for(Method method:target.getClass().getMethods())if(method.getName().equals(name) && method.getParameterCount()==args.length) {
+        for(Method method:target.getClass().getMethods())if(!method.isBridge() && method.getName().equals(name) && method.getParameterCount()==args.length) {
             boolean compatible=true;Class<?>[] types=method.getParameterTypes();for(int i=0;i<args.length;i++)compatible&=args[i]!=null && types[i].isInstance(args[i]);
             if(compatible){require(selected==null,"UNVERIFIED_NETWORK_RESULT ambiguous "+name);selected=method;}
         }

@@ -1,0 +1,6 @@
+package @PACKAGE@;
+public final class Features {
+    private boolean enabled=true;
+    public boolean enabled(){return enabled;}
+    public void disable(){enabled=false;}
+}
