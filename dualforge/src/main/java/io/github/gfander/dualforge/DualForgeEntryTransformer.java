@@ -50,6 +50,7 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
     private volatile Map<String, ForgeRegistryTransformationPlan> helperPlans = Map.of();
     private volatile Map<String, ForgeEventInitializerPlan> eventInitializerPlans = Map.of();
     private volatile Map<String, ForgeClientEventPlan> clientEventPlans = Map.of();
+    private volatile Map<String, ForgeDualBusPlan> dualBusPlans = Map.of();
 
     public DualForgeEntryTransformer() {
         this.rewriteEnabled = enabled("dualforge.2a.rewrite");
@@ -79,6 +80,13 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
         original.accept(input);
         try {
             log("offered: " + input.name);
+            var dualPlan = dualBusPlans.get(input.name);
+            if (dualPlan != null) {
+                if (!rewriteEnabled || !apiRewriteEnabled) throw new IllegalStateException("Dual bus requires enabled rewrites");
+                input = dualPlan.transform(input, context == null ? null : context.getInitialClassSha256());
+                log("DUAL_BUS_TRANSFORM class=" + input.name + " modId=" + dualPlan.modId + " plan=" + dualPlan.fingerprint);
+                dumpProfile(input); return input;
+            }
             var clientPlan = clientEventPlans.get(input.name);
             if (clientPlan != null) {
                 if (!rewriteEnabled || !apiRewriteEnabled || !subscriberRewriteEnabled)
@@ -368,6 +376,7 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
         Map<String, ForgeRegistryTransformationPlan> pendingHelpers = new HashMap<>();
         Map<String, ForgeEventInitializerPlan> pendingEvents = new HashMap<>();
         Map<String, ForgeClientEventPlan> pendingClients = new HashMap<>();
+        Map<String, ForgeDualBusPlan> pendingDual = new HashMap<>();
         Set<ITransformer.Target<ClassNode>> targets = new HashSet<>();
         // ModLauncher registers targets after FML completeScan, before the GAME layer.
         // getScanResult waits for the host's background scan; no classes are loaded here.
@@ -404,6 +413,19 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
                     }
                     var kind = ForgeEntryProfile.select(candidate, !events.isEmpty());
                     log("ENTRY_PROFILE modId=" + info.getModId() + " entry=" + entry + " selected=" + kind);
+                    if (kind == ForgeEntryProfile.Kind.DUAL_BUS) {
+                        var plan = ForgeDualBusPlan.create(info, internal);
+                        for (var other : loading.getModFiles()) if (other != file)
+                            plan.rejectForeignClasses(other.getFile().getScanResult().getClasses().stream()
+                                .map(c -> c.clazz().getInternalName()).collect(java.util.stream.Collectors.toSet()));
+                        for (String name : plan.targets()) {
+                            if (pendingDual.putIfAbsent(name, plan) != null)
+                                throw new IllegalStateException("CROSS_MODFILE_CONFLICT " + name);
+                            targets.add(ITransformer.Target.targetClass(name.replace('/', '.')));
+                        }
+                        log("DUAL_BUS_PREPLAN modId=" + info.getModId() + " plan=" + plan.fingerprint);
+                        continue;
+                    }
                     if (kind == ForgeEntryProfile.Kind.CLIENT_EVENTS) {
                         var plan = ForgeClientEventPlan.create(info, internal);
                         for (var other : loading.getModFiles()) {
@@ -526,6 +548,13 @@ public final class DualForgeEntryTransformer implements ITransformer<ClassNode> 
                     || entryEvents.containsKey(name) || eventClasses.contains(name))
                 throw new IllegalStateException("TRANSFORMATION_RULE_CONFLICT existing client profile " + name);
         }
+        for (String name : pendingDual.keySet()) {
+            if (pendingHelpers.containsKey(name) || pendingEvents.containsKey(name) || pendingClients.containsKey(name)
+                || contextEntries.containsKey(name) || registryEntries.containsKey(name) || blockEntries.containsKey(name)
+                || entryEvents.containsKey(name) || eventClasses.contains(name))
+                throw new IllegalStateException("TRANSFORMATION_RULE_CONFLICT dual bus " + name);
+        }
+        dualBusPlans = Map.copyOf(pendingDual);
         helperPlans = Map.copyOf(pendingHelpers);
         eventInitializerPlans = Map.copyOf(pendingEvents);
         clientEventPlans = Map.copyOf(pendingClients);

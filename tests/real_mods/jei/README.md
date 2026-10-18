@@ -1,5 +1,11 @@
 # Convergence-010A JEI release and startup boundary
 
+010B current scope: [controlled official buses/config](dual_bus/README.md),
+[source graph](dual_bus/JEI_BUS_SOURCE.md), [reference comparison](dual_bus/REFERENCES.md).
+The full original JEI entry still fails preplanning in the new finite constructor
+profile; its bus/config runtime and client remain NOT_RUN. The 010A results below
+are historical. The old exact-refusal evaluator is not a 010B compatibility test.
+
 Original Forge input: `jei-1.21.1-forge-19.27.0.340.jar`, official CurseForge
 file7420585, 1529402 bytes, SHA-256
 `f5e61a001d57dd044d6f2ba255daf955c50d90e4173f8b4933ab0eb8cd386ed5`.

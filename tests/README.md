@@ -1,5 +1,7 @@
 # 测试入口
 
+010B 的 [dual_bus](real_mods/jei/dual_bus/README.md) 使用两个未改原字节 Forge JAR、独立 native observer、双平台真实生命周期和配置重启对照。字节码计划、原生 API 隔离及 Owner/故障模型与真实 FML 结果分别标注；真实 JEI 仍严格拒绝，没有客户端交付包。010A 历史精确首失败工具保持原字节。
+
 010A的[JEI研究与边界契约](real_mods/jei/README.md)保留完整原/参考发行ABI、实际原生Forge观察和Neo首失败。28项双dist模型断言验证精确拒绝与无部分计划，生产零修改；GUI与最终客户端包仍被必要ABI阻塞。见[矩阵](real_mods/jei/MATRIX.md)。
 
 009C的后续Windows/PCL清单全部项目已获 **USER_REPORTED_MANUAL_PASS**，见[补充报告](<../Dev Manuals/Convergence-009C Windows 客户端人工验收补充报告.md>)。原自动化报告/清单/矩阵的NOT_RUN保持历史原字节；没有本次独立Windows日志或安装SHA复核。
