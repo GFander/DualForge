@@ -6,7 +6,7 @@ import org.objectweb.asm.tree.ClassNode;
 
 /** Candidate routing only. A selected profile must still pass its original validator. */
 final class ForgeEntryProfile {
-    enum Kind { BLOCK, NORMAL_ITEM, LEGACY_ITEM, EVENT, CONTEXT, EVENT_INITIALIZER }
+    enum Kind { BLOCK, NORMAL_ITEM, LEGACY_ITEM, EVENT, CONTEXT, EVENT_INITIALIZER, CLIENT_EVENTS }
 
     static Kind select(ClassNode node, boolean ownedEvent) {
         List<Kind> candidates = new ArrayList<>();
@@ -20,6 +20,7 @@ final class ForgeEntryProfile {
         if (ownedEvent) candidates.add(Kind.EVENT);
         if (ControlledForgeContextProfile.isCandidate(node)) candidates.add(Kind.CONTEXT);
         if (ForgeEventInitializerPlan.isCandidate(node)) candidates.add(Kind.EVENT_INITIALIZER);
+        if (ForgeClientEventPlan.isCandidate(node)) candidates.add(Kind.CLIENT_EVENTS);
         if (candidates.isEmpty()) throw new IllegalStateException("UNSUPPORTED_ENTRY " + node.name + ": no controlled Forge entry profile");
         if (candidates.size() != 1) throw new IllegalStateException("AMBIGUOUS_ENTRY " + node.name + ": " + candidates);
         return candidates.getFirst();
