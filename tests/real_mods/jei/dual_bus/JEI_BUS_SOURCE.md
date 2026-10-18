@@ -51,7 +51,7 @@ justified. CLIENT-only config loading has not been run.
 The full entry is rejected **before any JEI target is published or constructed**.
 The current guard expects immediate Game Bus acquisition after Object.<init>;
 the real first operation is the locale constructor at byte 4. Its current error
-is UNKNOWN_BUS_ORIGIN (field acquisition contract mismatch). This does not mean
+is UNKNOWN_CONSTRUCTOR_EFFECT, with actualOpcode=187 and the LocaleSupplier type. This does not mean
 that the original official Game Bus origin is unknown in this static graph, or
 that JEI bus/config runtime already passed. Network/Dist/client callbacks are
 subsequent unexecuted requirements, not a claimed new runtime failure.

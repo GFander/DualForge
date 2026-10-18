@@ -82,6 +82,7 @@ python3 -B tests/real_mods/jei/dual_bus/collect_abi.py --output /absolute/SSD/ab
 
 The 010A BoundaryContract/run_boundary tool remains a frozen historical exact
 refusal evaluator. It must not be used to assert the new candidate's error.
-Current 010B JEI startup is independently rerun and its actual preplan failure
+`assess.py` independently binds the actual installed JARs, original fixture copies,
+configuration restart receipts and source snapshot. Current 010B JEI startup is independently rerun and its actual preplan failure
 retained. Neither static source graphs nor successful negative tests imply JEI
 class construction or client compatibility. No 010B JEI client ZIP is produced.

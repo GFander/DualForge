@@ -1,6 +1,12 @@
 private void ownerModels(Object owner,Object a,Object b,IEventBus ma,IEventBus mb)throws Exception {
                 Class<?> bridge=Class.forName("io.github.gfander.dualforge.ForgeDualBusBridge");Field states=bridge.getDeclaredField("STATES");states.setAccessible(true);
                 Object session=((java.lang.ref.Reference<?>)((Map<?,?>)states.get(null)).get(owner)).get();Object identity=get(session,"identity");Class<?> entry=a.getClass();
+                Object settingsB=get(b,"settings"), valueB=get(settingsB,"enabled");
+                rejected("CONFIG_OWNER_MISMATCH_B_TO_A","WRONG_MODULE",()->{try {settingsB.getClass().getMethod("register",Object.class).invoke(null,session);}catch(Exception e){throw new RuntimeException(e);}});
+                check(get(settingsB,"enabled")==valueB,"foreign config attempt leaves real B value binding unchanged");
+                rejected("MOD_A_TO_BUS_B","UNKNOWN_BUS_ORIGIN",()->invoke(identity,"route",new Class<?>[]{IEventBus.class,boolean.class},mb,true));
+                IEventBus unknown=BusBuilder.builder().build();
+                rejected("CUSTOM_BUS_UNSUPPORTED","UNKNOWN_BUS_ORIGIN",()->invoke(identity,"route",new Class<?>[]{IEventBus.class,boolean.class},unknown,false));
                 Class<?>[] signature={Class.class};
                 rejected("WRONG_MODULE","WRONG_MODULE",()->invoke(identity,"sameOwner",signature,b.getClass()));
                 for(String field:List.of("loader","file","owner","mod","layer")) {

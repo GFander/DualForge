@@ -21,6 +21,14 @@ public final class PlanContract {
         try{plan(raw);throw new AssertionError("Unexpected approval "+label);}catch(IllegalStateException e){check(e.getMessage().contains(reason),label+" actual="+e);System.out.println("NEGATIVE "+label+" => "+e.getMessage());}
         check(raw.entrySet().stream().allMatch(e->before.get(e.getKey()).equals(ForgeDualBusPlan.digest(e.getValue()))),"reject never mutates source "+label);
     }
+    static void duplicateCall(MethodNode method,String owner,String name,int inputs) {
+        var ops=ForgeRegistryTransformationPlan.ops(method);
+        for(int at=0;at<ops.size();at++)if(ops.get(at) instanceof MethodInsnNode call && call.owner.equals(owner) && call.name.equals(name)) {
+            InsnList extra=new InsnList();for(int i=at-inputs;i<=at;i++)extra.add(ops.get(i).clone(new HashMap<>()));
+            method.instructions.insert(call,extra);return;
+        }
+        throw new AssertionError("Missing duplicate source call");
+    }
     static MethodNode ctor(ClassNode n){return n.methods.stream().filter(m->m.name.equals("<init>")).findFirst().orElseThrow();}
     static MethodNode registration(ClassNode n){return n.methods.stream().filter(m->!m.name.equals("<init>") && m.desc.equals(ForgeDualBusPlan.PAIR) && m.name.equals("register")).findFirst().orElseThrow();}
     public static void main(String[] args)throws Exception {
@@ -52,6 +60,7 @@ public final class PlanContract {
             }
             try{p.rejectForeignClasses(Set.of(router));throw new AssertionError("foreign approved");}catch(IllegalStateException e){check(e.getMessage().contains("CROSS_MODFILE_CONFLICT"),"cross file conflict");}
             ClassNode unknown=node(entry);unknown.name="other/Unclaimed";try{p.transform(unknown,null);throw new AssertionError("unclaimed approved");}catch(IllegalStateException e){check(e.getMessage().contains("UNCLAIMED_CLASS_MODIFIED"),"unclaimed refusal");}
+            reject("UNAPPROVED_CONSTRUCTOR_PREFIX",changed(entry,n->ctor(n).instructions.insert(ForgeRegistryTransformationPlan.ops(ctor(n)).get(1),new InsnNode(Opcodes.NOP))),"UNKNOWN_CONSTRUCTOR_EFFECT expectedField=");
             reject("UNKNOWN_CONSTRUCTOR_EFFECT",changed(entry,n->ctor(n).instructions.insertBefore(ctor(n).instructions.getLast(),new InsnNode(Opcodes.NOP))),"UNKNOWN_CONSTRUCTOR_EFFECT");
             reject("UNKNOWN_BUS_ORIGIN",changed(entry,n->{for(var m:n.methods)for(var op:m.instructions)if(op instanceof FieldInsnNode f&&f.name.equals("EVENT_BUS"))f.owner="custom/Global";}),"UNKNOWN_BUS_ORIGIN");
             reject("CUSTOM_BUS_UNSUPPORTED",changed(entry,n->{for(var m:n.methods)for(var op:m.instructions)if(op instanceof FieldInsnNode f&&f.name.equals("EVENT_BUS"))f.owner="net/minecraftforge/eventbus/api/BusBuilder";}),"UNKNOWN_BUS_ORIGIN");
@@ -71,7 +80,8 @@ public final class PlanContract {
             reject("CONFIG_SPEC_UNSUPPORTED",changed(config,n->{for(var m:n.methods)for(var op:m.instructions)if(op instanceof MethodInsnNode call&&call.name.equals("define"))call.name="defineUnknown";}),"UNKNOWN_CONSTRUCTOR_EFFECT");
             reject("CONFIG_WRONG_TYPE",changed(config,n->{for(var m:n.methods)for(var op:m.instructions)if(op instanceof FieldInsnNode f&&f.owner.equals(ForgeDualBusPlan.TYPE))f.name="UNKNOWN";}),"CONFIG_SPEC_UNSUPPORTED");
             reject("CONFIG_OWNER_MISMATCH",changed(config,n->{n.methods.stream().filter(m->m.name.equals("register")).findFirst().orElseThrow().access=Opcodes.ACC_PRIVATE|Opcodes.ACC_STATIC;}),"CONFIG_OWNER_MISMATCH");
-            reject("DUPLICATE_CONFIG_REGISTRATION",changed(config,n->{MethodNode m=n.methods.stream().filter(v->v.name.equals("register")).findFirst().orElseThrow();m.instructions.insertBefore(m.instructions.getLast(),new InsnNode(Opcodes.NOP));}),"UNKNOWN_CONSTRUCTOR_EFFECT");
+            reject("DUPLICATE_CONFIG_REGISTRATION",changed(config,n->duplicateCall(n.methods.stream().filter(v->v.name.equals("register")).findFirst().orElseThrow(),ForgeDualBusPlan.CTX,"registerConfig",3)),"UNKNOWN_CONSTRUCTOR_EFFECT");
+            reject("DUPLICATE_LISTENER_CALL",changed(entry,n->duplicateCall(ctor(n),router,"register",5)),"WRONG_EVENT_CLASS");
             Map<String,byte[]> missing=new TreeMap<>(source);missing.remove(config);reject("WRONG_MODFILE",missing,"UNKNOWN_CONSTRUCTOR_EFFECT");
             String saved=id;id="wrong_owner";reject("WRONG_MOD_CONTAINER",source,"WRONG_MOD_CONTAINER");id=saved;
         }

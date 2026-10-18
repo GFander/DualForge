@@ -263,7 +263,8 @@ final class ForgeDualBusPlan {
         void op(int c){require(next().getOpcode()==c,"UNKNOWN_CONSTRUCTOR_EFFECT opcode="+c);}
         void var(int c,int slot){require(next() instanceof VarInsnNode v&&v.getOpcode()==c&&v.var==slot,"UNKNOWN_CONSTRUCTOR_EFFECT local="+slot);}
         void call(int c,String o,String n,String d){require(next() instanceof MethodInsnNode m&&m.getOpcode()==c&&m.owner.equals(o)&&m.name.equals(n)&&m.desc.equals(d)&&m.itf==(c==Opcodes.INVOKEINTERFACE),"UNKNOWN_CONSTRUCTOR_EFFECT call="+o+"."+n);}
-        void field(int c,String o,String n,String d){require(next() instanceof FieldInsnNode f&&f.getOpcode()==c&&f.owner.equals(o)&&f.name.equals(n)&&f.desc.equals(d),"UNKNOWN_BUS_ORIGIN field="+o+"."+n);}
+        void field(int c,String o,String n,String d){var op=next();require(op instanceof FieldInsnNode,"UNKNOWN_CONSTRUCTOR_EFFECT expectedField="+o+"."+n+" actualOpcode="+op.getOpcode()+(op instanceof TypeInsnNode t?" actualType="+t.desc:""));
+            FieldInsnNode f=(FieldInsnNode)op;require(f.getOpcode()==c&&f.owner.equals(o)&&f.name.equals(n)&&f.desc.equals(d),"UNKNOWN_BUS_ORIGIN field="+o+"."+n);}
         String ownField(int c,ClassNode n,String d,boolean fin){var op=next();require(op instanceof FieldInsnNode f&&f.getOpcode()==c&&f.owner.equals(n.name)&&f.desc.equals(d),"WRONG_LISTENER_OWNER");var f=(FieldInsnNode)op;
             require(n.fields.stream().anyMatch(v->v.name.equals(f.name)&&v.desc.equals(d)&&v.access==(Opcodes.ACC_PRIVATE|(fin?Opcodes.ACC_FINAL:0))),"WRONG_LISTENER_OWNER");return f.name;}
         void type(int c,String t){require(next() instanceof TypeInsnNode n&&n.getOpcode()==c&&n.desc.equals(t),"CONFIG_SPEC_UNSUPPORTED");}

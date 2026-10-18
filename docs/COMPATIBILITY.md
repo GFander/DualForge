@@ -1,6 +1,6 @@
 # 实际兼容范围
 
-010B 当前新增有限三类构造器/路由/布尔配置闭包：复用真实 NeoForge Game/逐容器 Mod Bus，显式 Class/Consumer 与固定三种事件，保留原 Consumer、取消和真实配置副作用。COMMON/SERVER 双 Owner 默认值、修改值、重启恢复与原生控制分别验证；CLIENT 文件生命周期、真实 JEI WeakConsumer/动态订阅及客户端仍 NOT_RUN。真实 JEI 现在由新 profile 在入口 LocaleSupplier 前缀与受控模板不匹配处预计划拒绝（`UNKNOWN_BUS_ORIGIN`），尚未定义/构造；不能把新失败文字当作 JEI 的 Bus/Config 已运行通过。整体 PARTIAL，`CUSTOM_BUS_SUPPORT=NOT_IMPLEMENTED`，无 010B JEI 客户端 ZIP。详见 [010B 契约与限制](../tests/real_mods/jei/dual_bus/README.md)。
+010B 当前新增有限三类构造器/路由/布尔配置闭包：复用真实 NeoForge Game/逐容器 Mod Bus，显式 Class/Consumer 与固定三种事件，保留原 Consumer、取消和真实配置副作用。COMMON/SERVER 双 Owner 默认值、修改值、重启恢复与原生控制分别验证；CLIENT 文件生命周期、真实 JEI WeakConsumer/动态订阅及客户端仍 NOT_RUN。真实 JEI 现在由新 profile 在入口 LocaleSupplier 前缀与受控模板不匹配处预计划拒绝（`UNKNOWN_CONSTRUCTOR_EFFECT`），尚未定义/构造；不能把新失败文字当作 JEI 的 Bus/Config 已运行通过。整体 PARTIAL，`CUSTOM_BUS_SUPPORT=NOT_IMPLEMENTED`，无 010B JEI 客户端 ZIP。详见 [010B 契约与限制](../tests/real_mods/jei/dual_bus/README.md)。
 
 以下 010A 是当时基线的冻结结论；后续新构建另行验证，不继承 Windows 人工 PASS。
 
