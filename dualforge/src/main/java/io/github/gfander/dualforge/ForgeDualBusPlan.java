@@ -90,8 +90,8 @@ final class ForgeDualBusPlan {
         MethodInsnNode configCall=c.ownedCall(nodes);String config=configCall.owner;
         String configResult=Type.getReturnType(configCall.desc).getInternalName();
         require(configCall.getOpcode()==Opcodes.INVOKESTATIC && configCall.desc.equals("(L"+CTX+";)L"+configResult+";"),"CONFIG_SPEC_UNSUPPORTED");
-        c.ownField(Opcodes.PUTFIELD,e,"L"+configResult+";",true);
-        ForgeNetworkPlan network=ForgeNetworkPlan.entry(c,e,id,nodes);
+        String entryConfig=c.ownField(Opcodes.PUTFIELD,e,"L"+configResult+";",true);
+        ForgeNetworkPlan network=ForgeNetworkPlan.entry(c,e,id,nodes,entryConfig,configResult);
         List<Listener> listeners=new ArrayList<>();Set<String> fields=new HashSet<>(), callbacks=new HashSet<>();
         while(c.peek() instanceof VarInsnNode && c.remaining()>1) {
             int saved=c.pos;c.var(Opcodes.ALOAD,0);
@@ -143,7 +143,7 @@ final class ForgeDualBusPlan {
             while(matcher.find())require(allowed.contains(matcher.group()),"UNSUPPORTED_FULL_ENTRY_API "+matcher.group());
         }
         ControlledForgeGlobalBus.verifyHostBus();ForgeEventSemantics.verifyHost(host);
-        if(network!=null)ForgePayloadSemantics.verifyHost(host);
+        if(network!=null){ForgePayloadSemantics.verifyHost(host);if(network.closure!=null)ForgeSourceContextBridge.verifyHost(host);}
         return new ForgeDualBusPlan(id,module,entry,router,config,configType,listeners,raw,network);
     }
     private static void rejectLocalBoundary(Cursor c,Map<String,ClassNode> nodes,java.util.function.Function<String,byte[]> host) {
@@ -159,7 +159,7 @@ final class ForgeDualBusPlan {
         if(c.peek() instanceof TypeInsnNode allocation && allocation.getOpcode()==Opcodes.NEW) {
             ClassNode next=nodes.get(allocation.desc);require(next!=null,"CROSS_MODFILE_INITIALIZER");
             boolean network=next.methods.stream().flatMap(m->ForgeRegistryTransformationPlan.ops(m).stream()).anyMatch(op->op instanceof MethodInsnNode m && m.owner.startsWith(F+"network/"));
-            if(network)ForgeNetworkPlan.rejectUnverifiedInitializer(next);
+            if(network)ForgeNetworkBoundaryProof.reject(next,nodes);
             boundary="UNKNOWN_INITIALIZER_SIDE_EFFECT";
         } else if(c.peek() instanceof FieldInsnNode f && f.owner.equals(F+"api/distmarker/Dist"))boundary="UNVERIFIED_DIST_INITIALIZATION";
         throw new IllegalStateException("Dual bus rejected: "+boundary+" locale=STATIC_VERIFIED busIdentity=STATIC_VERIFIED router=STATIC_VERIFIED config="+type

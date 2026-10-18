@@ -1,0 +1,9 @@
+package @PACKAGE@;
+import net.minecraft.server.level.ServerPlayer;
+public final class BusinessContext {
+    private final ServerPlayer sender;
+    private final ISettings config;
+    private final IServerConnection server;
+    private final IClientConnection client;
+    public BusinessContext(ServerPlayer sender,ISettings config,IServerConnection server,IClientConnection client){this.sender=sender;this.config=config;this.server=server;this.client=client;}
+}

@@ -1,0 +1,60 @@
+package org.example.closureobserver;
+import java.lang.reflect.*;
+import java.util.*;
+import @FML@.ModList;
+import @FML@.common.Mod;
+import @BUS@.*;
+import @GAME@.event.server.ServerStartedEvent;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.ConnectionProtocol;
+import net.minecraft.network.protocol.PacketFlow;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.network.codec.StreamCodec;
+import io.netty.buffer.Unpooled;
+
+/** Native diagnostics only. Codec and direct Context models never count as packet delivery. */
+@Mod("closureobserver")
+public final class Observer {
+    private int assertions;
+    private void check(boolean ok,String why){if(!ok)throw new AssertionError(why);assertions++;}
+    private static Object get(Object obj,String name)throws Exception{
+        Class<?> c=obj instanceof Class<?> k?k:obj.getClass();while(c!=null){try{Field f=c.getDeclaredField(name);f.setAccessible(true);return f.get(obj instanceof Class<?>?null:obj);}catch(NoSuchFieldException e){c=c.getSuperclass();}}throw new NoSuchFieldException(name);
+    }
+    private static Object call(Object obj,String name)throws Exception{Method m=obj.getClass().getDeclaredMethod(name);m.setAccessible(true);return m.invoke(obj);}
+    private static Object entry(Object owner)throws Exception { @ENTRY@ }
+    public Observer(){@GLOBAL@.EVENT_BUS.addListener(EventPriority.LOWEST,false,ServerStartedEvent.class,this::started);@MODEL_LISTENERS@}
+    @SuppressWarnings({"unchecked","rawtypes"})
+    private void started(ServerStartedEvent event){
+        try {
+            Object[] networks=new Object[2],connections=new Object[2],features=new Object[2];
+            for(int index=0;index<2;index++){
+                String id=index==0?"flowalpha":"flowbeta";Object container=ModList.get().getModContainerById(id).orElseThrow(),entry=entry(container),network=get(entry,"network"),channel=get(network,"channel");networks[index]=network;
+                Class<?> globals=Class.forName(network.getClass().getModule(),network.getClass().getPackageName()+".Globals");connections[index]=get(globals,"server");features[index]=get(globals,"features");
+                check((int)get(globals,"writes")==1 && connections[index]==get(network,"server"),"real source PUTSTATIC once + exact reference");
+                check(get(connections[index],"network")==network && get(get(network,"client"),"network")==network && get(network,"config")==get(entry,"settings"),"source object/config identity");
+                check((boolean)get(features[index],"enabled") && features[index].getClass().getModule()==network.getClass().getModule(),"real source clinit feature object");
+                check((int)get(entry,"setups")==1 && (int)get(entry,"starts")==1,"real entry lifecycle");
+                @CHANNEL@
+                for(String leaf:List.of("UpTuple","UpWords","UpUnit","DownTuple","DownWords","DownUnit")){
+                    String path=leaf.toLowerCase(Locale.ROOT);Class<?> packet=Class.forName(network.getClass().getModule(),network.getClass().getPackageName()+"."+leaf);
+                    var type=(CustomPacketPayload.Type)packet.getField("TYPE").get(null);var codec=(StreamCodec<RegistryFriendlyByteBuf,CustomPacketPayload>)packet.getField("STREAM_CODEC").get(null);Object original=get(network,path+"Handler");
+                    check(type.id().toString().equals(id+":"+path) && packet.getModule()==network.getClass().getModule(),"owned type id/module");
+                    @REGISTRATION@
+                    List<Object> data=new ArrayList<>();
+                    if(leaf.endsWith("Tuple")){for(int number:new int[]{0,1,-1,Integer.MIN_VALUE,Integer.MAX_VALUE})for(boolean flag:new boolean[]{false,true})data.add(packet.getConstructor(int.class,boolean.class).newInstance(number,flag));}
+                    else if(leaf.endsWith("Words")){for(List<String> words:List.of(List.<String>of(),List.of(""),List.of("alpha","汉字","é")))data.add(packet.getConstructor(List.class).newInstance(words));}
+                    else data.add(packet.getField("INSTANCE").get(null));
+                    for(Object value:data){var buffer=new RegistryFriendlyByteBuf(Unpooled.buffer(),event.getServer().registryAccess());try{codec.encode(buffer,(CustomPacketPayload)value);Object decoded=codec.decode(buffer);check(decoded.getClass()==packet && ((CustomPacketPayload)decoded).type()==type && buffer.readableBytes()==0,"actual codec type + no trailing bytes");
+                            if(leaf.endsWith("Tuple"))check(call(decoded,"number").equals(call(value,"number")) && call(decoded,"flag").equals(call(value,"flag")),"composite int/bool preserved");
+                            else if(leaf.endsWith("Words"))check(call(decoded,"words").equals(call(value,"words")),"empty/unicode list preserved");else check(decoded==value,"unit exact singleton");
+                        }finally{buffer.release();}}
+                    check((int)get(network,path+"Count")==0,"no unobserved callback before isolated models");
+                }
+            }
+            check(networks[0]!=networks[1] && connections[0]!=connections[1] && features[0]!=features[1] && networks[0].getClass().getModule()!=networks[1].getClass().getModule(),"two module source-global isolation");
+            @MODELS@
+            System.out.println("CLOSURE_OBSERVER_PASS assertions="+assertions+" REAL_FML_REGISTRATION=PASS ISOLATED_CODEC=PASS REAL_CONNECTION=NOT_RUN REAL_PACKET_DELIVERY=NOT_RUN");
+        }catch(Throwable failure){failure.printStackTrace();throw new RuntimeException("CLOSURE_OBSERVER_FAIL",failure);}
+    }
+    @EXTRA@
+}
