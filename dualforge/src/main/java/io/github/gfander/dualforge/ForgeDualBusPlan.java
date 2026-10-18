@@ -27,16 +27,18 @@ final class ForgeDualBusPlan {
         m.put(F+"fml/config/ModConfig","net/neoforged/fml/config/ModConfig");
         m.put(F+"fml/config/IConfigSpec","net/neoforged/fml/config/IConfigSpec");m.put(TYPE,"net/neoforged/fml/config/ModConfig$Type");
         for(String e:EVENTS)m.put(e,e.replace(F+"fml/","net/neoforged/fml/").replace(F+"event/","net/neoforged/neoforge/event/"));
+        m.putAll(ForgeNetworkPlan.SOURCE_TYPES);
         TYPES = Map.copyOf(m);
     }
     record Listener(String event, String field, String callback, boolean canceled) { }
     final String modId, module, entry, router, config, configType, fingerprint;
     final List<Listener> listeners;
+    final ForgeNetworkPlan network;
     private final Map<String,byte[]> raw, normalized, output;
     private ForgeDualBusPlan(String id,String module,String entry,String router,String config,String configType,
-            List<Listener> listeners,Map<String,byte[]> source) {
+            List<Listener> listeners,Map<String,byte[]> source,ForgeNetworkPlan network) {
         this.modId=id;this.module=module;this.entry=entry;this.router=router;this.config=config;this.configType=configType;
-        this.listeners=List.copyOf(listeners);
+        this.listeners=List.copyOf(listeners);this.network=network;
         Map<String,byte[]> copy=new TreeMap<>();source.forEach((k,v)->copy.put(k,v.clone()));raw=Collections.unmodifiableMap(copy);
         StringBuilder identity=new StringBuilder("dual-bus-boolean-config-v1\n"+id+"\n"+module+"\n");
         raw.forEach((k,v)->identity.append(k).append(':').append(digest(v)).append('\n'));
@@ -89,6 +91,7 @@ final class ForgeDualBusPlan {
         String configResult=Type.getReturnType(configCall.desc).getInternalName();
         require(configCall.getOpcode()==Opcodes.INVOKESTATIC && configCall.desc.equals("(L"+CTX+";)L"+configResult+";"),"CONFIG_SPEC_UNSUPPORTED");
         c.ownField(Opcodes.PUTFIELD,e,"L"+configResult+";",true);
+        ForgeNetworkPlan network=ForgeNetworkPlan.entry(c,e,id,nodes);
         List<Listener> listeners=new ArrayList<>();Set<String> fields=new HashSet<>(), callbacks=new HashSet<>();
         while(c.peek() instanceof VarInsnNode && c.remaining()>1) {
             int saved=c.pos;c.var(Opcodes.ALOAD,0);
@@ -115,11 +118,13 @@ final class ForgeDualBusPlan {
         require(e.methods.size()==listeners.size()+1,"UNKNOWN_CONSTRUCTOR_EFFECT");
         Set<String> closure=new HashSet<>(List.of(entry,router,config));
         if(locale!=null)closure.addAll(locale.classes());
+        if(network!=null)closure.addAll(network.classes());
         if(!configResult.equals(config)){validateConfigInterface(nodes.get(config),nodes.get(configResult));closure.add(configResult);}
         require(raw.keySet().equals(closure) && !router.equals(config),"UNCLAIMED_CLASS_MODIFIED");
         validateRouter(nodes.get(router));String configType=validateConfig(nodes.get(config),configCall.name,configResult);
         Set<String> allowed=new HashSet<>(TYPES.keySet());allowed.add(F+"common/MinecraftForge");allowed.add(F+"fml/common/Mod");
         for(var n:nodes.values()) {
+            if(network!=null && network.classes().contains(n.name))continue;
             if((locale!=null && locale.classes().contains(n.name)) || (!configResult.equals(config) && n.name.equals(configResult)))continue;
             structure(n,n.name.equals(config));
             for(var f:n.fields)require(!f.name.equals(ANCHOR),"UNKNOWN_CONSTRUCTOR_EFFECT");
@@ -138,7 +143,8 @@ final class ForgeDualBusPlan {
             while(matcher.find())require(allowed.contains(matcher.group()),"UNSUPPORTED_FULL_ENTRY_API "+matcher.group());
         }
         ControlledForgeGlobalBus.verifyHostBus();ForgeEventSemantics.verifyHost(host);
-        return new ForgeDualBusPlan(id,module,entry,router,config,configType,listeners,raw);
+        if(network!=null)ForgePayloadSemantics.verifyHost(host);
+        return new ForgeDualBusPlan(id,module,entry,router,config,configType,listeners,raw,network);
     }
     private static void rejectLocalBoundary(Cursor c,Map<String,ClassNode> nodes,java.util.function.Function<String,byte[]> host) {
         String router=c.allocation(nodes);c.op(Opcodes.DUP);c.var(Opcodes.ALOAD,1);c.var(Opcodes.ALOAD,2);
@@ -153,7 +159,8 @@ final class ForgeDualBusPlan {
         if(c.peek() instanceof TypeInsnNode allocation && allocation.getOpcode()==Opcodes.NEW) {
             ClassNode next=nodes.get(allocation.desc);require(next!=null,"CROSS_MODFILE_INITIALIZER");
             boolean network=next.methods.stream().flatMap(m->ForgeRegistryTransformationPlan.ops(m).stream()).anyMatch(op->op instanceof MethodInsnNode m && m.owner.startsWith(F+"network/"));
-            boundary=network?"UNVERIFIED_NETWORK_INITIALIZATION":"UNKNOWN_INITIALIZER_SIDE_EFFECT";
+            if(network)ForgeNetworkPlan.rejectUnverifiedInitializer(next);
+            boundary="UNKNOWN_INITIALIZER_SIDE_EFFECT";
         } else if(c.peek() instanceof FieldInsnNode f && f.owner.equals(F+"api/distmarker/Dist"))boundary="UNVERIFIED_DIST_INITIALIZATION";
         throw new IllegalStateException("Dual bus rejected: "+boundary+" locale=STATIC_VERIFIED busIdentity=STATIC_VERIFIED router=STATIC_VERIFIED config="+type
             +" eventSemantics=BLOCKED_NO_EXPLICIT_SUBSCRIPTIONS combined=REJECTED_NO_TARGETS nextOpcode="+c.peek().getOpcode()
@@ -231,6 +238,7 @@ final class ForgeDualBusPlan {
             && m.instructions.size()==0 && m.annotationDefault==null && config.methods.stream().anyMatch(c->c.name.equals(m.name) && c.desc.equals(m.desc) && c.access==Opcodes.ACC_PUBLIC),"UNSUPPORTED_CONFIG_INTERFACE");
     }
     private void rewrite(ClassNode n) {
+        if(network!=null)network.rewrite(n);
         if(n.name.equals(entry) || n.name.equals(router))n.fields.add(new FieldNode(Opcodes.ACC_PRIVATE|Opcodes.ACC_SYNTHETIC,ANCHOR,"Ljava/lang/Object;",null,null));
         for(var m:n.methods) {
             if(m.name.equals("<init>") && n.name.equals(entry)) {

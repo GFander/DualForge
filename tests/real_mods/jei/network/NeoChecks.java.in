@@ -1,0 +1,75 @@
+    private int officialEvents;
+    private void early(){
+        try{Map<?,?> map=(Map<?,?>)get(net.neoforged.neoforge.network.registration.NetworkRegistry.class,"PAYLOAD_REGISTRATIONS");
+            check(map.values().stream().map(x->(Map<?,?>)x).flatMap(m->m.keySet().stream()).noneMatch(k->k.toString().startsWith("netalpha:")||k.toString().startsWith("netbeta:")),"no constructor-time native registration");
+            net.neoforged.fml.ModLoadingContext.get().getActiveContainer().getEventBus().addListener(EventPriority.LOWEST,false,net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent.class,this::registered);
+        }catch(Exception e){throw new RuntimeException(e);}
+    }
+    @SuppressWarnings({"rawtypes","unchecked"})
+    private void registered(net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent event){
+        try{
+            officialEvents++;check(!(boolean)get(net.neoforged.neoforge.network.registration.NetworkRegistry.class,"setup"),"official event before native lock");
+            check(StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE).walk(s->s.anyMatch(f->f.getDeclaringClass()==net.neoforged.neoforge.network.registration.NetworkRegistry.class && f.getMethodName().equals("setup"))),"actual native setup stack");
+            Map<ResourceLocation,net.neoforged.neoforge.network.registration.PayloadRegistration<?>> map=(Map)((Map<?,?>)get(net.neoforged.neoforge.network.registration.NetworkRegistry.class,"PAYLOAD_REGISTRATIONS")).get(ConnectionProtocol.PLAY);
+            check(map.keySet().stream().filter(k->Set.of("netalpha","netbeta").contains(k.getNamespace())).count()==4,"four actual native registrations in official event");
+            var reg=map.get(ResourceLocation.fromNamespaceAndPath("netalpha","up"));
+            try{net.neoforged.neoforge.network.registration.NetworkRegistry.register((CustomPacketPayload.Type)reg.type(),(StreamCodec)reg.codec(),(net.neoforged.neoforge.network.handling.IPayloadHandler)reg.handler(),List.of(ConnectionProtocol.PLAY),reg.flow(),reg.version(),reg.optional());throw new AssertionError("duplicate accepted");}
+            catch(UnsupportedOperationException expected){check(map.get(reg.id())==reg,"duplicate preserves original registration");System.out.println("NETWORK_NATIVE_NEGATIVE DUPLICATE_PAYLOAD_ID "+expected);}
+            bridgeFailure(event);
+            // Component diagnostic in the real official event: the native API writes PLAY then rejects unsupported LOGIN.
+            var extra=new CustomPacketPayload.Type<>(ResourceLocation.fromNamespaceAndPath("networkobserver","partial"));
+            try{net.neoforged.neoforge.network.registration.NetworkRegistry.register(extra,(StreamCodec)reg.codec(),(net.neoforged.neoforge.network.handling.IPayloadHandler)reg.handler(),List.of(ConnectionProtocol.PLAY,ConnectionProtocol.LOGIN),reg.flow(),reg.version(),true);throw new AssertionError("unsupported login accepted");}
+            catch(UnsupportedOperationException expected){check(map.containsKey(extra.id()),"actual native partial effect retained");System.out.println("NETWORK_NATIVE_PARTIAL retained="+extra.id()+" exception="+expected+" scope=ISOLATED_NATIVE_NETWORK_API; no rollback claimed");}
+        }catch(Exception e){throw new RuntimeException(e);}
+    }
+    private void negotiation(){
+        var id=ResourceLocation.fromNamespaceAndPath("networkobserver","negotiation");
+        var a=new net.neoforged.neoforge.network.negotiation.NegotiableNetworkComponent(id,"3",Optional.of(PacketFlow.SERVERBOUND),true);
+        var wrong=new net.neoforged.neoforge.network.negotiation.NegotiableNetworkComponent(id,"4",Optional.of(PacketFlow.SERVERBOUND),true);
+        var direction=new net.neoforged.neoforge.network.negotiation.NegotiableNetworkComponent(id,"3",Optional.of(PacketFlow.CLIENTBOUND),true);
+        check(net.neoforged.neoforge.network.negotiation.NetworkComponentNegotiator.negotiate(List.of(a),List.of(a)).success(),"actual native same-version algorithm");
+        check(!net.neoforged.neoforge.network.negotiation.NetworkComponentNegotiator.negotiate(List.of(a),List.of(wrong)).success(),"actual native version mismatch algorithm");
+        check(!net.neoforged.neoforge.network.negotiation.NetworkComponentNegotiator.negotiate(List.of(a),List.of(direction)).success(),"actual native direction mismatch algorithm");
+        var absent=net.neoforged.neoforge.network.negotiation.NetworkComponentNegotiator.negotiate(List.of(a),List.of());
+        check(absent.success() && absent.components().isEmpty(),"optional absent disables component");
+        var required=new net.neoforged.neoforge.network.negotiation.NegotiableNetworkComponent(id,"3",Optional.of(PacketFlow.SERVERBOUND),false);
+        check(!net.neoforged.neoforge.network.negotiation.NetworkComponentNegotiator.negotiate(List.of(required),List.of()).success(),"required absent rejects");
+        System.out.println("NETWORK_NEGOTIATION_PASS scope=ISOLATED_NATIVE_NETWORK_API REAL_CONNECTION=NOT_RUN");
+    }
+
+    private static void put(Object target,String name,Object value)throws Exception{Field f=target.getClass().getDeclaredField(name);f.setAccessible(true);f.set(target,value);}
+    private void rejection(String label,String expected,java.util.concurrent.Callable<?> action)throws Exception{
+        try{action.call();throw new AssertionError("unexpected approval "+label);}catch(Exception failure){Throwable t=failure;while(t.getCause()!=null)t=t.getCause();check(t.getMessage()!=null && t.getMessage().contains(expected),label+" actual="+t);System.out.println("NETWORK_BRIDGE_NEGATIVE "+label+" => "+t+" scope=ISOLATED_COMPONENT_WITH_LIVE_OWNER");}
+    }
+    private static Method registration(Object session)throws Exception{Method m=Class.forName("io.github.gfander.dualforge.ForgeNetworkBridge").getDeclaredMethod("register",session.getClass(),Object.class);m.setAccessible(true);return m;}
+    @SuppressWarnings({"rawtypes","unchecked"})
+    private Object cloneSession(Object original,boolean complete)throws Exception{
+        Object owner=get(original,"owner");Constructor<?> oc=owner.getClass().getDeclaredConstructors()[0];oc.setAccessible(true);
+        Object copy=oc.newInstance(get(owner,"identity"),get(owner,"plan"),get(owner,"entry"),(java.util.function.BooleanSupplier)()->complete);
+        Constructor<?> sc=original.getClass().getDeclaredConstructors()[0];sc.setAccessible(true);Object result=sc.newInstance(copy,get(original,"network"));
+        put(result,"definitions",get(original,"definitions"));put(result,"phase",Enum.valueOf((Class)get(original,"phase").getClass(),"PLANNED"));return result;
+    }
+    private void bridgeFailure(Object event)throws Exception{
+        Object actual=entry(ModList.get().getModContainerById("netalpha").orElseThrow()),network=get(actual,"network"),session=get(network,"channel"),isolated=cloneSession(session,true);
+        // Deliberately bypass definition-capture caller guards to isolate the host-operation state machine.
+        put(network,"channel",isolated);
+        try{rejection("HOST_NETWORK_ERROR","already registered",()->registration(isolated).invoke(null,isolated,event));check(get(isolated,"phase").toString().equals("UNCERTAIN"),"native error poisons isolated session");
+            rejection("UNCERTAIN_RETRY","DUPLICATE_REGISTRATION",()->registration(isolated).invoke(null,isolated,event));
+        }finally{put(network,"channel",session);}
+        check(get(session,"phase").toString().equals("REGISTERED"),"actual successful source session untouched");
+        System.out.println("NETWORK_BRIDGE_HOST_FAULT_PASS scope=ISOLATED_HOST_OPERATION callerPath=NOT_EXERCISED partialNativeEffects=SEPARATE_MODEL");
+    }
+    private void guardModels(Object network,Object other)throws Exception{
+        Object session=get(network,"channel"),owner=get(session,"owner"),identity=get(owner,"identity");
+        Object event=new net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent();
+        Object early=cloneSession(session,false),wrongPhase=cloneSession(session,true);
+        rejection("REGISTRATION_TOO_EARLY","REGISTRATION_TOO_EARLY",()->registration(early).invoke(null,early,event));
+        rejection("WRONG_REGISTRATION_PHASE","WRONG_REGISTRATION_PHASE",()->registration(wrongPhase).invoke(null,wrongPhase,event));
+        rejection("DUPLICATE_REGISTRATION","DUPLICATE_REGISTRATION",()->registration(session).invoke(null,session,event));
+        Method same=identity.getClass().getDeclaredMethod("sameOwner",Class.class);same.setAccessible(true);
+        rejection("WRONG_MODULE","WRONG_MODULE",()->same.invoke(identity,other.getClass()));
+        Object old=get(identity,"loader");try{put(identity,"loader",new ClassLoader(){});rejection("WRONG_CLASSLOADER","WRONG_CLASSLOADER",()->same.invoke(identity,network.getClass()));}finally{put(identity,"loader",old);}
+        Method named=Class.forName("io.github.gfander.dualforge.ForgeNetworkBridge").getMethod("named",Object.class,Object.class);
+        rejection("WRONG_CHANNEL_OWNER","WRONG_CHANNEL_OWNER",()->named.invoke(null,ResourceLocation.fromNamespaceAndPath("netalpha","channel"),network));
+        check(get(session,"phase").toString().equals("REGISTERED") && get(early,"phase").toString().equals("PLANNED") && get(wrongPhase,"phase").toString().equals("PLANNED"),"guards do not perform native writes");
+    }
