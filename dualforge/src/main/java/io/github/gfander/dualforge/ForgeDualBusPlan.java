@@ -6,7 +6,7 @@ import net.neoforged.neoforgespi.language.IModInfo;
 import org.objectweb.asm.*;
 import org.objectweb.asm.tree.*;
 
-/** Closed three-class constructor profile. Plans are validated and rendered before publication. */
+/** Closed constructor profile with independently verified initializer/config segments. Plans are validated and rendered before publication. */
 final class ForgeDualBusPlan {
     static final String F = "net/minecraftforge/", BUS = F+"eventbus/api/IEventBus", B = "L"+BUS+";";
     static final String CTX = F+"fml/ModLoadingContext", JAVA = F+"fml/javafmlmod/FMLJavaModLoadingContext";
@@ -78,14 +78,17 @@ final class ForgeDualBusPlan {
         require(e.visibleAnnotations!=null && e.visibleAnnotations.size()==1 && e.visibleAnnotations.getFirst().desc.equals("L"+F+"fml/common/Mod;")
             && e.visibleAnnotations.getFirst().values.equals(List.of("value",id)),"WRONG_MOD_CONTAINER");
         Cursor c=new Cursor(method(e,"<init>","()V"));require(c.method.access==Opcodes.ACC_PUBLIC,"UNSUPPORTED_BOOTSTRAP");c.base();
+        var locale=ForgeConstructorSegments.locale(c,nodes);
         c.field(Opcodes.GETSTATIC,F+"common/MinecraftForge","EVENT_BUS",B);c.var(Opcodes.ASTORE,1);
         c.call(Opcodes.INVOKESTATIC,JAVA,"get","()L"+JAVA+";");c.call(Opcodes.INVOKEVIRTUAL,JAVA,"getModEventBus","()"+B);c.var(Opcodes.ASTORE,2);
+        if(locale!=null && c.peek() instanceof TypeInsnNode)rejectLocalBoundary(c,nodes,host);
         c.var(Opcodes.ALOAD,0);String router=c.allocation(nodes);c.op(Opcodes.DUP);c.var(Opcodes.ALOAD,1);c.var(Opcodes.ALOAD,2);
         c.call(Opcodes.INVOKESPECIAL,router,"<init>","("+B+B+")V");String routerField=c.ownField(Opcodes.PUTFIELD,e,"L"+router+";",true);
         c.var(Opcodes.ALOAD,0);c.call(Opcodes.INVOKESTATIC,CTX,"get","()L"+CTX+";");
         MethodInsnNode configCall=c.ownedCall(nodes);String config=configCall.owner;
-        require(configCall.getOpcode()==Opcodes.INVOKESTATIC && configCall.desc.equals("(L"+CTX+";)L"+config+";"),"CONFIG_SPEC_UNSUPPORTED");
-        c.ownField(Opcodes.PUTFIELD,e,"L"+config+";",true);
+        String configResult=Type.getReturnType(configCall.desc).getInternalName();
+        require(configCall.getOpcode()==Opcodes.INVOKESTATIC && configCall.desc.equals("(L"+CTX+";)L"+configResult+";"),"CONFIG_SPEC_UNSUPPORTED");
+        c.ownField(Opcodes.PUTFIELD,e,"L"+configResult+";",true);
         List<Listener> listeners=new ArrayList<>();Set<String> fields=new HashSet<>(), callbacks=new HashSet<>();
         while(c.peek() instanceof VarInsnNode && c.remaining()>1) {
             int saved=c.pos;c.var(Opcodes.ALOAD,0);
@@ -110,11 +113,15 @@ final class ForgeDualBusPlan {
         }
         c.op(Opcodes.RETURN);c.end();
         require(e.methods.size()==listeners.size()+1,"UNKNOWN_CONSTRUCTOR_EFFECT");
-        require(raw.size()==3 && nodes.containsKey(router) && nodes.containsKey(config) && !router.equals(config),"UNCLAIMED_CLASS_MODIFIED");
-        validateRouter(nodes.get(router));String configType=validateConfig(nodes.get(config),configCall.name);
+        Set<String> closure=new HashSet<>(List.of(entry,router,config));
+        if(locale!=null)closure.addAll(locale.classes());
+        if(!configResult.equals(config)){validateConfigInterface(nodes.get(config),nodes.get(configResult));closure.add(configResult);}
+        require(raw.keySet().equals(closure) && !router.equals(config),"UNCLAIMED_CLASS_MODIFIED");
+        validateRouter(nodes.get(router));String configType=validateConfig(nodes.get(config),configCall.name,configResult);
         Set<String> allowed=new HashSet<>(TYPES.keySet());allowed.add(F+"common/MinecraftForge");allowed.add(F+"fml/common/Mod");
         for(var n:nodes.values()) {
-            structure(n);
+            if((locale!=null && locale.classes().contains(n.name)) || (!configResult.equals(config) && n.name.equals(configResult)))continue;
+            structure(n,n.name.equals(config));
             for(var f:n.fields)require(!f.name.equals(ANCHOR),"UNKNOWN_CONSTRUCTOR_EFFECT");
             for(var m:n.methods)for(var op:m.instructions) {
                 if(op instanceof MethodInsnNode call && call.owner.startsWith(F) && n==e) {
@@ -133,13 +140,35 @@ final class ForgeDualBusPlan {
         ControlledForgeGlobalBus.verifyHostBus();ForgeEventSemantics.verifyHost(host);
         return new ForgeDualBusPlan(id,module,entry,router,config,configType,listeners,raw);
     }
+    private static void rejectLocalBoundary(Cursor c,Map<String,ClassNode> nodes,java.util.function.Function<String,byte[]> host) {
+        String router=c.allocation(nodes);c.op(Opcodes.DUP);c.var(Opcodes.ALOAD,1);c.var(Opcodes.ALOAD,2);
+        c.call(Opcodes.INVOKESPECIAL,router,"<init>","("+B+B+")V");c.var(Opcodes.ASTORE,3);validateRouter(nodes.get(router));
+        c.call(Opcodes.INVOKESTATIC,CTX,"get","()L"+CTX+";");c.var(Opcodes.ASTORE,4);c.var(Opcodes.ALOAD,4);
+        MethodInsnNode call=c.ownedCall(nodes);require(call.getOpcode()==Opcodes.INVOKESTATIC,"CONFIG_OWNER_MISMATCH");
+        String result=Type.getReturnType(call.desc).getInternalName();require(call.desc.equals("(L"+CTX+";)L"+result+";"),"CONFIG_OWNER_MISMATCH");
+        ClassNode config=nodes.get(call.owner);if(!result.equals(call.owner))validateConfigInterface(config,nodes.get(result));
+        String type=validateConfig(config,call.name,result);c.var(Opcodes.ASTORE,5);
+        ControlledForgeGlobalBus.verifyHostBus();ForgeEventSemantics.verifyHost(host);
+        String boundary="PARTIAL_CONSTRUCTOR_PLAN";
+        if(c.peek() instanceof TypeInsnNode allocation && allocation.getOpcode()==Opcodes.NEW) {
+            ClassNode next=nodes.get(allocation.desc);require(next!=null,"CROSS_MODFILE_INITIALIZER");
+            boolean network=next.methods.stream().flatMap(m->ForgeRegistryTransformationPlan.ops(m).stream()).anyMatch(op->op instanceof MethodInsnNode m && m.owner.startsWith(F+"network/"));
+            boundary=network?"UNVERIFIED_NETWORK_INITIALIZATION":"UNKNOWN_INITIALIZER_SIDE_EFFECT";
+        } else if(c.peek() instanceof FieldInsnNode f && f.owner.equals(F+"api/distmarker/Dist"))boundary="UNVERIFIED_DIST_INITIALIZATION";
+        throw new IllegalStateException("Dual bus rejected: "+boundary+" locale=STATIC_VERIFIED busIdentity=STATIC_VERIFIED router=STATIC_VERIFIED config="+type
+            +" eventSemantics=BLOCKED_NO_EXPLICIT_SUBSCRIPTIONS combined=REJECTED_NO_TARGETS nextOpcode="+c.peek().getOpcode()
+            +(c.peek() instanceof TypeInsnNode t?" nextType="+t.desc:""));
+    }
     private static void validateRouter(ClassNode n) {
         structure(n);require(n.fields.size()==2 && n.methods.size()>=2 && n.methods.size()<=4,"UNKNOWN_BUS_ORIGIN");
         Cursor c=new Cursor(method(n,"<init>","("+B+B+")V"));c.base();c.var(Opcodes.ALOAD,0);c.var(Opcodes.ALOAD,1);
         String game=c.ownField(Opcodes.PUTFIELD,n,B,true);c.var(Opcodes.ALOAD,0);c.var(Opcodes.ALOAD,2);String mod=c.ownField(Opcodes.PUTFIELD,n,B,true);
         require(!game.equals(mod),"FOREIGN_MOD_BUS");c.op(Opcodes.RETURN);c.end();
-        for(var m:n.methods)if(!m.name.equals("<init>"))routerMethod(n,m.name,m.desc.equals(PAIR) && m.instructions.iterator().hasNext()
+        for(var m:n.methods)if(!m.name.equals("<init>")) {
+            if(m.desc.equals("()"+B)){Cursor getter=new Cursor(m);require(m.access==Opcodes.ACC_PUBLIC,"WRONG_LISTENER_OWNER");getter.var(Opcodes.ALOAD,0);getter.field(Opcodes.GETFIELD,n.name,mod,B);getter.op(Opcodes.ARETURN);getter.end();continue;}
+            routerMethod(n,m.name,m.desc.equals(PAIR) && m.instructions.iterator().hasNext()
             && ForgeRegistryTransformationPlan.ops(m).stream().anyMatch(op->op instanceof MethodInsnNode call && call.name.equals("unregister")));
+        }
     }
     private static boolean routerMethod(ClassNode n,String name,boolean remove) {
         Cursor c=new Cursor(method(n,name,PAIR));require(c.method.access==Opcodes.ACC_PUBLIC,"WRONG_LISTENER_OWNER");c.literal(Type.getObjectType(MARKER));c.var(Opcodes.ALOAD,1);
@@ -160,9 +189,10 @@ final class ForgeDualBusPlan {
         }
         require(next(end)==c.peek(),"WRONG_EVENT_DOMAIN");c.op(Opcodes.RETURN);c.end();return canceled;
     }
-    private static String validateConfig(ClassNode n,String register) {
-        structure(n);require(n.fields.size()>0 && n.methods.size()==n.fields.size()+2,"CONFIG_SPEC_UNSUPPORTED");
-        Cursor c=new Cursor(method(n,register,"(L"+CTX+";)L"+n.name+";"));
+    static String validateConfig(ClassNode n,String register,String result) {
+        structure(n,true);require(n.interfaces.isEmpty()==result.equals(n.name),"UNSUPPORTED_CONFIG_INTERFACE");
+        require(n.fields.size()>0 && n.methods.size()==n.fields.size()+2,"CONFIG_SPEC_UNSUPPORTED");
+        Cursor c=new Cursor(method(n,register,"(L"+CTX+";)L"+result+";"));
         require(c.method.access==(Opcodes.ACC_PUBLIC|Opcodes.ACC_STATIC),"CONFIG_OWNER_MISMATCH");
         c.type(Opcodes.NEW,BUILDER);c.op(Opcodes.DUP);c.call(Opcodes.INVOKESPECIAL,BUILDER,"<init>","()V");c.var(Opcodes.ASTORE,1);
         c.type(Opcodes.NEW,n.name);c.op(Opcodes.DUP);c.var(Opcodes.ALOAD,1);c.call(Opcodes.INVOKESPECIAL,n.name,"<init>","(L"+BUILDER+";)V");c.var(Opcodes.ASTORE,2);
@@ -172,7 +202,7 @@ final class ForgeDualBusPlan {
         c.var(Opcodes.ALOAD,3);c.call(Opcodes.INVOKEVIRTUAL,CTX,"registerConfig","(L"+TYPE+";L"+F+"fml/config/IConfigSpec;)V");c.var(Opcodes.ALOAD,2);c.op(Opcodes.ARETURN);c.end();
         c=new Cursor(method(n,"<init>","(L"+BUILDER+";)V"));require(c.method.access==Opcodes.ACC_PRIVATE,"CONFIG_SPEC_UNSUPPORTED");c.base();
         c.var(Opcodes.ALOAD,1);c.string();c.call(Opcodes.INVOKEVIRTUAL,BUILDER,"push","(Ljava/lang/String;)L"+BUILDER+";");c.op(Opcodes.POP);
-        Set<String> fields=new HashSet<>(),keys=new HashSet<>();
+        Set<String> fields=new HashSet<>(),keys=new HashSet<>(),getters=new HashSet<>();
         for(int i=0;i<n.fields.size();i++) {
             c.var(Opcodes.ALOAD,1);c.string();c.call(Opcodes.INVOKEVIRTUAL,BUILDER,"comment","(Ljava/lang/String;)L"+BUILDER+";");c.op(Opcodes.POP);
             c.var(Opcodes.ALOAD,0);c.var(Opcodes.ALOAD,1);require(keys.add(c.string()),"CONFIG_SPEC_UNSUPPORTED");
@@ -182,11 +212,23 @@ final class ForgeDualBusPlan {
         c.var(Opcodes.ALOAD,1);c.call(Opcodes.INVOKEVIRTUAL,BUILDER,"pop","()L"+BUILDER+";");c.op(Opcodes.POP);c.op(Opcodes.RETURN);c.end();
         for(var m:n.methods)if(!m.name.equals(register) && !m.name.equals("<init>")) {
             require(m.access==Opcodes.ACC_PUBLIC && m.desc.equals("()Z"),"CONFIG_SPEC_UNSUPPORTED");c=new Cursor(m);c.var(Opcodes.ALOAD,0);
-            require(fields.contains(c.ownField(Opcodes.GETFIELD,n,"Ljava/util/function/Supplier;",true)),"CONFIG_SPEC_UNSUPPORTED");
+            require(getters.add(c.ownField(Opcodes.GETFIELD,n,"Ljava/util/function/Supplier;",true)),"CONFIG_SUPPLIER_DATAFLOW_MISMATCH");
             c.call(Opcodes.INVOKEINTERFACE,"java/util/function/Supplier","get","()Ljava/lang/Object;");c.type(Opcodes.CHECKCAST,"java/lang/Boolean");
             c.call(Opcodes.INVOKEVIRTUAL,"java/lang/Boolean","booleanValue","()Z");c.op(Opcodes.IRETURN);c.end();
         }
+        require(getters.equals(fields),"CONFIG_SUPPLIER_DATAFLOW_MISMATCH");
         return type;
+    }
+    static void validateConfigInterface(ClassNode config,ClassNode api) {
+        require(config!=null && api!=null && config.interfaces.equals(List.of(api.name)),"UNSUPPORTED_CONFIG_INTERFACE");
+        require(api.version==Opcodes.V21 && api.access==(Opcodes.ACC_PUBLIC|Opcodes.ACC_ABSTRACT|Opcodes.ACC_INTERFACE)
+            && api.superName.equals("java/lang/Object") && api.interfaces.isEmpty() && api.fields.isEmpty() && api.methods.size()==config.fields.size()
+            && api.visibleAnnotations==null && api.invisibleAnnotations==null && api.nestHostClass==null && api.outerClass==null
+            && (api.nestMembers==null || api.nestMembers.isEmpty()) && !api.name.startsWith("java/") && !api.name.startsWith("javax/")
+            && !api.name.startsWith("net/minecraft") && !api.name.startsWith("net/neoforged/") && !api.name.startsWith("io/github/gfander/dualforge/"),"UNSUPPORTED_CONFIG_INTERFACE");
+        Set<String> names=new HashSet<>();
+        for(var m:api.methods)require(names.add(m.name) && m.access==(Opcodes.ACC_PUBLIC|Opcodes.ACC_ABSTRACT) && m.desc.equals("()Z")
+            && m.instructions.size()==0 && m.annotationDefault==null && config.methods.stream().anyMatch(c->c.name.equals(m.name) && c.desc.equals(m.desc) && c.access==Opcodes.ACC_PUBLIC),"UNSUPPORTED_CONFIG_INTERFACE");
     }
     private void rewrite(ClassNode n) {
         if(n.name.equals(entry) || n.name.equals(router))n.fields.add(new FieldNode(Opcodes.ACC_PRIVATE|Opcodes.ACC_SYNTHETIC,ANCHOR,"Ljava/lang/Object;",null,null));
@@ -246,17 +288,18 @@ final class ForgeDualBusPlan {
     static ClassNode read(byte[] b){return ForgeRegistryTransformationPlan.read(b);}static byte[] bytes(ClassNode n){return ForgeRegistryTransformationPlan.bytes(n);}static String digest(byte[] b){return ForgeRegistryTransformationPlan.digest(b);}
     static MethodNode method(ClassNode n,String name,String desc){return n.methods.stream().filter(m->m.name.equals(name)&&m.desc.equals(desc)).findFirst().orElseThrow(()->new IllegalStateException("Dual bus rejected: MISSING_METHOD "+name+desc));}
     private static AbstractInsnNode next(AbstractInsnNode n){do{n=n.getNext();}while(n!=null&&n.getOpcode()<0);return n;}
-    private static void structure(ClassNode n){RegistryBytecodeVerifier.verify(n);
+    private static void structure(ClassNode n){structure(n,false);}
+    private static void structure(ClassNode n,boolean configInterface){RegistryBytecodeVerifier.verify(n);
         require(!n.name.startsWith("java/") && !n.name.startsWith("javax/") && !n.name.startsWith("net/minecraft/")
             && !n.name.startsWith("net/minecraftforge/") && !n.name.startsWith("net/neoforged/") && !n.name.startsWith("io/github/gfander/dualforge/"),"WRONG_MODFILE");
         Set<String> fieldNames=new HashSet<>(),methods=new HashSet<>();
         for(var f:n.fields)require(fieldNames.add(f.name),"WRONG_LISTENER_OWNER");
         for(var m:n.methods)require(methods.add(m.name+m.desc),"WRONG_LISTENER_OWNER");
         require((n.access== (Opcodes.ACC_PUBLIC|Opcodes.ACC_SUPER) || n.access==(Opcodes.ACC_PUBLIC|Opcodes.ACC_SUPER|Opcodes.ACC_FINAL)),"WRONG_LISTENER_OWNER");
-        require(n.version==Opcodes.V21 && n.superName.equals("java/lang/Object") && n.interfaces.isEmpty()
+        require(n.version==Opcodes.V21 && n.superName.equals("java/lang/Object") && (n.interfaces.isEmpty() || configInterface && n.interfaces.size()==1 && !n.fields.isEmpty() && n.fields.stream().allMatch(f->f.desc.equals("Ljava/util/function/Supplier;")))
         && n.outerClass==null && n.nestHostClass==null && (n.nestMembers==null||n.nestMembers.isEmpty()) && n.fields.stream().noneMatch(f->f.name.equals(ANCHOR)),"UNKNOWN_CONSTRUCTOR_EFFECT");
         for(var m:n.methods)require(m.tryCatchBlocks.isEmpty() && m.annotationDefault==null && (m.access&(Opcodes.ACC_NATIVE|Opcodes.ACC_ABSTRACT|Opcodes.ACC_SYNCHRONIZED))==0,"UNKNOWN_CONSTRUCTOR_EFFECT");}
-    private static final class Cursor {
+    static final class Cursor {
         final MethodNode method;final List<AbstractInsnNode> code;int pos;
         Cursor(MethodNode m){method=m;code=ForgeRegistryTransformationPlan.ops(m);}
         int remaining(){return code.size()-pos;}AbstractInsnNode peek(){require(pos<code.size(),"UNKNOWN_CONSTRUCTOR_EFFECT");return code.get(pos);}AbstractInsnNode next(){var n=peek();pos++;return n;}

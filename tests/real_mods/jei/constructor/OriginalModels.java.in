@@ -1,0 +1,50 @@
+    /** Original release classes, isolated child loader; never a second JEI ModContainer. */
+    private static final class OriginalLoader extends ClassLoader {
+        OriginalLoader(ClassLoader parent){super(parent);}
+        Class<?> define(String name,byte[] bytes){return defineClass(name,bytes,0,bytes.length);}
+    }
+    private byte[] originalBytes(String name)throws Exception {
+        try(var in=Observer.class.getResourceAsStream("/META-INF/constructor-model/"+name.replace('.','/')+".bin")) {
+            if(in==null)throw new AssertionError("missing original component "+name);return in.readAllBytes();
+        }
+    }
+    private Object callPrivateStatic(Class<?> type,String name,Class<?>[] signature,Object... args)throws Exception {
+        Method method=type.getDeclaredMethod(name,signature);method.setAccessible(true);return method.invoke(null,args);
+    }
+    private void originalModels(Object fixture)throws Exception {
+        String configName="mezz.jei.forge.config.ServerConfig",apiName="mezz.jei.common.config.IServerConfig";
+        byte[] configBytes=originalBytes(configName), apiBytes=originalBytes(apiName);
+        @ORIGINAL_CONFIG_MAP@
+        OriginalLoader loader=new OriginalLoader(Observer.class.getClassLoader());
+        Class<?> api=loader.define(apiName,apiBytes),config=loader.define(configName,configBytes);
+        Class<?> builderClass=Class.forName("@BUILDER_CLASS@");Object builder=builderClass.getConstructor().newInstance();
+        Constructor<?> ctor=config.getDeclaredConstructor(builderClass);ctor.setAccessible(true);Object settings=ctor.newInstance(builder);
+        Object spec=builderClass.getMethod("build").invoke(builder);
+        check(spec.getClass()==Class.forName("@SPEC_CLASS@"),"actual original component uses native spec class");
+        com.electronwill.nightconfig.core.CommentedConfig data=com.electronwill.nightconfig.core.CommentedConfig.inMemory();
+        data.set(List.of("cheat mode","enableCheatModeForOp"),true);data.set(List.of("cheat mode","enableCheatModeForCreative"),true);data.set(List.of("cheat mode","enableCheatModeForGive"),false);
+        @ORIGINAL_CONFIG_LOAD@
+        check((boolean)api.getMethod("isCheatModeEnabledForOp").invoke(settings) && (boolean)api.getMethod("isCheatModeEnabledForCreative").invoke(settings)
+            && !(boolean)api.getMethod("isCheatModeEnabledForGive").invoke(settings),"original interface default true true false");
+        Field field=config.getDeclaredField("enableCheatModeForOp");field.setAccessible(true);Object supplier=field.get(settings);
+        data.set(List.of("cheat mode","enableCheatModeForOp"),false);
+        spec.getClass().getMethod("afterReload").invoke(spec);
+        check(!(boolean)api.getMethod("isCheatModeEnabledForOp").invoke(settings) && field.get(settings)==supplier,"original supplier reads updated config with same identity");
+        System.out.println("ORIGINAL_CONFIG_COMPONENT_PASS spec="+spec.getClass().getName()+" interface="+api.getName()+" default=true,true,false changed=false,true,false scope=ISOLATED_COMPONENT_WITH_LIVE_HOST factoryRegistration=NOT_RUN");
+        String localeName="mezz.jei.common.util.MinecraftLocaleSupplier",translatorName="mezz.jei.common.util.Translator";
+        Class<?> source=loader.define(localeName,originalBytes(localeName)),translator=loader.define(translatorName,originalBytes(translatorName));
+        Field state=translator.getDeclaredField("localeSupplier");state.setAccessible(true);
+        check(((java.util.function.Supplier<?>)state.get(null)).get().equals(Locale.ROOT),"original isolated translator pre-state ROOT");
+        Object actual=source.getConstructor().newInstance();Method setter=translator.getMethod("setLocaleSupplier",java.util.function.Supplier.class);setter.invoke(null,actual);
+        check(state.get(null)==actual,"original isolated translator retains original supplier");
+        String result;
+        try{result="VALUE:"+((java.util.function.Supplier<?>)actual).get();}
+        catch(RuntimeException|LinkageError failure){result=failure.getClass().getName()+":"+failure.getMessage();}
+        check(result.contains("net/minecraft/client/Minecraft"),"original supplier is client-only on dedicated host: "+result);
+        setter.invoke(null,actual);check(state.get(null)==actual,"original duplicate initialization replaces reference");
+        RuntimeException sentinel=new RuntimeException("010c-locale-sentinel");java.util.function.Supplier<Locale> failing=()->{throw sentinel;};setter.invoke(null,failing);
+        try{translator.getMethod("toLowercaseWithLocale",String.class).invoke(null,"I");throw new AssertionError("swallowed original failure");}
+        catch(InvocationTargetException failure){check(failure.getCause()==sentinel && state.get(null)==failing,"original exception identity and failed state");}
+        finally{setter.invoke(null,actual);}
+        System.out.println("ORIGINAL_LOCALE_COMPONENT_PASS before=ROOT after=ORIGINAL_SUPPLIER supplierGet="+result+" failure=PROPAGATES scope=ISOLATED_COMPONENT_WITH_LIVE_HOST client=NOT_RUN");
+    }

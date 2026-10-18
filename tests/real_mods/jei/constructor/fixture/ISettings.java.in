@@ -1,0 +1,2 @@
+package @PACKAGE@;
+public interface ISettings { boolean enabled(); boolean secondary(); boolean cancelDeath(); }
