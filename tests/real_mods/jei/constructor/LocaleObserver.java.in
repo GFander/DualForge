@@ -1,0 +1,47 @@
+package org.example.localeobserver;
+import java.lang.reflect.*;
+import java.util.*;
+import java.util.function.Supplier;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.server.ServerStartedEvent;
+
+/** Native Forge diagnostic only. Original JEI is never repackaged. */
+@Mod("localeobserver")
+public final class LocaleObserver {
+    private final Class<?> translator;
+    private final Field field;
+    private final Object before;
+    private final Object language;
+    private final Locale defaultLocale=Locale.getDefault();
+    public LocaleObserver() throws Exception {
+        translator=Class.forName("mezz.jei.common.util.Translator");
+        field=translator.getDeclaredField("localeSupplier");field.setAccessible(true);
+        before=field.get(null);
+        // Forge constructs mods concurrently; BEFORE does not serialize constructors.
+        // Do not invoke the supplier during construction or assume the default is still installed.
+        language=net.minecraft.locale.Language.getInstance();
+        System.out.println("LOCALE_BEFORE supplier="+before.getClass().getName()+" thread="+Thread.currentThread().getName());
+        MinecraftForge.EVENT_BUS.addListener(this::started);
+    }
+    private void started(ServerStartedEvent event) {
+        try {
+            Object actual=field.get(null);
+            if(!actual.getClass().getName().equals("mezz.jei.common.util.MinecraftLocaleSupplier"))throw new AssertionError("actual JEI registration");
+            Method setter=translator.getMethod("setLocaleSupplier",Supplier.class);
+            Method lower=translator.getMethod("toLowercaseWithLocale",String.class);
+            String getResult;
+            try {getResult="VALUE:"+((Supplier<?>)actual).get();}
+            catch(RuntimeException | LinkageError failure){getResult=failure.getClass().getName()+":"+failure.getMessage();}
+            if(!getResult.contains("net/minecraft/client/Minecraft"))throw new AssertionError(getResult);
+            setter.invoke(null,actual);if(field.get(null)!=actual)throw new AssertionError("duplicate setter identity");
+            RuntimeException sentinel=new RuntimeException("locale-supplier-sentinel");
+            Supplier<Locale> failing=()->{throw sentinel;};setter.invoke(null,failing);
+            try {lower.invoke(null,"I");throw new AssertionError("swallowed exception");}
+            catch(InvocationTargetException failure){if(failure.getCause()!=sentinel || field.get(null)!=failing)throw new AssertionError("failure state",failure);}
+            finally {setter.invoke(null,actual);}
+            if(net.minecraft.locale.Language.getInstance()!=language || !Locale.getDefault().equals(defaultLocale))throw new AssertionError("global language changed");
+            System.out.println("LOCALE_NATIVE_PASS actualSupplier="+actual.getClass().getName()+" supplierGet="+getResult+" duplicate=REPLACES_REFERENCE failure=PROPAGATES_RETAINS_SUPPLIER globalLanguage=UNCHANGED thread="+Thread.currentThread().getName()+" client=NOT_RUN");
+        } catch(Exception failure){throw new IllegalStateException(failure);}
+    }
+}

@@ -1,0 +1,29 @@
+    private void localeBefore() {
+        try {
+            for(String id:List.of("localpha","locbeta")) {
+                Class<?> tr=Class.forName("org.example."+id+".Translator");Field count=tr.getDeclaredField("registrations");count.setAccessible(true);
+                Field f=tr.getDeclaredField("localeSupplier");f.setAccessible(true);
+                Object supplier=f.get(null);
+                System.out.println("LOCALE_STATE_BEFORE "+id+" registrations="+count.get(null)+" supplier="+supplier.getClass().getName()+" value="+((java.util.function.Supplier<?>)supplier).get()+" thread="+Thread.currentThread().getName());
+            }
+        }catch(Exception failure){throw new IllegalStateException(failure);}
+    }
+    private void localeChecks(Object a,Object b)throws Exception {
+        List<Object> values=new ArrayList<>();List<Class<?>> owners=new ArrayList<>();
+        for(Object entry:List.of(a,b)) {
+            String pkg=entry.getClass().getPackageName();ClassLoader loader=entry.getClass().getClassLoader();
+            Class<?> tr=Class.forName(pkg+".Translator",true,loader),source=Class.forName(pkg+".LocaleSource",false,loader);
+            Field f=tr.getDeclaredField("localeSupplier");f.setAccessible(true);Object supplier=f.get(null);
+            Field count=source.getDeclaredField("creations");count.setAccessible(true);Field registered=tr.getDeclaredField("registrations");registered.setAccessible(true);
+            check((int)count.get(null)==1,"actual once-only locale construction");check((int)registered.get(null)==1,"actual once-only translator registration");
+            check(supplier.getClass()==source,"original supplier identity");check(((java.util.function.Supplier<?>)supplier).get().equals(Locale.ROOT),"actual supplier ROOT value");
+            check(tr.getMethod("toLowercaseWithLocale",String.class).invoke(null,"I").equals("i"),"actual translator original lazy read");
+            check(tr.getModule()==entry.getClass().getModule() && source.getModule()==tr.getModule(),"same source owner/module");
+            values.add(supplier);owners.add(tr);
+            System.out.println("LOCALE_STATE_AFTER "+pkg+" creations="+count.get(null)+" registrations="+registered.get(null)+" value=ROOT lower=i thread="+Thread.currentThread().getName());
+        }
+        check(values.get(0)!=values.get(1) && owners.get(0)!=owners.get(1),"independent translator globals");
+        Object settings=get(a,"settings");Class<?> api=settings.getClass().getInterfaces()[0];
+        check(api.getDeclaredMethods().length==3 && (boolean)api.getMethod("enabled").invoke(settings)==(boolean)settings.getClass().getMethod("enabled").invoke(settings),"actual config interface dispatch");
+        System.out.println("LOCALE_FIXTURE_PASS actualCounts=1,1 interfaceDispatch=true client=NOT_RUN");
+    }

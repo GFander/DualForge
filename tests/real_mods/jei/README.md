@@ -1,3 +1,5 @@
+010C 当前入口见 [constructor](constructor/README.md)：Locale/Translator 与布尔配置接口子契约完成有限验证，完整原 JEI 仍严格拒绝，客户端 NOT_RUN。010A/010B 的冻结事实和工具不改。
+
 # Convergence-010A JEI release and startup boundary
 
 010B current scope: [controlled official buses/config](dual_bus/README.md),

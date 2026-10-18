@@ -1,0 +1,26 @@
+package org.example.configobserver;
+import java.lang.reflect.*;
+import java.util.*;
+import @FML@.ModList;
+import @FML@.common.Mod;
+import @GAME@.event.server.ServerStartedEvent;
+@Mod("configobserver")
+public final class OriginalConfigObserver {
+    public OriginalConfigObserver(){
+        @SPEC@.Builder control=new @SPEC@.Builder();control.define("nativeControl",true);@CONTEXT@.registerConfig(@FML@.config.ModConfig.Type.SERVER,control.build());
+        @GLOBAL@.EVENT_BUS.addListener(@BUS@.EventPriority.LOWEST,false,ServerStartedEvent.class,this::started);
+    }
+    private static Object get(Object obj,String name)throws Exception{Field f=obj.getClass().getDeclaredField(name);f.setAccessible(true);return f.get(obj);}
+    private void started(ServerStartedEvent event){try {
+        var owner=ModList.get().getModContainerById("originalcfg").orElseThrow();Object entry;
+        @ENTRY@
+        Object settings=get(entry,"settings"),router=get(entry,"subscriptions");Class<?> api=settings.getClass().getInterfaces()[0];
+        if(!settings.getClass().getName().equals("mezz.jei.forge.config.ServerConfig") || !api.getName().equals("mezz.jei.common.config.IServerConfig"))throw new AssertionError("original classes");
+        if(settings.getClass().getModule()!=entry.getClass().getModule() || settings.getClass().getClassLoader()!=entry.getClass().getClassLoader())throw new AssertionError("actual new owner");
+        if(get(router,"game")!=@GLOBAL@.EVENT_BUS || get(router,"mod")!=owner.getClass().getMethod("getEventBus").invoke(owner))throw new AssertionError("native bus identity");
+        if((int)get(entry,"setups")!=1 || (int)get(entry,"starts")!=1 || get(entry,"startedEvent")!=event)throw new AssertionError("actual lifecycle");
+        Object value=get(settings,"enableCheatModeForOp");if(!value.getClass().getName().equals("@SPEC@$BooleanValue"))throw new AssertionError("native lazy BooleanValue");
+        String values=api.getMethod("isCheatModeEnabledForOp").invoke(settings)+","+api.getMethod("isCheatModeEnabledForCreative").invoke(settings)+","+api.getMethod("isCheatModeEnabledForGive").invoke(settings);
+        System.out.println("ORIGINAL_CONFIG_INTEGRATION_PASS owner=originalcfg actualFactoryRegistration=true values="+values+" nativeValue="+value.getClass().getName()+" scope=ORIGINAL_COMPONENT_WITH_NEW_MODCONTAINER fullJEI=NOT_RUN");
+    }catch(Exception e){throw new IllegalStateException(e);}}
+}
