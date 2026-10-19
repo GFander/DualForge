@@ -1,0 +1,70 @@
+package @PACKAGE@;
+import java.util.function.BiConsumer;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraftforge.network.Channel;
+import net.minecraftforge.network.ChannelBuilder;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+public final class Network {
+    private final ISettings config;
+    private final IServerConnection server;
+    private final IClientConnection client;
+    private final Channel<CustomPacketPayload> channel;
+    private final BiConsumer<UpTuple,CustomPayloadEvent.Context> uptupleHandler;
+    private int uptupleCount;private Object uptupleLast;private BusinessContext uptupleContext;private String uptupleThread;
+    private final BiConsumer<UpWords,CustomPayloadEvent.Context> upwordsHandler;
+    private int upwordsCount;private Object upwordsLast;private BusinessContext upwordsContext;private String upwordsThread;
+    private final BiConsumer<UpUnit,CustomPayloadEvent.Context> upunitHandler;
+    private int upunitCount;private Object upunitLast;private BusinessContext upunitContext;private String upunitThread;
+    private final BiConsumer<DownTuple,CustomPayloadEvent.Context> downtupleHandler;
+    private int downtupleCount;private Object downtupleLast;private BusinessContext downtupleContext;private String downtupleThread;
+    private final BiConsumer<DownWords,CustomPayloadEvent.Context> downwordsHandler;
+    private int downwordsCount;private Object downwordsLast;private BusinessContext downwordsContext;private String downwordsThread;
+    private final BiConsumer<DownUnit,CustomPayloadEvent.Context> downunitHandler;
+    private int downunitCount;private Object downunitLast;private BusinessContext downunitContext;private String downunitThread;
+    public Network(ISettings config,ResourceLocation id,int version){
+        this.config=config;
+        server=new ToServer(this);
+        Globals.set(server);
+        client=new ToClient(this);
+        uptupleHandler=this::uptuple;
+        upwordsHandler=this::upwords;
+        upunitHandler=this::upunit;
+        downtupleHandler=this::downtuple;
+        downwordsHandler=this::downwords;
+        downunitHandler=this::downunit;
+        channel=ChannelBuilder.named(id).networkProtocolVersion(version).optional().payloadChannel().play()
+            .serverbound().add(UpTuple.TYPE,UpTuple.STREAM_CODEC,uptupleHandler).add(UpWords.TYPE,UpWords.STREAM_CODEC,upwordsHandler).add(UpUnit.TYPE,UpUnit.STREAM_CODEC,upunitHandler)
+            .clientbound().add(DownTuple.TYPE,DownTuple.STREAM_CODEC,downtupleHandler).add(DownWords.TYPE,DownWords.STREAM_CODEC,downwordsHandler).add(DownUnit.TYPE,DownUnit.STREAM_CODEC,downunitHandler).build();
+    }
+    private void uptuple(UpTuple payload,CustomPayloadEvent.Context context){
+        BusinessContext business=new BusinessContext(context.getSender(),config,server,client);
+        context.setPacketHandled(true);
+        context.enqueueWork(()->{payload.process(business);uptupleCount++;uptupleLast=payload;uptupleContext=business;uptupleThread=Thread.currentThread().getName();});
+    }
+    private void upwords(UpWords payload,CustomPayloadEvent.Context context){
+        BusinessContext business=new BusinessContext(context.getSender(),config,server,client);
+        context.setPacketHandled(true);
+        context.enqueueWork(()->{payload.process(business);upwordsCount++;upwordsLast=payload;upwordsContext=business;upwordsThread=Thread.currentThread().getName();});
+    }
+    private void upunit(UpUnit payload,CustomPayloadEvent.Context context){
+        BusinessContext business=new BusinessContext(context.getSender(),config,server,client);
+        context.setPacketHandled(true);
+        context.enqueueWork(()->{payload.process(business);upunitCount++;upunitLast=payload;upunitContext=business;upunitThread=Thread.currentThread().getName();});
+    }
+    private void downtuple(DownTuple payload,CustomPayloadEvent.Context context){
+        BusinessContext business=new BusinessContext(context.getSender(),config,server,client);
+        context.setPacketHandled(true);
+        context.enqueueWork(()->{payload.process(business);downtupleCount++;downtupleLast=payload;downtupleContext=business;downtupleThread=Thread.currentThread().getName();});
+    }
+    private void downwords(DownWords payload,CustomPayloadEvent.Context context){
+        BusinessContext business=new BusinessContext(context.getSender(),config,server,client);
+        context.setPacketHandled(true);
+        context.enqueueWork(()->{payload.process(business);downwordsCount++;downwordsLast=payload;downwordsContext=business;downwordsThread=Thread.currentThread().getName();});
+    }
+    private void downunit(DownUnit payload,CustomPayloadEvent.Context context){
+        BusinessContext business=new BusinessContext(context.getSender(),config,server,client);
+        context.setPacketHandled(true);
+        context.enqueueWork(()->{payload.process(business);downunitCount++;downunitLast=payload;downunitContext=business;downunitThread=Thread.currentThread().getName();});
+    }
+}

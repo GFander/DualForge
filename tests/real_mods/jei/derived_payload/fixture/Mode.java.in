@@ -1,0 +1,2 @@
+package @PACKAGE@;
+public enum Mode { FIRST, SECOND }

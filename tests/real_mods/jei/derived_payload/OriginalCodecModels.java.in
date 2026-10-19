@@ -1,0 +1,27 @@
+    @SuppressWarnings({"rawtypes","unchecked"})
+    private void originalCodecs(net.minecraft.server.MinecraftServer server)throws Exception {
+        java.nio.file.Path jar=java.nio.file.Path.of("/home/albert/Env/DualForge/runs/convergence-010a-jei/inputs/jei-1.21.1-forge-19.27.0.340.jar");
+        String digest=java.util.HexFormat.of().formatHex(java.security.MessageDigest.getInstance("SHA-256").digest(java.nio.file.Files.readAllBytes(jar)));check(digest.equals("f5e61a001d57dd044d6f2ba255daf955c50d90e4173f8b4933ab0eb8cd386ed5"),"original JEI bytes before isolated components");
+        try(var loader=new java.net.URLClassLoader(new java.net.URL[]{jar.toUri().toURL()},getClass().getClassLoader())){
+            String pkg="mezz.jei.common.network.packets.";
+            for(String name:List.of("PacketDeletePlayerItem","PacketGiveItemStack","PacketRecipeTransfer","PacketSetHotbarItemStack","PacketRequestCheatPermission","PacketCheatPermission")){
+                Class<?> type=Class.forName(pkg+name,true,loader);var codec=(StreamCodec<RegistryFriendlyByteBuf,CustomPacketPayload>)type.getField("STREAM_CODEC").get(null);List<Object> values=new ArrayList<>();
+                var stack=new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.PAPER,7);stack.set(net.minecraft.core.component.DataComponents.CUSTOM_NAME,net.minecraft.network.chat.Component.literal("010F 汉字"));
+                switch(name){
+                    case "PacketDeletePlayerItem"->values.add(type.getConstructor(net.minecraft.world.item.ItemStack.class).newInstance(stack));
+                    case "PacketGiveItemStack"->{Class<?> mode=Class.forName("mezz.jei.common.config.GiveMode",true,loader);for(Object value:mode.getEnumConstants())values.add(type.getConstructor(net.minecraft.world.item.ItemStack.class,mode).newInstance(stack,value));}
+                    case "PacketRecipeTransfer"->{Class<?> operation=Class.forName("mezz.jei.common.transfer.TransferOperation",true,loader);Object a=operation.getConstructor(int.class,int.class).newInstance(0,127),b=operation.getConstructor(int.class,int.class).newInstance(Integer.MAX_VALUE,-1);values.add(type.getConstructor(List.class,List.class,List.class,boolean.class,boolean.class).newInstance(List.of(a,b),List.of(0,127,128),List.of(8,9),true,false));values.add(type.getConstructor(List.class,List.class,List.class,boolean.class,boolean.class).newInstance(List.of(),List.of(),List.of(),false,false));values.add(type.getConstructor(List.class,List.class,List.class,boolean.class,boolean.class).newInstance(List.of(),List.of(0,127,128,-1),List.of(Integer.MAX_VALUE),true,true));}
+                    case "PacketSetHotbarItemStack"->{for(int index:new int[]{0,8})values.add(type.getConstructor(net.minecraft.world.item.ItemStack.class,int.class).newInstance(stack,index));for(int index:new int[]{-1,Integer.MAX_VALUE})try{type.getConstructor(net.minecraft.world.item.ItemStack.class,int.class).newInstance(stack,index);throw new AssertionError("source hotbar guard bypassed");}catch(InvocationTargetException expected){check(expected.getCause() instanceof IllegalArgumentException,"original hotbar constructor preserves range rejection");System.out.println("ORIGINAL_CONSTRUCTOR_REJECT hotbar="+index+" reason="+expected.getCause());}}
+                    case "PacketRequestCheatPermission"->values.add(type.getField("INSTANCE").get(null));
+                    case "PacketCheatPermission"->{values.add(type.getConstructor(boolean.class,List.class).newInstance(false,List.of()));values.add(type.getConstructor(boolean.class,List.class).newInstance(true,List.of("a","汉字","")));}
+                }
+                for(Object value:values){var buf=new RegistryFriendlyByteBuf(Unpooled.buffer(),server.registryAccess());try{codec.encode(buf,(CustomPacketPayload)value);Object decoded=codec.decode(buf);check(decoded.getClass()==type && ((CustomPacketPayload)decoded).type()==type.getField("TYPE").get(null) && buf.readableBytes()==0,"original JEI codec roundtrip type/id");
+                    for(Field f:type.getDeclaredFields())if(!Modifier.isStatic(f.getModifiers())){f.setAccessible(true);Object a=f.get(value),b=f.get(decoded);if(a instanceof net.minecraft.world.item.ItemStack item)check(b instanceof net.minecraft.world.item.ItemStack && net.minecraft.world.item.ItemStack.matches(item,(net.minecraft.world.item.ItemStack)b),"original ItemStack components/item/count");else check(Objects.equals(a,b),"original composite field "+f.getName());}
+                }finally{buf.release();}}
+                System.out.println("ORIGINAL_CODEC_COMPONENT_PASS "+name+" cases="+values.size()+" scope=ISOLATED_CLASSLOADER_REAL_REGISTRY_BUFFER; PROCESS_NOT_CALLED");
+            }
+            Class<?> holder=Class.forName("mezz.jei.common.Internal",true,loader);Object feature=get(holder,"jeiFeatures");check((boolean)feature.getClass().getMethod("getInventoryEffectRendererGuiHandlerEnabled").invoke(feature) && get(holder,"serverConnection")==null,"original Internal clinit actual feature/default field state; network constructor not invoked");
+            System.out.println("ORIGINAL_INTERNAL_CLINIT_COMPONENT_PASS scope=ISOLATED_CLASSLOADER; NETWORK_CONSTRUCTOR_NOT_RUN");
+        }
+        check(java.util.HexFormat.of().formatHex(java.security.MessageDigest.getInstance("SHA-256").digest(java.nio.file.Files.readAllBytes(jar))).equals(digest),"original JEI component input unchanged");
+    }

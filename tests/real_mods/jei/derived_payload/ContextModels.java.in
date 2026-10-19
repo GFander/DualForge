@@ -1,0 +1,46 @@
+    private final List<java.util.concurrent.CompletableFuture<Void>> pending=new ArrayList<>();
+    private final List<Integer> order=Collections.synchronizedList(new ArrayList<>());
+    private final List<Thread> ran=Collections.synchronizedList(new ArrayList<>());
+    private final RuntimeException sentinel=new RuntimeException("010F_CONTEXT_EXPECTED_FAILURE");
+    private Object[] modelNetworks;private net.minecraft.server.MinecraftServer modelServer;private boolean contextDone;
+    private java.util.concurrent.CompletableFuture<Void> nativeGuard;
+    private static Throwable root(Throwable x){while(x instanceof InvocationTargetException && x.getCause()!=null)x=x.getCause();return x;}
+    private Object modelContext(net.minecraft.server.MinecraftServer server)throws Exception { @MAKE_CONTEXT@ }
+    @SuppressWarnings("unchecked")
+    private java.util.concurrent.CompletableFuture<Void> queue(Object context,Runnable work)throws Exception { @QUEUE@ }
+    @SuppressWarnings({"rawtypes","unchecked"})
+    private void originalHandler(Object network,String leaf,Object context)throws Exception {
+        Class<?> packet=Class.forName(network.getClass().getModule(),network.getClass().getPackageName()+"."+leaf);Object payload=leaf.endsWith("Tuple")?packet.getConstructor(int.class,boolean.class).newInstance(42,true):leaf.endsWith("Words")?richValues(packet).getFirst():packet.getField("INSTANCE").get(null);
+        @HANDLE@
+    }
+    private void contextModels(net.minecraft.server.MinecraftServer server,Object[] networks)throws Exception {
+        modelServer=server;modelNetworks=networks;Object context=modelContext(server);
+        @SENDER_HANDLED@
+        Thread originalThread=Thread.currentThread();int[] inline={0};var completed=queue(context,()->{inline[0]++;check(Thread.currentThread()==originalThread,"inline thread");});check(completed.isDone() && !completed.isCompletedExceptionally() && inline[0]==1,"same-thread runs synchronously and returns completed future");
+        try{queue(context,()->{throw sentinel;});throw new AssertionError("synchronous exception swallowed");}catch(Exception expected){check(root(expected)==sentinel,"same synchronous exception identity");}
+        for(Object network:networks)for(String packet:List.of("UpTuple","UpWords","UpUnit"))originalHandler(network,packet,modelContext(server));
+        Thread worker=new Thread(()->{
+            try {
+                Object remote=modelContext(server);pending.add(queue(remote,()->{order.add(1);ran.add(Thread.currentThread());}));pending.add(queue(remote,()->{order.add(2);ran.add(Thread.currentThread());}));pending.add(queue(remote,()->{throw sentinel;}));
+                for(Object network:networks)for(String packet:List.of("UpTuple","UpWords","UpUnit"))originalHandler(network,packet,modelContext(server));
+                @NATIVE_GUARD@
+                pending.add(queue(remote,()->{}));
+            }catch(Exception failure){throw new RuntimeException(failure);}
+        },"010F-component-worker");worker.setUncaughtExceptionHandler((t,e)->{e.printStackTrace();});worker.start();worker.join(10000);check(!worker.isAlive() && pending.size()==4,"worker submitted to actual game queue without waiting for it");
+    }
+    private void contextTick(@TICK@ event){if(modelServer!=null && !contextDone && pending.size()==4 && pending.stream().allMatch(java.util.concurrent.CompletableFuture::isDone) && (nativeGuard==null || nativeGuard.isDone())){try{finishContext();}catch(Exception e){throw new RuntimeException(e);}}}
+    private void contextStop(@STOP@ event){if(modelServer!=null && !contextDone){try{finishContext();}catch(Exception e){throw new RuntimeException(e);}}}
+    private void finishContext()throws Exception {
+        check(pending.size()==4 && pending.stream().allMatch(java.util.concurrent.CompletableFuture::isDone),"all source-compatible queued work finished");
+        check(order.equals(List.of(1,2)) && ran.stream().allMatch(t->t==Thread.currentThread()),"FIFO order on actual game server thread");
+        check(pending.get(0).join()==null && pending.get(1).join()==null,"queued successful future return");
+        check(pending.get(2).isCompletedExceptionally(),"source-compatible future remains exceptional");try{pending.get(2).join();throw new AssertionError("async failure swallowed");}catch(java.util.concurrent.CompletionException expected){check(expected.getCause()==sentinel,"async failure preserves original cause");}
+        @CHECK_NATIVE_GUARD@
+        for(Object network:modelNetworks)for(String leaf:List.of("uptuple","upwords","upunit")){
+            check((int)get(network,leaf+"Count")==2,"two explicitly isolated handler invocations");Object business=get(network,leaf+"Context");
+            check(get(business,"sender")==null && get(business,"config")==get(network,"config") && get(business,"server")==get(network,"server") && get(business,"client")==get(network,"client"),"original safe business context references preserved; disconnected sender remains null");
+            check(get(network,leaf+"Thread").equals(Thread.currentThread().getName()),"original business runnable on actual server thread");check((int)get(business,"count")==1 && get(business,"last")==get(network,leaf+"Last") && (int)get(business,"parentValue")==17 && ((boolean)get(business,"enabled")==configured(network)) && get(business,"thread").equals(Thread.currentThread().getName()),"unmodified inherited process recorded payload/config/parent/thread");
+        }
+        for(Object network:modelNetworks){Object settings=get(network,"config");Field field=settings.getClass().getDeclaredField("enabled");field.setAccessible(true);Object original=field.get(settings);try{field.set(settings,(java.util.function.Supplier<Boolean>)()->{throw sentinel;});try{originalHandler(network,"UpTuple",modelContext(modelServer));throw new AssertionError("process failure swallowed");}catch(Exception expected){check(root(expected)==sentinel,"actual original process/config failure propagates same exception");}}finally{field.set(settings,original);}check((int)get(network,"uptupleCount")==2 && field.get(settings)==original,"business failure stops later source counter; config restored");}System.out.println("DERIVED_PROCESS_CONFIG_PASS alpha="+configured(modelNetworks[0])+" beta="+configured(modelNetworks[1])+" scope=ORIGINAL_PROCESS_CONFIG_READ");System.out.println("DERIVED_PROCESS_FAILURE_MODEL_PASS scope=ISOLATED_CONFIG_FAILURE_THROUGH_ORIGINAL_PROCESS; NO_PERMISSION_OR_INVENTORY_BUSINESS");
+        contextDone=true;System.out.println("DERIVED_CONTEXT_MODEL_PASS assertions="+assertions+" scope=ISOLATED_DISCONNECTED_CONTEXT_AND_DIRECT_HANDLER; REAL_CONNECTION=NOT_RUN REAL_PACKET_DELIVERY=NOT_RUN");
+    }

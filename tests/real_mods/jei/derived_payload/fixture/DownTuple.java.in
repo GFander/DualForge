@@ -1,0 +1,18 @@
+package @PACKAGE@;
+import java.util.List;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+public final class DownTuple extends BasePacket<DownTuple> {
+    public static final Type<DownTuple> TYPE=new Type<>(ResourceLocation.fromNamespaceAndPath("@ID@","downtuple"));
+    public static final StreamCodec<RegistryFriendlyByteBuf,DownTuple> STREAM_CODEC=StreamCodec.composite(ByteBufCodecs.VAR_INT,DownTuple::number,ByteBufCodecs.BOOL,DownTuple::flag,DownTuple::new);
+    private final int number;private final boolean flag;
+    public DownTuple(int number,boolean flag){this.number=number;this.flag=flag;}
+    public int number(){return number;}
+    public boolean flag(){return flag;}
+    public Type<DownTuple> type(){return TYPE;}
+    public StreamCodec<RegistryFriendlyByteBuf,DownTuple> streamCodec(){return STREAM_CODEC;}
+    public void process(BusinessContext context){context.record(this,inheritedValue());}
+}

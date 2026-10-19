@@ -45,7 +45,7 @@ final class ForgeDualBusPlan {
         fingerprint=digest(identity.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
         Map<String,byte[]> n=new TreeMap<>(), o=new TreeMap<>();
         for(var row:raw.entrySet()) {
-            ClassNode node=read(row.getValue());n.put(row.getKey(),bytes(node));rewrite(node);
+            ClassNode node=read(row.getValue());n.put(row.getKey(),bytes(node));if(network!=null && network.closure!=null && network.closure.readOnly.contains(row.getKey()))continue;rewrite(node);
             RegistryBytecodeVerifier.verify(node);o.put(row.getKey(),bytes(node));
         }
         normalized=Map.copyOf(n);output=Map.copyOf(o);
@@ -83,7 +83,7 @@ final class ForgeDualBusPlan {
         var locale=ForgeConstructorSegments.locale(c,nodes);
         c.field(Opcodes.GETSTATIC,F+"common/MinecraftForge","EVENT_BUS",B);c.var(Opcodes.ASTORE,1);
         c.call(Opcodes.INVOKESTATIC,JAVA,"get","()L"+JAVA+";");c.call(Opcodes.INVOKEVIRTUAL,JAVA,"getModEventBus","()"+B);c.var(Opcodes.ASTORE,2);
-        if(locale!=null && c.peek() instanceof TypeInsnNode)rejectLocalBoundary(c,nodes,host);
+        if(locale!=null && c.peek() instanceof TypeInsnNode)rejectLocalBoundary(c,nodes,host,id);
         c.var(Opcodes.ALOAD,0);String router=c.allocation(nodes);c.op(Opcodes.DUP);c.var(Opcodes.ALOAD,1);c.var(Opcodes.ALOAD,2);
         c.call(Opcodes.INVOKESPECIAL,router,"<init>","("+B+B+")V");String routerField=c.ownField(Opcodes.PUTFIELD,e,"L"+router+";",true);
         c.var(Opcodes.ALOAD,0);c.call(Opcodes.INVOKESTATIC,CTX,"get","()L"+CTX+";");
@@ -146,7 +146,7 @@ final class ForgeDualBusPlan {
         if(network!=null){ForgePayloadSemantics.verifyHost(host);if(network.closure!=null)ForgeSourceContextBridge.verifyHost(host);}
         return new ForgeDualBusPlan(id,module,entry,router,config,configType,listeners,raw,network);
     }
-    private static void rejectLocalBoundary(Cursor c,Map<String,ClassNode> nodes,java.util.function.Function<String,byte[]> host) {
+    private static void rejectLocalBoundary(Cursor c,Map<String,ClassNode> nodes,java.util.function.Function<String,byte[]> host,String id) {
         String router=c.allocation(nodes);c.op(Opcodes.DUP);c.var(Opcodes.ALOAD,1);c.var(Opcodes.ALOAD,2);
         c.call(Opcodes.INVOKESPECIAL,router,"<init>","("+B+B+")V");c.var(Opcodes.ASTORE,3);validateRouter(nodes.get(router));
         c.call(Opcodes.INVOKESTATIC,CTX,"get","()L"+CTX+";");c.var(Opcodes.ASTORE,4);c.var(Opcodes.ALOAD,4);
@@ -159,7 +159,7 @@ final class ForgeDualBusPlan {
         if(c.peek() instanceof TypeInsnNode allocation && allocation.getOpcode()==Opcodes.NEW) {
             ClassNode next=nodes.get(allocation.desc);require(next!=null,"CROSS_MODFILE_INITIALIZER");
             boolean network=next.methods.stream().flatMap(m->ForgeRegistryTransformationPlan.ops(m).stream()).anyMatch(op->op instanceof MethodInsnNode m && m.owner.startsWith(F+"network/"));
-            if(network)ForgeNetworkBoundaryProof.reject(next,nodes);
+            if(network)ForgeNetworkBoundaryProof.reject(next,nodes,id);
             boundary="UNKNOWN_INITIALIZER_SIDE_EFFECT";
         } else if(c.peek() instanceof FieldInsnNode f && f.owner.equals(F+"api/distmarker/Dist"))boundary="UNVERIFIED_DIST_INITIALIZATION";
         throw new IllegalStateException("Dual bus rejected: "+boundary+" locale=STATIC_VERIFIED busIdentity=STATIC_VERIFIED router=STATIC_VERIFIED config="+type
@@ -288,9 +288,9 @@ final class ForgeDualBusPlan {
     private static Object constant(Object v){if(v instanceof Type t)return Type.getType(descriptor(t.getDescriptor()));if(v instanceof Handle h)return new Handle(h.getTag(),type(h.getOwner()),h.getName(),descriptor(h.getDesc()),h.isInterface());return v;}
     private static void mapFrame(List<Object> frame){if(frame!=null)for(int i=0;i<frame.size();i++)if(frame.get(i) instanceof String s)frame.set(i,type(s));}
 
-    Set<String> targets(){return raw.keySet();}
+    Set<String> targets(){return output.keySet();}
     void rejectForeignClasses(Set<String> foreign){require(Collections.disjoint(raw.keySet(),foreign),"CROSS_MODFILE_CONFLICT");}
-    ClassNode transform(ClassNode n,byte[] sha){require(raw.containsKey(n.name),"UNCLAIMED_CLASS_MODIFIED");require(sha==null || Arrays.equals(sha,HexFormat.of().parseHex(digest(raw.get(n.name)))),"INPUT_SHA_CHANGED");require(Arrays.equals(bytes(n),normalized.get(n.name)),"PARTIAL_TRANSFORM_REJECTED");return read(output.get(n.name));}
+    ClassNode transform(ClassNode n,byte[] sha){require(output.containsKey(n.name),"UNCLAIMED_CLASS_MODIFIED");require(sha==null || Arrays.equals(sha,HexFormat.of().parseHex(digest(raw.get(n.name)))),"INPUT_SHA_CHANGED");require(Arrays.equals(bytes(n),normalized.get(n.name)),"PARTIAL_TRANSFORM_REJECTED");return read(output.get(n.name));}
     private static MethodInsnNode bridge(String name,String desc){return new MethodInsnNode(Opcodes.INVOKESTATIC,BRIDGE,name,desc,false);}
     static void require(boolean ok,String why){if(!ok)throw new IllegalStateException("Dual bus rejected: "+why);}
     static ClassNode read(byte[] b){return ForgeRegistryTransformationPlan.read(b);}static byte[] bytes(ClassNode n){return ForgeRegistryTransformationPlan.bytes(n);}static String digest(byte[] b){return ForgeRegistryTransformationPlan.digest(b);}
