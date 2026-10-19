@@ -9,7 +9,7 @@ import static io.github.gfander.dualforge.ForgeNetworkPlan.*;
 /** Read-only source-prefix proof. It never creates a partial transform plan or executes the setter. */
 final class ForgeNetworkBoundaryProof {
     private ForgeNetworkBoundaryProof() { }
-    static void reject(ClassNode n,Map<String,ClassNode> nodes){
+    static void reject(ClassNode n,Map<String,ClassNode> nodes,String id){
         List<MethodNode> constructors=n.methods.stream().filter(m->m.name.equals("<init>") && Type.getArgumentTypes(m.desc).length==3).toList();
         require(constructors.size()==1,"UNVERIFIED_NETWORK_INITIALIZATION UNKNOWN_STATIC_SIDE_EFFECT constructor closure");
         MethodNode ctor=constructors.getFirst();Type[] args=Type.getArgumentTypes(ctor.desc);
@@ -22,7 +22,9 @@ final class ForgeNetworkBoundaryProof {
         String client=connection(c,n,nodes);String clientApi=nextFieldDescriptor(c);c.ownField(Opcodes.PUTFIELD,n,clientApi,true);require(!server.equals(client),"UNVERIFIED_NETWORK_INITIALIZATION WRONG_NETWORK_HANDLER_IDENTITY");
         c.var(Opcodes.ALOAD,0);c.var(Opcodes.ALOAD,2);c.call(Opcodes.INVOKESTATIC,BUILD,"named","(L"+RL+";)L"+BUILD+";");c.var(Opcodes.ILOAD,3);c.call(Opcodes.INVOKEVIRTUAL,BUILD,"networkProtocolVersion","(I)L"+BUILD+";");c.call(Opcodes.INVOKEVIRTUAL,BUILD,"optional","()L"+BUILD+";");c.call(Opcodes.INVOKEVIRTUAL,BUILD,"payloadChannel","()L"+CONNECTION+";");c.call(Opcodes.INVOKEINTERFACE,CONNECTION,"play","()L"+PROTOCOL+";");c.call(Opcodes.INVOKEINTERFACE,PROTOCOL,"serverbound","()Ljava/lang/Object;");c.type(Opcodes.CHECKCAST,FLOW);
         var first=c.next();require(first instanceof FieldInsnNode f && f.getOpcode()==Opcodes.GETSTATIC && f.desc.equals("L"+PT+";"),"UNVERIFIED_NETWORK_INITIALIZATION UNKNOWN_PAYLOAD_TYPE");String packet=((FieldInsnNode)first).owner;ClassNode payload=nodes.get(packet);require(payload!=null,"UNVERIFIED_NETWORK_INITIALIZATION CROSS_MODFILE_CONFLICT");
-        require(false,"UNVERIFIED_NETWORK_INITIALIZATION UNKNOWN_PAYLOAD_TYPE source="+packet+" super="+payload.superName+" access="+payload.access+" required=VERIFIED_FINAL_DATA_PAYLOAD globalConnection=STATIC_VERIFIED originalSetter=RETAINED sourceClinit=STATIC_VERIFIED context=FINITE_ADD_PROFILE_ONLY combined=REJECTED_NO_TARGETS");
+        try{var proof=ForgeDerivedPayloadPlan.inspect(payload,id,nodes);ForgeDerivedPayloadPlan.process(proof,nodes);}
+        catch(IllegalStateException failure){String message=failure.getMessage();throw new IllegalStateException("Dual bus rejected: UNVERIFIED_NETWORK_INITIALIZATION "+message.replaceFirst("^Dual bus rejected: ","")+" globalConnection=STATIC_VERIFIED originalSetter=RETAINED sourceClinit=STATIC_VERIFIED context=FINITE_ADD_PROFILE_ONLY combined=REJECTED_NO_TARGETS",failure);}
+        require(false,"UNVERIFIED_NETWORK_INITIALIZATION PARTIAL_NETWORK_PLAN all payloads and source wrappers must be proved combined=REJECTED_NO_TARGETS");
     }
     private static String nextFieldDescriptor(Cursor c){var op=c.peek();require(op instanceof FieldInsnNode,"UNVERIFIED_NETWORK_INITIALIZATION WRONG_NETWORK_HANDLER_IDENTITY");return ((FieldInsnNode)op).desc;}
     private static String connection(Cursor c,ClassNode network,Map<String,ClassNode> nodes){

@@ -1,0 +1,28 @@
+    private static void put(Object obj,String name,Object value)throws Exception{Field f=obj.getClass().getDeclaredField(name);f.setAccessible(true);f.set(obj,value);}
+    private void rejected(String label,String expected,java.util.concurrent.Callable<?> operation)throws Exception{
+        try{operation.call();throw new AssertionError("unexpected approval "+label);}catch(Exception e){Throwable cause=e;while(cause.getCause()!=null)cause=cause.getCause();check(cause.getMessage()!=null && cause.getMessage().contains(expected),label+" actual="+cause);System.out.println("DERIVED_OWNER_NEGATIVE "+label+" => "+cause+" scope=ISOLATED_COMPONENT_WITH_LIVE_OWNER");}
+    }
+    private void ownerModels(Object[] networks)throws Exception{
+        Object session=get(networks[0],"channel"),owner=get(session,"owner"),identity=get(owner,"identity");Method same=identity.getClass().getDeclaredMethod("sameOwner",Class.class);same.setAccessible(true);
+        rejected("WRONG_MODULE","WRONG_MODULE",()->same.invoke(identity,networks[1].getClass()));
+        for(String field:List.of("loader","owner","file")){
+            Object old=get(identity,field);try{put(identity,field,field.equals("loader")?new ClassLoader(){}:field.equals("owner")?new java.lang.ref.WeakReference<>(null):new Object());String why=field.equals("loader")?"WRONG_CLASSLOADER":field.equals("owner")?"WRONG_MOD_CONTAINER":"WRONG_MODFILE";rejected(why,why,()->same.invoke(identity,networks[0].getClass()));}finally{put(identity,field,old);}
+        }
+        Constructor<?> create=session.getClass().getDeclaredConstructors()[0];create.setAccessible(true);Object copy=create.newInstance(owner,networks[0]);put(copy,"definitions",get(session,"definitions"));put(copy,"phase",Enum.valueOf((Class)get(session,"phase").getClass(),"PLANNED"));
+        Method reg=Class.forName("io.github.gfander.dualforge.ForgeNetworkBridge").getDeclaredMethod("register",session.getClass(),Object.class);reg.setAccessible(true);
+        rejected("WRONG_REGISTRATION_PHASE","WRONG_REGISTRATION_PHASE",()->reg.invoke(null,copy,new net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent()));
+        Class<?> globals=Class.forName(networks[0].getClass().getModule(),networks[0].getClass().getPackageName()+".Globals");Object value=get(globals,"server");
+        rejected("LATE_GLOBAL_CONNECTION_WRITE","WRONG_MOD_CONTAINER",()->globals.getMethod("set",Class.forName(networks[0].getClass().getModule(),networks[0].getClass().getPackageName()+".IServerConnection")).invoke(null,value));
+        check(get(globals,"server")==value && (int)get(globals,"writes")==1 && get(session,"phase").toString().equals("REGISTERED"),"owner guards preserve original global/reference and successful session");
+    }
+    @SuppressWarnings({"rawtypes","unchecked"})
+    private void hostFault(net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent event){
+        try{
+            Object entry=entry(ModList.get().getModContainerById("treealpha").orElseThrow()),network=get(entry,"network"),actual=get(network,"channel");check(get(actual,"phase").toString().equals("REGISTERED"),"owner event runs before ordered observer");
+            Object owner=get(actual,"owner");Constructor<?> ctor=actual.getClass().getDeclaredConstructors()[0];ctor.setAccessible(true);Object isolated=ctor.newInstance(owner,network);put(isolated,"definitions",get(actual,"definitions"));put(isolated,"phase",Enum.valueOf((Class)get(actual,"phase").getClass(),"PLANNED"));
+            Class<?> globals=Class.forName(network.getClass().getModule(),network.getClass().getPackageName()+".Globals");Object connection=get(globals,"server");
+            put(network,"channel",isolated);try{Method register=Class.forName("io.github.gfander.dualforge.ForgeNetworkBridge").getDeclaredMethod("register",actual.getClass(),Object.class);register.setAccessible(true);rejected("NATIVE_REGISTRATION_FAILURE","already registered",()->register.invoke(null,isolated,event));check(get(isolated,"phase").toString().equals("UNCERTAIN"),"host throw poisons isolated registration state");rejected("UNCERTAIN_RETRY","DUPLICATE_REGISTRATION",()->register.invoke(null,isolated,event));}finally{put(network,"channel",actual);}
+            check(get(globals,"server")==connection && (int)get(globals,"writes")==1,"actual source static object is retained after later host error, no rollback");
+            System.out.println("GLOBAL_REFERENCE_FAILURE_MODEL_PASS scope=ISOLATED_HOST_OPERATION; constructor-failure catch separately STATIC_VERIFIED");
+        }catch(Exception e){throw new RuntimeException(e);}
+    }
