@@ -1,0 +1,59 @@
+package org.example.networkobserver;
+import java.lang.reflect.*;
+import java.util.*;
+import @FML@.ModList;
+import @FML@.common.Mod;
+import @BUS@.*;
+import @GAME@.event.server.ServerStartedEvent;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.ConnectionProtocol;
+import net.minecraft.network.protocol.PacketFlow;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceLocation;
+import io.netty.buffer.Unpooled;
+
+/** Reads actual native registrations. Codec calls are isolated serialization, never packet delivery. */
+@Mod("networkobserver")
+public final class Observer {
+    private int assertions;
+    private void check(boolean ok,String why){if(!ok)throw new AssertionError(why);assertions++;}
+    private static Object get(Object obj,String name)throws Exception{
+        Class<?> c=obj instanceof Class<?> k?k:obj.getClass();
+        while(c!=null){try{Field f=c.getDeclaredField(name);f.setAccessible(true);return f.get(obj instanceof Class<?>?null:obj);}catch(NoSuchFieldException e){c=c.getSuperclass();}}
+        throw new NoSuchFieldException(name);
+    }
+    private static Object call(Object obj,String name)throws Exception{Method m=obj.getClass().getDeclaredMethod(name);m.setAccessible(true);return m.invoke(obj);}
+    private static Object entry(Object owner)throws Exception { @ENTRY@ }
+    public Observer(){@EARLY@ @GLOBAL@.EVENT_BUS.addListener(EventPriority.LOWEST,false,ServerStartedEvent.class,this::started);}
+    @EXTRA@
+    @SuppressWarnings({"unchecked","rawtypes"})
+    private void started(ServerStartedEvent event) {
+        try {
+            Object[] networks=new Object[2];Object[] channels=new Object[2];
+            for(int index=0;index<2;index++){
+                String id=index==0?"netalpha":"netbeta";
+                Object owner=ModList.get().getModContainerById(id).orElseThrow(),instance=entry(owner),network=get(instance,"network"),channel=get(network,"channel");networks[index]=network;channels[index]=channel;
+                check((int)get(instance,"setups")==1 && (int)get(instance,"starts")==1,"actual FML + game lifecycle "+id);
+                @CHANNEL@
+                for(String leaf:List.of("Up","Down")) {
+                    String path=leaf.toLowerCase(Locale.ROOT);Class<?> packet=Class.forName(network.getClass().getModule(),network.getClass().getPackageName()+"."+leaf);
+                    check(packet!=null && packet.getModule()==network.getClass().getModule() && packet.getClassLoader()==network.getClass().getClassLoader(),"payload ownership");
+                    var type=(CustomPacketPayload.Type)packet.getField("TYPE").get(null);var codec=(StreamCodec<RegistryFriendlyByteBuf,CustomPacketPayload>)packet.getField("STREAM_CODEC").get(null);
+                    check(type.id().toString().equals(id+":"+path),"derived payload id");Object original=get(network,path+"Handler");
+                    @REGISTRATION@
+                    for(int number:new int[]{0,1,127,128,-1,Integer.MIN_VALUE,Integer.MAX_VALUE}) {
+                        var data=(CustomPacketPayload)packet.getConstructor(int.class).newInstance(number);var buffer=new RegistryFriendlyByteBuf(Unpooled.buffer(),event.getServer().registryAccess());
+                        try{codec.encode(buffer,data);var decoded=codec.decode(buffer);check(decoded.getClass()==packet && (int)packet.getMethod("number").invoke(decoded)==number && decoded.type()==type && buffer.readableBytes()==0,"isolated codec round trip "+number);}finally{buffer.release();}
+                    }
+                    var broken=new RegistryFriendlyByteBuf(Unpooled.wrappedBuffer(new byte[]{-128,-128,-128,-128,-128,-128}),event.getServer().registryAccess());
+                    try{codec.decode(broken);throw new AssertionError("malformed VarInt accepted");}catch(RuntimeException expected){check(true,"actual source codec rejects malformed input");System.out.println("NETWORK_CODEC_REJECT "+id+":"+path+" "+expected);}finally{broken.release();}
+                    check((int)get(network,path+"Count")==0 && get(network,path+"Thread")==null,"no callback invoked without connection");
+                }
+            }
+            check(networks[0]!=networks[1] && channels[0]!=channels[1] && networks[0].getClass().getModule()!=networks[1].getClass().getModule(),"two actual owner isolation");
+            @FINAL@
+            System.out.println("NETWORK_OBSERVER_PASS assertions="+assertions+" REAL_FML_REGISTRATION=PASS ISOLATED_CODEC=PASS REAL_CONNECTION=NOT_RUN REAL_PACKET_DELIVERY=NOT_RUN");
+        }catch(Throwable e){e.printStackTrace();throw new RuntimeException("NETWORK_OBSERVER_FAIL",e);}
+    }
+}

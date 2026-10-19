@@ -1,0 +1,80 @@
+package org.example.dualobserver;
+
+import java.lang.reflect.*;
+import java.util.*;
+import java.util.function.Consumer;
+import @FML@.ModList;
+import @FML@.common.Mod;
+import @BUS@.*;
+import @GAME@.event.server.ServerStartedEvent;
+import @GAME@.event.entity.living.LivingDeathEvent;
+import @FML@.event.lifecycle.FMLCommonSetupEvent;
+
+/** Separate native diagnostic mod. Extra posts below are not FML lifecycle stages. */
+@Mod("dualobserver")
+public final class Observer {
+    private final IEventBus game=@GLOBAL@.EVENT_BUS;
+    private int assertions;
+    private void check(boolean ok,String why){if(!ok)throw new AssertionError(why);assertions++;}
+    public Observer(){@CONFIG_CONTROL@ game.addListener(EventPriority.LOWEST,false,ServerStartedEvent.class,this::started);}
+    private static Object get(Object obj,String name)throws Exception{Field f=obj.getClass().getDeclaredField(name);f.setAccessible(true);return f.get(obj);}
+    private static void set(Object obj,String name,Object value)throws Exception{Field f=obj.getClass().getDeclaredField(name);f.setAccessible(true);f.set(obj,value);}
+    private static Object entry(Object owner)throws Exception { @ENTRY@ }
+    private void rejected(String label,String expected,Runnable operation) {
+        try {operation.run();throw new AssertionError("Unexpected approval "+label);}
+        catch(RuntimeException e){Throwable t=e;while(t.getCause()!=null)t=t.getCause();check(t.getMessage()!=null && t.getMessage().contains(expected),label+" actual="+t);System.out.println("DUAL_NEGATIVE "+label+" => "+t.getMessage()+" scope=ISOLATED_MODEL_WITH_LIVE_OWNER");}
+    }
+    private static void invoke(Object target,String method,Class<?>[] types,Object...args){try{Method m=target.getClass().getDeclaredMethod(method,types);m.setAccessible(true);m.invoke(target,args);}catch(Exception e){throw new RuntimeException(e);}}
+    @OWNER_MODELS@
+    private void started(ServerStartedEvent event) {
+        try {
+            var ca=ModList.get().getModContainerById("busalpha").orElseThrow();
+            var cb=ModList.get().getModContainerById("busbeta").orElseThrow();
+            Object a=entry(ca), b=entry(cb);Object ra=get(a,"subscriptions"), rb=get(b,"subscriptions");
+            IEventBus ma=(IEventBus)ca.getClass().getMethod("getEventBus").invoke(ca), mb=(IEventBus)cb.getClass().getMethod("getEventBus").invoke(cb);
+            check(ma!=mb && ma!=game && mb!=game,"actual distinct owned mod buses");
+            check(get(ra,"game")==game && get(rb,"game")==game,"same actual official game bus");
+            check(get(ra,"mod")==ma && get(rb,"mod")==mb,"real container bus identity");
+            check((int)get(a,"setups")==1 && (int)get(b,"setups")==1,"once-only actual FML setup");
+            check(get(a,"setupEvent")!=get(b,"setupEvent"),"separate real FML setup event objects");
+            check((int)get(a,"starts")==1 && (int)get(b,"starts")==1,"once-only actual server start");
+            check(get(a,"startedEvent")==event && get(b,"startedEvent")==event,"same native server event object");
+            check(a.getClass().getModule()!=b.getClass().getModule(),"distinct source modules");
+            Object sa=get(a,"settings"),sb=get(b,"settings");
+            check(sa!=sb && get(sa,"enabled")!=get(sb,"enabled"),"distinct native config values");
+            System.out.println("DUAL_CONFIG_OBSERVED alpha="+sa.getClass().getMethod("enabled").invoke(sa)+","+sa.getClass().getMethod("secondary").invoke(sa)
+                +" beta="+sb.getClass().getMethod("enabled").invoke(sb)+","+sb.getClass().getMethod("secondary").invoke(sb));
+            if("true".equals(System.getenv("DF010B_CONFIG_ONLY"))) {
+                System.out.println("DUAL_OBSERVER_PASS assertions="+assertions+" configRestartOnly=true client=NOT_RUN");return;
+            }
+            @RUN_OWNER_MODELS@
+            FMLCommonSetupEvent ea=@SETUP_A@, eb=@SETUP_B@;
+            ma.post(ea);check((int)get(a,"setups")==2 && (int)get(b,"setups")==1 && get(a,"setupEvent")==ea,"diagnostic A-only native mod post");
+            mb.post(eb);check((int)get(a,"setups")==2 && (int)get(b,"setups")==2 && get(b,"setupEvent")==eb,"diagnostic B-only native mod post");
+            ra.getClass().getMethod("unregister",Class.class,Consumer.class).invoke(ra,FMLCommonSetupEvent.class,get(a,"setupListener"));
+            ma.post(ea);check((int)get(a,"setups")==2 && (int)get(b,"setups")==2,"original Consumer native unregister");
+            // Real native Game Bus/event, diagnostic null entity/source never enter gameplay.
+            LivingDeathEvent death=new LivingDeathEvent(null,null);
+            game.post(death);check((int)get(a,"deaths")==1 && (int)get(b,"deaths")==1 && get(a,"deathEvent")==death && get(b,"deathEvent")==death,"same death object and callback count");
+            check(!death.isCanceled(),"default death cancellation outcome");
+            LivingDeathEvent preCanceled=new LivingDeathEvent(null,null);preCanceled.setCanceled(true);game.post(preCanceled);
+            check((int)get(a,"deaths")==1 && (int)get(b,"deaths")==2 && get(b,"deathEvent")==preCanceled,"original explicit receiveCanceled true/false");
+            Object originalValue=get(sa,"cancelDeath");set(sa,"cancelDeath",(java.util.function.Supplier<Boolean>)()->true);
+            LivingDeathEvent business=new LivingDeathEvent(null,null);
+            @ACCEPT_ORIGINAL@
+            check(business.isCanceled() && get(a,"deathEvent")==business,"unchanged original callback sets native cancellation (diagnostic Supplier substitution)");
+            set(sa,"cancelDeath",originalValue);
+            game.unregister(get(a,"deathListener"));game.unregister(get(b,"deathListener"));
+            LivingDeathEvent priorityEvent=new LivingDeathEvent(null,null);
+            List<String> order=new ArrayList<>();Consumer<LivingDeathEvent> high=e->{order.add("high");check(e==priorityEvent,"native event identity");e.setCanceled(true);};
+            Consumer<LivingDeathEvent> skip=e->order.add("skip"), receive=e->order.add("receive");
+            game.addListener(EventPriority.HIGH,false,LivingDeathEvent.class,high);
+            game.addListener(EventPriority.NORMAL,false,LivingDeathEvent.class,skip);
+            game.addListener(EventPriority.LOW,true,LivingDeathEvent.class,receive);
+            game.post(priorityEvent);check(priorityEvent.isCanceled() && order.equals(List.of("high","receive")),"native cancellation priority receiveCanceled ordering");
+            game.unregister(high);game.unregister(skip);game.unregister(receive);
+            check(death.getEntity()==null && death.getSource()==null,"native parameters preserved");
+            System.out.println("DUAL_OBSERVER_PASS assertions="+assertions+" realLifecycle=true diagnosticExtraPosts=true client=NOT_RUN");
+        } catch(Exception e){throw new IllegalStateException("Dual observer failed",e);}
+    }
+}

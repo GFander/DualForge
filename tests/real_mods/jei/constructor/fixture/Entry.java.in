@@ -1,0 +1,56 @@
+package @PACKAGE@;
+
+import java.util.function.Consumer;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.server.ServerStartedEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+
+@Mod("@ID@")
+public final class Entry {
+    private final Subscriptions subscriptions;
+    private final ISettings settings;
+    private final Consumer<FMLCommonSetupEvent> setupListener;
+    private final Consumer<ServerStartedEvent> startedListener;
+    private final Consumer<LivingDeathEvent> deathListener;
+    private int setups, starts, deaths;
+    private Object setupEvent, startedEvent, deathEvent;
+
+    public Entry() {
+        Translator.setLocaleSupplier(new LocaleSource());
+        IEventBus game = MinecraftForge.EVENT_BUS;
+        IEventBus mod = FMLJavaModLoadingContext.get().getModEventBus();
+        subscriptions = new Subscriptions(game, mod);
+        settings = Settings.register(ModLoadingContext.get());
+        setupListener = this::setup;
+        startedListener = this::started;
+        deathListener = this::death;
+        subscriptions.register(FMLCommonSetupEvent.class, setupListener);
+        subscriptions.register(ServerStartedEvent.class, startedListener);
+        subscriptions.@DEATH_REGISTER@(LivingDeathEvent.class, deathListener);
+    }
+
+    private void setup(FMLCommonSetupEvent event) {
+        setups++;
+        setupEvent = event;
+        System.out.println("DUAL_SETUP @ID@ count=" + setups + " thread=" + Thread.currentThread().getName());
+    }
+
+    private void started(ServerStartedEvent event) {
+        starts++;
+        startedEvent = event;
+        System.out.println("DUAL_STARTED @ID@ count=" + starts + " setups=" + setups
+            + " values=" + settings.enabled() + "," + settings.secondary() + "," + settings.cancelDeath());
+    }
+
+    private void death(LivingDeathEvent event) {
+        deaths++;
+        deathEvent = event;
+        if (settings.cancelDeath()) event.setCanceled(true);
+        System.out.println("DUAL_DEATH @ID@ count=" + deaths + " canceled=" + event.isCanceled());
+    }
+}

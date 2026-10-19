@@ -1,5 +1,11 @@
 # 010A evidence matrix
 
+010B current scope: [controlled official buses/config](dual_bus/README.md),
+[source graph](dual_bus/JEI_BUS_SOURCE.md), [reference comparison](dual_bus/REFERENCES.md).
+The full original JEI entry still fails preplanning in the new finite constructor
+profile; its bus/config runtime and client remain NOT_RUN. The 010A results below
+are historical. The old exact-refusal evaluator is not a 010B compatibility test.
+
 | Gate | Evidence type | Result |
 |---|---|---|
 | 009C final A/B/mouse/config/mixed acceptance | USER_REPORTED_MANUAL_PASS | PASS for the expected009C artifact only; logs not provided |

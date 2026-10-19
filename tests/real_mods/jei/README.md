@@ -1,4 +1,12 @@
+010C 当前入口见 [constructor](constructor/README.md)：Locale/Translator 与布尔配置接口子契约完成有限验证，完整原 JEI 仍严格拒绝，客户端 NOT_RUN。010A/010B 的冻结事实和工具不改。
+
 # Convergence-010A JEI release and startup boundary
+
+010B current scope: [controlled official buses/config](dual_bus/README.md),
+[source graph](dual_bus/JEI_BUS_SOURCE.md), [reference comparison](dual_bus/REFERENCES.md).
+The full original JEI entry still fails preplanning in the new finite constructor
+profile; its bus/config runtime and client remain NOT_RUN. The 010A results below
+are historical. The old exact-refusal evaluator is not a 010B compatibility test.
 
 Original Forge input: `jei-1.21.1-forge-19.27.0.340.jar`, official CurseForge
 file7420585, 1529402 bytes, SHA-256

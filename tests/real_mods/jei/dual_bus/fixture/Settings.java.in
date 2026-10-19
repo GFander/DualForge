@@ -1,0 +1,35 @@
+package @PACKAGE@;
+
+import java.util.function.Supplier;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.config.ModConfig;
+
+public final class Settings {
+    private final Supplier<Boolean> enabled;
+    private final Supplier<Boolean> secondary;
+    private final Supplier<Boolean> cancelDeath;
+
+    public static Settings register(ModLoadingContext context) {
+        ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
+        Settings settings = new Settings(builder);
+        ForgeConfigSpec spec = builder.build();
+        context.registerConfig(ModConfig.Type.@CONFIGTYPE@, spec);
+        return settings;
+    }
+
+    private Settings(ForgeConfigSpec.Builder builder) {
+        builder.push("behavior");
+        builder.comment("Enable the controlled feature");
+        enabled = builder.define("enabled", true);
+        builder.comment("Independent secondary setting");
+        secondary = builder.define("secondary", true);
+        builder.comment("Cancel death only in explicit diagnostics");
+        cancelDeath = builder.define("cancelDeath", false);
+        builder.pop();
+    }
+
+    public boolean enabled() { return enabled.get(); }
+    public boolean secondary() { return secondary.get(); }
+    public boolean cancelDeath() { return cancelDeath.get(); }
+}
