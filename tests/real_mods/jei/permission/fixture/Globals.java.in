@@ -1,0 +1,9 @@
+package @PACKAGE@;
+public final class Globals {
+    private static IServerConnection server;
+    private static int writes;
+    private static final Features features=new Features();
+    private Globals(){}
+    public static void set(IServerConnection value){server=value;writes++;}
+    public static IServerConnection get(){return server;}
+}

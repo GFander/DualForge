@@ -1,0 +1,2 @@
+package @PACKAGE@;
+public interface IServerConnection { Network owner(); }

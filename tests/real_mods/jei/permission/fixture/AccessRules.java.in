@@ -1,0 +1,24 @@
+package @PACKAGE@;
+import java.util.Optional;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.commands.CommandSourceStack;
+import com.mojang.brigadier.tree.CommandNode;
+public final class AccessRules {
+    private static final org.apache.logging.log4j.Logger LOGGER=org.apache.logging.log4j.LogManager.getLogger();
+    public static boolean allowed(Player sender,ISettings config){
+        if(config.enabled() && sender.isCreative()) return true;
+        CommandSourceStack commandSource=sender.createCommandSourceStack();
+        if(config.secondary()){
+            MinecraftServer server=sender.getServer();
+            if(server!=null){int level=server.getOperatorUserPermissionLevel();return commandSource.hasPermission(level);}
+        }
+        if(config.cancelDeath()) return findGive(sender).map(command->command.canUse(commandSource)).orElse(false);
+        return false;
+    }
+    private static Optional<CommandNode<CommandSourceStack>> findGive(Player sender){
+        return Optional.ofNullable(sender.getServer()).map(server->{
+            var commands=server.getCommands();var dispatcher=commands.getDispatcher();var root=dispatcher.getRoot();return root.getChild("give");
+        });
+    }
+}

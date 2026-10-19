@@ -1,0 +1,9 @@
+package @PACKAGE@;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+public final class EnumCodec<E extends Enum<E>> implements StreamCodec<FriendlyByteBuf,E> {
+    private final Class<E> enumClass;
+    public EnumCodec(Class<E> enumClass){this.enumClass=enumClass;}
+    public E decode(FriendlyByteBuf buffer){return buffer.readEnum(enumClass);}
+    public void encode(FriendlyByteBuf buffer,E value){buffer.writeEnum(value);}
+}

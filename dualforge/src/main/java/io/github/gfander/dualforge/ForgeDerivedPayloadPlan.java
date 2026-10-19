@@ -63,22 +63,17 @@ final class ForgeDerivedPayloadPlan {
             c.var(Opcodes.ALOAD,1);c.var(Opcodes.ALOAD,0);c.var(Opcodes.ALOAD,0);var op=c.next();require(op instanceof MethodInsnNode call && call.getOpcode()==Opcodes.INVOKEVIRTUAL && !call.itf && (call.owner.equals(proof.owner) || call.owner.equals(proof.parent)) && call.name.equals(proof.inherited) && call.desc.equals("()I"),"UNVERIFIED_INHERITED_METHOD");
             var call=c.next();require(call instanceof MethodInsnNode x && x.getOpcode()==Opcodes.INVOKEVIRTUAL && !x.itf && x.owner.equals(proof.context) && x.desc.equals("(Ljava/lang/Object;I)V") && nodes.get(proof.context).methods.stream().anyMatch(v->v.name.equals(x.name) && v.desc.equals(x.desc) && v.access==Opcodes.ACC_PUBLIC),"WRONG_PROCESS_CONTEXT");var remainder=c.peek();require(remainder.getOpcode()==Opcodes.RETURN,"UNKNOWN_BUSINESS_SIDE_EFFECT source="+proof.owner+".process next="+(remainder instanceof MethodInsnNode extra?extra.owner+"."+extra.name+extra.desc:Integer.toString(remainder.getOpcode())));c.op(Opcodes.RETURN);c.end();return;
         }
-        // Read-only diagnostics for an unapproved business body, never a substitute implementation.
-        ClassNode context=nodes.get(proof.context);ForgeRichCodecPlan.referenceRecord(context);
-        for(var op:ForgeRegistryTransformationPlan.ops(m))if(op instanceof MethodInsnNode call){
-            if(call.owner.equals(context.name) && context.methods.stream().anyMatch(v->v.name.equals(call.name) && v.desc.equals(call.desc) && Type.getArgumentTypes(v.desc).length==0))continue;
-            String why=Type.getReturnType(call.desc).equals(Type.BOOLEAN_TYPE) && Arrays.stream(Type.getArgumentTypes(call.desc)).anyMatch(t->List.of("Lnet/minecraft/world/entity/player/Player;","Lnet/minecraft/server/level/ServerPlayer;").contains(t.getDescriptor()))?"UNVERIFIED_PERMISSION_CHECK":"UNKNOWN_PROCESS_METHOD";
-            require(false,why+" source="+proof.owner+".process(L"+proof.context+";)V call="+call.owner+"."+call.name+call.desc+" derivedType=STATIC_VERIFIED codec=STATIC_VERIFIED originalProcess=RETAINED");
-        }
-        require(false,"UNKNOWN_PROCESS_METHOD "+proof.owner);
+        // Read-only prefix proof; inventory/response business is never approved by this path.
+        ForgePermissionPlan.rejectOriginalProcess(proof,nodes);
     }
-    static void context(ClassNode n,String config,String server,String client,Map<String,ClassNode> nodes){
+    static Set<String> context(ClassNode n,String config,String server,String client,Map<String,ClassNode> nodes){
+        if(ForgePermissionPlan.context(n))return ForgePermissionPlan.context(n,config,server,client,nodes);
         fence(n);require(n.access==(Opcodes.ACC_PUBLIC|Opcodes.ACC_FINAL|Opcodes.ACC_SUPER) && n.superName.equals("java/lang/Object") && n.interfaces.isEmpty() && n.fields.size()==9 && n.methods.size()==2,"WRONG_PROCESS_CONTEXT");
         Cursor c=new Cursor(method(n,"<init>","(L"+ForgeNetworkClosurePlan.PLAYER+";L"+config+";L"+server+";L"+client+";)V"));require(c.method.access==Opcodes.ACC_PUBLIC,"WRONG_PROCESS_CONTEXT");c.base();Set<String> fields=new HashSet<>();String configField=null;int slot=1;
         for(String type:List.of(ForgeNetworkClosurePlan.PLAYER,config,server,client)){c.var(Opcodes.ALOAD,0);c.var(Opcodes.ALOAD,slot++);String name=c.ownField(Opcodes.PUTFIELD,n,"L"+type+";",true);require(fields.add(name),"WRONG_FIELD_OWNER");if(type.equals(config))configField=name;}c.op(Opcodes.RETURN);c.end();
         MethodNode record=n.methods.stream().filter(m->!m.name.equals("<init>")).findFirst().orElseThrow();require(record.access==Opcodes.ACC_PUBLIC && record.desc.equals("(Ljava/lang/Object;I)V"),"WRONG_PROCESS_CONTEXT");c=new Cursor(record);c.var(Opcodes.ALOAD,0);c.op(Opcodes.DUP);String count=c.ownField(Opcodes.GETFIELD,n,"I",false);require(fields.add(count),"WRONG_FIELD_OWNER");c.op(Opcodes.ICONST_1);c.op(Opcodes.IADD);c.field(Opcodes.PUTFIELD,n.name,count,"I");
         for(String[] f:List.of(new String[]{"1","Ljava/lang/Object;"},new String[]{"2","I"})){c.var(Opcodes.ALOAD,0);c.var(f[1].equals("I")?Opcodes.ILOAD:Opcodes.ALOAD,Integer.parseInt(f[0]));require(fields.add(c.ownField(Opcodes.PUTFIELD,n,f[1],false)),"WRONG_FIELD_OWNER");}
         c.var(Opcodes.ALOAD,0);c.var(Opcodes.ALOAD,0);c.field(Opcodes.GETFIELD,n.name,configField,"L"+config+";");var call=c.next();require(call instanceof MethodInsnNode m && m.getOpcode()==Opcodes.INVOKEINTERFACE && m.itf && m.owner.equals(config) && m.desc.equals("()Z") && nodes.get(config).methods.stream().anyMatch(v->v.name.equals(m.name) && v.desc.equals(m.desc) && v.access==(Opcodes.ACC_PUBLIC|Opcodes.ACC_ABSTRACT)),"WRONG_PROCESS_CONTEXT");require(fields.add(c.ownField(Opcodes.PUTFIELD,n,"Z",false)),"WRONG_FIELD_OWNER");
-        c.var(Opcodes.ALOAD,0);c.call(Opcodes.INVOKESTATIC,"java/lang/Thread","currentThread","()Ljava/lang/Thread;");c.call(Opcodes.INVOKEVIRTUAL,"java/lang/Thread","getName","()Ljava/lang/String;");require(fields.add(c.ownField(Opcodes.PUTFIELD,n,"Ljava/lang/String;",false)) && fields.size()==n.fields.size(),"WRONG_FIELD_OWNER");c.op(Opcodes.RETURN);c.end();
+        c.var(Opcodes.ALOAD,0);c.call(Opcodes.INVOKESTATIC,"java/lang/Thread","currentThread","()Ljava/lang/Thread;");c.call(Opcodes.INVOKEVIRTUAL,"java/lang/Thread","getName","()Ljava/lang/String;");require(fields.add(c.ownField(Opcodes.PUTFIELD,n,"Ljava/lang/String;",false)) && fields.size()==n.fields.size(),"WRONG_FIELD_OWNER");c.op(Opcodes.RETURN);c.end();return Set.of();
     }
 }
