@@ -81,7 +81,7 @@ public final class ForgeNetworkBridge {
     }
     @SuppressWarnings({"rawtypes","unchecked"})
     public static Object build(Object token) {
-        Session s=transition(token,caller(),Phase.CLIENT_ADDED,Phase.PLANNED);require(s.definitions.size()==s.owner.plan.payloads.size(),"PARTIAL_NETWORK_PLAN");
+        Session s=constructor(token,caller());Phase expected=s.owner.plan.closure!=null && s.owner.plan.closure.permission?Phase.SERVER_ADDED:Phase.CLIENT_ADDED;require(s.phase==expected,"WRONG_REGISTRATION_PHASE expected="+expected+" actual="+s.phase);s.phase=Phase.PLANNED;require(s.definitions.size()==s.owner.plan.payloads.size(),"PARTIAL_NETWORK_PLAN");
         s.definitions=List.copyOf(s.definitions);
         Class<?> event=host("net/neoforged/neoforge/network/event/RegisterPayloadHandlersEvent","neoforge");
         try {s.owner.identity.mod.addListener(EventPriority.NORMAL,false,(Class)event,(Consumer)(e->register(s,e)));}
@@ -111,7 +111,7 @@ public final class ForgeNetworkBridge {
                     require(invoke(context,"flow").toString().equals(d.source.direction()),"WRONG_PAYLOAD_DIRECTION");
                     // Supported source callbacks never inspect the Forge Context; an opaque private token preserves that finite ABI.
                     if(s.owner.plan.closure==null)d.consumer.accept(payload,new Object());
-                    else {var scope=ForgeSourceContextBridge.open(s.owner.identity,context,s.network,d.source.handlerMethod(),d.source.direction());boolean normal=false;try{d.consumer.accept(payload,scope);normal=true;}finally{ForgeSourceContextBridge.close(scope,normal);}}return null;
+                    else {var scope=ForgeSourceContextBridge.open(s.owner.identity,context,s.network,d.source.handlerMethod(),d.source.direction(),s.owner.plan.closure.permission);boolean normal=false;try{d.consumer.accept(payload,scope);normal=true;}finally{ForgeSourceContextBridge.close(scope,normal);}}return null;
                 });
                 invoke(registrar,d.source.direction().equals("SERVERBOUND")?"playToServer":"playToClient",d.type,d.codec,proxy);
             }

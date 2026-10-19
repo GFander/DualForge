@@ -1,0 +1,8 @@
+package @PACKAGE@;
+import net.minecraft.world.entity.player.Player;
+public final class BusinessContext {
+    private final Player sender;private final ISettings config;private final IServerConnection server;private final IClientConnection client;
+    private int count;private Object last;private int parentValue;private boolean enabled;private int protectedCalls;private int deniedCalls;private String thread;
+    public BusinessContext(Player sender,ISettings config,IServerConnection server,IClientConnection client){this.sender=sender;this.config=config;this.server=server;this.client=client;}
+    public void record(Object payload,int parent){count++;last=payload;parentValue=parent;enabled=AccessRules.allowed(sender,config);if(enabled)protectedCalls++;else deniedCalls++;thread=Thread.currentThread().getName();}
+}

@@ -1,0 +1,63 @@
+    /** Ordinary unconnected Player test double, never a ServerPlayer or a network sender. */
+    private static final class ModelPlayer extends net.minecraft.world.entity.player.Player {
+        private final boolean creative,absent;private final int level;
+        ModelPlayer(net.minecraft.server.MinecraftServer server,boolean creative,int level,boolean absent){super(server.overworld(),net.minecraft.core.BlockPos.ZERO,0.0f,new com.mojang.authlib.GameProfile(UUID.randomUUID(),"PermissionModel"));this.creative=creative;this.level=level;this.absent=absent;}
+        public boolean isCreative(){return creative;}public boolean isSpectator(){return false;}
+        protected int getPermissionLevel(){return level;}
+        public net.minecraft.server.MinecraftServer getServer(){return absent?null:super.getServer();}
+    }
+    private static Throwable root(Throwable t){while(t.getCause()!=null)t=t.getCause();return t;}
+    private boolean setting(Object cfg,String name)throws Exception{return (boolean)cfg.getClass().getMethod(name).invoke(cfg);}
+    private void setSetting(Object cfg,String name,boolean value)throws Exception{Object supplier=get(cfg,name);supplier.getClass().getMethod("set",Object.class).invoke(supplier,value);check(setting(cfg,name)==value,"actual registered config supplier reads changed value");}
+    private boolean allowed(Object network,net.minecraft.world.entity.player.Player player)throws Exception{
+        Class<?> rules=Class.forName(network.getClass().getModule(),network.getClass().getPackageName()+".AccessRules");Class<?> api=Class.forName(network.getClass().getModule(),network.getClass().getPackageName()+".ISettings");
+        return (boolean)rules.getMethod("allowed",net.minecraft.world.entity.player.Player.class,api).invoke(null,player,get(network,"config"));
+    }
+    private Object business(Object network,net.minecraft.world.entity.player.Player player)throws Exception{
+        Class<?> context=Class.forName(network.getClass().getModule(),network.getClass().getPackageName()+".BusinessContext");
+        return context.getConstructors()[0].newInstance(player,get(network,"config"),get(network,"server"),get(network,"client"));
+    }
+    private void process(Object network,Object ctx)throws Exception{
+        Class<?> packet=Class.forName(network.getClass().getModule(),network.getClass().getPackageName()+".UpTuple");Object payload=packet.getConstructor(int.class,boolean.class).newInstance(127,true);packet.getMethod("process",ctx.getClass()).invoke(payload,ctx);
+        check(get(ctx,"last")==payload && (int)get(ctx,"parentValue")==17 && get(ctx,"thread").equals(Thread.currentThread().getName()),"original safe packet/process/context data and server-thread record");
+    }
+    private Object originalConfig(Class<?> api,Object cfg){return Proxy.newProxyInstance(api.getClassLoader(),new Class<?>[]{api},(proxy,m,args)->switch(m.getName()){
+        case "isCheatModeEnabledForCreative"->setting(cfg,"enabled");case "isCheatModeEnabledForOp"->setting(cfg,"secondary");case "isCheatModeEnabledForGive"->setting(cfg,"cancelDeath");case "toString"->"isolated original interface delegated to actual owning registered config";case "hashCode"->System.identityHashCode(proxy);case "equals"->proxy==args[0];default->throw new UnsupportedOperationException(m.toString());});}
+    private void permissionModels(net.minecraft.server.MinecraftServer server,Object[] networks)throws Exception{
+        check(server.isSameThread(),"all protected safe counter callbacks run on actual server thread");int[] counts=new int[2];
+        java.nio.file.Path original=java.nio.file.Path.of("/home/albert/Env/DualForge/runs/convergence-010a-jei/inputs/jei-1.21.1-forge-19.27.0.340.jar");String digest=java.util.HexFormat.of().formatHex(java.security.MessageDigest.getInstance("SHA-256").digest(java.nio.file.Files.readAllBytes(original)));check(digest.equals("f5e61a001d57dd044d6f2ba255daf955c50d90e4173f8b4933ab0eb8cd386ed5"),"fixed original permission component JAR");
+        try(var loader=new java.net.URLClassLoader(new java.net.URL[]{original.toUri().toURL()},getClass().getClassLoader())){
+            Class<?> util=Class.forName("mezz.jei.common.util.ServerCommandUtil",true,loader),api=Class.forName("mezz.jei.common.config.IServerConfig",true,loader);Method source=util.getMethod("hasPermissionForCheatMode",net.minecraft.world.entity.player.Player.class,api);
+            for(Object network:networks){
+                Object cfg=get(network,"config");boolean[] saved={setting(cfg,"enabled"),setting(cfg,"secondary"),setting(cfg,"cancelDeath")};System.out.println("PERMISSION_REGISTERED_CONFIG owner="+network.getClass().getPackageName()+" creative="+saved[0]+" op="+saved[1]+" give="+saved[2]+" scope=REAL_FML_CONFIG");
+                try{
+                    Object originalCfg=originalConfig(api,cfg);
+                    for(int mask=0;mask<8;mask++){
+                        setSetting(cfg,"enabled",(mask&1)!=0);setSetting(cfg,"secondary",(mask&2)!=0);setSetting(cfg,"cancelDeath",(mask&4)!=0);
+                        for(boolean creative:List.of(false,true))for(int level:new int[]{0,1,2,3,4})for(boolean absent:List.of(false,true)){
+                            ModelPlayer player=new ModelPlayer(server,creative,level,absent);var stack=player.createCommandSourceStack();boolean expected;
+                            if((mask&1)!=0 && creative)expected=true;
+                            else if((mask&2)!=0 && !absent)expected=stack.hasPermission(server.getOperatorUserPermissionLevel());
+                            else expected=(mask&4)!=0 && !absent && server.getCommands().getDispatcher().getRoot().getChild("give").canUse(stack);
+                            boolean nativeOriginal=(boolean)source.invoke(null,player,originalCfg),independent=allowed(network,player);check(nativeOriginal==expected && independent==expected,"original and independent full ordered predicate/native permission on identical isolated model");
+                            Object ctx=business(network,player);process(network,ctx);check((boolean)get(ctx,"enabled")==expected && (int)get(ctx,"count")==1 && (int)get(ctx,"protectedCalls")== (expected?1:0) && (int)get(ctx,"deniedCalls")== (expected?0:1),"permission false never executes protected counter; actual original safe branches");counts[expected?0:1]++;
+                            check(get(ctx,"sender")==player && get(ctx,"config")==cfg && get(ctx,"server")==get(network,"server") && get(ctx,"client")==get(network,"client"),"isolated ordinary Player and real owning config/reference dataflow");
+                        }
+                    }
+                    // Missing command uses the actual Optional/map path, with original command tree restored.
+                    setSetting(cfg,"enabled",false);setSetting(cfg,"secondary",false);setSetting(cfg,"cancelDeath",true);Object rootNode=server.getCommands().getDispatcher().getRoot();Map children=(Map)get(rootNode,"children");Map snapshot=new LinkedHashMap(children);try{children.remove("give");ModelPlayer player=new ModelPlayer(server,false,4,false);check(!(boolean)source.invoke(null,player,originalCfg) && !allowed(network,player),"missing native command is denied, never authorized");Object ctx=business(network,player);process(network,ctx);check((int)get(ctx,"protectedCalls")==0 && (int)get(ctx,"deniedCalls")==1,"missing permission source safe branch");}finally{children.clear();children.putAll(snapshot);}check(children.equals(snapshot),"native command tree restored after isolated missing-command model");
+                    // A source config exception passes unchanged through both predicates and original process.
+                    for(String fieldName:List.of("enabled","secondary","cancelDeath")){
+                        setSetting(cfg,"enabled",false);setSetting(cfg,"secondary",false);setSetting(cfg,"cancelDeath",false);Field field=cfg.getClass().getDeclaredField(fieldName);field.setAccessible(true);Object old=field.get(cfg);RuntimeException sentinel=new RuntimeException("010G_SOURCE_CONFIG_"+fieldName);
+                        try{field.set(cfg,(java.util.function.Supplier<Boolean>)()->{throw sentinel;});ModelPlayer player=new ModelPlayer(server,false,0,false);Object ctx=business(network,player);for(java.util.concurrent.Callable<?> call:List.<java.util.concurrent.Callable<?>>of(()->source.invoke(null,player,originalCfg),()->allowed(network,player),()->{process(network,ctx);return null;})){try{call.call();throw new AssertionError("permission failure swallowed");}catch(Exception ex){check(root(ex)==sentinel,"original source exception identity retained");}}check((int)get(ctx,"protectedCalls")==0 && (int)get(ctx,"deniedCalls")==0 && (int)get(ctx,"count")==1,"exception grants nothing; prior local count is retained, no rollback");}finally{field.set(cfg,old);}
+                    }
+                    for(boolean nullConfig:List.of(false,true)){ModelPlayer player=new ModelPlayer(server,false,0,false);try{source.invoke(null,nullConfig?player:null,nullConfig?null:originalCfg);throw new AssertionError("null source authorized");}catch(InvocationTargetException ex){check(root(ex) instanceof NullPointerException,"original null player/config throws instead of granting");}}
+                }finally{setSetting(cfg,"enabled",saved[0]);setSetting(cfg,"secondary",saved[1]);setSetting(cfg,"cancelDeath",saved[2]);}
+                Object ctx=business(network,null);try{process(network,ctx);throw new AssertionError("null sender granted");}catch(InvocationTargetException ex){check(root(ex) instanceof NullPointerException && (int)get(ctx,"protectedCalls")==0 && (int)get(ctx,"deniedCalls")==0,"unconnected sender cannot authorize or increment protected counter");}
+                @DISCONNECTED@
+            }
+            Object a=get(networks[0],"config"),b=get(networks[1],"config");boolean[] saved={setting(a,"enabled"),setting(a,"secondary"),setting(a,"cancelDeath"),setting(b,"enabled"),setting(b,"secondary"),setting(b,"cancelDeath")};try{setSetting(a,"enabled",true);setSetting(a,"secondary",false);setSetting(a,"cancelDeath",false);setSetting(b,"enabled",false);setSetting(b,"secondary",false);setSetting(b,"cancelDeath",false);ModelPlayer player=new ModelPlayer(server,true,0,false);check(allowed(networks[0],player) && !allowed(networks[1],player),"same isolated player + distinct real ModContainer configs remain independent");}finally{int i=0;for(Object c:List.of(a,b))for(String n:List.of("enabled","secondary","cancelDeath"))setSetting(c,n,saved[i++]);}
+            check(counts[0]>0 && counts[1]>0,"both source business branches actually executed");System.out.println("PERMISSION_COMPONENT_PASS cases="+(counts[0]+counts[1])+" allowed="+counts[0]+" denied="+counts[1]+" original=UNMODIFIED_JEI; scope=ISOLATED_ORDINARY_PLAYER_NATIVE_STACK_AND_ACTUAL_REGISTERED_CONFIG; REAL_SERVER_PLAYER=NOT_RUN REAL_CONNECTED_PLAYER=NOT_RUN REAL_PACKET_DELIVERY=NOT_RUN");
+        }
+        check(java.util.HexFormat.of().formatHex(java.security.MessageDigest.getInstance("SHA-256").digest(java.nio.file.Files.readAllBytes(original))).equals(digest),"original JEI component bytes unchanged");
+    }

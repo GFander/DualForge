@@ -122,6 +122,7 @@ final class ForgeDualBusPlan {
         if(!configResult.equals(config)){validateConfigInterface(nodes.get(config),nodes.get(configResult));closure.add(configResult);}
         require(raw.keySet().equals(closure) && !router.equals(config),"UNCLAIMED_CLASS_MODIFIED");
         validateRouter(nodes.get(router));String configType=validateConfig(nodes.get(config),configCall.name,configResult);
+        if(network!=null && network.closure!=null && network.closure.permission){require(configType.equals("SERVER"),"UNVERIFIED_SERVER_SIDE");ForgePermissionPlan.verifyHost(host);}
         Set<String> allowed=new HashSet<>(TYPES.keySet());allowed.add(F+"common/MinecraftForge");allowed.add(F+"fml/common/Mod");
         for(var n:nodes.values()) {
             if(network!=null && network.classes().contains(n.name))continue;

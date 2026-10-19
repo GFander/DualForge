@@ -1,0 +1,21 @@
+package @PACKAGE@;
+import java.util.function.BiConsumer;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraftforge.network.Channel;
+import net.minecraftforge.network.ChannelBuilder;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+public final class Network {
+ private final ISettings config;private final IServerConnection server;private final IClientConnection client;private final Channel<CustomPacketPayload> channel;
+ private final BiConsumer<UpTuple,CustomPayloadEvent.Context> uptupleHandler;private int uptupleCount;private Object uptupleLast;private BusinessContext uptupleContext;private String uptupleThread;
+ private final BiConsumer<UpWords,CustomPayloadEvent.Context> upwordsHandler;private int upwordsCount;private Object upwordsLast;private BusinessContext upwordsContext;private String upwordsThread;
+ private final BiConsumer<UpUnit,CustomPayloadEvent.Context> upunitHandler;private int upunitCount;private Object upunitLast;private BusinessContext upunitContext;private String upunitThread;
+ public Network(ISettings config,ResourceLocation id,int version){this.config=config;server=new ToServer(this);Globals.set(server);client=new ToClient(this);
+ uptupleHandler=this::uptuple;
+ upwordsHandler=this::upwords;
+ upunitHandler=this::upunit;
+ channel=ChannelBuilder.named(id).networkProtocolVersion(version).optional().payloadChannel().play().serverbound().add(UpTuple.TYPE,UpTuple.STREAM_CODEC,uptupleHandler).add(UpWords.TYPE,UpWords.STREAM_CODEC,upwordsHandler).add(UpUnit.TYPE,UpUnit.STREAM_CODEC,upunitHandler).build();}
+ private void uptuple(UpTuple payload,CustomPayloadEvent.Context context){BusinessContext business=new BusinessContext(context.getSender(),config,server,client);context.setPacketHandled(true);context.enqueueWork(()->{payload.process(business);uptupleCount++;uptupleLast=payload;uptupleContext=business;uptupleThread=Thread.currentThread().getName();});}
+ private void upwords(UpWords payload,CustomPayloadEvent.Context context){BusinessContext business=new BusinessContext(context.getSender(),config,server,client);context.setPacketHandled(true);context.enqueueWork(()->{payload.process(business);upwordsCount++;upwordsLast=payload;upwordsContext=business;upwordsThread=Thread.currentThread().getName();});}
+ private void upunit(UpUnit payload,CustomPayloadEvent.Context context){BusinessContext business=new BusinessContext(context.getSender(),config,server,client);context.setPacketHandled(true);context.enqueueWork(()->{payload.process(business);upunitCount++;upunitLast=payload;upunitContext=business;upunitThread=Thread.currentThread().getName();});}
+}

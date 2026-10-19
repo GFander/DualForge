@@ -1,0 +1,8 @@
+package @PACKAGE@;
+import java.util.Locale;
+import java.util.function.Supplier;
+public class LocaleSource implements Supplier<Locale> {
+    private static int creations;
+    public LocaleSource() { creations++; }
+    public Locale get() { return Locale.ROOT; }
+}
